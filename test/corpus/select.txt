@@ -162,3 +162,483 @@ select * from cte2
     (from_clause
       (identifier))))
 
+================================================================================
+SELECT statement
+================================================================================
+
+SELECT;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause)))
+
+================================================================================
+SELECT statement with distinct expression
+================================================================================
+
+SELECT 1 IS DISTINCT FROM NULL;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (is_expression
+          (number)
+          (distinct_from
+            (NULL)))))))
+
+================================================================================
+SELECT statement FROM clause
+================================================================================
+
+SELECT a, b FROM table1;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (identifier)
+        (identifier)))
+    (from_clause
+      (identifier))))
+
+================================================================================
+SELECT statement with SELECT subexpression
+================================================================================
+
+SELECT (SELECT 1) AS a
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (alias
+          (select_subexpression
+            (select_statement
+              (select_clause
+                (select_clause_body
+                  (number)))))
+          (identifier))))))
+
+================================================================================
+SELECT statement with aliases
+================================================================================
+
+SELECT a, b AS c FROM table1 AS t;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (identifier)
+        (alias
+          (identifier)
+          (identifier))))
+    (from_clause
+      (alias
+        (identifier)
+        (identifier)))))
+
+================================================================================
+SELECT statement with group by
+================================================================================
+
+SELECT a, b
+FROM table1
+GROUP BY lower(a), b;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (identifier)
+        (identifier)))
+    (from_clause
+      (identifier))
+    (group_by_clause
+      (group_by_clause_body
+        (function_call
+          (identifier)
+          (identifier))
+        (identifier)))))
+
+================================================================================
+SELECT statement with order by
+================================================================================
+
+SELECT a, b
+FROM table1
+ORDER BY lower(a), b;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (identifier)
+        (identifier)))
+    (from_clause
+      (identifier))
+    (order_by_clause
+      (order_by_clause_body
+        (function_call
+          (identifier)
+          (identifier))
+        (identifier)))))
+
+================================================================================
+SELECT statement FROM multiple tables
+================================================================================
+
+SELECT a, b FROM table1, table2;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (identifier)
+        (identifier)))
+    (from_clause
+      (identifier)
+      (identifier))))
+
+================================================================================
+SELECT statement with numbers
+================================================================================
+
+SELECT 1, 2;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (number)
+        (number)))))
+
+================================================================================
+SELECT statement with expression
+================================================================================
+
+SELECT 1 + 2;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (binary_expression
+          (number)
+          (number))))))
+
+================================================================================
+SELECT statement with empty string
+================================================================================
+
+SELECT '';
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (string)))))
+
+================================================================================
+SELECT statement with columns
+================================================================================
+
+SELECT a, b;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (identifier)
+        (identifier)))))
+
+================================================================================
+SELECT statement with comparison expression
+================================================================================
+
+SELECT 1 < 2;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (comparison_operator
+          (number)
+          (number))))))
+
+================================================================================
+SELECT statement with is expression
+================================================================================
+
+SELECT a IS TRUE, b IS NOT NULL, c IS FALSE;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (is_expression
+          (identifier)
+          (TRUE))
+        (is_expression
+          (identifier)
+          (NULL))
+        (is_expression
+          (identifier)
+          (FALSE))))))
+
+================================================================================
+SELECT field
+================================================================================
+
+SELECT foo.bar FROM a;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (identifier)))
+    (from_clause
+      (identifier))))
+
+================================================================================
+SELECT statement with comparison expression and is expression
+================================================================================
+
+SELECT 1 < 2 IS TRUE;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (is_expression
+          (comparison_operator
+            (number)
+            (number))
+          (TRUE))))))
+
+================================================================================
+SELECT expression with function
+================================================================================
+
+SELECT foo(bar, baz) < 10;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (comparison_operator
+          (function_call
+            (identifier)
+            (identifier)
+            (identifier))
+          (number))))))
+
+================================================================================
+SELECT expression with function without args
+================================================================================
+
+SELECT foo();
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (function_call
+          (identifier))))))
+
+================================================================================
+SELECT comparison expression boolean
+================================================================================
+
+SELECT TRUE AND foo(1) OR FALSE AND NOT a = b.c;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (boolean_expression
+          (boolean_expression
+            (TRUE)
+            (function_call
+              (identifier)
+              (number)))
+          (boolean_expression
+            (FALSE)
+            (boolean_expression
+              (comparison_operator
+                (identifier)
+                (identifier)
+                ))))))))
+
+================================================================================
+SELECT parenthesized expression
+================================================================================
+
+SELECT (TRUE);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (TRUE)))))
+
+================================================================================
+SELECT parenthesized expression 2
+================================================================================
+
+SELECT TRUE AND (foo(1) OR FALSE);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (boolean_expression
+          (TRUE)
+          (boolean_expression
+            (function_call
+              (identifier)
+              (number))
+            (FALSE)))))))
+
+================================================================================
+SELECT string
+================================================================================
+
+SELECT 'aaaa'
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (string)))))
+
+================================================================================
+SELECT in clause
+================================================================================
+
+SELECT 1 IN (1, 2);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (in_expression
+          (number)
+          (tuple
+            (number)
+            (number)))))))
+
+================================================================================
+Comment
+================================================================================
+
+-- Smile and wave
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment))
+
+================================================================================
+Multiline comment
+================================================================================
+
+/*
+Smile and wave
+*/
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment))
+
+
+================================================================================
+SELECT asterisk expressions
+================================================================================
+
+SELECT * FROM Customers;
+SELECT a.* FROM Customers;
+SELECT COUNT(*) FROM Customers;
+SELECT COUNT(a.*) FROM Customers;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (asterisk_expression)))
+    (from_clause
+      (identifier)))
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (asterisk_expression)))
+    (from_clause
+      (identifier)))
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (function_call
+          (identifier)
+          (asterisk_expression))))
+    (from_clause
+      (identifier)))
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (function_call
+          (identifier)
+          (asterisk_expression))))
+    (from_clause
+      (identifier))))
+
+ 
