@@ -199,51 +199,6 @@ SELECT '';
         (string)))))
 
 ================================================================================
-SELECT statement with dollar quoted string
-================================================================================
-
-SELECT $$hey$$;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (string)))))
-
-================================================================================
-SELECT statement with dollar quoted brackets inside
-================================================================================
-
-SELECT $$(a + b)$$;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (string)))))
-
-================================================================================
-SELECT statement with type cast
-================================================================================
-
-SELECT ''::JSONB;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (type_cast
-          (string)
-          (type
-            (identifier)))))))
-
-================================================================================
 SELECT statement with columns
 ================================================================================
 
@@ -848,31 +803,6 @@ create function add(integer) returns integer language sql as 'select $1';
         (select_clause
           (select_clause_body
             (argument_reference)))))))
-
-================================================================================
-CREATE FUNCTION highlight function body
-================================================================================
-
-create function add(integer) returns integer language sql as 'select a, b';
-
---------------------------------------------------------------------------------
-
-(source_file
-  (create_function_statement
-    (identifier)
-    (create_function_parameters
-      (create_function_parameter
-        (type
-          (identifier))))
-    (type
-      (identifier))
-    (language)
-    (function_body
-      (select_statement
-        (select_clause
-          (select_clause_body
-            (identifier)
-            (identifier)))))))
 
 ================================================================================
 CREATE SCHEMA schema

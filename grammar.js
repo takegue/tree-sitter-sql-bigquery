@@ -53,7 +53,7 @@ function sep2(rule, separator) {
 }
 
 const unquoted_identifier = $ => /[_a-zA-Z][_a-zA-Z0-9]*/;
-const quoted_identifier = $ => /`[a-zA-Z0-9._-]+`/;
+const quoted_identifier = $ => /`[a-zA-Z0-9.-_]+`/;
 
 module.exports = grammar({
   name: "sql",
@@ -68,7 +68,6 @@ module.exports = grammar({
           $.update_statement,
           $.set_statement,
           $.insert_statement,
-          $.grant_statement,
           $.create_type_statement,
           $.create_domain_statement,
           $.create_index_statement,
@@ -109,7 +108,7 @@ module.exports = grammar({
         kw("STRICT"),
       ),
     _function_language: $ =>
-      seq(kw("LANGUAGE"), alias($.identifier, $.language)),
+      seq(kw("LANGUAGE"), alias($._unquoted_identifier, $.language)),
     _create_function_return_type: $ =>
       choice($._type, $.setof, $.constrained_type),
     setof: $ => seq(kw("SETOF"), choice($._type, $.constrained_type)),
@@ -144,36 +143,6 @@ module.exports = grammar({
         choice("=", kw("TO")),
         choice($._expression, kw("DEFAULT")),
       ),
-    grant_statement: $ =>
-      prec.left(seq(
-        kw("GRANT"),
-        choice(
-          seq(kw("ALL"), optional(kw("PRIVILEGES"))),
-          repeat(
-            choice(
-              kw("SELECT"),
-              kw("INSERT"),
-              kw("UPDATE"),
-              kw("DELETE"),
-              kw("TRUNCATE"),
-              kw("REFERENCES"),
-              kw("TRIGGER"),
-              kw("USAGE"),
-            ),
-          ),
-        ),
-        kw("ON"),
-        field(
-          "type",
-          optional(
-            choice(kw("SCHEMA"), kw("DATABASE"), kw("SEQUENCE"), kw("TABLE")),
-          ),
-        ),
-        $.identifier,
-        kw("TO"),
-        choice(seq(optional(kw("GROUP")), $.identifier), kw("PUBLIC")),
-        optional(kw("WITH GRANT OPTION")),
-      )),
     create_domain_statement: $ =>
       seq(
         kw("CREATE DOMAIN"),
@@ -368,7 +337,7 @@ module.exports = grammar({
           $._expression,
         ),
       ),
-    _parenthesized_expression: $ => seq("(", $._expression, ")"),
+    _parenthesized_expression: $ => prec(10, seq("(", $._expression, ")")),
     is_expression: $ =>
       prec.left(
         1,
@@ -389,7 +358,58 @@ module.exports = grammar({
     NULL: $ => kw("NULL"),
     TRUE: $ => kw("TRUE"),
     FALSE: $ => kw("FALSE"),
-    number: $ => /\d+/,
+    _integer: $ => /\d+/,
+    _float: $ => choice(
+      /[+-]?\d+\.(\d*)([eE][+-]?\d+)?/,
+      /(\d+)?\.\d+([eE][+-]?\d+)?/,
+      /\d+[eE][+-]?\d+/,
+    ),
+    _float_or_integer: $ => choice(
+      $._integer,
+      $._float,
+    ),
+    numeric: $ => seq(
+      choice(kw("NUMERIC"), kw("BIGNUMERIC"), kw("DECIMAL"), kw("BIGDECIMAL")),
+      choice(
+        seq("'", $._float_or_integer, "'"),
+        seq('"', $._float_or_integer, '"'),
+      )
+    ),
+    _number: $ => choice(
+      $._integer,
+      $._float,
+      $.numeric,
+    ),
+    time: $ => seq(
+      choice(kw("DATE"), kw("TIME"), kw("DATETIME"), kw("TIMESTAMP")),
+      $.string
+    ),
+    number: $ => $._number,
+    query_parameter: $ => /@+[_a-zA-Z][_a-zA-Z0-9]*/,
+    _literal: $ => choice(
+      $.query_parameter,
+      $.array,
+      $.struct,
+      $.time,
+      $.string,
+      $.TRUE,
+      $.FALSE,
+      $.NULL,
+      $._identifier,
+      $.number,
+    ),
+    array: $ => seq(optional(choice(
+        kw("ARRAY"),
+        seq(kw("ARRAY"), /<\w+>/)
+      )), 
+      "[", optional(commaSep1($._literal)), "]"
+    ),
+    struct: $ => seq(optional(choice(
+        kw("STRUCT"),
+        seq(kw("STRUCT"), /<[^>]+>/)
+      )), 
+      "(", commaSep1($._aliasable_expression), ")"
+    ),
     _unquoted_identifier: unquoted_identifier, 
     _quoted_identifier: quoted_identifier,
     _identifier: $ => choice($._quoted_identifier, $._unquoted_identifier),
@@ -397,10 +417,12 @@ module.exports = grammar({
     identifier: $ => prec.left(1, seq(repeat($._dotted_identifier), $._identifier)),
     type: $ => seq($.identifier, optional(seq("(", $.number, ")"))),
     string: $ =>
-      choice(
-        seq("'", field("content", /[^']*/), "'"),
-        seq("$$", field("content", /(\$?[^$]+)+/), "$$"), // FIXME empty string test, maybe read a bit more into c comments answer
-      ),
+      alias(choice(
+        seq(/[bB]?[rR]?'/, field("content", /[^']*/), "'"),
+        seq(/[bB]?[rR]?"/, field("content", /[^"]*/), '"'),
+        seq(/[bB]?[rR]?'''/, field("content", /[^']+/), "'''"), // FIXME: single quote included multi-line text
+        seq(/[bB]?[rR]?"""/, field("content", /[^"]+/), '"""'), // FIXME double quote included multi-line text
+      ), "_string"),
     field_access: $ => seq($.identifier, "->>", $.string),
     ordered_expression: $ =>
       seq($._expression, field("order", choice(kw("ASC"), kw("DESC")))),
@@ -435,16 +457,13 @@ module.exports = grammar({
     asterisk_expression: $ => seq(optional($._dotted_identifier), "*"),
     argument_reference: $ => seq("$", /\d+/),
     _expression: $ =>
-      choice(
+      prec(10, choice(
         $.function_call,
         $.string,
         $.field_access,
-        $.TRUE,
-        $.FALSE,
-        $.NULL,
+        $._literal,
         $.asterisk_expression,
         $.identifier,
-        $.number,
         $.comparison_operator,
         $.in_expression,
         $.is_expression,
@@ -455,7 +474,7 @@ module.exports = grammar({
         $.array_element_access,
         $.argument_reference,
         $.select_subexpression,
-      ),
+      )),
   },
 });
 

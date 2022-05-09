@@ -1,8 +1,12 @@
 =======================================================
-identifier: #1
+IDENTIFIER: basic names
 =======================================================
 
-select _5bc.dataField
+select 
+  _5bc.dataField, 
+ `5abc`.dataField,
+ `GROUP`.dataField,
+ abc5.GROUP
 
 --------------------------------------------------------------------------------
 
@@ -10,13 +14,24 @@ select _5bc.dataField
  (select_statement
   (select_clause
    (select_clause_body
-    (identifier)))))
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)
+    ))))
+
 
 =======================================================
-identifier: #2
+IDENTIFIER: literals
 =======================================================
 
-select `5abc`.dataField
+select 
+ "",
+ "double quote", 
+ "double quote", 
+ 'single "quote"',
+ '''triple quoted ''',
+ """triple quoted """
 
 --------------------------------------------------------------------------------
 
@@ -24,13 +39,32 @@ select `5abc`.dataField
  (select_statement
   (select_clause
    (select_clause_body
-    (identifier)))))
+    (string)
+    (string)
+    (string)
+    (string)
+    (string)
+    (string)
+    ))))
+
 
 =======================================================
-identifier: #3
+IDENTIFIER: NUMERIC literals
 =======================================================
 
-select `GROUP`.dataField
+select 
+  NUMERIC '0',
+  NUMERIC '123456',
+  NUMERIC '-3.14',
+  NUMERIC '-0.54321',
+  NUMERIC '1.23456e05',
+  NUMERIC '-9.876e-3',
+  BIGNUMERIC '0',
+  BIGNUMERIC '123456',
+  BIGNUMERIC '-3.14',
+  BIGNUMERIC '-0.54321',
+  BIGNUMERIC '1.23456e05',
+  BIGNUMERIC '-9.876e-3'
 
 --------------------------------------------------------------------------------
 
@@ -38,14 +72,30 @@ select `GROUP`.dataField
  (select_statement
   (select_clause
    (select_clause_body
-    (identifier)))))
+    (number (numeric))
+    (number (numeric))
+    (number (numeric))
+    (number (numeric))
+    (number (numeric))
+    (number (numeric))
+    (number (numeric))
+    (number (numeric))
+    (number (numeric))
+    (number (numeric))
+    (number (numeric))
+    (number (numeric))
+    ))))
 
 
 =======================================================
-identifier: #4
+IDENTIFIER: Floating point
 =======================================================
 
-select abc5.GROUP
+select 
+  123.456e-67,
+  .1E4,
+  58.,
+  4e2
 
 --------------------------------------------------------------------------------
 
@@ -53,5 +103,105 @@ select abc5.GROUP
  (select_statement
   (select_clause
    (select_clause_body
-    (identifier)))))
+    (number)
+    (number)
+    (number)
+    (number)
+    ))))
+
+
+=======================================================
+IDENTIFIER: Array literals
+=======================================================
+
+select
+  [1, 2, 3],
+  ['x', 'y', 'xy'],
+  ARRAY[1, 2, 3],
+  ARRAY<string>['x', 'y', 'xy'],
+  ARRAY<int64>[],
+  []
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (select_statement
+  (select_clause
+   (select_clause_body
+    (array (number) (number) (number))
+    (array (string) (string) (string))
+    (array (number) (number) (number))
+    (array (string) (string) (string))
+    (array)
+    (array)
+    ))))
+
+=======================================================
+IDENTIFIER: Struct literals
+=======================================================
+
+select
+  (1, 2, 3),
+  (1, 'abc'),
+  STRUCT(1 AS foo, 'abc' AS bar),
+  STRUCT<INT32, INT64>(1, 2),
+  STRUCT(1),
+  STRUCT<INT64>(1)
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (select_statement
+  (select_clause
+   (select_clause_body
+    (struct (number) (number) (number))
+    (struct (number) (string))
+    (struct (alias (number) (identifier)) (alias (string) (identifier)))
+    (struct (number) (number))
+    (struct (number))
+    (struct (number))
+    ))))
+ 
+
+=======================================================
+IDENTIFIER: DATE/TIME/DATETIME/TIMESTAMP/INTERVAL literals
+=======================================================
+
+select
+  DATE '2014-09-27',
+  TIME '12:30:00.45',
+  DATETIME '2014-09-27 12:30:00.45',
+  TIMESTAMP '2014-09-27 12:30:00.45-08'
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (select_statement
+  (select_clause
+   (select_clause_body
+    (time (string))
+    (time (string))
+    (time (string))
+    (time (string))
+    ))))
+ 
+
+=======================================================
+IDENTIFIER: Query parameter
+=======================================================
+
+select 
+  @user_used,
+  @@system_used
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (select_statement
+  (select_clause
+   (select_clause_body
+    (query_parameter)
+    (query_parameter)
+    ))))
+ 
 
