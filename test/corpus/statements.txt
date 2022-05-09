@@ -1,0 +1,892 @@
+================================================================================
+SELECT statement
+================================================================================
+
+SELECT;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause)))
+
+================================================================================
+SELECT statement with distinct expression
+================================================================================
+
+SELECT 1 IS DISTINCT FROM NULL;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (is_expression
+          (number)
+          (distinct_from
+            (NULL)))))))
+
+================================================================================
+SELECT statement FROM clause
+================================================================================
+
+SELECT a, b FROM table1;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (identifier)
+        (identifier)))
+    (from_clause
+      (identifier))))
+
+================================================================================
+SELECT statement with SELECT subexpression
+================================================================================
+
+SELECT (SELECT 1) AS a
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (alias
+          (select_subexpression
+            (select_statement
+              (select_clause
+                (select_clause_body
+                  (number)))))
+          (identifier))))))
+
+================================================================================
+SELECT statement with aliases
+================================================================================
+
+SELECT a, b AS c FROM table1 AS t;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (identifier)
+        (alias
+          (identifier)
+          (identifier))))
+    (from_clause
+      (alias
+        (identifier)
+        (identifier)))))
+
+================================================================================
+SELECT statement with group by
+================================================================================
+
+SELECT a, b
+FROM table1
+GROUP BY lower(a), b;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (identifier)
+        (identifier)))
+    (from_clause
+      (identifier))
+    (group_by_clause
+      (group_by_clause_body
+        (function_call
+          (identifier)
+          (identifier))
+        (identifier)))))
+
+================================================================================
+SELECT statement with order by
+================================================================================
+
+SELECT a, b
+FROM table1
+ORDER BY lower(a), b;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (identifier)
+        (identifier)))
+    (from_clause
+      (identifier))
+    (order_by_clause
+      (order_by_clause_body
+        (function_call
+          (identifier)
+          (identifier))
+        (identifier)))))
+
+================================================================================
+SELECT statement FROM multiple tables
+================================================================================
+
+SELECT a, b FROM table1, table2;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (identifier)
+        (identifier)))
+    (from_clause
+      (identifier)
+      (identifier))))
+
+================================================================================
+SELECT statement with numbers
+================================================================================
+
+SELECT 1, 2;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (number)
+        (number)))))
+
+================================================================================
+SELECT statement with expression
+================================================================================
+
+SELECT 1 + 2;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (binary_expression
+          (number)
+          (number))))))
+
+================================================================================
+SELECT statement with empty string
+================================================================================
+
+SELECT '';
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (string)))))
+
+================================================================================
+SELECT statement with dollar quoted string
+================================================================================
+
+SELECT $$hey$$;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (string)))))
+
+================================================================================
+SELECT statement with dollar quoted brackets inside
+================================================================================
+
+SELECT $$(a + b)$$;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (string)))))
+
+================================================================================
+SELECT statement with type cast
+================================================================================
+
+SELECT ''::JSONB;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (type_cast
+          (string)
+          (type
+            (identifier)))))))
+
+================================================================================
+SELECT statement with columns
+================================================================================
+
+SELECT a, b;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (identifier)
+        (identifier)))))
+
+================================================================================
+SELECT statement with comparison expression
+================================================================================
+
+SELECT 1 < 2;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (comparison_operator
+          (number)
+          (number))))))
+
+================================================================================
+SELECT statement with is expression
+================================================================================
+
+SELECT a IS TRUE, b IS NOT NULL, c IS FALSE;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (is_expression
+          (identifier)
+          (TRUE))
+        (is_expression
+          (identifier)
+          (NULL))
+        (is_expression
+          (identifier)
+          (FALSE))))))
+
+================================================================================
+SELECT field
+================================================================================
+
+SELECT foo.bar FROM a;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (identifier)))
+    (from_clause
+      (identifier))))
+
+================================================================================
+SELECT statement with comparison expression and is expression
+================================================================================
+
+SELECT 1 < 2 IS TRUE;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (is_expression
+          (comparison_operator
+            (number)
+            (number))
+          (TRUE))))))
+
+================================================================================
+SELECT expression with function
+================================================================================
+
+SELECT foo(bar, baz) < 10;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (comparison_operator
+          (function_call
+            (identifier)
+            (identifier)
+            (identifier))
+          (number))))))
+
+================================================================================
+SELECT expression with function without args
+================================================================================
+
+SELECT foo();
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (function_call
+          (identifier))))))
+
+================================================================================
+SELECT comparison expression boolean
+================================================================================
+
+SELECT TRUE AND foo(1) OR FALSE AND NOT a = b.c;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (boolean_expression
+          (boolean_expression
+            (TRUE)
+            (function_call
+              (identifier)
+              (number)))
+          (boolean_expression
+            (FALSE)
+            (boolean_expression
+              (comparison_operator
+                (identifier)
+                (identifier)
+                ))))))))
+
+================================================================================
+SELECT parenthesized expression
+================================================================================
+
+SELECT (TRUE);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (TRUE)))))
+
+================================================================================
+SELECT parenthesized expression 2
+================================================================================
+
+SELECT TRUE AND (foo(1) OR FALSE);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (boolean_expression
+          (TRUE)
+          (boolean_expression
+            (function_call
+              (identifier)
+              (number))
+            (FALSE)))))))
+
+================================================================================
+SELECT string
+================================================================================
+
+SELECT 'aaaa'
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (string)))))
+
+================================================================================
+SELECT weird_string
+================================================================================
+
+SELECT '%{a.b}'
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (string)))))
+
+================================================================================
+SELECT field_access
+================================================================================
+
+SELECT foo->>'bar'
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (field_access
+          (identifier)
+          (string))))))
+
+================================================================================
+SELECT in clause
+================================================================================
+
+SELECT 1 IN (1, 2);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (in_expression
+          (number)
+          (tuple
+            (number)
+            (number)))))))
+
+================================================================================
+Comment
+================================================================================
+
+-- Smile and wave
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment))
+
+================================================================================
+Multiline comment
+================================================================================
+
+/*
+Smile and wave
+*/
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment))
+
+================================================================================
+SET
+================================================================================
+
+SET search_path TO information_schema;
+SET search_path TO 'test';
+SET LOCAL search_path TO 'test';
+SET SESSION search_path TO 'test';
+SET SESSION search_path = 'test';
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (set_statement
+    (identifier)
+    (identifier))
+  (set_statement
+    (identifier)
+    (string))
+  (set_statement
+    (identifier)
+    (string))
+  (set_statement
+    (identifier)
+    (string))
+  (set_statement
+    (identifier)
+    (string)))
+
+================================================================================
+SELECT asterisk expressions
+================================================================================
+
+SELECT * FROM Customers;
+SELECT a.* FROM Customers;
+SELECT COUNT(*) FROM Customers;
+SELECT COUNT(a.*) FROM Customers;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (asterisk_expression)))
+    (from_clause
+      (identifier)))
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (asterisk_expression)))
+    (from_clause
+      (identifier)))
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (function_call
+          (identifier)
+          (asterisk_expression))))
+    (from_clause
+      (identifier)))
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (function_call
+          (identifier)
+          (asterisk_expression))))
+    (from_clause
+      (identifier))))
+
+
+================================================================================
+CREATE FUNCTION
+================================================================================
+
+CREATE FUNCTION add(integer, integer) RETURNS integer
+    AS 'select $1 + $2;'
+    LANGUAGE SQL;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (create_function_statement
+    (identifier)
+    (create_function_parameters
+      (create_function_parameter
+        (type
+          (identifier)))
+      (create_function_parameter
+        (type
+          (identifier))))
+    (type
+      (identifier))
+    (function_body
+      (select_statement
+        (select_clause
+          (select_clause_body
+            (binary_expression
+              (argument_reference)
+              (argument_reference))))))
+    (language)))
+
+================================================================================
+CREATE OR REPLACE FUNCTION
+================================================================================
+
+CREATE OR REPLACE FUNCTION add(integer, integer) RETURNS integer
+    AS 'select $1 + $2;'
+    LANGUAGE SQL;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (create_function_statement
+    (identifier)
+    (create_function_parameters
+      (create_function_parameter
+        (type
+          (identifier)))
+      (create_function_parameter
+        (type
+          (identifier))))
+    (type
+      (identifier))
+    (function_body
+      (select_statement
+        (select_clause
+          (select_clause_body
+            (binary_expression
+              (argument_reference)
+              (argument_reference))))))
+    (language)))
+
+================================================================================
+CREATE FUNCTION hints
+================================================================================
+
+CREATE FUNCTION foo(int) RETURNS integer
+    AS 'select 1'
+    LANGUAGE SQL STRICT IMMUTABLE PARALLEL SAFE;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (create_function_statement
+    (identifier)
+    (create_function_parameters
+      (create_function_parameter
+        (type
+          (identifier))))
+    (type
+      (identifier))
+    (function_body
+      (select_statement
+        (select_clause
+          (select_clause_body
+            (number)))))
+    (language)
+    (null_hint)
+    (optimizer_hint)
+    (parallel_hint)
+    (parallel_hint)))
+
+================================================================================
+CREATE FUNCTION argmode
+================================================================================
+
+CREATE FUNCTION add(IN int, OUT int, INOUT int, VARIADIC int) RETURNS int
+    AS 'select col2 from table where col1 = $1;'
+    LANGUAGE SQL;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (create_function_statement
+    (identifier)
+    (create_function_parameters
+      (create_function_parameter
+        (type
+          (identifier)))
+      (create_function_parameter
+        (type
+          (identifier)))
+      (create_function_parameter
+        (type
+          (identifier)))
+      (create_function_parameter
+        (type
+          (identifier))))
+    (type
+      (identifier))
+    (function_body
+      (select_statement
+        (select_clause
+          (select_clause_body
+            (identifier)))
+        (from_clause
+          (identifier))
+        (where_clause
+          (comparison_operator
+            (identifier)
+            (argument_reference)))))
+    (language)))
+
+================================================================================
+CREATE FUNCTION returns setof
+================================================================================
+
+CREATE FUNCTION add(text) RETURNS SETOF int
+    AS 'select col2 from table where col1 = $1;'
+    LANGUAGE SQL;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (create_function_statement
+    (identifier)
+    (create_function_parameters
+      (create_function_parameter
+        (type
+          (identifier))))
+    (setof
+      (type
+        (identifier)))
+    (function_body
+      (select_statement
+        (select_clause
+          (select_clause_body
+            (identifier)))
+        (from_clause
+          (identifier))
+        (where_clause
+          (comparison_operator
+            (identifier)
+            (argument_reference)))))
+    (language)))
+
+
+================================================================================
+CREATE FUNCTION Language in first pos
+================================================================================
+
+CREATE FUNCTION add(integer) RETURNS integer LANGUAGE SQL AS 'select $1';
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (create_function_statement
+    (identifier)
+    (create_function_parameters
+      (create_function_parameter
+        (type
+          (identifier))))
+    (type
+      (identifier))
+    (language)
+    (function_body
+      (select_statement
+        (select_clause
+          (select_clause_body
+            (argument_reference)))))))
+
+================================================================================
+CREATE FUNCTION with optimizer hint
+================================================================================
+
+CREATE FUNCTION add(integer) RETURNS integer STABLE LANGUAGE SQL AS 'select $1';
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (create_function_statement
+    (identifier)
+    (create_function_parameters
+      (create_function_parameter
+        (type
+          (identifier))))
+    (type
+      (identifier))
+    (optimizer_hint)
+    (language)
+    (function_body
+      (select_statement
+        (select_clause
+          (select_clause_body
+            (argument_reference)))))))
+
+================================================================================
+CREATE FUNCTION with constrained args
+================================================================================
+
+CREATE FUNCTION add(integer NOT NULL) RETURNS integer STABLE LANGUAGE SQL AS 'select $1';
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (create_function_statement
+    (identifier)
+    (create_function_parameters
+      (create_function_parameter
+        (constrained_type
+          (type
+            (identifier))
+          (null_constraint
+            (NULL)))))
+    (type
+      (identifier))
+    (optimizer_hint)
+    (language)
+    (function_body
+      (select_statement
+        (select_clause
+          (select_clause_body
+            (argument_reference)))))))
+
+================================================================================
+CREATE FUNCTION lowercase
+================================================================================
+
+create function add(integer) returns integer language sql as 'select $1';
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (create_function_statement
+    (identifier)
+    (create_function_parameters
+      (create_function_parameter
+        (type
+          (identifier))))
+    (type
+      (identifier))
+    (language)
+    (function_body
+      (select_statement
+        (select_clause
+          (select_clause_body
+            (argument_reference)))))))
+
+================================================================================
+CREATE FUNCTION highlight function body
+================================================================================
+
+create function add(integer) returns integer language sql as 'select a, b';
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (create_function_statement
+    (identifier)
+    (create_function_parameters
+      (create_function_parameter
+        (type
+          (identifier))))
+    (type
+      (identifier))
+    (language)
+    (function_body
+      (select_statement
+        (select_clause
+          (select_clause_body
+            (identifier)
+            (identifier)))))))
+
+================================================================================
+CREATE SCHEMA schema
+================================================================================
+
+CREATE SCHEMA information_schema;
+CREATE SCHEMA IF NOT EXISTS information_schema;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (create_schema_statement
+    (identifier))
+  (create_schema_statement
+    (identifier)))
+
+

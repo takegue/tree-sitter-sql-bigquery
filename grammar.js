@@ -52,7 +52,7 @@ function sep2(rule, separator) {
   return seq(rule, repeat1(seq(separator, rule)));
 }
 
-const unquoted_identifier = $ => /[_a-zA-Z][a-zA-Z0-9]*/;
+const unquoted_identifier = $ => /[_a-zA-Z][_a-zA-Z0-9]*/;
 const quoted_identifier = $ => /`[a-zA-Z0-9._-]+`/;
 
 module.exports = grammar({
