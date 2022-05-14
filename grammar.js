@@ -195,8 +195,6 @@ module.exports = grammar({
       ),
     auto_increment_constraint: (_) => kw("AUTO_INCREMENT"),
     direction_constraint: (_) => choice(kw("ASC"), kw("DESC")),
-    time_zone_constraint: (_) =>
-      seq(choice(kw("WITH"), kw("WITHOUT")), kw("TIME ZONE")),
     named_constraint: ($) => seq("CONSTRAINT", $.identifier),
     column_default: ($) =>
       seq(
@@ -275,8 +273,7 @@ module.exports = grammar({
     select_clause_body: ($) => prec.left(commaSep1($._aliasable_expression)),
     select_clause: ($) =>
       prec.left(seq(kw("SELECT"), optional($.select_clause_body))),
-    cte_clause: ($) =>
-      seq(
+    cte_clause: ($) => seq(
         kw("WITH"),
         commaSep1(seq($.identifier, kw("AS"), $.select_clause_body)),
       ),
@@ -360,6 +357,17 @@ module.exports = grammar({
         optional(field("arguments", commaSep1($._expression))),
         ")",
       ),
+    unnest_operator: $ => choice(
+        seq(kw("UNNEST"), "(", $.array, ")"),
+        seq(kw("UNNEST"), "(", $._identifier, ")"),
+        seq(kw("UNNEST"), "(", $.function_call, ")"),
+    ),
+    unnest_clause: ($) => prec.right(50, seq(
+      $.unnest_operator
+      , optional(seq(kw("AS"), $.identifier))
+      , optional($.unnest_withoffset)
+    )),
+    unnest_withoffset: $ => prec.left(2, seq(kw("WITH OFFSET"), optional(seq(kw("AS"), $._identifier)))),
     comparison_operator: ($) =>
       prec.left(
         6,
@@ -443,20 +451,26 @@ module.exports = grammar({
       ),
     array: ($) =>
       seq(
-        optional(choice(
+        optional(seq(
           kw("ARRAY"),
-          seq(kw("ARRAY"), /<\w+>/),
+          optional(seq("<", choice($._type_struct, $._unquoted_identifier), ">")),
         )),
         "[",
         optional(commaSep1($._literal)),
         "]",
       ),
+    _type_struct: ($) => seq(
+      kw("STRUCT"),
+      optional(seq("<", commaSep1(
+          seq(
+            optional(/[a-zA-Z0-9]+/),
+            choice(/[a-zA-Z0-9]+/, $._type_struct)
+          )
+        ), ">"))
+    ),
     struct: ($) =>
       seq(
-        optional(choice(
-          kw("STRUCT"),
-          seq(kw("STRUCT"), /<[^>]+>/),
-        )),
+        optional($._type_struct),
         "(",
         commaSep1($._aliasable_expression),
         ")",
@@ -522,6 +536,7 @@ module.exports = grammar({
           $.asterisk_expression,
           $.identifier,
           $.comparison_operator,
+          $.unnest_clause,
           $.in_expression,
           $.is_expression,
           $.boolean_expression,
