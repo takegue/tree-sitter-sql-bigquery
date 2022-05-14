@@ -575,30 +575,40 @@ SELECT 1 IN (1, 2);
             (number)
             (number)))))))
 
-================================================================================
-Comment
-================================================================================
 
--- Smile and wave
+==================
+Can parse subquery
+==================
 
---------------------------------------------------------------------------------
+SELECT id
+FROM foo
+WHERE id < (
+  SELECT id
+  FROM bar
+  LIMIT 1 OFFSET 0
+);
 
-(source_file
-  (comment))
-
-================================================================================
-Multiline comment
-================================================================================
-
-/*
-Smile and wave
-*/
-
---------------------------------------------------------------------------------
+---
 
 (source_file
-  (comment))
-
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (identifier)))
+    (from_clause
+      (identifier))
+    (where_clause
+      (comparison_operator
+        (identifier)
+        (select_subexpression
+          (select_statement
+            (select_clause
+              (select_clause_body
+                (identifier)))
+            (from_clause
+              (identifier))
+            (limit_clause))
+            )))))
 
 ================================================================================
 SELECT asterisk expressions
@@ -642,3 +652,64 @@ SELECT COUNT(a.*) FROM Customers;
       (identifier))))
 
  
+================================================================================
+ALL SYNTAX INCLUDED SQL EXAMPLE
+================================================================================
+
+with cte1 as (
+  select 
+    1 as literal
+    , hoge as a
+  from unnest(generated_array(1, 10)) as a
+  left join unnest([struct(
+    a as hoge
+  )])
+)
+, cte2 as (
+  select all as struct
+    1 as literal
+    , hoge as a
+  from unnest(generated_array(1, 10)) as a
+)
+, cte3 as (
+  select distinct  as value
+    1 as literal
+    , hoge as a
+  from unnest(generated_array(1, 10)) as a
+)
+, cte_unioned as (
+  select * from cte2
+  union all select * from cte3
+  inteersect distinct select * from cte3
+  except distinct select * from cte3
+)
+
+SELECT id
+FROM foo
+WHERE id < (
+  SELECT id
+  FROM bar
+  LIMIT 1 OFFSET 0
+);
+
+---
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (identifier)))
+    (from_clause
+      (identifier))
+    (where_clause
+      (comparison_operator
+        (identifier)
+        (select_subexpression
+          (select_statement
+            (select_clause
+              (select_clause_body
+                (identifier)))
+            (from_clause
+              (identifier))
+            (limit_clause))
+            )))))

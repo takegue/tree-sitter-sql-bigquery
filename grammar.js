@@ -51,12 +51,18 @@ function sep2(rule, separator) {
   return seq(rule, repeat1(seq(separator, rule)));
 }
 
-const unquoted_identifier = ($) => /[_a-zA-Z][_a-zA-Z0-9]*/;
-const quoted_identifier = ($) => /`[a-zA-Z0-9.-_]+`/;
+const unquoted_identifier = _ => /[_a-zA-Z][_a-zA-Z0-9]*/;
+const quoted_identifier = _ => /`[a-zA-Z0-9.-_]+`/;
 
 module.exports = grammar({
   name: "sql",
-  extras: ($) => [$.comment, /[\s\f\uFEFF\u2060\u200B]|\\\r?\n/],
+  extras: ($) => [
+    /\s\n/,
+    /\s/,
+    $.comment,
+    /[\s\f\uFEFF\u2060\u200B]|\\\r?\n/
+  ],
+  word: $ => $._unquoted_identifier,
   rules: {
     source_file: ($) => repeat($._statement),
 
@@ -67,9 +73,9 @@ module.exports = grammar({
           $.update_statement,
           $.set_statement,
           $.insert_statement,
-          $.create_type_statement,
-          $.create_domain_statement,
-          $.create_index_statement,
+          // $.create_type_statement,
+          // $.create_domain_statement,
+          // $.create_index_statement,
           $.create_table_statement,
           $.create_function_statement,
           $.create_schema_statement,
@@ -233,11 +239,33 @@ module.exports = grammar({
         optional(repeat($.join_clause)),
         optional($.where_clause),
         optional($.group_by_clause),
+        optional($.having_clause),
+        optional($.qualify_clause),
         optional($.order_by_clause),
+        optional($.limit_clause),
       ),
+    having_clause: ($) => seq(kw("HAVING"), $.boolean_expression),
+    qualify_clause: ($) => seq(kw("QUALIFY"), $.boolean_expression),
+    limit_clause: ($) => seq(kw("LIMIT"), $._integer, optional(seq(kw("OFFSET"), $._integer))),
     group_by_clause_body: ($) => commaSep1($._expression),
-    group_by_clause: ($) => seq(kw("GROUP BY"), $.group_by_clause_body),
-    order_by_clause_body: ($) => commaSep1($._expression),
+    group_by_clause: ($) => seq(
+      kw("GROUP BY"),
+      choice(
+        $.group_by_clause_body
+        , seq(kw("ROLLUP"), "(", $.group_by_clause_body, ")")
+      )
+    ),
+    window_specification: ($) => seq(
+      $.identifier,
+      optional(kw("PARTITION BY")),
+      optional($.order_by_clause)
+    ),
+    named_window_expression: ($) => seq(
+      $.identifier, kw("AS"), 
+      choice($.identifier, $.window_specification)
+    ),
+    window_clause: ($) => seq(kw("WINDOW"), $.named_window_expression),
+    order_by_clause_body: ($) => commaSep1(seq($._expression, optional(choice(kw("ASC"), kw("DESC"))))),
     order_by_clause: ($) => seq(kw("ORDER BY"), $.order_by_clause_body),
     where_clause: ($) => seq(kw("WHERE"), $._expression),
     _aliased_expression: ($) =>
@@ -470,7 +498,7 @@ module.exports = grammar({
     // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890
     comment: ($) =>
       token(
-        choice(seq("--", /.*/), seq("/*", /[^*]*\*+([^/*][^*]*\*+)*/, "/")),
+        choice(seq("#", /.*/), seq("--", /.*/), seq("/*", /[^*]*\*+([^/*][^*]*\*+)*/, "/")),
       ),
     array_element_access: ($) =>
       seq(choice($.identifier, $.argument_reference), "[", $._expression, "]"),
