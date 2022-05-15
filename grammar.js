@@ -39,14 +39,36 @@ module.exports = grammar({
     keyword_if_not_exists: _ => kw('IF NOT EXISTS'),
     keyword_temporary: _ => choice(kw('TEMP'), kw('TEMPORARY')),
     keyword_replace: _ => kw("OR REPLACE"),
+    _keyword_struct: _ => kw("STRUCT"),
+    _keyword_array: _ => kw("ARRAY"),
 
-    option_item: $ => seq($.identifier, "=", $._literal),
+    option_item: $ => seq(field("key", $.identifier), "=", field("value", $._literal)),
     option_list: $ => seq(token(kw('OPTIONS')), '(', optional(sep1($.option_item, ',')), ')'),
+
+    column_definition: $ => seq(
+      field("name", $.identifier),
+      field("type", $.column_type),
+      optional(field("option", $.option_list))
+    ),
+    column_type: $ => choice(
+      $._column_definition_type_array,
+      $._unquoted_identifier,
+      $._column_definition_type_struct,
+    ),
+    _column_definition_type_array: $ => seq(
+      $._keyword_array, "<", choice(
+        $._unquoted_identifier,
+        $._column_definition_type_struct,
+      ), ">",
+    ),
+    _column_definition_type_struct: ($) => seq(
+      $._keyword_struct, "<", commaSep1($.column_definition, ','), ">"
+    ),
 
     create_schema_statement: $ => seq(
       kw("CREATE SCHEMA"),
       optional($.keyword_if_not_exists),
-      $.identifier,
+      field("name", $.identifier),
       optional($.option_list),
     ),
     create_table_statement: ($) => seq(
@@ -55,20 +77,18 @@ module.exports = grammar({
       optional($.keyword_temporary),
       kw("TABLE"),
       optional($.keyword_if_not_exists),
-      $.identifier,
+      field("name", $.identifier),
       optional($.create_table_parameters),
       optional($.table_partition_clause),
       optional($.table_cluster_clause),
       optional($.option_list),
       optional(seq(kw("AS"), $.select_statement)),
     ),
+    create_table_parameters: ($) => seq("(", commaSep1($.column_definition), ")"),
+
     partition_expression: $ => choice(
       kw("_PARTITIONDATE"),
-      seq(kw("DATE"), "(", 
-        choice(
-          kw("_PARTITIONTIME"),
-          $.identifier
-        ), ")"),
+      seq(kw("DATE"), "(", choice(kw("_PARTITIONTIME"), $.identifier), ")"),
       $.identifier,
       seq(choice(kw("DATETIME_TRUNC"), kw("TIMESTAMP_TRUNC"), kw("DATE_TRUNC")
         ), "(", $.identifier, choice(kw("DAY"),kw("HOUR"), kw("HOUR"), kw("MONTH"), kw("YEAR")), ")"),
@@ -123,31 +143,7 @@ module.exports = grammar({
         choice("=", kw("TO")),
         choice($._expression, kw("DEFAULT")),
       ),
-    create_table_column_parameter: ($) =>
-      seq(
-        field("name", $.identifier),
-        field("type", $._type),
-        repeat(
-          choice(
-            // $.column_default,
-            // $.check_constraint,
-            // $.references_constraint,
-            // $.unique_constraint,
-            // $.null_constraint,
-            // $.named_constraint,
-            // $.direction_constraint,
-            // $.auto_increment_constraint,
-            // $.time_zone_constraint,
-          ),
-        ),
-      ),
     _direction_keywords: (_) => choice(kw("ASC"), kw("DESC")),
-    create_table_parameters: ($) =>
-      seq(
-        "(",
-        commaSep1(choice($.create_table_column_parameter)),
-        ")",
-      ),
     using_clause: ($) => seq(kw("USING"), field("type", $.identifier)),
     index_table_parameters: ($) =>
       seq("(", commaSep1(choice($._expression, $.ordered_expression)), ")"),
@@ -373,16 +369,6 @@ module.exports = grammar({
         $.NULL,
         $.number,
       ),
-    array: ($) =>
-      seq(
-        optional(seq(
-          kw("ARRAY"),
-          optional(seq("<", choice($._type_struct, $._unquoted_identifier), ">")),
-        )),
-        "[",
-        optional(commaSep1($._literal)),
-        "]",
-      ),
     _type_struct: ($) => seq(
       kw("STRUCT"),
       optional(seq("<", commaSep1(
@@ -392,6 +378,17 @@ module.exports = grammar({
           )
         ), ">"))
     ),
+    _type_array: $ => seq(
+        kw("ARRAY"),
+        optional(seq("<", choice($._type_struct, $._unquoted_identifier), ">")),
+    ),
+    array: ($) =>
+      seq(
+        optional($._type_array),
+        "[",
+        optional(commaSep1($._literal)),
+        "]",
+      ),
     struct: ($) =>
       seq(
         optional($._type_struct),
