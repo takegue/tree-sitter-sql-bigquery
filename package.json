@@ -23,7 +23,10 @@
   "author": "Maksim Novikov <mnovikov.work@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "nan": "^2.14.2"
+    "graphviz": "^0.0.9",
+    "nan": "^2.14.2",
+    "nopt": "^5.0.0",
+    "tree-sitter": "^0.20.0"
   },
   "devDependencies": {
     "prettier": "^2.4.1",

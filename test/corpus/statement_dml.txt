@@ -1,305 +1,144 @@
 ================================================================================
-CREATE SATETMENT: CREATE TABLE
+DML: SCHEMA with options
 ================================================================================
 
-CREATE TABLE my_table (col1 INT, col2 INT)
+CREATE SCHEMA mydataset OPTIONS();
+CREATE SCHEMA mydataset
+OPTIONS(
+  location="hoge",
+  labels=[("label1","value1"),("label2","value2")]
+);
+
+--------------------------------------------------------------------------------
+
+(source_file 
+    (create_schema_statement
+        (identifier)
+        (option_list))
+    (create_schema_statement
+        (identifier)
+        (option_list 
+            (option_item (identifier) (string))
+            (option_item (identifier) (array
+              (struct (string) (string))
+              (struct (string) (string))))))
+    )
+
+================================================================================
+DML: SCHEMA IF NOT EXISTS
+================================================================================
+
+CREATE SCHEMA IF NOT EXISTS mydataset 
+
+--------------------------------------------------------------------------------
+
+(source_file 
+    (create_schema_statement 
+        (keyword_if_not_exists) 
+        (identifier)))
+
+================================================================================
+DML: TABLE 
+================================================================================
+
+CREATE TABLE my_table (col1 INT64);
+CREATE OR REPLACE TABLE my_table (col1 INT64);
+CREATE TABLE IF NOT EXISTS my_table (col1 INT64);
+CREATE TEMPORARY TABLE IF NOT EXISTS my_table (col1 INT64);
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (create_table_statement
+ (create_table_statement
+  (identifier)
+  (create_table_parameters
+   (create_table_column_parameter
+    (identifier)
+    (type
+     (identifier)))))
+ (create_table_statement
+  (keyword_replace)
+  (identifier)
+  (create_table_parameters
+   (create_table_column_parameter
+    (identifier)
+    (type
+     (identifier)))))
+ (create_table_statement
+  (keyword_if_not_exists)
+  (identifier)
+  (create_table_parameters
+   (create_table_column_parameter
+    (identifier)
+    (type
+     (identifier)))))
+ (create_table_statement
+    (keyword_temporary)
+    (keyword_if_not_exists)
     (identifier)
     (create_table_parameters
-      (create_table_column_parameter
+        (create_table_column_parameter
         (identifier)
         (type
-          (identifier)))
+        (identifier)))))
+  )
+
+
+
+================================================================================
+DML: TABLE with table options
+================================================================================
+
+CREATE TABLE my_table (timestamp TIMESTAMP)
+PARTITION BY DATE(timestamp);
+
+CREATE TABLE my_table (col1 INT, col2 INT)
+CLUSTER BY col1, col2;
+
+CREATE TABLE my_table (col1 INT)
+OPTIONS(description="text description");
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (create_table_statement
+  (identifier)
+  (create_table_parameters
+   (create_table_column_parameter
+    (identifier)
+    (type
+     (identifier))))
+  (table_partition_clause
+   (partition_expression
+    (identifier))))
+ (create_table_statement
+  (identifier)
+  (create_table_parameters
+   (create_table_column_parameter
+    (identifier)
+    (type
+     (identifier)))
+   (create_table_column_parameter
+    (identifier)
+    (type
+     (identifier))))
+  (table_cluster_clause
+   (identifier)
+   (identifier)))
+    (create_table_statement
+     (identifier)
+     (create_table_parameters
       (create_table_column_parameter
-        (identifier)
-        (type
-          (identifier))))))
-
-================================================================================
-CREATE FUNCTION
-================================================================================
-
-CREATE FUNCTION add(integer, integer) RETURNS integer
-    AS 'select $1 + $2;'
-    LANGUAGE SQL;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (create_function_statement
-    (identifier)
-    (create_function_parameters
-      (create_function_parameter
-        (type
-          (identifier)))
-      (create_function_parameter
-        (type
-          (identifier))))
-    (type
-      (identifier))
-    (function_body
-      (select_statement
-        (select_clause
-          (select_clause_body
-            (binary_expression
-              (argument_reference)
-              (argument_reference))))))
-    (language)))
-
-================================================================================
-CREATE OR REPLACE FUNCTION
-================================================================================
-
-CREATE OR REPLACE FUNCTION add(integer, integer) RETURNS integer
-    AS 'select $1 + $2;'
-    LANGUAGE SQL;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (create_function_statement
-    (identifier)
-    (create_function_parameters
-      (create_function_parameter
-        (type
-          (identifier)))
-      (create_function_parameter
-        (type
-          (identifier))))
-    (type
-      (identifier))
-    (function_body
-      (select_statement
-        (select_clause
-          (select_clause_body
-            (binary_expression
-              (argument_reference)
-              (argument_reference))))))
-    (language)))
-
-================================================================================
-CREATE FUNCTION hints
-================================================================================
-
-CREATE FUNCTION foo(int) RETURNS integer
-    AS 'select 1'
-    LANGUAGE SQL STRICT IMMUTABLE PARALLEL SAFE;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (create_function_statement
-    (identifier)
-    (create_function_parameters
-      (create_function_parameter
-        (type
-          (identifier))))
-    (type
-      (identifier))
-    (function_body
-      (select_statement
-        (select_clause
-          (select_clause_body
-            (number)))))
-    (language)
-    (null_hint)
-    (optimizer_hint)
-    (parallel_hint)
-    (parallel_hint)))
-
-================================================================================
-CREATE FUNCTION argmode
-================================================================================
-
-CREATE FUNCTION add(IN int, OUT int, INOUT int, VARIADIC int) RETURNS int
-    AS 'select col2 from table where col1 = $1;'
-    LANGUAGE SQL;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (create_function_statement
-    (identifier)
-    (create_function_parameters
-      (create_function_parameter
-        (type
-          (identifier)))
-      (create_function_parameter
-        (type
-          (identifier)))
-      (create_function_parameter
-        (type
-          (identifier)))
-      (create_function_parameter
-        (type
-          (identifier))))
-    (type
-      (identifier))
-    (function_body
-      (select_statement
-        (select_clause
-          (select_clause_body
-            (identifier)))
-        (from_clause
-          (identifier))
-        (where_clause
-          (comparison_operator
-            (identifier)
-            (argument_reference)))))
-    (language)))
-
-================================================================================
-CREATE FUNCTION returns setof
-================================================================================
-
-CREATE FUNCTION add(text) RETURNS SETOF int
-    AS 'select col2 from table where col1 = $1;'
-    LANGUAGE SQL;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (create_function_statement
-    (identifier)
-    (create_function_parameters
-      (create_function_parameter
-        (type
-          (identifier))))
-    (setof
-      (type
-        (identifier)))
-    (function_body
-      (select_statement
-        (select_clause
-          (select_clause_body
-            (identifier)))
-        (from_clause
-          (identifier))
-        (where_clause
-          (comparison_operator
-            (identifier)
-            (argument_reference)))))
-    (language)))
+       (identifier)
+       (type
+        (identifier))))
+     (option_list
+      (option_item
+       (identifier)
+       (string)))))
 
 
 ================================================================================
-CREATE FUNCTION Language in first pos
+DML: TABLE with table options
 ================================================================================
-
-CREATE FUNCTION add(integer) RETURNS integer LANGUAGE SQL AS 'select $1';
-
---------------------------------------------------------------------------------
-
-(source_file
-  (create_function_statement
-    (identifier)
-    (create_function_parameters
-      (create_function_parameter
-        (type
-          (identifier))))
-    (type
-      (identifier))
-    (language)
-    (function_body
-      (select_statement
-        (select_clause
-          (select_clause_body
-            (argument_reference)))))))
-
-================================================================================
-CREATE FUNCTION with optimizer hint
-================================================================================
-
-CREATE FUNCTION add(integer) RETURNS integer STABLE LANGUAGE SQL AS 'select $1';
-
---------------------------------------------------------------------------------
-
-(source_file
-  (create_function_statement
-    (identifier)
-    (create_function_parameters
-      (create_function_parameter
-        (type
-          (identifier))))
-    (type
-      (identifier))
-    (optimizer_hint)
-    (language)
-    (function_body
-      (select_statement
-        (select_clause
-          (select_clause_body
-            (argument_reference)))))))
-
-================================================================================
-CREATE FUNCTION with constrained args
-================================================================================
-
-CREATE FUNCTION add(integer NOT NULL) RETURNS integer STABLE LANGUAGE SQL AS 'select $1';
-
---------------------------------------------------------------------------------
-
-(source_file
-  (create_function_statement
-    (identifier)
-    (create_function_parameters
-      (create_function_parameter
-        (constrained_type
-          (type
-            (identifier))
-          (null_constraint
-            (NULL)))))
-    (type
-      (identifier))
-    (optimizer_hint)
-    (language)
-    (function_body
-      (select_statement
-        (select_clause
-          (select_clause_body
-            (argument_reference)))))))
-
-================================================================================
-CREATE FUNCTION lowercase
-================================================================================
-
-create function add(integer) returns integer language sql as 'select $1';
-
---------------------------------------------------------------------------------
-
-(source_file
-  (create_function_statement
-    (identifier)
-    (create_function_parameters
-      (create_function_parameter
-        (type
-          (identifier))))
-    (type
-      (identifier))
-    (language)
-    (function_body
-      (select_statement
-        (select_clause
-          (select_clause_body
-            (argument_reference)))))))
-
-================================================================================
-CREATE SCHEMA schema
-================================================================================
-
-CREATE SCHEMA information_schema;
-CREATE SCHEMA IF NOT EXISTS information_schema;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (create_schema_statement
-    (identifier))
-  (create_schema_statement
-    (identifier)))
-
 

@@ -1,58 +1,16 @@
 /* eslint-disable no-unused-vars */
 
-// 1Generate case insentitive match for SQL keyword
-// In case of multiple word keyword provide a seq matcher
-function kw(keyword) {
-  if (keyword.toUpperCase() != keyword) {
-    throw new Error(`Expected upper case keyword got ${keyword}`);
-  }
-  const words = keyword.split(" ");
-  const regExps = words.map(createCaseInsensitiveRegex);
+const 
+  multiplicative_operators = ['*', '/', '%', '<<', '>>', '&', '&^', kw('AND'), kw('OR')],
+  comparative_operators = ["<", "<=", "<>", "=", ">", ">=", '!='],
+  additive_operators = ['+', '-', '|', '||'],
+  unary_operators = ['~', '+', '-', kw('NOT')],
 
-  if (regExps.length == 1) {
-    return alias(regExps[0], keyword);
-  } else {
-    return alias(seq(...regExps), keyword.replace(/ /g, "_"));
-  }
-}
+  hexDigit = /[0-9a-fA-F]/
 
-function createOrReplace(item) {
-  if (item.toUpperCase() != item) {
-    throw new Error(`Expected upper case item got ${item}`);
-  }
-  return alias(
-    seq(
-      createCaseInsensitiveRegex("CREATE"),
-      field("replace", optional(createCaseInsensitiveRegex("OR REPLACE"))),
-      createCaseInsensitiveRegex(item),
-    ),
-    `CREATE_OR_REPLACE_${item}`,
-  );
-}
-
-function createCaseInsensitiveRegex(word) {
-  return new RegExp(
-    word
-      .split("")
-      .map((letter) => `[${letter.toLowerCase()}${letter.toUpperCase()}]`)
-      .join(""),
-  );
-}
-
-function commaSep1(rule) {
-  return sep1(rule, ",");
-}
-
-function sep1(rule, separator) {
-  return seq(rule, repeat(seq(separator, rule)));
-}
-
-function sep2(rule, separator) {
-  return seq(rule, repeat1(seq(separator, rule)));
-}
-
-const unquoted_identifier = _ => /[_a-zA-Z][_a-zA-Z0-9]*/;
-const quoted_identifier = _ => /`[a-zA-Z0-9._-]+`/;
+  unquoted_identifier = _ => /[_a-zA-Z][_a-zA-Z0-9]*/,
+  quoted_identifier = _ => /`[a-zA-Z0-9._-]+`/
+;
 
 module.exports = grammar({
   name: "sql",
@@ -65,60 +23,78 @@ module.exports = grammar({
   word: $ => $._unquoted_identifier,
   rules: {
     source_file: ($) => repeat($._statement),
-
     _statement: ($) =>
       seq(
         choice(
+          $.create_schema_statement,
+          $.create_table_statement,
           $.select_statement,
           $.update_statement,
           $.set_statement,
           $.insert_statement,
-          // $.create_type_statement,
-          // $.create_domain_statement,
-          // $.create_index_statement,
-          $.create_table_statement,
-          $.create_function_statement,
-          $.create_schema_statement,
+          // $.create_function_statement,
         ),
         optional(";"),
       ),
+    keyword_if_not_exists: _ => kw('IF NOT EXISTS'),
+    keyword_temporary: _ => choice(kw('TEMP'), kw('TEMPORARY')),
+    keyword_replace: _ => kw("OR REPLACE"),
 
-    create_function_statement: ($) =>
-      seq(
-        createOrReplace("FUNCTION"),
-        $.identifier,
-        $.create_function_parameters,
-        kw("RETURNS"),
-        $._create_function_return_type,
-        repeat(
-          choice(
-            $._function_language,
-            $.function_body,
-            $.optimizer_hint,
-            $.parallel_hint,
-            $.null_hint,
-          ),
-        ),
-      ),
-    optimizer_hint: ($) =>
-      choice(kw("VOLATILE"), kw("IMMUTABLE"), kw("STABLE")),
-    parallel_hint: ($) =>
-      choice(
-        kw("PARALLEL"),
-        choice(kw("SAFE"), kw("UNSAFE"), kw("RESTRICTED")),
-      ),
-    null_hint: ($) =>
-      choice(
-        kw("CALLED ON NULL INPUT"),
-        kw("RETURNS NULL ON NULL INPUT"),
-        kw("STRICT"),
-      ),
+    option_item: $ => seq($.identifier, "=", $._literal),
+    option_list: $ => seq(token(kw('OPTIONS')), '(', optional(sep1($.option_item, ',')), ')'),
+
+    create_schema_statement: $ => seq(
+      kw("CREATE SCHEMA"),
+      optional($.keyword_if_not_exists),
+      $.identifier,
+      optional($.option_list),
+    ),
+    create_table_statement: ($) => seq(
+      kw("CREATE"),
+      optional($.keyword_replace),
+      optional($.keyword_temporary),
+      kw("TABLE"),
+      optional($.keyword_if_not_exists),
+      $.identifier,
+      optional($.create_table_parameters),
+      optional($.table_partition_clause),
+      optional($.table_cluster_clause),
+      optional($.option_list),
+      optional(seq(kw("AS"), $.select_statement)),
+    ),
+    partition_expression: $ => choice(
+      kw("_PARTITIONDATE"),
+      seq(kw("DATE"), "(", 
+        choice(
+          kw("_PARTITIONTIME"),
+          $.identifier
+        ), ")"),
+      $.identifier,
+      seq(choice(kw("DATETIME_TRUNC"), kw("TIMESTAMP_TRUNC"), kw("DATE_TRUNC")
+        ), "(", $.identifier, choice(kw("DAY"),kw("HOUR"), kw("HOUR"), kw("MONTH"), kw("YEAR")), ")"),
+      seq(kw("RANGE_BUCKET"), $.identifier, kw("GENERATE_ARRAY"), "(", commaSep1($._expression), ")")
+    ),
+    table_partition_clause: $ => seq(kw('PARTITION BY'), $.partition_expression),
+    table_cluster_clause: $ => seq(kw('CLUSTER BY'), sep1($._expression, ',')),
+    // create_function_statement: ($) =>
+    //   seq(
+    //     createOrReplace("FUNCTION"),
+    //     $.identifier,
+    //     $.create_function_parameters,
+    //     optional(kw("RETURNS")),
+    //     $._create_function_return_type,
+    //     repeat(
+    //       choice(
+    //         $._function_language,
+    //         $.function_body,
+    //         $.optimizer_hint,
+    //         $.parallel_hint,
+    //         $.null_hint,
+    //       ),
+    //     ),
+    //   ),
     _function_language: ($) =>
       seq(kw("LANGUAGE"), alias($._unquoted_identifier, $.language)),
-    _create_function_return_type: ($) =>
-      choice($._type, $.setof, $.constrained_type),
-    setof: ($) => seq(kw("SETOF"), choice($._type, $.constrained_type)),
-    constrained_type: ($) => seq(seq($._type, $.null_constraint)),
     create_function_parameter: ($) =>
       seq(
         field(
@@ -126,7 +102,7 @@ module.exports = grammar({
           optional(choice(kw("IN"), kw("OUT"), kw("INOUT"), kw("VARIADIC"))),
         ),
         optional($.identifier),
-        choice($._type, $.constrained_type),
+        choice($._type),
         optional(seq("=", alias($._expression, $.default))),
       ),
     create_function_parameters: ($) =>
@@ -139,8 +115,6 @@ module.exports = grammar({
           seq("'", $.select_statement, optional(";"), "'"),
         ),
       ),
-    create_schema_statement: ($) =>
-      seq(kw("CREATE SCHEMA"), optional(kw("IF NOT EXISTS")), $.identifier),
     set_statement: ($) =>
       seq(
         kw("SET"),
@@ -149,39 +123,13 @@ module.exports = grammar({
         choice("=", kw("TO")),
         choice($._expression, kw("DEFAULT")),
       ),
-    create_domain_statement: ($) =>
-      seq(
-        kw("CREATE DOMAIN"),
-        $.identifier,
-        optional(
-          seq(
-            kw("AS"),
-            $._type,
-            repeat(choice($.null_constraint, $.check_constraint)),
-          ),
-        ),
-      ),
-    create_type_statement: ($) =>
-      seq(kw("CREATE TYPE"), $.identifier, kw("AS"), $.parameters),
-    create_index_statement: ($) =>
-      seq(
-        kw("CREATE"),
-        optional($.unique_constraint),
-        kw("INDEX"),
-        field("name", $.identifier),
-        kw("ON"),
-        field("table", $.identifier),
-        optional($.using_clause),
-        $.index_table_parameters,
-        optional($.where_clause),
-      ),
     create_table_column_parameter: ($) =>
       seq(
         field("name", $.identifier),
         field("type", $._type),
         repeat(
           choice(
-            $.column_default,
+            // $.column_default,
             // $.check_constraint,
             // $.references_constraint,
             // $.unique_constraint,
@@ -194,33 +142,11 @@ module.exports = grammar({
         ),
       ),
     _direction_keywords: (_) => choice(kw("ASC"), kw("DESC")),
-    column_default: ($) =>
-      seq(
-        kw("DEFAULT"),
-        // TODO: this should be specific variable-free expression https://www.postgresql.org/docs/9.1/sql-createtable.html
-        // TODO: simple expression to use for check and default
-        choice(
-          choice(
-            $._parenthesized_expression,
-            $.string,
-            $.identifier,
-            $.function_call,
-          ),
-          $.type_cast,
-        ),
-      ),
     create_table_parameters: ($) =>
       seq(
         "(",
         commaSep1(choice($.create_table_column_parameter)),
         ")",
-      ),
-    create_table_statement: ($) =>
-      seq(
-        kw("CREATE TABLE"),
-        optional(kw("IF NOT EXISTS")),
-        $.identifier,
-        $.create_table_parameters,
       ),
     using_clause: ($) => seq(kw("USING"), field("type", $.identifier)),
     index_table_parameters: ($) =>
@@ -445,7 +371,6 @@ module.exports = grammar({
         $.TRUE,
         $.FALSE,
         $.NULL,
-        $._identifier,
         $.number,
       ),
     array: ($) =>
@@ -477,17 +402,17 @@ module.exports = grammar({
     _unquoted_identifier: unquoted_identifier,
     _quoted_identifier: quoted_identifier,
     _identifier: ($) => choice($._quoted_identifier, $._unquoted_identifier),
-    _dotted_identifier: ($) => seq($._identifier, "."),
+    _dotted_identifier: ($) => seq($._identifier, token.immediate(".")),
     identifier: ($) =>
       prec.right(1, seq(repeat($._dotted_identifier), $._identifier)),
     type: ($) => seq($.identifier, optional(seq("(", $.number, ")"))),
     string: ($) =>
       alias(
         choice(
-          seq(/[bB]?[rR]?'/, field("content", /[^']*/), "'"),
-          seq(/[bB]?[rR]?"/, field("content", /[^"]*/), '"'),
-          seq(/[bB]?[rR]?'''/, field("content", /[^']+/), "'''"), // FIXME: single quote included multi-line text
-          seq(/[bB]?[rR]?"""/, field("content", /[^"]+/), '"""'), // FIXME double quote included multi-line text
+          seq(/[bB]?[rR]?'/, /[^']*/, "'"),
+          seq(/[bB]?[rR]?"/, /[^"]*/, '"'),
+          seq(/[bB]?[rR]?'''/, /[^']+/, "'''"), // FIXME: single quote included multi-line text
+          seq(/[bB]?[rR]?"""/, /[^"]+/, '"""'), // FIXME double quote included multi-line text
         ),
         "_string",
       ),
@@ -496,18 +421,6 @@ module.exports = grammar({
       seq($._expression, field("order", choice(kw("ASC"), kw("DESC")))),
     array_type: ($) => seq($._type, "[", "]"),
     _type: ($) => choice($.type, $.array_type),
-    type_cast: ($) =>
-      seq(
-        // TODO: should be moved to basic expression or something
-        choice(
-          $._parenthesized_expression,
-          $.string,
-          $.identifier,
-          $.function_call,
-        ),
-        "::",
-        field("type", $._type),
-      ),
     // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890
     comment: ($) =>
       token(
@@ -529,7 +442,6 @@ module.exports = grammar({
         10,
         choice(
           $.function_call,
-          $.string,
           $.field_access,
           $._literal,
           $.asterisk_expression,
@@ -540,7 +452,6 @@ module.exports = grammar({
           $.is_expression,
           $.boolean_expression,
           $._parenthesized_expression,
-          $.type_cast,
           $.binary_expression,
           $.array_element_access,
           $.argument_reference,
@@ -549,3 +460,55 @@ module.exports = grammar({
       ),
   },
 });
+
+// Generate case insentitive match for SQL keyword
+// In case of multiple word keyword provide a seq matcher
+function kw(keyword) {
+  if (keyword.toUpperCase() != keyword) {
+    throw new Error(`Expected upper case keyword got ${keyword}`);
+  }
+  const words = keyword.split(" ");
+  const regExps = words.map(createCaseInsensitiveRegex);
+
+  if (regExps.length == 1) {
+    return alias(regExps[0], keyword);
+  } else {
+    return alias(seq(...regExps), keyword.replace(/ /g, "_"));
+  }
+}
+
+function createOrReplace(item) {
+  if (item.toUpperCase() != item) {
+    throw new Error(`Expected upper case item got ${item}`);
+  }
+  return alias(
+    seq(
+      createCaseInsensitiveRegex("CREATE"),
+      field("replace", optional(createCaseInsensitiveRegex("OR REPLACE"))),
+      createCaseInsensitiveRegex(item),
+    ),
+    `CREATE_OR_REPLACE_${item}`,
+  );
+}
+
+function createCaseInsensitiveRegex(word) {
+  return new RegExp(
+    word
+      .split("")
+      .map((letter) => `[${letter.toLowerCase()}${letter.toUpperCase()}]`)
+      .join(""),
+  );
+}
+
+function commaSep1(rule) {
+  return sep1(rule, ",");
+}
+
+function sep1(rule, separator) {
+  return seq(rule, repeat(seq(separator, rule)));
+}
+
+function sep2(rule, separator) {
+  return seq(rule, repeat1(seq(separator, rule)));
+}
+

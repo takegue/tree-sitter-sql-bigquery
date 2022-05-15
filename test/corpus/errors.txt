@@ -1,0 +1,49 @@
+==================
+^select
+==================
+
+selections
+
+---
+
+(source_file (ERROR))
+
+==================
+^inserted_at
+==================
+
+inserted_at
+
+---
+
+(source_file (ERROR))
+
+==================
+^updated_at
+==================
+
+updated_at
+
+---
+
+(source_file (ERROR))
+
+==================
+^deleted_at
+==================
+
+deleted_at
+
+---
+
+(source_file (ERROR))
+
+==================
+^created_at
+==================
+
+created
+
+---
+
+(source_file (ERROR))

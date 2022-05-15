@@ -1,0 +1,32 @@
+==================
+One cte
+==================
+
+WITH my_cte AS (
+  SELECT one, two
+  FROM my_table
+)
+SELECT *
+FROM my_cte;
+
+---
+
+(source_file
+    (select_statement
+    (cte_clause
+        (identifier)
+        (select_clause_body
+        (select_subexpression
+            (select_statement
+            (select_clause
+                (select_clause_body
+                (identifier)
+                (identifier)))
+            (from_clause
+                (identifier))))))
+    (select_clause
+        (select_clause_body
+        (asterisk_expression)))
+    (from_clause
+        (identifier))))
+

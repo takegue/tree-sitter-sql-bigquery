@@ -22,7 +22,7 @@ select
 
 
 =======================================================
-IDENTIFIER: literals
+IDENTIFIER: String literals
 =======================================================
 
 select 
@@ -120,6 +120,7 @@ select
   ARRAY[1, 2, 3],
   ARRAY<string>['x', 'y', 'xy'],
   ARRAY<int64>[],
+  ARRAY<struct<x INT64, y STRING>>[],
   []
 
 --------------------------------------------------------------------------------
@@ -134,6 +135,7 @@ select
     (array (string) (string) (string))
     (array)
     (array)
+    (array)
     ))))
 
 =======================================================
@@ -146,7 +148,9 @@ select
   STRUCT(1 AS foo, 'abc' AS bar),
   STRUCT<INT32, INT64>(1, 2),
   STRUCT(1),
-  STRUCT<INT64>(1)
+  STRUCT<INT64>(1),
+  STRUCT<x string>(1),
+  STRUCT<x struct<INT64>>(1)
 
 --------------------------------------------------------------------------------
 
@@ -158,6 +162,8 @@ select
     (struct (number) (string))
     (struct (alias (number) (identifier)) (alias (string) (identifier)))
     (struct (number) (number))
+    (struct (number))
+    (struct (number))
     (struct (number))
     (struct (number))
     ))))
