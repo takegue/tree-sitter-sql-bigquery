@@ -52,7 +52,7 @@ function sep2(rule, separator) {
 }
 
 const unquoted_identifier = _ => /[_a-zA-Z][_a-zA-Z0-9]*/;
-const quoted_identifier = _ => /`[a-zA-Z0-9.-_]+`/;
+const quoted_identifier = _ => /`[a-zA-Z0-9._-]+`/;
 
 module.exports = grammar({
   name: "sql",
@@ -193,9 +193,7 @@ module.exports = grammar({
           ),
         ),
       ),
-    auto_increment_constraint: (_) => kw("AUTO_INCREMENT"),
-    direction_constraint: (_) => choice(kw("ASC"), kw("DESC")),
-    named_constraint: ($) => seq("CONSTRAINT", $.identifier),
+    _direction_keywords: (_) => choice(kw("ASC"), kw("DESC")),
     column_default: ($) =>
       seq(
         kw("DEFAULT"),
@@ -263,7 +261,7 @@ module.exports = grammar({
       choice($.identifier, $.window_specification)
     ),
     window_clause: ($) => seq(kw("WINDOW"), $.named_window_expression),
-    order_by_clause_body: ($) => commaSep1(seq($._expression, optional(choice(kw("ASC"), kw("DESC"))))),
+    order_by_clause_body: ($) => commaSep1(seq($._expression, optional($._direction_keywords))),
     order_by_clause: ($) => seq(kw("ORDER BY"), $.order_by_clause_body),
     where_clause: ($) => seq(kw("WHERE"), $._expression),
     _aliased_expression: ($) =>
@@ -282,6 +280,7 @@ module.exports = grammar({
       seq(
         choice(
           kw("INNER"),
+          kw("CROSS"),
           seq(
             choice(kw("LEFT"), kw("RIGHT"), kw("FULL")),
             optional(kw("OUTER")),
@@ -480,7 +479,7 @@ module.exports = grammar({
     _identifier: ($) => choice($._quoted_identifier, $._unquoted_identifier),
     _dotted_identifier: ($) => seq($._identifier, "."),
     identifier: ($) =>
-      prec.left(1, seq(repeat($._dotted_identifier), $._identifier)),
+      prec.right(1, seq(repeat($._dotted_identifier), $._identifier)),
     type: ($) => seq($.identifier, optional(seq("(", $.number, ")"))),
     string: ($) =>
       alias(
