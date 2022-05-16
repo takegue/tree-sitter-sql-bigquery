@@ -56,7 +56,6 @@ module.exports = grammar({
           $.update_statement,
           $.set_statement,
           $.insert_statement,
-          // $.create_function_statement,
         ),
         optional(";"),
       ),
@@ -67,9 +66,11 @@ module.exports = grammar({
     _keyword_array: _ => kw("ARRAY"),
     _keyword_returns: _ => kw("RETURNS"),
     _keyword_is: _ => kw("IS"),
+    _keyword_in: _ => kw("IN"),
     _keyword_not: _ => kw("NOT"),
     _keyword_and: _ => kw("AND"),
     _keyword_or: _ => kw("OR"),
+    _keyword_like: _ => kw("LIKE"),
 
     option_item: $ => seq(field("key", $.identifier), "=", field("value", $._literal)),
     option_list: $ => seq(token(kw('OPTIONS')), '(', optional(sep1($.option_item, ',')), ')'),
@@ -160,7 +161,7 @@ module.exports = grammar({
       seq(
         field(
           "argmode",
-          optional(choice(kw("IN"), kw("OUT"), kw("INOUT"), kw("VARIADIC"))),
+          optional(choice($._keyword_in, kw("OUT"), kw("INOUT"), kw("VARIADIC"))),
         ),
         optional($.identifier),
         choice($._type),
@@ -273,8 +274,6 @@ module.exports = grammar({
       seq(kw("INSERT"), kw("INTO"), $.identifier, $.values_clause),
     values_clause: ($) => seq(kw("VALUES"), "(", $.values_clause_body, ")"),
     values_clause_body: ($) => commaSep1($._expression),
-    in_expression: ($) =>
-      prec.left(1, seq($._expression, optional($._keyword_not), kw("IN"), $.tuple)),
     tuple: ($) =>
       seq(
         // TODO: maybe collapse with function arguments, but make sure to preserve clarity
@@ -404,7 +403,7 @@ module.exports = grammar({
         ),
         "_string",
       ),
-    field_access: ($) => seq($.identifier, "->>", $.string),
+    // field_access: ($) => seq($.identifier, "->>", $.string),
     ordered_expression: ($) =>
       seq($._expression, field("order", choice(kw("ASC"), kw("DESC")))),
     array_type: ($) => seq($._type, "[", "]"),
@@ -422,11 +421,9 @@ module.exports = grammar({
           // $.ternary_expression,
           prec(1, $._literal),
           $.function_call,
-          $.field_access,
           $.asterisk_expression,
           $.identifier,
           $.unnest_clause,
-          $.in_expression,
           $._parenthesized_expression,
           $.binary_expression,
           $.array_element_access,
@@ -462,8 +459,10 @@ module.exports = grammar({
         ['binary_bitwise_and', '&'],
         ['binary_bitwise_xor', '^'],
         ['binary_bitwise_or', '|'],
-        ['binary_and', 'AND'],
-        ['binary_or', 'OR'],
+        ['binary_and', kw('AND')],
+        ['binary_or', kw('OR')],
+        ['operator_compare', seq(optional($._keyword_not), $._keyword_in)],
+        ['operator_compare', seq(optional($._keyword_not), $._keyword_like)],
         ['operator_compare', seq($._keyword_is, optional($._keyword_not), kw("DISTINCT FROM"))],
       ];
 

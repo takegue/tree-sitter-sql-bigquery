@@ -104,22 +104,50 @@ SELECT EXISTS ( SELECT value FROM Words WHERE direction = 'south' ) as result;
      (identifier))))))
 
 ================================================================================
-OPERATORS: IN operator
+OPERATORS: LIKE operator
 ================================================================================
 
-SELECT 1 IN (1, 2);
+SELECT x LIKE "hoge";
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (in_expression
-          (number)
-          (tuple
-            (number)
-            (number)))))))
+ (select_statement
+  (select_clause
+   (select_clause_body
+    (binary_expression
+     (identifier)
+     (string))))))
+
+
+================================================================================
+OPERATORS: IN operator
+================================================================================
+
+SELECT 1 IN (1, 2);
+SELECT 1 IN UNNEST([1, 2]);
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (select_statement
+  (select_clause
+   (select_clause_body
+    (binary_expression
+     (number)
+     (struct
+      (number)
+      (number))))))
+ (select_statement
+  (select_clause
+   (select_clause_body
+    (binary_expression
+     (number)
+     (unnest_clause
+      (unnest_operator
+       (array
+        (number)
+        (number)))))))))
 
 ================================================================================
 OPERATORS: statement with comparison expression
