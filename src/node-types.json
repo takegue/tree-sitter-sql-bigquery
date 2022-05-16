@@ -1,5 +1,24 @@
 [
   {
+    "type": "$.returns",
+    "named": false,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "array_type",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "FALSE",
     "named": true,
     "fields": {}
@@ -55,14 +74,6 @@
           "named": true
         },
         {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
           "type": "field_access",
           "named": true
         },
@@ -79,7 +90,7 @@
           "named": true
         },
         {
-          "type": "is_expression",
+          "type": "named_query_parameter",
           "named": true
         },
         {
@@ -87,7 +98,7 @@
           "named": true
         },
         {
-          "type": "query_parameter",
+          "type": "positional_query_parameter",
           "named": true
         },
         {
@@ -104,6 +115,10 @@
         },
         {
           "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
           "named": true
         },
         {
@@ -143,11 +158,15 @@
           "named": true
         },
         {
+          "type": "named_query_parameter",
+          "named": true
+        },
+        {
           "type": "number",
           "named": true
         },
         {
-          "type": "query_parameter",
+          "type": "positional_query_parameter",
           "named": true
         },
         {
@@ -206,14 +225,6 @@
           "named": true
         },
         {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
           "type": "field_access",
           "named": true
         },
@@ -230,7 +241,7 @@
           "named": true
         },
         {
-          "type": "is_expression",
+          "type": "named_query_parameter",
           "named": true
         },
         {
@@ -238,7 +249,7 @@
           "named": true
         },
         {
-          "type": "query_parameter",
+          "type": "positional_query_parameter",
           "named": true
         },
         {
@@ -255,6 +266,10 @@
         },
         {
           "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
           "named": true
         },
         {
@@ -324,14 +339,6 @@
           "named": true
         },
         {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
           "type": "field_access",
           "named": true
         },
@@ -348,7 +355,7 @@
           "named": true
         },
         {
-          "type": "is_expression",
+          "type": "named_query_parameter",
           "named": true
         },
         {
@@ -356,7 +363,7 @@
           "named": true
         },
         {
-          "type": "query_parameter",
+          "type": "positional_query_parameter",
           "named": true
         },
         {
@@ -373,6 +380,10 @@
         },
         {
           "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
           "named": true
         },
         {
@@ -390,298 +401,297 @@
   {
     "type": "binary_expression",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "FALSE",
-          "named": true
-        },
-        {
-          "type": "NULL",
-          "named": true
-        },
-        {
-          "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "argument_reference",
-          "named": true
-        },
-        {
-          "type": "array",
-          "named": true
-        },
-        {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
-          "type": "field_access",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "in_expression",
-          "named": true
-        },
-        {
-          "type": "is_expression",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "query_parameter",
-          "named": true
-        },
-        {
-          "type": "select_subexpression",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "struct",
-          "named": true
-        },
-        {
-          "type": "time",
-          "named": true
-        },
-        {
-          "type": "unnest_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "boolean_expression",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "FALSE",
-          "named": true
-        },
-        {
-          "type": "NULL",
-          "named": true
-        },
-        {
-          "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "argument_reference",
-          "named": true
-        },
-        {
-          "type": "array",
-          "named": true
-        },
-        {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
-          "type": "field_access",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "in_expression",
-          "named": true
-        },
-        {
-          "type": "is_expression",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "query_parameter",
-          "named": true
-        },
-        {
-          "type": "select_subexpression",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "struct",
-          "named": true
-        },
-        {
-          "type": "time",
-          "named": true
-        },
-        {
-          "type": "unnest_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "check_constraint",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "FALSE",
-          "named": true
-        },
-        {
-          "type": "NULL",
-          "named": true
-        },
-        {
-          "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "argument_reference",
-          "named": true
-        },
-        {
-          "type": "array",
-          "named": true
-        },
-        {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
-          "type": "field_access",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "in_expression",
-          "named": true
-        },
-        {
-          "type": "is_expression",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "query_parameter",
-          "named": true
-        },
-        {
-          "type": "select_subexpression",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "struct",
-          "named": true
-        },
-        {
-          "type": "time",
-          "named": true
-        },
-        {
-          "type": "unnest_clause",
-          "named": true
-        }
-      ]
+    "fields": {
+      "left": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "FALSE",
+            "named": true
+          },
+          {
+            "type": "NULL",
+            "named": true
+          },
+          {
+            "type": "TRUE",
+            "named": true
+          },
+          {
+            "type": "argument_reference",
+            "named": true
+          },
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "array_element_access",
+            "named": true
+          },
+          {
+            "type": "asterisk_expression",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "field_access",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "in_expression",
+            "named": true
+          },
+          {
+            "type": "named_query_parameter",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "positional_query_parameter",
+            "named": true
+          },
+          {
+            "type": "select_subexpression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
+            "named": true
+          },
+          {
+            "type": "time",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "unnest_clause",
+            "named": true
+          }
+        ]
+      },
+      "operator": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "!=",
+            "named": false
+          },
+          {
+            "type": "&",
+            "named": false
+          },
+          {
+            "type": "*",
+            "named": false
+          },
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": "<",
+            "named": false
+          },
+          {
+            "type": "<<",
+            "named": false
+          },
+          {
+            "type": "<=",
+            "named": false
+          },
+          {
+            "type": "<>",
+            "named": false
+          },
+          {
+            "type": "=",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          },
+          {
+            "type": ">=",
+            "named": false
+          },
+          {
+            "type": ">>",
+            "named": false
+          },
+          {
+            "type": "AND",
+            "named": false
+          },
+          {
+            "type": "DISTINCT_FROM",
+            "named": false
+          },
+          {
+            "type": "IS",
+            "named": false
+          },
+          {
+            "type": "NOT",
+            "named": false
+          },
+          {
+            "type": "OR",
+            "named": false
+          },
+          {
+            "type": "^",
+            "named": false
+          },
+          {
+            "type": "|",
+            "named": false
+          },
+          {
+            "type": "||",
+            "named": false
+          }
+        ]
+      },
+      "right": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "FALSE",
+            "named": true
+          },
+          {
+            "type": "NULL",
+            "named": true
+          },
+          {
+            "type": "TRUE",
+            "named": true
+          },
+          {
+            "type": "argument_reference",
+            "named": true
+          },
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "array_element_access",
+            "named": true
+          },
+          {
+            "type": "asterisk_expression",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "field_access",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "in_expression",
+            "named": true
+          },
+          {
+            "type": "named_query_parameter",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "positional_query_parameter",
+            "named": true
+          },
+          {
+            "type": "select_subexpression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
+            "named": true
+          },
+          {
+            "type": "time",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "unnest_clause",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -736,136 +746,6 @@
     }
   },
   {
-    "type": "comparison_operator",
-    "named": true,
-    "fields": {
-      "operator": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "<",
-            "named": false
-          },
-          {
-            "type": "<=",
-            "named": false
-          },
-          {
-            "type": "<>",
-            "named": false
-          },
-          {
-            "type": "=",
-            "named": false
-          },
-          {
-            "type": ">",
-            "named": false
-          },
-          {
-            "type": ">=",
-            "named": false
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "FALSE",
-          "named": true
-        },
-        {
-          "type": "NULL",
-          "named": true
-        },
-        {
-          "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "argument_reference",
-          "named": true
-        },
-        {
-          "type": "array",
-          "named": true
-        },
-        {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
-          "type": "field_access",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "in_expression",
-          "named": true
-        },
-        {
-          "type": "is_expression",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "query_parameter",
-          "named": true
-        },
-        {
-          "type": "select_subexpression",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "struct",
-          "named": true
-        },
-        {
-          "type": "time",
-          "named": true
-        },
-        {
-          "type": "unnest_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "create_function_parameter",
     "named": true,
     "fields": {
@@ -910,6 +790,71 @@
         },
         {
           "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "create_function_parameters",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "create_function_parameter",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "create_function_statement",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "column_type",
+          "named": true
+        },
+        {
+          "type": "create_function_parameters",
+          "named": true
+        },
+        {
+          "type": "keyword_if_not_exists",
+          "named": true
+        },
+        {
+          "type": "keyword_replace",
+          "named": true
+        },
+        {
+          "type": "keyword_temporary",
+          "named": true
+        },
+        {
+          "type": "option_list",
+          "named": true
+        },
+        {
+          "type": "select_subexpression",
           "named": true
         }
       ]
@@ -1039,7 +984,7 @@
     "fields": {},
     "children": {
       "multiple": false,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "FALSE",
@@ -1074,14 +1019,6 @@
           "named": true
         },
         {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
           "type": "field_access",
           "named": true
         },
@@ -1098,7 +1035,7 @@
           "named": true
         },
         {
-          "type": "is_expression",
+          "type": "named_query_parameter",
           "named": true
         },
         {
@@ -1106,7 +1043,7 @@
           "named": true
         },
         {
-          "type": "query_parameter",
+          "type": "positional_query_parameter",
           "named": true
         },
         {
@@ -1126,102 +1063,7 @@
           "named": true
         },
         {
-          "type": "unnest_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "distinct_from",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "FALSE",
-          "named": true
-        },
-        {
-          "type": "NULL",
-          "named": true
-        },
-        {
-          "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "argument_reference",
-          "named": true
-        },
-        {
-          "type": "array",
-          "named": true
-        },
-        {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
-          "type": "field_access",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "in_expression",
-          "named": true
-        },
-        {
-          "type": "is_expression",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "query_parameter",
-          "named": true
-        },
-        {
-          "type": "select_subexpression",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "struct",
-          "named": true
-        },
-        {
-          "type": "time",
+          "type": "unary_expression",
           "named": true
         },
         {
@@ -1256,7 +1098,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "FALSE",
@@ -1295,14 +1137,6 @@
           "named": true
         },
         {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
           "type": "field_access",
           "named": true
         },
@@ -1319,7 +1153,7 @@
           "named": true
         },
         {
-          "type": "is_expression",
+          "type": "named_query_parameter",
           "named": true
         },
         {
@@ -1327,7 +1161,7 @@
           "named": true
         },
         {
-          "type": "query_parameter",
+          "type": "positional_query_parameter",
           "named": true
         },
         {
@@ -1344,6 +1178,10 @@
         },
         {
           "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
           "named": true
         },
         {
@@ -1406,14 +1244,6 @@
             "named": true
           },
           {
-            "type": "boolean_expression",
-            "named": true
-          },
-          {
-            "type": "comparison_operator",
-            "named": true
-          },
-          {
             "type": "field_access",
             "named": true
           },
@@ -1430,7 +1260,7 @@
             "named": true
           },
           {
-            "type": "is_expression",
+            "type": "named_query_parameter",
             "named": true
           },
           {
@@ -1438,7 +1268,7 @@
             "named": true
           },
           {
-            "type": "query_parameter",
+            "type": "positional_query_parameter",
             "named": true
           },
           {
@@ -1455,6 +1285,10 @@
           },
           {
             "type": "time",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
             "named": true
           },
           {
@@ -1496,7 +1330,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "FALSE",
@@ -1531,14 +1365,6 @@
           "named": true
         },
         {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
           "type": "field_access",
           "named": true
         },
@@ -1555,7 +1381,7 @@
           "named": true
         },
         {
-          "type": "is_expression",
+          "type": "named_query_parameter",
           "named": true
         },
         {
@@ -1563,7 +1389,7 @@
           "named": true
         },
         {
-          "type": "query_parameter",
+          "type": "positional_query_parameter",
           "named": true
         },
         {
@@ -1583,6 +1409,10 @@
           "named": true
         },
         {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
           "type": "unnest_clause",
           "named": true
         }
@@ -1598,7 +1428,87 @@
       "required": true,
       "types": [
         {
-          "type": "boolean_expression",
+          "type": "FALSE",
+          "named": true
+        },
+        {
+          "type": "NULL",
+          "named": true
+        },
+        {
+          "type": "TRUE",
+          "named": true
+        },
+        {
+          "type": "argument_reference",
+          "named": true
+        },
+        {
+          "type": "array",
+          "named": true
+        },
+        {
+          "type": "array_element_access",
+          "named": true
+        },
+        {
+          "type": "asterisk_expression",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "in_expression",
+          "named": true
+        },
+        {
+          "type": "named_query_parameter",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "positional_query_parameter",
+          "named": true
+        },
+        {
+          "type": "select_subexpression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "struct",
+          "named": true
+        },
+        {
+          "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "unnest_clause",
           "named": true
         }
       ]
@@ -1650,14 +1560,6 @@
           "named": true
         },
         {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
           "type": "field_access",
           "named": true
         },
@@ -1674,7 +1576,7 @@
           "named": true
         },
         {
-          "type": "is_expression",
+          "type": "named_query_parameter",
           "named": true
         },
         {
@@ -1682,7 +1584,7 @@
           "named": true
         },
         {
-          "type": "query_parameter",
+          "type": "positional_query_parameter",
           "named": true
         },
         {
@@ -1706,6 +1608,10 @@
           "named": true
         },
         {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
           "type": "unnest_clause",
           "named": true
         }
@@ -1726,109 +1632,6 @@
         },
         {
           "type": "values_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "is_expression",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "FALSE",
-          "named": true
-        },
-        {
-          "type": "NULL",
-          "named": true
-        },
-        {
-          "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "argument_reference",
-          "named": true
-        },
-        {
-          "type": "array",
-          "named": true
-        },
-        {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
-          "type": "distinct_from",
-          "named": true
-        },
-        {
-          "type": "field_access",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "in_expression",
-          "named": true
-        },
-        {
-          "type": "is_expression",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "query_parameter",
-          "named": true
-        },
-        {
-          "type": "select_subexpression",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "struct",
-          "named": true
-        },
-        {
-          "type": "time",
-          "named": true
-        },
-        {
-          "type": "unnest_clause",
           "named": true
         }
       ]
@@ -1875,14 +1678,6 @@
           "named": true
         },
         {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
           "type": "field_access",
           "named": true
         },
@@ -1899,11 +1694,11 @@
           "named": true
         },
         {
-          "type": "is_expression",
+          "type": "join_type",
           "named": true
         },
         {
-          "type": "join_type",
+          "type": "named_query_parameter",
           "named": true
         },
         {
@@ -1911,7 +1706,7 @@
           "named": true
         },
         {
-          "type": "query_parameter",
+          "type": "positional_query_parameter",
           "named": true
         },
         {
@@ -1928,6 +1723,10 @@
         },
         {
           "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
           "named": true
         },
         {
@@ -1982,21 +1781,6 @@
     }
   },
   {
-    "type": "null_constraint",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "NULL",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "number",
     "named": true,
     "fields": {},
@@ -2015,54 +1799,6 @@
     "type": "numeric",
     "named": true,
     "fields": {}
-  },
-  {
-    "type": "on_delete_action",
-    "named": true,
-    "fields": {
-      "action": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "CASCADE",
-            "named": false
-          },
-          {
-            "type": "RESTRICT",
-            "named": false
-          },
-          {
-            "type": "SET_NULL",
-            "named": false
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "on_update_action",
-    "named": true,
-    "fields": {
-      "action": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "CASCADE",
-            "named": false
-          },
-          {
-            "type": "RESTRICT",
-            "named": false
-          },
-          {
-            "type": "SET_NULL",
-            "named": false
-          }
-        ]
-      }
-    }
   },
   {
     "type": "option_item",
@@ -2099,11 +1835,15 @@
             "named": true
           },
           {
+            "type": "named_query_parameter",
+            "named": true
+          },
+          {
             "type": "number",
             "named": true
           },
           {
-            "type": "query_parameter",
+            "type": "positional_query_parameter",
             "named": true
           },
           {
@@ -2158,7 +1898,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "FALSE",
@@ -2193,14 +1933,6 @@
           "named": true
         },
         {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
           "type": "field_access",
           "named": true
         },
@@ -2217,7 +1949,7 @@
           "named": true
         },
         {
-          "type": "is_expression",
+          "type": "named_query_parameter",
           "named": true
         },
         {
@@ -2225,7 +1957,7 @@
           "named": true
         },
         {
-          "type": "query_parameter",
+          "type": "positional_query_parameter",
           "named": true
         },
         {
@@ -2242,6 +1974,10 @@
         },
         {
           "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
           "named": true
         },
         {
@@ -2272,7 +2008,7 @@
     },
     "children": {
       "multiple": false,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "FALSE",
@@ -2307,14 +2043,6 @@
           "named": true
         },
         {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
           "type": "field_access",
           "named": true
         },
@@ -2331,7 +2059,7 @@
           "named": true
         },
         {
-          "type": "is_expression",
+          "type": "named_query_parameter",
           "named": true
         },
         {
@@ -2339,7 +2067,7 @@
           "named": true
         },
         {
-          "type": "query_parameter",
+          "type": "positional_query_parameter",
           "named": true
         },
         {
@@ -2356,6 +2084,10 @@
         },
         {
           "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
           "named": true
         },
         {
@@ -2429,14 +2161,6 @@
           "named": true
         },
         {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
           "type": "field_access",
           "named": true
         },
@@ -2453,7 +2177,7 @@
           "named": true
         },
         {
-          "type": "is_expression",
+          "type": "named_query_parameter",
           "named": true
         },
         {
@@ -2461,7 +2185,7 @@
           "named": true
         },
         {
-          "type": "query_parameter",
+          "type": "positional_query_parameter",
           "named": true
         },
         {
@@ -2481,6 +2205,10 @@
           "named": true
         },
         {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
           "type": "unnest_clause",
           "named": true
         }
@@ -2496,7 +2224,87 @@
       "required": true,
       "types": [
         {
-          "type": "boolean_expression",
+          "type": "FALSE",
+          "named": true
+        },
+        {
+          "type": "NULL",
+          "named": true
+        },
+        {
+          "type": "TRUE",
+          "named": true
+        },
+        {
+          "type": "argument_reference",
+          "named": true
+        },
+        {
+          "type": "array",
+          "named": true
+        },
+        {
+          "type": "array_element_access",
+          "named": true
+        },
+        {
+          "type": "asterisk_expression",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "in_expression",
+          "named": true
+        },
+        {
+          "type": "named_query_parameter",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "positional_query_parameter",
+          "named": true
+        },
+        {
+          "type": "select_subexpression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "struct",
+          "named": true
+        },
+        {
+          "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "unnest_clause",
           "named": true
         }
       ]
@@ -2523,7 +2331,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "FALSE",
@@ -2562,14 +2370,6 @@
           "named": true
         },
         {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
           "type": "field_access",
           "named": true
         },
@@ -2586,7 +2386,7 @@
           "named": true
         },
         {
-          "type": "is_expression",
+          "type": "named_query_parameter",
           "named": true
         },
         {
@@ -2594,7 +2394,7 @@
           "named": true
         },
         {
-          "type": "query_parameter",
+          "type": "positional_query_parameter",
           "named": true
         },
         {
@@ -2611,6 +2411,10 @@
         },
         {
           "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
           "named": true
         },
         {
@@ -2772,14 +2576,6 @@
           "named": true
         },
         {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
           "type": "field_access",
           "named": true
         },
@@ -2796,7 +2592,7 @@
           "named": true
         },
         {
-          "type": "is_expression",
+          "type": "named_query_parameter",
           "named": true
         },
         {
@@ -2804,7 +2600,7 @@
           "named": true
         },
         {
-          "type": "query_parameter",
+          "type": "positional_query_parameter",
           "named": true
         },
         {
@@ -2824,6 +2620,10 @@
           "named": true
         },
         {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
           "type": "unnest_clause",
           "named": true
         }
@@ -2838,6 +2638,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "create_function_statement",
+          "named": true
+        },
         {
           "type": "create_schema_statement",
           "named": true
@@ -2876,7 +2680,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "FALSE",
@@ -2915,14 +2719,6 @@
           "named": true
         },
         {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
           "type": "field_access",
           "named": true
         },
@@ -2939,7 +2735,7 @@
           "named": true
         },
         {
-          "type": "is_expression",
+          "type": "named_query_parameter",
           "named": true
         },
         {
@@ -2947,7 +2743,7 @@
           "named": true
         },
         {
-          "type": "query_parameter",
+          "type": "positional_query_parameter",
           "named": true
         },
         {
@@ -2967,6 +2763,10 @@
           "named": true
         },
         {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
           "type": "unnest_clause",
           "named": true
         }
@@ -2979,7 +2779,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "FALSE",
@@ -3014,14 +2814,6 @@
           "named": true
         },
         {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
           "type": "field_access",
           "named": true
         },
@@ -3038,7 +2830,7 @@
           "named": true
         },
         {
-          "type": "is_expression",
+          "type": "named_query_parameter",
           "named": true
         },
         {
@@ -3046,7 +2838,7 @@
           "named": true
         },
         {
-          "type": "query_parameter",
+          "type": "positional_query_parameter",
           "named": true
         },
         {
@@ -3063,6 +2855,10 @@
         },
         {
           "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
           "named": true
         },
         {
@@ -3155,14 +2951,6 @@
             "named": true
           },
           {
-            "type": "boolean_expression",
-            "named": true
-          },
-          {
-            "type": "comparison_operator",
-            "named": true
-          },
-          {
             "type": "field_access",
             "named": true
           },
@@ -3179,7 +2967,7 @@
             "named": true
           },
           {
-            "type": "is_expression",
+            "type": "named_query_parameter",
             "named": true
           },
           {
@@ -3187,7 +2975,7 @@
             "named": true
           },
           {
-            "type": "query_parameter",
+            "type": "positional_query_parameter",
             "named": true
           },
           {
@@ -3204,6 +2992,10 @@
           },
           {
             "type": "time",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
             "named": true
           },
           {
@@ -3228,6 +3020,226 @@
         },
         {
           "type": "number",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "unary_expression",
+    "named": true,
+    "fields": {
+      "operator": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
+          {
+            "type": "EXISTS",
+            "named": false
+          },
+          {
+            "type": "NOT",
+            "named": false
+          },
+          {
+            "type": "~",
+            "named": false
+          }
+        ]
+      },
+      "value": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "FALSE",
+            "named": true
+          },
+          {
+            "type": "NULL",
+            "named": true
+          },
+          {
+            "type": "TRUE",
+            "named": true
+          },
+          {
+            "type": "argument_reference",
+            "named": true
+          },
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "array_element_access",
+            "named": true
+          },
+          {
+            "type": "asterisk_expression",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "field_access",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "in_expression",
+            "named": true
+          },
+          {
+            "type": "named_query_parameter",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "positional_query_parameter",
+            "named": true
+          },
+          {
+            "type": "select_subexpression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
+            "named": true
+          },
+          {
+            "type": "time",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "unnest_clause",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "FALSE",
+          "named": true
+        },
+        {
+          "type": "NULL",
+          "named": true
+        },
+        {
+          "type": "TRUE",
+          "named": true
+        },
+        {
+          "type": "argument_reference",
+          "named": true
+        },
+        {
+          "type": "array",
+          "named": true
+        },
+        {
+          "type": "array_element_access",
+          "named": true
+        },
+        {
+          "type": "asterisk_expression",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "in_expression",
+          "named": true
+        },
+        {
+          "type": "named_query_parameter",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "positional_query_parameter",
+          "named": true
+        },
+        {
+          "type": "select_subexpression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "struct",
+          "named": true
+        },
+        {
+          "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "unnest_clause",
           "named": true
         }
       ]
@@ -3324,7 +3336,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "FALSE",
@@ -3359,14 +3371,6 @@
           "named": true
         },
         {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
           "type": "field_access",
           "named": true
         },
@@ -3383,7 +3387,7 @@
           "named": true
         },
         {
-          "type": "is_expression",
+          "type": "named_query_parameter",
           "named": true
         },
         {
@@ -3391,7 +3395,7 @@
           "named": true
         },
         {
-          "type": "query_parameter",
+          "type": "positional_query_parameter",
           "named": true
         },
         {
@@ -3408,6 +3412,10 @@
         },
         {
           "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
           "named": true
         },
         {
@@ -3423,7 +3431,7 @@
     "fields": {},
     "children": {
       "multiple": false,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "FALSE",
@@ -3458,14 +3466,6 @@
           "named": true
         },
         {
-          "type": "boolean_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
           "type": "field_access",
           "named": true
         },
@@ -3482,7 +3482,7 @@
           "named": true
         },
         {
-          "type": "is_expression",
+          "type": "named_query_parameter",
           "named": true
         },
         {
@@ -3490,7 +3490,7 @@
           "named": true
         },
         {
-          "type": "query_parameter",
+          "type": "positional_query_parameter",
           "named": true
         },
         {
@@ -3507,6 +3507,10 @@
         },
         {
           "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
           "named": true
         },
         {
@@ -3536,6 +3540,10 @@
     }
   },
   {
+    "type": "!=",
+    "named": false
+  },
+  {
     "type": "\"",
     "named": false
   },
@@ -3545,6 +3553,10 @@
   },
   {
     "type": "$$",
+    "named": false
+  },
+  {
+    "type": "&",
     "named": false
   },
   {
@@ -3572,6 +3584,10 @@
     "named": false
   },
   {
+    "type": "-",
+    "named": false
+  },
+  {
     "type": "->>",
     "named": false
   },
@@ -3580,11 +3596,19 @@
     "named": false
   },
   {
+    "type": "/",
+    "named": false
+  },
+  {
     "type": ";",
     "named": false
   },
   {
     "type": "<",
+    "named": false
+  },
+  {
+    "type": "<<",
     "named": false
   },
   {
@@ -3605,6 +3629,10 @@
   },
   {
     "type": ">=",
+    "named": false
+  },
+  {
+    "type": ">>",
     "named": false
   },
   {
@@ -3629,14 +3657,6 @@
   },
   {
     "type": "BIGNUMERIC",
-    "named": false
-  },
-  {
-    "type": "CASCADE",
-    "named": false
-  },
-  {
-    "type": "CHECK",
     "named": false
   },
   {
@@ -3692,6 +3712,10 @@
     "named": false
   },
   {
+    "type": "EXISTS",
+    "named": false
+  },
+  {
     "type": "FALSE",
     "named": false
   },
@@ -3701,6 +3725,10 @@
   },
   {
     "type": "FULL",
+    "named": false
+  },
+  {
+    "type": "FUNCTION",
     "named": false
   },
   {
@@ -3792,14 +3820,6 @@
     "named": false
   },
   {
-    "type": "ON_DELETE",
-    "named": false
-  },
-  {
-    "type": "ON_UPDATE",
-    "named": false
-  },
-  {
     "type": "OR",
     "named": false
   },
@@ -3832,11 +3852,7 @@
     "named": false
   },
   {
-    "type": "REFERENCES",
-    "named": false
-  },
-  {
-    "type": "RESTRICT",
+    "type": "RETURNS",
     "named": false
   },
   {
@@ -3857,10 +3873,6 @@
   },
   {
     "type": "SET",
-    "named": false
-  },
-  {
-    "type": "SET_NULL",
     "named": false
   },
   {
@@ -3897,10 +3909,6 @@
   },
   {
     "type": "TRUE",
-    "named": false
-  },
-  {
-    "type": "UNIQUE",
     "named": false
   },
   {
@@ -3952,6 +3960,10 @@
     "named": false
   },
   {
+    "type": "^",
+    "named": false
+  },
+  {
     "type": "_PARTITIONDATE",
     "named": false
   },
@@ -3972,8 +3984,20 @@
     "named": true
   },
   {
-    "type": "query_parameter",
+    "type": "named_query_parameter",
     "named": true
+  },
+  {
+    "type": "positional_query_parameter",
+    "named": true
+  },
+  {
+    "type": "|",
+    "named": false
+  },
+  {
+    "type": "||",
+    "named": false
   },
   {
     "type": "~",

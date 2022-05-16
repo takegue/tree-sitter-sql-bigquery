@@ -1,0 +1,287 @@
+
+================================================================================
+OPERATORS: Unary Operators
+================================================================================
+
+select 
+    +1,
+    -1,
+    ~1,
+    NOT TRUE,
+    null IS NOT TRUE,
+    false IS FALSE,
+    hoge IS NULL
+;
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (select_statement
+  (select_clause
+   (select_clause_body
+    (number)
+    (number)
+    (unary_expression
+     (number))
+    (unary_expression
+     (TRUE))
+    (unary_expression
+     (NULL)
+     (TRUE))
+    (unary_expression
+     (FALSE)
+     (FALSE))
+    (unary_expression
+     (identifier)
+     (NULL))))))
+
+
+================================================================================
+OPERATORS: Binary Operators
+================================================================================
+
+select 
+    1 - 2 * 3 / 10,
+    "string1" || hoge2,
+    (2 << 4) >> 2,
+    TRUE AND NOT (null is true)
+    ;
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (select_statement
+  (select_clause
+   (select_clause_body
+    (binary_expression
+     (number)
+     (binary_expression
+      (binary_expression
+       (number)
+       (number))
+      (number)))
+    (binary_expression
+     (string)
+     (identifier))
+    (binary_expression
+     (binary_expression
+      (number)
+      (number))
+     (number))
+    (binary_expression
+     (TRUE)
+     (unary_expression
+      (unary_expression
+       (NULL)
+       (TRUE))))))))
+
+================================================================================
+OPERATORS: EXISTS operator
+================================================================================
+
+
+SELECT EXISTS ( SELECT value FROM Words WHERE direction = 'south' ) as result;
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (select_statement
+  (select_clause
+   (select_clause_body
+    (alias
+     (unary_expression
+      (select_subexpression
+       (select_statement
+        (select_clause
+         (select_clause_body
+          (identifier)))
+        (from_clause
+         (identifier))
+        (where_clause
+         (binary_expression
+          (identifier)
+          (string))))))
+     (identifier))))))
+
+================================================================================
+OPERATORS: IN operator
+================================================================================
+
+SELECT 1 IN (1, 2);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (in_expression
+          (number)
+          (tuple
+            (number)
+            (number)))))))
+
+================================================================================
+OPERATORS: statement with comparison expression
+================================================================================
+
+SELECT 1 < 2;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (binary_expression
+          (number)
+          (number))))))
+
+================================================================================
+OPERATORS:SELECT statement with is expression
+================================================================================
+
+SELECT a IS TRUE, b IS NOT NULL, c IS FALSE;
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (select_statement
+  (select_clause
+   (select_clause_body
+    (unary_expression
+     (identifier)
+     (TRUE))
+    (unary_expression
+     (identifier)
+     (NULL))
+    (unary_expression
+     (identifier)
+     (FALSE))))))
+
+================================================================================
+OPERATORS: field
+================================================================================
+
+SELECT foo.bar FROM a;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (identifier)))
+    (from_clause
+      (identifier))))
+
+================================================================================
+OPERATORS: statement with comparison expression and is expression
+================================================================================
+
+SELECT 1 < 2 IS TRUE;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (unary_expression
+          (binary_expression
+            (number)
+            (number))
+          (TRUE))))))
+
+================================================================================
+SELECT expression with function
+================================================================================
+
+SELECT foo(bar, baz) < 10;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (binary_expression
+          (function_call
+            (identifier)
+            (identifier)
+            (identifier))
+          (number))))))
+
+================================================================================
+SELECT expression with function without args
+================================================================================
+
+SELECT foo();
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (function_call
+          (identifier))))))
+
+================================================================================
+SELECT comparison expression boolean
+================================================================================
+
+SELECT TRUE AND foo(1) OR FALSE AND NOT a = b.c;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (binary_expression
+          (binary_expression
+            (TRUE)
+            (function_call
+              (identifier)
+              (number)))
+          (binary_expression
+            (FALSE)
+            (unary_expression 
+              (binary_expression
+               (identifier)
+               (identifier)))))))))
+
+================================================================================
+SELECT parenthesized expression
+================================================================================
+
+SELECT (TRUE);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (TRUE)))))
+
+================================================================================
+SELECT parenthesized expression 2
+================================================================================
+
+SELECT TRUE AND (foo(1) OR FALSE);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_clause
+      (select_clause_body
+        (binary_expression
+          (TRUE)
+          (binary_expression
+            (function_call
+              (identifier)
+              (number))
+            (FALSE)))))))

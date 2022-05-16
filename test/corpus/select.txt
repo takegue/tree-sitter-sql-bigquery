@@ -32,63 +32,69 @@ LEFT OUTER JOIN t7 ON t.a = t7.a;
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (identifier)
-        (identifier)
-        (identifier)))
-    (from_clause
-      (alias
-        (identifier)
-        (identifier)))
-    (join_clause
-      (identifier)
-      (binary_expression
-        (identifier)
-        (identifier)))
-    (join_clause
-      (join_type)
-      (identifier)
-      (binary_expression
-        (identifier)
-        (identifier)))
-    (join_clause
-      (join_type)
-      (identifier)
-      (binary_expression
-        (identifier)
-        (identifier)))
-    (join_clause
-      (join_type)
-      (identifier)
-      (binary_expression
-        (identifier)
-        (identifier)))
-    (join_clause
-      (join_type)
-      (identifier)
-      (binary_expression
-        (identifier)
-        (identifier)))
-    (join_clause
-      (join_type)
-      (identifier)
-      (binary_expression
-        (identifier)
-        (identifier)))
-    (join_clause
-      (join_type)
-      (identifier)
-      (binary_expression
-        (identifier)
-        (identifier)))
-    (join_clause
-      (join_type)
-      (identifier)
-      (binary_expression
-        (identifier)
-        (identifier)))))
+ (select_statement
+  (select_clause
+   (select_clause_body
+    (identifier)
+    (identifier)
+    (identifier)))
+  (from_clause
+   (alias
+    (identifier)
+    (identifier)))
+  (join_clause
+   (identifier)
+   (binary_expression
+    (identifier)
+    (identifier)))
+  (join_clause
+   (join_type)
+   (identifier)
+   (binary_expression
+    (identifier)
+    (identifier)))
+  (join_clause
+   (join_type)
+   (identifier)
+   (binary_expression
+    (identifier)
+    (identifier)))
+  (join_clause
+   (join_type)
+   (identifier)
+   (binary_expression
+    (identifier)
+    (identifier)))
+  (join_clause
+   (join_type)
+   (identifier)
+   (binary_expression
+    (identifier)
+    (identifier)))
+  (join_clause
+   (join_type)
+   (identifier)
+   (binary_expression
+    (identifier)
+    (identifier)))
+  (join_clause
+   (join_type)
+   (identifier)
+   (binary_expression
+    (identifier)
+    (identifier)))
+  (join_clause
+   (join_type)
+   (identifier)
+   (binary_expression
+    (identifier)
+    (identifier)))
+  (join_clause
+   (join_type)
+   (identifier)
+   (binary_expression
+    (identifier)
+    (identifier)))))
 
 ================================================================================
 SELECT element from array
@@ -202,10 +208,9 @@ SELECT 1 IS DISTINCT FROM NULL;
   (select_statement
     (select_clause
       (select_clause_body
-        (is_expression
+        (binary_expression
           (number)
-          (distinct_from
-            (NULL)))))))
+          (NULL))))))
 
 ================================================================================
 SELECT statement FROM clause
@@ -393,174 +398,7 @@ SELECT a, b;
         (identifier)
         (identifier)))))
 
-================================================================================
-SELECT statement with comparison expression
-================================================================================
 
-SELECT 1 < 2;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (binary_expression
-          (number)
-          (number))))))
-
-================================================================================
-SELECT statement with is expression
-================================================================================
-
-SELECT a IS TRUE, b IS NOT NULL, c IS FALSE;
-
---------------------------------------------------------------------------------
-
-(source_file
- (select_statement
-  (select_clause
-   (select_clause_body
-    (unary_expression
-     (is_expression
-      (identifier)
-      (TRUE)))
-    (unary_expression
-     (is_expression
-      (identifier)
-      (NULL)))
-    (unary_expression
-     (is_expression
-      (identifier)
-      (FALSE)))))))
-
-================================================================================
-SELECT field
-================================================================================
-
-SELECT foo.bar FROM a;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (identifier)))
-    (from_clause
-      (identifier))))
-
-================================================================================
-SELECT statement with comparison expression and is expression
-================================================================================
-
-SELECT 1 < 2 IS TRUE;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (unary_expression
-          (is_expression
-            (binary_expression
-              (number)
-              (number))
-            (TRUE)))))))
-
-================================================================================
-SELECT expression with function
-================================================================================
-
-SELECT foo(bar, baz) < 10;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (binary_expression
-          (function_call
-            (identifier)
-            (identifier)
-            (identifier))
-          (number))))))
-
-================================================================================
-SELECT expression with function without args
-================================================================================
-
-SELECT foo();
-
---------------------------------------------------------------------------------
-
-(source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (function_call
-          (identifier))))))
-
-================================================================================
-SELECT comparison expression boolean
-================================================================================
-
-SELECT TRUE AND foo(1) OR FALSE AND NOT a = b.c;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (binary_expression
-          (binary_expression
-            (TRUE)
-            (function_call
-              (identifier)
-              (number)))
-          (binary_expression
-            (FALSE)
-            (unary_expression 
-              (binary_expression
-               (identifier)
-               (identifier)))))))))
-
-================================================================================
-SELECT parenthesized expression
-================================================================================
-
-SELECT (TRUE);
-
---------------------------------------------------------------------------------
-
-(source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (TRUE)))))
-
-================================================================================
-SELECT parenthesized expression 2
-================================================================================
-
-SELECT TRUE AND (foo(1) OR FALSE);
-
---------------------------------------------------------------------------------
-
-(source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (binary_expression
-          (TRUE)
-          (binary_expression
-            (function_call
-              (identifier)
-              (number))
-            (FALSE)))))))
 
 ================================================================================
 SELECT string
@@ -576,28 +414,10 @@ SELECT 'aaaa'
       (select_clause_body
         (string)))))
 
+
 ================================================================================
-SELECT in clause
-================================================================================
-
-SELECT 1 IN (1, 2);
-
---------------------------------------------------------------------------------
-
-(source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (in_expression
-          (number)
-          (tuple
-            (number)
-            (number)))))))
-
-
-==================
 Can parse subquery
-==================
+================================================================================
 
 SELECT id
 FROM foo

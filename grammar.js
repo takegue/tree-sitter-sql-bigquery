@@ -235,8 +235,10 @@ module.exports = grammar({
     order_by_clause_body: ($) => commaSep1(seq($._expression, optional($._direction_keywords))),
     order_by_clause: ($) => seq(kw("ORDER BY"), $.order_by_clause_body),
     where_clause: ($) => seq(kw("WHERE"), $._expression),
-    _aliasable_expression: ($) =>
-      seq($._expression, optional(seq(optional(kw("AS")), $.identifier))),
+    _aliased_expression: $ =>
+      seq($._expression, optional(kw("AS")), $.identifier),
+    _aliasable_expression: $ =>
+      choice($._expression, alias($._aliased_expression, $.alias)),
     select_clause_body: ($) => prec.left(commaSep1($._aliasable_expression)),
     select_clause: ($) =>
       prec.left(seq(kw("SELECT"), optional($.select_clause_body))),
@@ -437,24 +439,23 @@ module.exports = grammar({
           $.array_element_access,
           $.argument_reference,
           $.select_subexpression,
-      ),
+    ),
 
     _parenthesized_expression: ($) => prec(20, seq("(", $._expression, ")")),
     array_element_access: ($) =>
       seq(choice($.identifier, $.argument_reference), "[", $._expression, "]"),
 
-    distinct_from: ($) => prec.left(seq(kw("DISTINCT FROM"), $._expression)),
-    is_expression: $ => prec.left('binary_compare', seq(
-        $._expression, $._keyword_is, optional($._keyword_not), choice($.NULL, $.TRUE, $.FALSE)
-    )),
     unary_expression: $ => choice(
       prec.left('unary_not', seq(field("operator", $._keyword_not), field("value", $._expression))),
       prec.left('unary_exp', seq(field("operator", choice(...unary_operators)), $._expression)),
-      $.is_expression,
+      prec.left('unary_exp', seq(field("operator", kw('EXISTS')), $.select_subexpression)),
+      prec.left('binary_compare', seq(
+        $._expression, $._keyword_is, optional($._keyword_not), choice($.NULL, $.TRUE, $.FALSE)
+    )),
     ),
     binary_expression: $ => {
       const table = [
-        // [PREC.multiplicative, choice(...multiplicative_operators)],
+        ["binary_times", choice(...multiplicative_operators)],
         ["binary_plus", choice(...additive_operators)],
         ['binary_compare', choice(...comparative_operators)],
         ['binary_bitwise_shift', choice(...shift_operators)],
@@ -463,6 +464,7 @@ module.exports = grammar({
         ['binary_bitwise_or', '|'],
         ['binary_and', 'AND'],
         ['binary_or', 'OR'],
+        ['binary_compare', seq($._keyword_is, optional($._keyword_not), kw("DISTINCT FROM"))],
       ];
 
       return choice(...table.map(([precedence, operator]) =>
