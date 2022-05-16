@@ -44,55 +44,49 @@ LEFT OUTER JOIN t7 ON t.a = t7.a;
         (identifier)))
     (join_clause
       (identifier)
-      (comparison_operator
+      (binary_expression
         (identifier)
         (identifier)))
     (join_clause
       (join_type)
       (identifier)
-      (comparison_operator
+      (binary_expression
         (identifier)
         (identifier)))
     (join_clause
       (join_type)
       (identifier)
-      (comparison_operator
+      (binary_expression
         (identifier)
         (identifier)))
     (join_clause
       (join_type)
       (identifier)
-      (comparison_operator
+      (binary_expression
         (identifier)
         (identifier)))
     (join_clause
       (join_type)
       (identifier)
-      (comparison_operator
+      (binary_expression
         (identifier)
         (identifier)))
     (join_clause
       (join_type)
       (identifier)
-      (comparison_operator
+      (binary_expression
         (identifier)
         (identifier)))
     (join_clause
       (join_type)
       (identifier)
-      (comparison_operator
+      (binary_expression
         (identifier)
         (identifier)))
     (join_clause
       (join_type)
       (identifier)
-      (comparison_operator
-        (identifier)
-        (identifier)))
-    (join_clause
-      (join_type)
-      (identifier)
-      (comparison_operator
+      (binary_expression
         (identifier)
         (identifier)))))
 
@@ -411,7 +405,7 @@ SELECT 1 < 2;
   (select_statement
     (select_clause
       (select_clause_body
-        (comparison_operator
+        (binary_expression
           (number)
           (number))))))
 
@@ -424,18 +418,21 @@ SELECT a IS TRUE, b IS NOT NULL, c IS FALSE;
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (is_expression
-          (identifier)
-          (TRUE))
-        (is_expression
-          (identifier)
-          (NULL))
-        (is_expression
-          (identifier)
-          (FALSE))))))
+ (select_statement
+  (select_clause
+   (select_clause_body
+    (unary_expression
+     (is_expression
+      (identifier)
+      (TRUE)))
+    (unary_expression
+     (is_expression
+      (identifier)
+      (NULL)))
+    (unary_expression
+     (is_expression
+      (identifier)
+      (FALSE)))))))
 
 ================================================================================
 SELECT field
@@ -465,11 +462,12 @@ SELECT 1 < 2 IS TRUE;
   (select_statement
     (select_clause
       (select_clause_body
-        (is_expression
-          (comparison_operator
-            (number)
-            (number))
-          (TRUE))))))
+        (unary_expression
+          (is_expression
+            (binary_expression
+              (number)
+              (number))
+            (TRUE)))))))
 
 ================================================================================
 SELECT expression with function
@@ -483,7 +481,7 @@ SELECT foo(bar, baz) < 10;
   (select_statement
     (select_clause
       (select_clause_body
-        (comparison_operator
+        (binary_expression
           (function_call
             (identifier)
             (identifier)
@@ -517,19 +515,18 @@ SELECT TRUE AND foo(1) OR FALSE AND NOT a = b.c;
   (select_statement
     (select_clause
       (select_clause_body
-        (boolean_expression
-          (boolean_expression
+        (binary_expression
+          (binary_expression
             (TRUE)
             (function_call
               (identifier)
               (number)))
-          (boolean_expression
+          (binary_expression
             (FALSE)
-            (boolean_expression
-              (comparison_operator
-                (identifier)
-                (identifier)
-                ))))))))
+            (unary_expression 
+              (binary_expression
+               (identifier)
+               (identifier)))))))))
 
 ================================================================================
 SELECT parenthesized expression
@@ -557,9 +554,9 @@ SELECT TRUE AND (foo(1) OR FALSE);
   (select_statement
     (select_clause
       (select_clause_body
-        (boolean_expression
+        (binary_expression
           (TRUE)
-          (boolean_expression
+          (binary_expression
             (function_call
               (identifier)
               (number))
@@ -620,7 +617,7 @@ WHERE id < (
     (from_clause
       (identifier))
     (where_clause
-      (comparison_operator
+      (binary_expression
         (identifier)
         (select_subexpression
           (select_statement

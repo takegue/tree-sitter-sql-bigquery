@@ -206,8 +206,8 @@ select
  (select_statement
   (select_clause
    (select_clause_body
-    (query_parameter)
-    (query_parameter)
+    (named_query_parameter)
+    (named_query_parameter)
     ))))
  
 

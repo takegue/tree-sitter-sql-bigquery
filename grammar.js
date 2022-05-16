@@ -1,23 +1,11 @@
 /* eslint-disable no-unused-vars */
 
 const
-  PREC = {
-    primary: 7,
-    unary: 6,
-    multiplicative: 3,
-    additive: 4,
-    comparative: 3,
-    not: 10,
-    and: 2,
-    or: 1,
-    composite_literal: -1,
-  },
-
-  multiplicative_operators = ['*', '/', '%', '&', '&^', kw('AND'), kw('OR')],
+  multiplicative_operators = ['*', '/', '||'],
   shift_operators = ["<<", ">>"]
   comparative_operators = ["<", "<=", "<>", "=", ">", ">=", '!='],
-  additive_operators = ['+', '-', '|', '||'],
-  unary_operators = ['~', '+', '-', kw('NOT')],
+  additive_operators = ['+', '-'],
+  unary_operators = ['~', '+', '-'],
 
   hexDigit = /[0-9a-fA-F]/
 
@@ -34,19 +22,28 @@ module.exports = grammar({
     /[\s\f\uFEFF\u2060\u200B]|\\\r?\n/
   ],
 
-  // precedences: $ => [
-  //   [
-  //     'unary_not',
-  //     'binary_exp',
-  //     'binary_times',
-  //     'binary_plus',
-  //     'binary_in',
-  //     'binary_compare',
-  //     'binary_relation',
-  //     'binary_concat',
-  //     'clause_connective',
-  //   ],
-  // ],
+  // Reference: 
+  //   Operator Precedence: https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#operator_precedence
+  precedences: $ => [
+    [
+      'unary_exp',
+      'binary_exp',
+      'binary_times',
+      'binary_plus',
+      'binary_in',
+      'binary_bitwise_shift',
+      'binary_bitwise_and',
+      'binary_bitwise_xor',
+      'binary_bitwise_or',
+      'binary_compare',
+      'binary_relation',
+      'binary_concat',
+      'binary_and',
+      'binary_or',
+      'unary_not',
+      'clause_connective',
+    ],
+  ],
 
   word: $ => $._unquoted_identifier,
   rules: {
@@ -73,6 +70,8 @@ module.exports = grammar({
     _keyword_returns: _ => kw("RETURNS"),
     _keyword_is: _ => kw("IS"),
     _keyword_not: _ => kw("NOT"),
+    _keyword_and: _ => kw("AND"),
+    _keyword_or: _ => kw("OR"),
 
     option_item: $ => seq(field("key", $.identifier), "=", field("value", $._literal)),
     option_list: $ => seq(token(kw('OPTIONS')), '(', optional(sep1($.option_item, ',')), ')'),
@@ -212,8 +211,8 @@ module.exports = grammar({
         optional($.order_by_clause),
         optional($.limit_clause),
       ),
-    having_clause: ($) => seq(kw("HAVING"), $.boolean_expression),
-    qualify_clause: ($) => seq(kw("QUALIFY"), $.boolean_expression),
+    having_clause: ($) => seq(kw("HAVING"), $._expression),
+    qualify_clause: ($) => seq(kw("QUALIFY"), $._expression),
     limit_clause: ($) => seq(kw("LIMIT"), $._integer, optional(seq(kw("OFFSET"), $._integer))),
     group_by_clause_body: ($) => commaSep1($._expression),
     group_by_clause: ($) => seq(
@@ -238,7 +237,7 @@ module.exports = grammar({
     where_clause: ($) => seq(kw("WHERE"), $._expression),
     _aliasable_expression: ($) =>
       seq($._expression, optional(seq(optional(kw("AS")), $.identifier))),
-    select_clause_body: ($) => seq($._expression, optional(seq(optional(kw("AS")), $.identifier))),
+    select_clause_body: ($) => prec.left(commaSep1($._aliasable_expression)),
     select_clause: ($) =>
       prec.left(seq(kw("SELECT"), optional($.select_clause_body))),
     cte_clause: ($) => seq(
@@ -281,7 +280,7 @@ module.exports = grammar({
     values_clause: ($) => seq(kw("VALUES"), "(", $.values_clause_body, ")"),
     values_clause_body: ($) => commaSep1($._expression),
     in_expression: ($) =>
-      prec.left(1, seq($._expression, optional(kw("NOT")), kw("IN"), $.tuple)),
+      prec.left(1, seq($._expression, optional($._keyword_not), kw("IN"), $.tuple)),
     tuple: ($) =>
       seq(
         // TODO: maybe collapse with function arguments, but make sure to preserve clarity
@@ -425,15 +424,12 @@ module.exports = grammar({
      *                           Operators
      * ********************************************************************/
     _expression: ($) => choice(
-          prec.left(9, $.is_expression),
-          prec.left(10, seq(kw("NOT"), $._expression)),
-          prec.right(-1, seq(choice("+", "~", "-"), $._expression)),
+          $.unary_expression,
           prec(1, $._literal),
           $.function_call,
           $.field_access,
           $.asterisk_expression,
           $.identifier,
-          $.comparison_operator,
           $.unnest_clause,
           $.in_expression,
           $._parenthesized_expression,
@@ -443,35 +439,30 @@ module.exports = grammar({
           $.select_subexpression,
       ),
 
-    comparison_operator: ($) =>
-      prec.left(
-        6,
-        seq(
-          $._expression,
-          field("operator", choice("<", "<=", "<>", "=", ">", ">=")),
-          $._expression,
-        ),
-      ),
     _parenthesized_expression: ($) => prec(20, seq("(", $._expression, ")")),
     array_element_access: ($) =>
       seq(choice($.identifier, $.argument_reference), "[", $._expression, "]"),
 
-    boolean_expression: ($) =>
-      choice(
-        prec.left(4, seq($._expression, kw("AND"), $._expression)),
-        prec.left(3, seq($._expression, kw("OR"), $._expression)),
-      ),
     distinct_from: ($) => prec.left(seq(kw("DISTINCT FROM"), $._expression)),
-    is_expression: $ => seq(
+    is_expression: $ => prec.left('binary_compare', seq(
         $._expression, $._keyword_is, optional($._keyword_not), choice($.NULL, $.TRUE, $.FALSE)
+    )),
+    unary_expression: $ => choice(
+      prec.left('unary_not', seq(field("operator", $._keyword_not), field("value", $._expression))),
+      prec.left('unary_exp', seq(field("operator", choice(...unary_operators)), $._expression)),
+      $.is_expression,
     ),
     binary_expression: $ => {
       const table = [
         // [PREC.multiplicative, choice(...multiplicative_operators)],
-        // [PREC.additive, choice(...additive_operators)],
-        // [PREC.comparative, choice(...comparative_operators)],
-        // [PREC.and, '&&'],
-        [PREC.or, '||'],
+        ["binary_plus", choice(...additive_operators)],
+        ['binary_compare', choice(...comparative_operators)],
+        ['binary_bitwise_shift', choice(...shift_operators)],
+        ['binary_bitwise_and', '&'],
+        ['binary_bitwise_xor', '^'],
+        ['binary_bitwise_or', '|'],
+        ['binary_and', 'AND'],
+        ['binary_or', 'OR'],
       ];
 
       return choice(...table.map(([precedence, operator]) =>
