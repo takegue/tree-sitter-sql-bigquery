@@ -1,7 +1,20 @@
 /* eslint-disable no-unused-vars */
 
-const 
-  multiplicative_operators = ['*', '/', '%', '<<', '>>', '&', '&^', kw('AND'), kw('OR')],
+const
+  PREC = {
+    primary: 7,
+    unary: 6,
+    multiplicative: 3,
+    additive: 4,
+    comparative: 3,
+    not: 10,
+    and: 2,
+    or: 1,
+    composite_literal: -1,
+  },
+
+  multiplicative_operators = ['*', '/', '%', '&', '&^', kw('AND'), kw('OR')],
+  shift_operators = ["<<", ">>"]
   comparative_operators = ["<", "<=", "<>", "=", ">", ">=", '!='],
   additive_operators = ['+', '-', '|', '||'],
   unary_operators = ['~', '+', '-', kw('NOT')],
@@ -20,6 +33,21 @@ module.exports = grammar({
     $.comment,
     /[\s\f\uFEFF\u2060\u200B]|\\\r?\n/
   ],
+
+  // precedences: $ => [
+  //   [
+  //     'unary_not',
+  //     'binary_exp',
+  //     'binary_times',
+  //     'binary_plus',
+  //     'binary_in',
+  //     'binary_compare',
+  //     'binary_relation',
+  //     'binary_concat',
+  //     'clause_connective',
+  //   ],
+  // ],
+
   word: $ => $._unquoted_identifier,
   rules: {
     source_file: ($) => repeat($._statement),
@@ -28,6 +56,7 @@ module.exports = grammar({
         choice(
           $.create_schema_statement,
           $.create_table_statement,
+          $.create_function_statement,
           $.select_statement,
           $.update_statement,
           $.set_statement,
@@ -41,6 +70,9 @@ module.exports = grammar({
     keyword_replace: _ => kw("OR REPLACE"),
     _keyword_struct: _ => kw("STRUCT"),
     _keyword_array: _ => kw("ARRAY"),
+    _keyword_returns: _ => kw("RETURNS"),
+    _keyword_is: _ => kw("IS"),
+    _keyword_not: _ => kw("NOT"),
 
     option_item: $ => seq(field("key", $.identifier), "=", field("value", $._literal)),
     option_list: $ => seq(token(kw('OPTIONS')), '(', optional(sep1($.option_item, ',')), ')'),
@@ -96,6 +128,24 @@ module.exports = grammar({
     ),
     table_partition_clause: $ => seq(kw('PARTITION BY'), $.partition_expression),
     table_cluster_clause: $ => seq(kw('CLUSTER BY'), sep1($._expression, ',')),
+
+    create_function_statement: ($) => seq(
+      kw("CREATE"),
+      optional($.keyword_replace),
+      optional($.keyword_temporary),
+      kw("FUNCTION"),
+      optional($.keyword_if_not_exists),
+      field("name", $.identifier),
+      $.create_function_parameters,
+      optional($.column_type),
+      optional($.option_list),
+      optional(alias(seq($._keyword_returns, $._type), "$.returns")),
+      kw("AS"), "(", choice(
+        seq("(", $.select_subexpression ,")")
+      ), ")",
+    ),
+    create_function_parameters: ($) => seq("(", commaSep1($.column_definition), ")"),
+
     // create_function_statement: ($) =>
     //   seq(
     //     createOrReplace("FUNCTION"),
@@ -186,11 +236,9 @@ module.exports = grammar({
     order_by_clause_body: ($) => commaSep1(seq($._expression, optional($._direction_keywords))),
     order_by_clause: ($) => seq(kw("ORDER BY"), $.order_by_clause_body),
     where_clause: ($) => seq(kw("WHERE"), $._expression),
-    _aliased_expression: ($) =>
-      seq($._expression, optional(kw("AS")), $.identifier),
     _aliasable_expression: ($) =>
-      choice($._expression, alias($._aliased_expression, $.alias)),
-    select_clause_body: ($) => prec.left(commaSep1($._aliasable_expression)),
+      seq($._expression, optional(seq(optional(kw("AS")), $.identifier))),
+    select_clause_body: ($) => seq($._expression, optional(seq(optional(kw("AS")), $.identifier))),
     select_clause: ($) =>
       prec.left(seq(kw("SELECT"), optional($.select_clause_body))),
     cte_clause: ($) => seq(
@@ -241,34 +289,6 @@ module.exports = grammar({
         field("elements", commaSep1($._expression)),
         ")",
       ),
-    // TODO: named constraints
-    references_constraint: ($) =>
-      seq(
-        kw("REFERENCES"),
-        $.identifier,
-        optional(seq("(", commaSep1($.identifier), ")")),
-        // seems like a case for https://github.com/tree-sitter/tree-sitter/issues/130
-        optional(
-          choice(
-            seq($.on_update_action, $.on_delete_action),
-            seq($.on_delete_action, $.on_update_action),
-          ),
-        ),
-      ),
-    on_update_action: ($) =>
-      seq(kw("ON UPDATE"), field("action", $._constraint_action)),
-    on_delete_action: ($) =>
-      seq(kw("ON DELETE"), field("action", $._constraint_action)),
-    _constraint_action: ($) =>
-      choice(kw("RESTRICT"), kw("CASCADE"), kw("SET NULL")),
-    unique_constraint: ($) => kw("UNIQUE"),
-    null_constraint: ($) => seq(optional(kw("NOT")), $.NULL),
-    check_constraint: ($) => seq(kw("CHECK"), $._expression),
-    _constraint: ($) =>
-      seq(
-        choice($.null_constraint, $.check_constraint),
-        optional($.check_constraint),
-      ),
     parameter: ($) => seq($.identifier, $._type),
     parameters: ($) => seq("(", commaSep1($.parameter), ")"),
     function_call: ($) =>
@@ -289,40 +309,29 @@ module.exports = grammar({
       , optional($.unnest_withoffset)
     )),
     unnest_withoffset: $ => prec.left(2, seq(kw("WITH OFFSET"), optional(seq(kw("AS"), $._identifier)))),
-    comparison_operator: ($) =>
-      prec.left(
-        6,
-        seq(
-          $._expression,
-          field("operator", choice("<", "<=", "<>", "=", ">", ">=")),
-          $._expression,
-        ),
-      ),
-    _parenthesized_expression: ($) => prec(10, seq("(", $._expression, ")")),
-    is_expression: ($) =>
-      prec.left(
-        1,
-        seq(
-          $._expression,
-          kw("IS"),
-          optional(kw("NOT")),
-          choice($.NULL, $.TRUE, $.FALSE, $.distinct_from),
-        ),
-      ),
-    distinct_from: ($) => prec.left(seq(kw("DISTINCT FROM"), $._expression)),
-    boolean_expression: ($) =>
+    /* *******************************************************************
+     *                           Literals
+     * ********************************************************************/
+    _literal: ($) =>
       choice(
-        prec.left(5, seq(kw("NOT"), $._expression)),
-        prec.left(4, seq($._expression, kw("AND"), $._expression)),
-        prec.left(3, seq($._expression, kw("OR"), $._expression)),
+        $.named_query_parameter,
+        $.positional_query_parameter,
+        $.array,
+        $.struct,
+        $.time,
+        $.string,
+        $.TRUE,
+        $.FALSE,
+        $.NULL,
+        $.number,
       ),
-    NULL: ($) => kw("NULL"),
-    TRUE: ($) => kw("TRUE"),
-    FALSE: ($) => kw("FALSE"),
-    _integer: ($) => /\d+/,
+    NULL: _ => kw("NULL"),
+    TRUE: _ => kw("TRUE"),
+    FALSE: _ => kw("FALSE"),
+    _integer: _ => /[-+]?\d+/,
     _float: ($) =>
       choice(
-        /[+-]?\d+\.(\d*)([eE][+-]?\d+)?/,
+        /[-+]?\d+\.(\d*)([eE][+-]?\d+)?/,
         /(\d+)?\.\d+([eE][+-]?\d+)?/,
         /\d+[eE][+-]?\d+/,
       ),
@@ -356,19 +365,8 @@ module.exports = grammar({
         $.string,
       ),
     number: ($) => $._number,
-    query_parameter: ($) => /@+[_a-zA-Z][_a-zA-Z0-9]*/,
-    _literal: ($) =>
-      choice(
-        $.query_parameter,
-        $.array,
-        $.struct,
-        $.time,
-        $.string,
-        $.TRUE,
-        $.FALSE,
-        $.NULL,
-        $.number,
-      ),
+    named_query_parameter: _ => /@+[_a-zA-Z][_a-zA-Z0-9]*/,
+    positional_query_parameter: _ => /\?/,
     _type_struct: ($) => seq(
       kw("STRUCT"),
       optional(seq("<", commaSep1(
@@ -401,7 +399,7 @@ module.exports = grammar({
     _identifier: ($) => choice($._quoted_identifier, $._unquoted_identifier),
     _dotted_identifier: ($) => seq($._identifier, token.immediate(".")),
     identifier: ($) =>
-      prec.right(1, seq(repeat($._dotted_identifier), $._identifier)),
+      prec.right(seq(repeat(($._dotted_identifier)), $._identifier)),
     type: ($) => seq($.identifier, optional(seq("(", $.number, ")"))),
     string: ($) =>
       alias(
@@ -423,38 +421,70 @@ module.exports = grammar({
       token(
         choice(seq("#", /.*/), seq("--", /.*/), seq("/*", /[^*]*\*+([^/*][^*]*\*+)*/, "/")),
       ),
-    array_element_access: ($) =>
-      seq(choice($.identifier, $.argument_reference), "[", $._expression, "]"),
-    binary_expression: ($) =>
-      prec.left(
-        choice(
-          seq($._expression, "~", $._expression),
-          seq($._expression, "+", $._expression),
-        ),
-      ),
-    asterisk_expression: ($) => seq(optional($._dotted_identifier), "*"),
-    argument_reference: ($) => seq("$", /\d+/),
-    _expression: ($) =>
-      prec(
-        10,
-        choice(
+    /* *******************************************************************
+     *                           Operators
+     * ********************************************************************/
+    _expression: ($) => choice(
+          prec.left(9, $.is_expression),
+          prec.left(10, seq(kw("NOT"), $._expression)),
+          prec.right(-1, seq(choice("+", "~", "-"), $._expression)),
+          prec(1, $._literal),
           $.function_call,
           $.field_access,
-          $._literal,
           $.asterisk_expression,
           $.identifier,
           $.comparison_operator,
           $.unnest_clause,
           $.in_expression,
-          $.is_expression,
-          $.boolean_expression,
           $._parenthesized_expression,
           $.binary_expression,
           $.array_element_access,
           $.argument_reference,
           $.select_subexpression,
+      ),
+
+    comparison_operator: ($) =>
+      prec.left(
+        6,
+        seq(
+          $._expression,
+          field("operator", choice("<", "<=", "<>", "=", ">", ">=")),
+          $._expression,
         ),
       ),
+    _parenthesized_expression: ($) => prec(20, seq("(", $._expression, ")")),
+    array_element_access: ($) =>
+      seq(choice($.identifier, $.argument_reference), "[", $._expression, "]"),
+
+    boolean_expression: ($) =>
+      choice(
+        prec.left(4, seq($._expression, kw("AND"), $._expression)),
+        prec.left(3, seq($._expression, kw("OR"), $._expression)),
+      ),
+    distinct_from: ($) => prec.left(seq(kw("DISTINCT FROM"), $._expression)),
+    is_expression: $ => seq(
+        $._expression, $._keyword_is, optional($._keyword_not), choice($.NULL, $.TRUE, $.FALSE)
+    ),
+    binary_expression: $ => {
+      const table = [
+        // [PREC.multiplicative, choice(...multiplicative_operators)],
+        // [PREC.additive, choice(...additive_operators)],
+        // [PREC.comparative, choice(...comparative_operators)],
+        // [PREC.and, '&&'],
+        [PREC.or, '||'],
+      ];
+
+      return choice(...table.map(([precedence, operator]) =>
+        prec.left(precedence, seq(
+          field('left', $._expression),
+          field('operator', operator),
+          field('right', $._expression)
+        ))
+      ));
+    },
+
+    asterisk_expression: ($) => seq(optional($._dotted_identifier), "*"),
+    argument_reference: ($) => seq("$", /\d+/),
   },
 });
 
