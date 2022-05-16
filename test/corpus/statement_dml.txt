@@ -234,6 +234,23 @@ AS (x * y);
 
 --------------------------------------------------------------------------------
 
+  (source_file
+    (create_function_statement
+      (identifier)
+      (create_function_parameters
+        (create_function_parameter
+          (identifier)
+          (type
+            (identifier)))
+        (create_function_parameter
+          (identifier)
+          (type
+            (identifier))))
+      (type
+        (identifier))
+      (binary_expression
+        (identifier)
+        (identifier))))
 
 ================================================================================
 DML: CREATE FUNCTION with Javascript UDF
@@ -248,3 +265,20 @@ AS r"""
 
 --------------------------------------------------------------------------------
 
+(source_file
+  (create_function_statement
+    (keyword_temporary)
+    (identifier)
+    (create_function_parameters
+      (create_function_parameter
+        (identifier)
+        (type
+          (identifier)))
+      (create_function_parameter
+        (identifier)
+        (type
+          (identifier))))
+    (type
+      (identifier))
+    (language)
+    (string)))

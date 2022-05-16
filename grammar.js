@@ -427,6 +427,7 @@ module.exports = grammar({
      * ********************************************************************/
     _expression: ($) => choice(
           $.unary_expression,
+          // $.ternary_expression,
           prec(1, $._literal),
           $.function_call,
           $.field_access,
@@ -451,7 +452,14 @@ module.exports = grammar({
       prec.left('unary_exp', seq(field("operator", kw('EXISTS')), $.select_subexpression)),
       prec.left('binary_compare', seq(
         $._expression, $._keyword_is, optional($._keyword_not), choice($.NULL, $.TRUE, $.FALSE)
-    )),
+      )),
+    ),
+    ternary_expression: $ => choice(
+        prec.left('operator_compare', seq(
+          $._expression,
+          optional($._keyword_not), kw("BETWEEN"),
+          $._expression, $._keyword_and, $._expression
+        ))
     ),
     binary_expression: $ => {
       const table = [
