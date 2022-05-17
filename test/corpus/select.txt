@@ -533,3 +533,21 @@ select * from unnest(field_path) as hoge with offset;
     (unnest_withoffset))
    ))
  )
+
+================================================================================
+TABLESAMPLE operator
+================================================================================
+
+SELECT * FROM dataset.my_table TABLESAMPLE SYSTEM (10 PERCENT)
+
+--------------------------------------------------------------------------------
+
+(source_file
+    (select_statement
+    (select_clause
+        (select_clause_body
+        (asterisk_expression)))
+    (from_clause
+        (from_item
+        (identifier))
+        (tablesample_operator))))

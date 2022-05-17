@@ -46,18 +46,7 @@ module.exports = grammar({
   word: $ => $._unquoted_identifier,
   rules: {
     source_file: ($) => repeat($._statement),
-    _statement: ($) =>
-      seq(
-        choice(
-          $.create_schema_statement,
-          $.create_table_statement,
-          $.create_function_statement,
-          $.select_statement,
-          $.update_statement,
-          $.insert_statement,
-        ),
-        optional(";"),
-      ),
+
     keyword_if_not_exists: _ => kw('IF NOT EXISTS'),
     keyword_temporary: _ => choice(kw('TEMP'), kw('TEMPORARY')),
     keyword_replace: _ => kw("OR REPLACE"),
@@ -72,8 +61,21 @@ module.exports = grammar({
     _keyword_like: _ => kw("LIKE"),
 
     /**************************************************************************
-     *                              Statement
+     *                              Statements
      ***************************************************************************/
+
+    _statement: ($) =>
+      seq(
+        choice(
+          $.create_schema_statement,
+          $.create_table_statement,
+          $.create_function_statement,
+          $.select_statement,
+          $.update_statement,
+          $.insert_statement,
+        ),
+        optional(";"),
+      ),
 
     option_item: $ => seq(field("key", $.identifier), "=", field("value", $._literal)),
     option_list: $ => seq(token(kw('OPTIONS')), '(', optional(sep1($.option_item, ',')), ')'),
@@ -194,7 +196,6 @@ module.exports = grammar({
       ),
 
     _direction_keywords: (_) => choice(kw("ASC"), kw("DESC")),
-    using_clause: ($) => seq(kw("USING"), field("type", $.identifier)),
 
     // SELECT
     select_statement: ($) =>
@@ -202,7 +203,6 @@ module.exports = grammar({
         optional($.cte_clause),
         $.select_clause,
         optional($.from_clause),
-        optional(repeat($.join_clause)),
         optional($.where_clause),
         optional($.group_by_clause),
         optional($.having_clause),
@@ -238,6 +238,12 @@ module.exports = grammar({
       seq($._expression, optional(kw("AS")), $.identifier),
     _aliasable_expression: $ =>
       choice($._expression, alias($._aliased_expression, $.alias)),
+
+    _aliased_identifier: $ =>
+      prec(10, seq(field("table_name", $.identifier), optional(kw("AS")), $.identifier)),
+    _aliasable_identifier: $ =>
+      choice(field("table_name", $.identifier), alias($._aliased_identifier, $.alias)),
+
     select_clause_body: ($) => prec.left(commaSep1($._aliasable_expression)),
     select_clause: ($) =>
       prec.left(seq(kw("SELECT"), optional($.select_clause_body))),
@@ -245,26 +251,53 @@ module.exports = grammar({
         kw("WITH"),
         commaSep1(seq($.identifier, kw("AS"), $.select_clause_body)),
       ),
-    from_clause: ($) => seq(kw("FROM"), commaSep1($._aliasable_expression)),
+    from_clause: ($) => seq(kw("FROM"), seq(
+      $.from_item,
+      optional($.tablesample_operator),
+    )),
+    tablesample_operator: $ => seq(kw("TABLESAMPLE SYSTEM"), "(", field("sample_rate", choice($._integer, $.query_parameter)), kw("PERCENT"),")"),
+    // TODO: pivot_operators, unpivot_operators
+    from_item: $ => seq(
+      choice(
+        $._aliasable_identifier,
+        //TODO: add fucntion call subexpression
+        // $._aliased_expression,
+        // $.select_subexpression,
+        $.unnest_clause,
+        $.join_opereation,
+        seq("(", $.join_opereation, ")")
+      )
+    ),
+    join_opereation: $ => choice(
+      $.cross_join_operation, $.condition_join_operator
+    ),
     join_type: ($) =>
       seq(
         choice(
           kw("INNER"),
-          kw("CROSS"),
           seq(
             choice(kw("LEFT"), kw("RIGHT"), kw("FULL")),
             optional(kw("OUTER")),
           ),
         ),
       ),
-    join_clause: ($) =>
+    cross_join_operation: $ => prec.left("clause_connective", seq(
+        $.from_item,
+        choice(kw("CROSS JOIN"), ","),
+        $.from_item
+    )),
+    condition_join_operator: $ =>
       seq(
+        $.from_item,
         optional($.join_type),
         kw("JOIN"),
-        $.identifier,
-        kw("ON"),
-        $._expression,
+        $.from_item,
+        choice(
+          seq(kw("ON"), $._expression),
+          seq(kw("USING"), "(", repeat1(field("keys", $.identifier)), ")"),
+        )
       ),
+
     select_subexpression: ($) => seq("(", $.select_statement, ")"),
 
     // UPDATE
@@ -307,13 +340,13 @@ module.exports = grammar({
       , optional($.unnest_withoffset)
     )),
     unnest_withoffset: $ => prec.left(2, seq(kw("WITH OFFSET"), optional(seq(kw("AS"), $._identifier)))),
+
     /* *******************************************************************
      *                           Literals
      * ********************************************************************/
     _literal: ($) =>
       choice(
-        $.named_query_parameter,
-        $.positional_query_parameter,
+        $.query_parameter,
         $.array,
         $.struct,
         $.time,
@@ -363,8 +396,9 @@ module.exports = grammar({
         $.string,
       ),
     number: ($) => $._number,
-    named_query_parameter: _ => /@+[_a-zA-Z][_a-zA-Z0-9]*/,
-    positional_query_parameter: _ => /\?/,
+    query_parameter: $ => choice($._named_query_parameter, $._positional_query_parameter),
+    _named_query_parameter: _ => /@+[_a-zA-Z][_a-zA-Z0-9]*/,
+    _positional_query_parameter: _ => /\?/,
     _type_struct: ($) => seq(
       kw("STRUCT"),
       optional(seq("<", commaSep1(
