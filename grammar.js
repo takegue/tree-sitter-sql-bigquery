@@ -54,7 +54,6 @@ module.exports = grammar({
           $.create_function_statement,
           $.select_statement,
           $.update_statement,
-          $.set_statement,
           $.insert_statement,
         ),
         optional(";"),
@@ -71,6 +70,10 @@ module.exports = grammar({
     _keyword_and: _ => kw("AND"),
     _keyword_or: _ => kw("OR"),
     _keyword_like: _ => kw("LIKE"),
+
+    /**************************************************************************
+     *                              Statement
+     ***************************************************************************/
 
     option_item: $ => seq(field("key", $.identifier), "=", field("value", $._literal)),
     option_list: $ => seq(token(kw('OPTIONS')), '(', optional(sep1($.option_item, ',')), ')'),
@@ -105,7 +108,7 @@ module.exports = grammar({
       kw("CREATE"),
       optional($.keyword_replace),
       optional($.keyword_temporary),
-      kw("TABLE"),
+      choice(kw("TABLE"), kw("VIEW"), kw("MATERIALIZED VIEW")),
       optional($.keyword_if_not_exists),
       field("name", $.identifier),
       optional($.create_table_parameters),
@@ -114,6 +117,7 @@ module.exports = grammar({
       optional($.option_list),
       optional(seq(kw("AS"), $.select_statement)),
     ),
+
     create_table_parameters: ($) => seq("(", commaSep1($.column_definition), ")"),
 
     partition_expression: $ => choice(
@@ -135,7 +139,6 @@ module.exports = grammar({
       optional($.keyword_if_not_exists),
       field("name", $.identifier),
       $.create_function_parameters,
-      optional($.column_type),
       optional($.option_list),
       choice(
         // SQL UDF
@@ -153,19 +156,31 @@ module.exports = grammar({
         )
       )
     ),
-    create_function_parameters: ($) => seq("(", commaSep1($.column_definition), ")"),
 
+    create_table_function_function_statement: ($) => seq(
+      kw("CREATE"),
+      optional($.keyword_replace),
+      kw("TABLE FUNCTION"),
+      optional($.keyword_if_not_exists),
+      field("name", $.identifier),
+      alias($.create_function_parameters, "$.create_table_function_parameters"),
+      optional($.column_type),
+      optional($.option_list),
+      seq(
+        optional(alias(seq($._keyword_returns, kw("TABLE"), $.column_definition), "$.returns")),
+        kw("AS"), "(", choice(
+          seq(kw("AS"), $.select_statement),
+        ), ")",
+      )
+    ),
+
+    create_function_parameters: ($) => seq("(", commaSep1($.column_definition), ")"),
     _function_language: ($) =>
       seq(kw("LANGUAGE"), alias($._unquoted_identifier, $.language)),
     create_function_parameter: ($) =>
       seq(
-        field(
-          "argmode",
-          optional(choice($._keyword_in, kw("OUT"), kw("INOUT"), kw("VARIADIC"))),
-        ),
         optional($.identifier),
         choice($._type),
-        optional(seq("=", alias($._expression, $.default))),
       ),
     create_function_parameters: ($) =>
       seq("(", commaSep1($.create_function_parameter), ")"),
@@ -177,18 +192,9 @@ module.exports = grammar({
           seq("'", $.select_statement, optional(";"), "'"),
         ),
       ),
-    set_statement: ($) =>
-      seq(
-        kw("SET"),
-        field("scope", optional(choice(kw("SESSION"), kw("LOCAL")))),
-        $.identifier,
-        choice("=", kw("TO")),
-        choice($._expression, kw("DEFAULT")),
-      ),
+
     _direction_keywords: (_) => choice(kw("ASC"), kw("DESC")),
     using_clause: ($) => seq(kw("USING"), field("type", $.identifier)),
-    index_table_parameters: ($) =>
-      seq("(", commaSep1(choice($._expression, $.ordered_expression)), ")"),
 
     // SELECT
     select_statement: ($) =>
