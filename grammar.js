@@ -59,6 +59,7 @@ module.exports = grammar({
     _keyword_and: _ => kw("AND"),
     _keyword_or: _ => kw("OR"),
     _keyword_like: _ => kw("LIKE"),
+    _keyword_as: _ => kw("AS"),
 
     /**************************************************************************
      *                              Statements
@@ -117,7 +118,7 @@ module.exports = grammar({
       optional($.table_partition_clause),
       optional($.table_cluster_clause),
       optional($.option_list),
-      optional(seq(kw("AS"), $.select_statement)),
+      optional(seq($._keyword_as, $.select_statement)),
     ),
 
     create_table_parameters: ($) => seq("(", commaSep1($.column_definition), ")"),
@@ -146,7 +147,7 @@ module.exports = grammar({
         // SQL UDF
         seq(
           optional(alias(seq($._keyword_returns, $._type), "$.returns")),
-          kw("AS"), "(", choice(
+          $._keyword_as, "(", choice(
             $._expression
           ), ")",
         ),
@@ -154,7 +155,7 @@ module.exports = grammar({
         seq(
           alias(seq($._keyword_returns, $._type), "$.returns"),
           $._function_language,
-          kw("AS"), $.string
+          $._keyword_as, $.string
         )
       )
     ),
@@ -170,8 +171,8 @@ module.exports = grammar({
       optional($.option_list),
       seq(
         optional(alias(seq($._keyword_returns, kw("TABLE"), $.column_definition), "$.returns")),
-        kw("AS"), "(", choice(
-          seq(kw("AS"), $.select_statement),
+        $._keyword_as, "(", choice(
+          seq($._keyword_as, $.select_statement),
         ), ")",
       )
     ),
@@ -188,14 +189,14 @@ module.exports = grammar({
       seq("(", commaSep1($.create_function_parameter), ")"),
     function_body: ($) =>
       seq(
-        kw("AS"),
+        $._keyword_as,
         choice(
           seq("$$", $.select_statement, optional(";"), "$$"),
           seq("'", $.select_statement, optional(";"), "'"),
         ),
       ),
 
-    _direction_keywords: (_) => choice(kw("ASC"), kw("DESC")),
+    _direction_keywords: (_) => field("order", choice(kw("ASC"), kw("DESC"))),
 
     // SELECT
     select_statement: ($) =>
@@ -227,7 +228,7 @@ module.exports = grammar({
       optional($.order_by_clause)
     ),
     named_window_expression: ($) => seq(
-      $.identifier, kw("AS"), 
+      $.identifier, $._keyword_as, 
       choice($.identifier, $.window_specification)
     ),
     window_clause: ($) => seq(kw("WINDOW"), $.named_window_expression),
@@ -235,21 +236,18 @@ module.exports = grammar({
     order_by_clause: ($) => seq(kw("ORDER BY"), $.order_by_clause_body),
     where_clause: ($) => seq(kw("WHERE"), $._expression),
     _aliased_expression: $ =>
-      seq($._expression, optional(kw("AS")), $.identifier),
+      seq($._expression, optional($._keyword_as), $.identifier),
     _aliasable_expression: $ =>
       choice($._expression, alias($._aliased_expression, $.alias)),
 
-    _aliased_identifier: $ =>
-      prec(10, seq(field("table_name", $.identifier), optional(kw("AS")), $.identifier)),
-    _aliasable_identifier: $ =>
-      choice(field("table_name", $.identifier), alias($._aliased_identifier, $.alias)),
+    as_alias: $ => seq(optional("AS"), field("alias_name", $.identifier)),
 
     select_clause_body: ($) => prec.left(commaSep1($._aliasable_expression)),
     select_clause: ($) =>
       prec.left(seq(kw("SELECT"), optional($.select_clause_body))),
     cte_clause: ($) => seq(
         kw("WITH"),
-        commaSep1(seq($.identifier, kw("AS"), $.select_clause_body)),
+        commaSep1(seq($.identifier, $._keyword_as, $.select_clause_body)),
       ),
     from_clause: ($) => seq(kw("FROM"), seq(
       $.from_item,
@@ -259,17 +257,16 @@ module.exports = grammar({
     // TODO: pivot_operators, unpivot_operators
     from_item: $ => seq(
       choice(
-        $._aliasable_identifier,
+        seq(field("table_name", $.identifier), optional($.as_alias)),
         //TODO: add fucntion call subexpression
-        // $._aliased_expression,
-        // $.select_subexpression,
+        seq($.select_subexpression, optional($.as_alias)),
         $.unnest_clause,
-        $.join_opereation,
-        seq("(", $.join_opereation, ")")
+        $.join_operation,
+        seq("(", $.join_operation, ")")
       )
     ),
-    join_opereation: $ => choice(
-      $.cross_join_operation, $.condition_join_operator
+    join_operation: $ => choice(
+      $._cross_join_operation, $._condition_join_operator
     ),
     join_type: ($) =>
       seq(
@@ -281,12 +278,12 @@ module.exports = grammar({
           ),
         ),
       ),
-    cross_join_operation: $ => prec.left("clause_connective", seq(
+    _cross_join_operation: $ => prec.left("clause_connective", seq(
         $.from_item,
-        choice(kw("CROSS JOIN"), ","),
+        field("operator", choice(kw("CROSS JOIN"), ",")),
         $.from_item
     )),
-    condition_join_operator: $ =>
+    _condition_join_operator: $ =>
       seq(
         $.from_item,
         optional($.join_type),
@@ -336,10 +333,10 @@ module.exports = grammar({
     ),
     unnest_clause: ($) => prec.right(50, seq(
       $.unnest_operator
-      , optional(seq(kw("AS"), $.identifier))
+      , optional(seq($._keyword_as, $.identifier))
       , optional($.unnest_withoffset)
     )),
-    unnest_withoffset: $ => prec.left(2, seq(kw("WITH OFFSET"), optional(seq(kw("AS"), $._identifier)))),
+    unnest_withoffset: $ => prec.left(2, seq(kw("WITH OFFSET"), optional(seq($._keyword_as, $._identifier)))),
 
     /* *******************************************************************
      *                           Literals
@@ -444,8 +441,7 @@ module.exports = grammar({
         "_string",
       ),
     // field_access: ($) => seq($.identifier, "->>", $.string),
-    ordered_expression: ($) =>
-      seq($._expression, field("order", choice(kw("ASC"), kw("DESC")))),
+    ordered_expression: ($) => seq($._expression, $._direction_keywords),
     array_type: ($) => seq($._type, "[", "]"),
     _type: ($) => choice($.type, $.array_type),
     // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890

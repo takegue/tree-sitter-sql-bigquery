@@ -79,4 +79,5 @@ FROM my_table;
         (identifier)))
     (comment)
     (from_clause
-        (identifier))))
+      (from_item 
+        (identifier)))))

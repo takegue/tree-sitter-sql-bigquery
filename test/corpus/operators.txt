@@ -96,7 +96,7 @@ SELECT EXISTS ( SELECT value FROM Words WHERE direction = 'south' ) as result;
          (select_clause_body
           (identifier)))
         (from_clause
-         (identifier))
+         (from_item (identifier)))
         (where_clause
          (binary_expression
           (identifier)
@@ -191,7 +191,7 @@ SELECT a IS TRUE, b IS NOT NULL, c IS FALSE;
 OPERATORS: field
 ================================================================================
 
-SELECT foo.bar FROM a;
+SELECT foo.bar;
 
 --------------------------------------------------------------------------------
 
@@ -199,9 +199,7 @@ SELECT foo.bar FROM a;
   (select_statement
     (select_clause
       (select_clause_body
-        (identifier)))
-    (from_clause
-      (identifier))))
+        (identifier)))))
 
 ================================================================================
 OPERATORS: statement with comparison expression and is expression

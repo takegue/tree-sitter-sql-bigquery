@@ -1,8 +1,54 @@
 [
   {
-    "type": "$.returns",
+    "type": "$.create_table_function_parameters",
     "named": false,
     "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "create_function_parameter",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "$.returns",
+    "named": false,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "option": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "option_list",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "column_type",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": false,
       "required": false,
@@ -82,15 +128,11 @@
           "named": true
         },
         {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
-          "type": "positional_query_parameter",
+          "type": "query_parameter",
           "named": true
         },
         {
@@ -150,15 +192,11 @@
           "named": true
         },
         {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
-          "type": "positional_query_parameter",
+          "type": "query_parameter",
           "named": true
         },
         {
@@ -225,15 +263,11 @@
           "named": true
         },
         {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
-          "type": "positional_query_parameter",
+          "type": "query_parameter",
           "named": true
         },
         {
@@ -280,6 +314,22 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "as_alias",
+    "named": true,
+    "fields": {
+      "alias_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -331,15 +381,11 @@
           "named": true
         },
         {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
-          "type": "positional_query_parameter",
+          "type": "query_parameter",
           "named": true
         },
         {
@@ -431,15 +477,11 @@
             "named": true
           },
           {
-            "type": "named_query_parameter",
-            "named": true
-          },
-          {
             "type": "number",
             "named": true
           },
           {
-            "type": "positional_query_parameter",
+            "type": "query_parameter",
             "named": true
           },
           {
@@ -623,15 +665,11 @@
             "named": true
           },
           {
-            "type": "named_query_parameter",
-            "named": true
-          },
-          {
             "type": "number",
             "named": true
           },
           {
-            "type": "positional_query_parameter",
+            "type": "query_parameter",
             "named": true
           },
           {
@@ -716,40 +754,13 @@
   {
     "type": "create_function_parameter",
     "named": true,
-    "fields": {
-      "argmode": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "IN",
-            "named": false
-          },
-          {
-            "type": "INOUT",
-            "named": false
-          },
-          {
-            "type": "OUT",
-            "named": false
-          },
-          {
-            "type": "VARIADIC",
-            "named": false
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
       "required": true,
       "types": [
         {
           "type": "array_type",
-          "named": true
-        },
-        {
-          "type": "default",
           "named": true
         },
         {
@@ -830,10 +841,6 @@
           "named": true
         },
         {
-          "type": "column_type",
-          "named": true
-        },
-        {
           "type": "create_function_parameters",
           "named": true
         },
@@ -862,10 +869,6 @@
           "named": true
         },
         {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
@@ -874,7 +877,7 @@
           "named": true
         },
         {
-          "type": "positional_query_parameter",
+          "type": "query_parameter",
           "named": true
         },
         {
@@ -1023,93 +1026,6 @@
     }
   },
   {
-    "type": "default",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "FALSE",
-          "named": true
-        },
-        {
-          "type": "NULL",
-          "named": true
-        },
-        {
-          "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "argument_reference",
-          "named": true
-        },
-        {
-          "type": "array",
-          "named": true
-        },
-        {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "positional_query_parameter",
-          "named": true
-        },
-        {
-          "type": "select_subexpression",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "struct",
-          "named": true
-        },
-        {
-          "type": "time",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
-          "named": true
-        },
-        {
-          "type": "unnest_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "from_clause",
     "named": true,
     "fields": {},
@@ -1118,79 +1034,45 @@
       "required": true,
       "types": [
         {
-          "type": "FALSE",
+          "type": "from_item",
           "named": true
         },
         {
-          "type": "NULL",
+          "type": "tablesample_operator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "from_item",
+    "named": true,
+    "fields": {
+      "table_name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "as_alias",
           "named": true
         },
         {
-          "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "alias",
-          "named": true
-        },
-        {
-          "type": "argument_reference",
-          "named": true
-        },
-        {
-          "type": "array",
-          "named": true
-        },
-        {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "positional_query_parameter",
+          "type": "join_operation",
           "named": true
         },
         {
           "type": "select_subexpression",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "struct",
-          "named": true
-        },
-        {
-          "type": "time",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
           "named": true
         },
         {
@@ -1261,15 +1143,11 @@
             "named": true
           },
           {
-            "type": "named_query_parameter",
-            "named": true
-          },
-          {
             "type": "number",
             "named": true
           },
           {
-            "type": "positional_query_parameter",
+            "type": "query_parameter",
             "named": true
           },
           {
@@ -1374,15 +1252,11 @@
           "named": true
         },
         {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
-          "type": "positional_query_parameter",
+          "type": "query_parameter",
           "named": true
         },
         {
@@ -1461,15 +1335,11 @@
           "named": true
         },
         {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
-          "type": "positional_query_parameter",
+          "type": "query_parameter",
           "named": true
         },
         {
@@ -1524,9 +1394,34 @@
     }
   },
   {
-    "type": "join_clause",
+    "type": "join_operation",
     "named": true,
-    "fields": {},
+    "fields": {
+      "keys": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "operator": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "CROSS_JOIN",
+            "named": false
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -1564,6 +1459,10 @@
           "named": true
         },
         {
+          "type": "from_item",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1576,15 +1475,11 @@
           "named": true
         },
         {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
-          "type": "positional_query_parameter",
+          "type": "query_parameter",
           "named": true
         },
         {
@@ -1713,15 +1608,11 @@
             "named": true
           },
           {
-            "type": "named_query_parameter",
-            "named": true
-          },
-          {
             "type": "number",
             "named": true
           },
           {
-            "type": "positional_query_parameter",
+            "type": "query_parameter",
             "named": true
           },
           {
@@ -1773,7 +1664,22 @@
   {
     "type": "order_by_clause_body",
     "named": true,
-    "fields": {},
+    "fields": {
+      "order": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "ASC",
+            "named": false
+          },
+          {
+            "type": "DESC",
+            "named": false
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -1819,117 +1725,11 @@
           "named": true
         },
         {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
-          "type": "positional_query_parameter",
-          "named": true
-        },
-        {
-          "type": "select_subexpression",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "struct",
-          "named": true
-        },
-        {
-          "type": "time",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
-          "named": true
-        },
-        {
-          "type": "unnest_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "ordered_expression",
-    "named": true,
-    "fields": {
-      "order": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "ASC",
-            "named": false
-          },
-          {
-            "type": "DESC",
-            "named": false
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "FALSE",
-          "named": true
-        },
-        {
-          "type": "NULL",
-          "named": true
-        },
-        {
-          "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "argument_reference",
-          "named": true
-        },
-        {
-          "type": "array",
-          "named": true
-        },
-        {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "positional_query_parameter",
+          "type": "query_parameter",
           "named": true
         },
         {
@@ -2031,15 +1831,11 @@
           "named": true
         },
         {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
-          "type": "positional_query_parameter",
+          "type": "query_parameter",
           "named": true
         },
         {
@@ -2118,15 +1914,11 @@
           "named": true
         },
         {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
-          "type": "positional_query_parameter",
+          "type": "query_parameter",
           "named": true
         },
         {
@@ -2155,6 +1947,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "query_parameter",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "select_clause",
@@ -2224,15 +2021,11 @@
           "named": true
         },
         {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
-          "type": "positional_query_parameter",
+          "type": "query_parameter",
           "named": true
         },
         {
@@ -2284,10 +2077,6 @@
         },
         {
           "type": "having_clause",
-          "named": true
-        },
-        {
-          "type": "join_clause",
           "named": true
         },
         {
@@ -2359,108 +2148,6 @@
     }
   },
   {
-    "type": "set_statement",
-    "named": true,
-    "fields": {
-      "scope": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "LOCAL",
-            "named": false
-          },
-          {
-            "type": "SESSION",
-            "named": false
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "FALSE",
-          "named": true
-        },
-        {
-          "type": "NULL",
-          "named": true
-        },
-        {
-          "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "argument_reference",
-          "named": true
-        },
-        {
-          "type": "array",
-          "named": true
-        },
-        {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "positional_query_parameter",
-          "named": true
-        },
-        {
-          "type": "select_subexpression",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "struct",
-          "named": true
-        },
-        {
-          "type": "time",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
-          "named": true
-        },
-        {
-          "type": "unnest_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "source_file",
     "named": true,
     "fields": {},
@@ -2486,10 +2173,6 @@
         },
         {
           "type": "select_statement",
-          "named": true
-        },
-        {
-          "type": "set_statement",
           "named": true
         },
         {
@@ -2557,15 +2240,11 @@
           "named": true
         },
         {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
-          "type": "positional_query_parameter",
+          "type": "query_parameter",
           "named": true
         },
         {
@@ -2644,15 +2323,11 @@
           "named": true
         },
         {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
-          "type": "positional_query_parameter",
+          "type": "query_parameter",
           "named": true
         },
         {
@@ -2695,6 +2370,22 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "tablesample_operator",
+    "named": true,
+    "fields": {
+      "sample_rate": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "query_parameter",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -2814,15 +2505,11 @@
             "named": true
           },
           {
-            "type": "named_query_parameter",
-            "named": true
-          },
-          {
             "type": "number",
             "named": true
           },
           {
-            "type": "positional_query_parameter",
+            "type": "query_parameter",
             "named": true
           },
           {
@@ -2897,15 +2584,11 @@
           "named": true
         },
         {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
-          "type": "positional_query_parameter",
+          "type": "query_parameter",
           "named": true
         },
         {
@@ -3069,15 +2752,11 @@
           "named": true
         },
         {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
-          "type": "positional_query_parameter",
+          "type": "query_parameter",
           "named": true
         },
         {
@@ -3156,15 +2835,11 @@
           "named": true
         },
         {
-          "type": "named_query_parameter",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
-          "type": "positional_query_parameter",
+          "type": "query_parameter",
           "named": true
         },
         {
@@ -3346,7 +3021,7 @@
     "named": false
   },
   {
-    "type": "CROSS",
+    "type": "CROSS_JOIN",
     "named": false
   },
   {
@@ -3371,10 +3046,6 @@
   },
   {
     "type": "DECIMAL",
-    "named": false
-  },
-  {
-    "type": "DEFAULT",
     "named": false
   },
   {
@@ -3434,10 +3105,6 @@
     "named": false
   },
   {
-    "type": "INOUT",
-    "named": false
-  },
-  {
     "type": "INSERT",
     "named": false
   },
@@ -3470,7 +3137,7 @@
     "named": false
   },
   {
-    "type": "LOCAL",
+    "type": "MATERIALIZED_VIEW",
     "named": false
   },
   {
@@ -3510,15 +3177,15 @@
     "named": false
   },
   {
-    "type": "OUT",
-    "named": false
-  },
-  {
     "type": "OUTER",
     "named": false
   },
   {
     "type": "PARTITION_BY",
+    "named": false
+  },
+  {
+    "type": "PERCENT",
     "named": false
   },
   {
@@ -3546,10 +3213,6 @@
     "named": false
   },
   {
-    "type": "SESSION",
-    "named": false
-  },
-  {
     "type": "SET",
     "named": false
   },
@@ -3559,6 +3222,14 @@
   },
   {
     "type": "TABLE",
+    "named": false
+  },
+  {
+    "type": "TABLESAMPLE_SYSTEM",
+    "named": false
+  },
+  {
+    "type": "TABLE_FUNCTION",
     "named": false
   },
   {
@@ -3582,10 +3253,6 @@
     "named": false
   },
   {
-    "type": "TO",
-    "named": false
-  },
-  {
     "type": "TRUE",
     "named": false
   },
@@ -3606,7 +3273,7 @@
     "named": false
   },
   {
-    "type": "VARIADIC",
+    "type": "VIEW",
     "named": false
   },
   {
@@ -3659,14 +3326,6 @@
   },
   {
     "type": "language",
-    "named": true
-  },
-  {
-    "type": "named_query_parameter",
-    "named": true
-  },
-  {
-    "type": "positional_query_parameter",
     "named": true
   },
   {
