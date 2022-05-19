@@ -274,7 +274,7 @@ module.exports = grammar({
       ),
     from_clause: ($) => seq(kw("FROM"), seq(
       $.from_item,
-      optional($.pivot_operator),
+      optional(choice($.pivot_operator, $.unpivot_operator)),
       optional($.tablesample_operator),
     )),
     pivot_value: $ => seq($.function_call, optional($.as_alias)),
@@ -285,6 +285,28 @@ module.exports = grammar({
       kw("IN"), "(", commaSep1(alias($._aliasable_expression, $.pivot_column)), ")", 
       ")", optional($.as_alias)
     ),
+    unpivot_operator: $ => seq(
+      kw("UNPIVOT"), 
+      optional(choice(kw("INCLUDE NULLS"), kw("EXCLUDE NULLS"))), 
+      "(", 
+        choice($.single_column_unpivot, $.multi_column_unpivot),
+      ")", optional($.as_alias)
+    ),
+    single_column_unpivot: $ => seq(
+      alias($.identifier, $.unpivot_value),
+      kw("FOR"), alias($.identifier, $.name_column),
+      kw("IN"), "(", commaSep1($.unpivot_column), ")", 
+    ), 
+    multi_column_unpivot: $ => prec.right(seq(
+      "(", commaSep1(alias($.identifier, $.unpivot_value)), ")",
+      kw("FOR"), alias($.identifier, $.name_column),
+      kw("IN"), "(", commaSep1($.unpivot_column), ")", 
+    )),
+    unpivot_column: $ => seq(
+      choice($.struct, $.identifier),
+      optional(seq($._keyword_as, field("alias", $.string)))
+    ),
+
     tablesample_operator: $ => seq(kw("TABLESAMPLE SYSTEM"), "(", field("sample_rate", choice($._integer, $.query_parameter)), kw("PERCENT"),")"),
     // TODO: pivot_operators, unpivot_operators
     from_item: $ => seq(
