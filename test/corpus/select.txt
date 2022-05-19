@@ -686,3 +686,38 @@ FROM my_cte;
      (from_item
       (identifier)))))))
 
+==================
+SELECT: pivot operator
+==================
+
+SELECT * FROM Produce
+PIVOT(SUM(sales) FOR quarter IN ('Q1', 'Q2', 'Q3', 'Q4'))
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (select_all
+      (asterisk_expression)))
+    (from_clause
+     (from_item
+      (identifier))
+     (pivot_operator
+      (pivot_value
+       (function_call
+        (identifier)
+        (identifier)))
+      (input_column)
+      (pivot_column
+       (string))
+      (pivot_column
+       (string))
+      (pivot_column
+       (string))
+      (pivot_column
+       (string))))))))
+
+

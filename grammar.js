@@ -274,8 +274,17 @@ module.exports = grammar({
       ),
     from_clause: ($) => seq(kw("FROM"), seq(
       $.from_item,
+      optional($.pivot_operator),
       optional($.tablesample_operator),
     )),
+    pivot_value: $ => seq($.function_call, optional($.as_alias)),
+    pivot_operator: $ => seq(
+      kw("PIVOT"), "(", 
+      commaSep1($.pivot_value),
+      kw("FOR"), alias($.identifier, $.input_column),
+      kw("IN"), "(", commaSep1(alias($._aliasable_expression, $.pivot_column)), ")", 
+      ")", optional($.as_alias)
+    ),
     tablesample_operator: $ => seq(kw("TABLESAMPLE SYSTEM"), "(", field("sample_rate", choice($._integer, $.query_parameter)), kw("PERCENT"),")"),
     // TODO: pivot_operators, unpivot_operators
     from_item: $ => seq(
