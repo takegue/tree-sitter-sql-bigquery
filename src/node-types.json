@@ -112,10 +112,6 @@
           "named": true
         },
         {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
           "type": "binary_expression",
           "named": true
         },
@@ -247,10 +243,6 @@
           "named": true
         },
         {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
           "type": "binary_expression",
           "named": true
         },
@@ -365,10 +357,6 @@
           "named": true
         },
         {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
           "type": "binary_expression",
           "named": true
         },
@@ -458,10 +446,6 @@
           },
           {
             "type": "array_element_access",
-            "named": true
-          },
-          {
-            "type": "asterisk_expression",
             "named": true
           },
           {
@@ -649,10 +633,6 @@
             "named": true
           },
           {
-            "type": "asterisk_expression",
-            "named": true
-          },
-          {
             "type": "binary_expression",
             "named": true
           },
@@ -833,10 +813,6 @@
           "named": true
         },
         {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
           "type": "binary_expression",
           "named": true
         },
@@ -992,7 +968,7 @@
           "named": true
         },
         {
-          "type": "select_statement",
+          "type": "query_statement",
           "named": true
         },
         {
@@ -1019,7 +995,7 @@
           "named": true
         },
         {
-          "type": "select_clause_body",
+          "type": "query_expr",
           "named": true
         }
       ]
@@ -1236,10 +1212,6 @@
           "named": true
         },
         {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
           "type": "binary_expression",
           "named": true
         },
@@ -1319,10 +1291,6 @@
           "named": true
         },
         {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
           "type": "binary_expression",
           "named": true
         },
@@ -1397,6 +1365,96 @@
     "type": "join_operation",
     "named": true,
     "fields": {
+      "join_condition": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "FALSE",
+            "named": true
+          },
+          {
+            "type": "NULL",
+            "named": true
+          },
+          {
+            "type": "ON",
+            "named": false
+          },
+          {
+            "type": "TRUE",
+            "named": true
+          },
+          {
+            "type": "USING",
+            "named": false
+          },
+          {
+            "type": "argument_reference",
+            "named": true
+          },
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "array_element_access",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "query_parameter",
+            "named": true
+          },
+          {
+            "type": "select_subexpression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
+            "named": true
+          },
+          {
+            "type": "time",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "unnest_clause",
+            "named": true
+          }
+        ]
+      },
       "keys": {
         "multiple": true,
         "required": false,
@@ -1427,83 +1485,11 @@
       "required": true,
       "types": [
         {
-          "type": "FALSE",
-          "named": true
-        },
-        {
-          "type": "NULL",
-          "named": true
-        },
-        {
-          "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "argument_reference",
-          "named": true
-        },
-        {
-          "type": "array",
-          "named": true
-        },
-        {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
           "type": "from_item",
           "named": true
         },
         {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
           "type": "join_type",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "query_parameter",
-          "named": true
-        },
-        {
-          "type": "select_subexpression",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "struct",
-          "named": true
-        },
-        {
-          "type": "time",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
-          "named": true
-        },
-        {
-          "type": "unnest_clause",
           "named": true
         }
       ]
@@ -1709,10 +1695,6 @@
           "named": true
         },
         {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
           "type": "binary_expression",
           "named": true
         },
@@ -1815,10 +1797,6 @@
           "named": true
         },
         {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
           "type": "binary_expression",
           "named": true
         },
@@ -1898,10 +1876,6 @@
           "named": true
         },
         {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
           "type": "binary_expression",
           "named": true
         },
@@ -1949,27 +1923,209 @@
     }
   },
   {
-    "type": "query_parameter",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "select_clause",
+    "type": "query_expr",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
-      "required": false,
+      "multiple": true,
+      "required": true,
       "types": [
         {
-          "type": "select_clause_body",
+          "type": "cte_clause",
+          "named": true
+        },
+        {
+          "type": "limit_clause",
+          "named": true
+        },
+        {
+          "type": "order_by_clause",
+          "named": true
+        },
+        {
+          "type": "query_expr",
+          "named": true
+        },
+        {
+          "type": "select",
+          "named": true
+        },
+        {
+          "type": "set_operation",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "select_clause_body",
+    "type": "query_parameter",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "query_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "query_expr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "select",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "from_clause",
+          "named": true
+        },
+        {
+          "type": "group_by_clause",
+          "named": true
+        },
+        {
+          "type": "having_clause",
+          "named": true
+        },
+        {
+          "type": "qualify_clause",
+          "named": true
+        },
+        {
+          "type": "select_list",
+          "named": true
+        },
+        {
+          "type": "where_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "select_all",
+    "named": true,
+    "fields": {
+      "except_key": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "replace_exp": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "FALSE",
+            "named": true
+          },
+          {
+            "type": "NULL",
+            "named": true
+          },
+          {
+            "type": "TRUE",
+            "named": true
+          },
+          {
+            "type": "argument_reference",
+            "named": true
+          },
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "array_element_access",
+            "named": true
+          },
+          {
+            "type": "as_alias",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "query_parameter",
+            "named": true
+          },
+          {
+            "type": "select_subexpression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
+            "named": true
+          },
+          {
+            "type": "time",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "unnest_clause",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "asterisk_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "select_list",
     "named": true,
     "fields": {},
     "children": {
@@ -2005,10 +2161,6 @@
           "named": true
         },
         {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
           "type": "binary_expression",
           "named": true
         },
@@ -2026,6 +2178,10 @@
         },
         {
           "type": "query_parameter",
+          "named": true
+        },
+        {
+          "type": "select_all",
           "named": true
         },
         {
@@ -2056,53 +2212,6 @@
     }
   },
   {
-    "type": "select_statement",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "cte_clause",
-          "named": true
-        },
-        {
-          "type": "from_clause",
-          "named": true
-        },
-        {
-          "type": "group_by_clause",
-          "named": true
-        },
-        {
-          "type": "having_clause",
-          "named": true
-        },
-        {
-          "type": "limit_clause",
-          "named": true
-        },
-        {
-          "type": "order_by_clause",
-          "named": true
-        },
-        {
-          "type": "qualify_clause",
-          "named": true
-        },
-        {
-          "type": "select_clause",
-          "named": true
-        },
-        {
-          "type": "where_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "select_subexpression",
     "named": true,
     "fields": {},
@@ -2111,7 +2220,7 @@
       "required": true,
       "types": [
         {
-          "type": "select_statement",
+          "type": "query_statement",
           "named": true
         }
       ]
@@ -2148,6 +2257,44 @@
     }
   },
   {
+    "type": "set_operation",
+    "named": true,
+    "fields": {
+      "operator": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "EXCEPT_DISTINCT",
+            "named": false
+          },
+          {
+            "type": "INTERSECT_DISTINCT",
+            "named": false
+          },
+          {
+            "type": "UNION_ALL",
+            "named": false
+          },
+          {
+            "type": "UNION_DISTINCT",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "query_expr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "source_file",
     "named": true,
     "fields": {},
@@ -2172,7 +2319,7 @@
           "named": true
         },
         {
-          "type": "select_statement",
+          "type": "query_statement",
           "named": true
         },
         {
@@ -2221,10 +2368,6 @@
         },
         {
           "type": "array_element_access",
-          "named": true
-        },
-        {
-          "type": "asterisk_expression",
           "named": true
         },
         {
@@ -2304,10 +2447,6 @@
         },
         {
           "type": "array_element_access",
-          "named": true
-        },
-        {
-          "type": "asterisk_expression",
           "named": true
         },
         {
@@ -2489,10 +2628,6 @@
             "named": true
           },
           {
-            "type": "asterisk_expression",
-            "named": true
-          },
-          {
             "type": "binary_expression",
             "named": true
           },
@@ -2565,10 +2700,6 @@
         },
         {
           "type": "array_element_access",
-          "named": true
-        },
-        {
-          "type": "asterisk_expression",
           "named": true
         },
         {
@@ -2736,10 +2867,6 @@
           "named": true
         },
         {
-          "type": "asterisk_expression",
-          "named": true
-        },
-        {
           "type": "binary_expression",
           "named": true
         },
@@ -2816,10 +2943,6 @@
         },
         {
           "type": "array_element_access",
-          "named": true
-        },
-        {
-          "type": "asterisk_expression",
           "named": true
         },
         {
@@ -2981,6 +3104,10 @@
     "named": false
   },
   {
+    "type": "ALL",
+    "named": false
+  },
+  {
     "type": "AND",
     "named": false
   },
@@ -3053,7 +3180,19 @@
     "named": false
   },
   {
+    "type": "DISTINCT",
+    "named": false
+  },
+  {
     "type": "DISTINCT_FROM",
+    "named": false
+  },
+  {
+    "type": "EXCEPT",
+    "named": false
+  },
+  {
+    "type": "EXCEPT_DISTINCT",
     "named": false
   },
   {
@@ -3106,6 +3245,10 @@
   },
   {
     "type": "INSERT",
+    "named": false
+  },
+  {
+    "type": "INTERSECT_DISTINCT",
     "named": false
   },
   {
@@ -3197,6 +3340,10 @@
     "named": false
   },
   {
+    "type": "REPLACE",
+    "named": false
+  },
+  {
     "type": "RETURNS",
     "named": false
   },
@@ -3257,6 +3404,14 @@
     "named": false
   },
   {
+    "type": "UNION_ALL",
+    "named": false
+  },
+  {
+    "type": "UNION_DISTINCT",
+    "named": false
+  },
+  {
     "type": "UNNEST",
     "named": false
   },
@@ -3266,6 +3421,10 @@
   },
   {
     "type": "USING",
+    "named": false
+  },
+  {
+    "type": "VALUE",
     "named": false
   },
   {

@@ -35,11 +35,12 @@ SELECT 1;
 ---
 
 (source_file
-    (comment)
-    (select_statement
-    (select_clause
-        (select_clause_body
-        (number)))))
+  (comment)
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (number))))))
 
 ==================
 Can parse comments anywhere...
@@ -52,13 +53,14 @@ SELECT 1; --hi
 ---
 
 (source_file
- (comment)
-    (select_statement
-    (select_clause
-        (select_clause_body
-        (number))))
- (comment)
- (comment))
+  (comment)
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (number)))))
+   (comment)
+   (comment))
 
 
 ==================
@@ -72,12 +74,13 @@ FROM my_table;
 ---
 
 (source_file
-    (comment)
-    (select_statement
-    (select_clause
-        (select_clause_body
-        (identifier)))
+  (comment)
+  (query_statement
+  (query_expr
+    (select
+    (select_list
+      (identifier))
     (comment)
     (from_clause
-      (from_item 
-        (identifier)))))
+      (from_item
+      (identifier)))))))

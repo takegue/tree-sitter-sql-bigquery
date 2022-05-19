@@ -138,24 +138,27 @@ CREATE TABLE my_table AS SELECT "2022-01-01";
 CREATE TABLE my_table(date DATE) AS SELECT "2022-01-01";
 
 --------------------------------------------------------------------------------
- 
+
 (source_file
  (create_table_statement
   (identifier)
-  (select_statement
-   (select_clause
-    (select_clause_body
-     (string)))))
+  (query_statement
+   (query_expr
+    (select
+     (select_list
+      (string))))))
  (create_table_statement
   (identifier)
   (create_table_parameters
    (column_definition
     (identifier)
     (column_type)))
-  (select_statement
-   (select_clause
-    (select_clause_body
-     (string))))))
+  (query_statement
+   (query_expr
+    (select
+     (select_list
+      (string)))))))
+
 
 ================================================================================
 DML: CREATE TABLE on BigQuery Examples #1

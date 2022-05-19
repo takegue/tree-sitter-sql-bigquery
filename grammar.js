@@ -42,6 +42,9 @@ module.exports = grammar({
       'clause_connective',
     ],
   ],
+  conflicts: $ => [
+    [$.query_expr]
+  ],
 
   word: $ => $._unquoted_identifier,
   rules: {
@@ -71,7 +74,7 @@ module.exports = grammar({
           $.create_schema_statement,
           $.create_table_statement,
           $.create_function_statement,
-          $.select_statement,
+          $.query_statement,
           $.update_statement,
           $.insert_statement,
         ),
@@ -107,7 +110,7 @@ module.exports = grammar({
       field("name", $.identifier),
       optional($.option_list),
     ),
-    create_table_statement: ($) => seq(
+    create_table_statement: ($) => prec.right(seq(
       kw("CREATE"),
       optional($.keyword_replace),
       optional($.keyword_temporary),
@@ -118,8 +121,8 @@ module.exports = grammar({
       optional($.table_partition_clause),
       optional($.table_cluster_clause),
       optional($.option_list),
-      optional(seq($._keyword_as, $.select_statement)),
-    ),
+      optional(seq($._keyword_as, $.query_statement)),
+    )),
 
     create_table_parameters: ($) => seq("(", commaSep1($.column_definition), ")"),
 
@@ -134,7 +137,7 @@ module.exports = grammar({
     table_partition_clause: $ => seq(kw('PARTITION BY'), $.partition_expression),
     table_cluster_clause: $ => seq(kw('CLUSTER BY'), sep1($._expression, ',')),
 
-    create_function_statement: ($) => seq(
+    create_function_statement: ($) => prec.left(seq(
       kw("CREATE"),
       optional($.keyword_replace),
       optional($.keyword_temporary),
@@ -158,9 +161,9 @@ module.exports = grammar({
           $._keyword_as, $.string
         )
       )
-    ),
+    )),
 
-    create_table_function_function_statement: ($) => seq(
+    create_table_function_function_statement: ($) => prec.left(seq(
       kw("CREATE"),
       optional($.keyword_replace),
       kw("TABLE FUNCTION"),
@@ -172,10 +175,10 @@ module.exports = grammar({
       seq(
         optional(alias(seq($._keyword_returns, kw("TABLE"), $.column_definition), "$.returns")),
         $._keyword_as, "(", choice(
-          seq($._keyword_as, $.select_statement),
+          seq($._keyword_as, $.query_statement),
         ), ")",
       )
-    ),
+    )),
 
     create_function_parameters: ($) => seq("(", commaSep1($.column_definition), ")"),
     _function_language: ($) =>
@@ -191,26 +194,49 @@ module.exports = grammar({
       seq(
         $._keyword_as,
         choice(
-          seq("$$", $.select_statement, optional(";"), "$$"),
-          seq("'", $.select_statement, optional(";"), "'"),
+          seq("$$", $.query_statement, optional(";"), "$$"),
+          seq("'", $.query_statement, optional(";"), "'"),
         ),
       ),
 
     _direction_keywords: (_) => field("order", choice(kw("ASC"), kw("DESC"))),
 
     // SELECT
-    select_statement: ($) =>
+    query_statement: ($) => $.query_expr,
+    set_operation: $ => prec.right(seq(
+      $.query_expr, field("operator", choice(
+        kw("UNION ALL"),
+        kw("UNION DISTINCT"),
+        kw("INTERSECT DISTINCT"),
+        kw("EXCEPT DISTINCT"),
+      )), $.query_expr)),
+    query_expr: ($) => prec(10, seq(
+      optional($.cte_clause),
+      choice($.select, seq("(", $.query_expr ,")"), $.set_operation),
+      // choice($.select),
+      optional($.order_by_clause),
+      optional($.limit_clause),
+    )),
+    select: ($) => 
       seq(
-        optional($.cte_clause),
-        $.select_clause,
+        kw("SELECT"),
+        optional(choice("ALL", "DISTINCT")),
+        optional(seq($._keyword_as, choice("STRUCT", "VALUE"))),
+        $.select_list,
         optional($.from_clause),
         optional($.where_clause),
         optional($.group_by_clause),
         optional($.having_clause),
         optional($.qualify_clause),
-        optional($.order_by_clause),
-        optional($.limit_clause),
       ),
+
+    select_list: $ => prec.left(commaSep1(choice($.select_all, $._aliasable_expression))),
+    select_all: ($) => prec.right(seq(
+      seq($.asterisk_expression),
+      optional(seq(kw("EXCEPT"), "(", commaSep1(field("except_key", $.identifier)), ")")),
+      optional(seq(kw("REPLACE"), "(", commaSep1(field("replace_exp", seq($._expression, $.as_alias))), ")"))
+    )),
+    select_expr: ($) => seq($._expression, $.as_alias),
     having_clause: ($) => seq(kw("HAVING"), $._expression),
     qualify_clause: ($) => seq(kw("QUALIFY"), $._expression),
     limit_clause: ($) => seq(kw("LIMIT"), $._integer, optional(seq(kw("OFFSET"), $._integer))),
@@ -240,14 +266,11 @@ module.exports = grammar({
     _aliasable_expression: $ =>
       choice($._expression, alias($._aliased_expression, $.alias)),
 
-    as_alias: $ => seq(optional("AS"), field("alias_name", $.identifier)),
+    as_alias: $ => seq(optional($._keyword_as), field("alias_name", $.identifier)),
 
-    select_clause_body: ($) => prec.left(commaSep1($._aliasable_expression)),
-    select_clause: ($) =>
-      prec.left(seq(kw("SELECT"), optional($.select_clause_body))),
     cte_clause: ($) => seq(
         kw("WITH"),
-        commaSep1(seq($.identifier, $._keyword_as, $.select_clause_body)),
+        commaSep1(seq($.identifier, $._keyword_as, "(", $.query_expr,")")),
       ),
     from_clause: ($) => seq(kw("FROM"), seq(
       $.from_item,
@@ -289,13 +312,13 @@ module.exports = grammar({
         optional($.join_type),
         kw("JOIN"),
         $.from_item,
-        choice(
+        field("join_condition", choice(
           seq(kw("ON"), $._expression),
           seq(kw("USING"), "(", repeat1(field("keys", $.identifier)), ")"),
-        )
+        ))
       ),
 
-    select_subexpression: ($) => seq("(", $.select_statement, ")"),
+    select_subexpression: ($) => seq("(", $.query_statement, ")"),
 
     // UPDATE
     update_statement: ($) =>
@@ -320,12 +343,13 @@ module.exports = grammar({
     parameter: ($) => seq($.identifier, $._type),
     parameters: ($) => seq("(", commaSep1($.parameter), ")"),
     function_call: ($) =>
-      seq(
+      // FIXME: precedence
+      prec(10, seq(
         field("function", $.identifier),
         "(",
-        optional(field("arguments", commaSep1($._expression))),
+        optional(field("arguments", commaSep1(choice($._expression, $.asterisk_expression)))),
         ")",
-      ),
+      )),
     unnest_operator: $ => choice(
         seq(kw("UNNEST"), "(", $.array, ")"),
         seq(kw("UNNEST"), "(", $._identifier, ")"),
@@ -456,8 +480,8 @@ module.exports = grammar({
           $.unary_expression,
           // $.ternary_expression,
           prec(1, $._literal),
+          // $.asterisk_expression
           $.function_call,
-          $.asterisk_expression,
           $.identifier,
           $.unnest_clause,
           $._parenthesized_expression,

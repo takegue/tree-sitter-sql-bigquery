@@ -6,12 +6,157 @@ SELECT * FROM `bigquery-public-data.austin_311.311_service_requests` LIMIT 1000
 
 --------------------------------------------------------------------------------
 
-(source_file 
-  (select_statement 
-    (select_clause 
-      (select_clause_body (asterisk_expression)))
-    (from_clause (from_item (identifier)))
-    (limit_clause)))
+(source_file
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_all
+            (asterisk_expression)))
+        (from_clause
+          (from_item
+            (identifier))))
+      (limit_clause))))
+
+================================================================================
+SELECT statement with REPLACE
+================================================================================
+
+WITH orders AS
+  (SELECT 5 as order_id,
+  "sprocket" as item_name,
+  200 as quantity)
+SELECT * REPLACE (quantity * 2 as quantity2)
+FROM orders;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (query_statement
+    (query_expr
+      (cte_clause
+        (identifier)
+        (query_expr
+          (select
+            (select_list
+              (alias
+                (number)
+                (identifier))
+              (alias
+                (string)
+                (identifier))
+              (alias
+                (number)
+                (identifier))))))
+      (select
+        (select_list
+          (select_all
+            (asterisk_expression)
+            (binary_expression
+              (identifier)
+              (number))
+            (as_alias
+              (identifier))))
+        (from_clause
+          (from_item
+            (identifier)))))))
+
+
+================================================================================
+SELECT statement with EXCEPT
+================================================================================
+
+WITH orders AS
+  (SELECT 5 as order_id,
+  "sprocket" as item_name,
+  200 as quantity)
+SELECT * EXCEPT (order_id)
+FROM orders;
+
+--------------------------------------------------------------------------------
+ 
+(source_file
+  (query_statement
+    (query_expr
+      (cte_clause
+        (identifier)
+        (query_expr
+          (select
+            (select_list
+              (alias
+                (number)
+                (identifier))
+              (alias
+                (string)
+                (identifier))
+              (alias
+                (number)
+                (identifier))))))
+      (select
+        (select_list
+          (select_all
+            (asterisk_expression)
+            (identifier)))
+        (from_clause
+          (from_item
+            (identifier)))))))
+
+================================================================================
+SELECT statement with Set Operators
+================================================================================
+
+select 1 
+UNION ALL (select 2 UNION DISTINCT select 3)
+UNION ALL (select 2 INTERSECT DISTINCT select 3)
+UNION ALL (select 2 EXCEPT DISTINCT select 3)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (query_statement
+    (query_expr
+      (set_operation
+        (query_expr
+          (select
+            (select_list
+              (number))))
+        (query_expr
+          (set_operation
+            (query_expr
+              (query_expr
+                (set_operation
+                  (query_expr
+                    (select
+                      (select_list
+                        (number))))
+                  (query_expr
+                    (select
+                      (select_list
+                        (number)))))))
+            (query_expr
+              (set_operation
+                (query_expr
+                  (query_expr
+                    (set_operation
+                      (query_expr
+                        (select
+                          (select_list
+                            (number))))
+                      (query_expr
+                        (select
+                          (select_list
+                            (number)))))))
+                (query_expr
+                  (query_expr
+                    (set_operation
+                      (query_expr
+                        (select
+                          (select_list
+                            (number))))
+                      (query_expr
+                        (select
+                          (select_list
+                            (number)))))))))))))))
 
 ================================================================================
 SELECT statement with joins
@@ -21,7 +166,6 @@ SELECT a, t.a, t.b
 FROM table1 AS t
 JOIN t1 ON (t.a = t1.a)
 INNER JOIN t2 ON (t.a = t2.a)
-CROSS JOIN t3 ON t.a = t2.a
 FULL OUTER JOIN t2 ON t.a = t2.a
 FULL JOIN t3 ON t.a = t3.a
 RIGHT JOIN t4 ON t.a = t4.a
@@ -30,106 +174,83 @@ LEFT JOIN t6 ON t.a = t6.a
 LEFT OUTER JOIN t7 ON t.a = t7.a;
 
 --------------------------------------------------------------------------------
-
+ 
 (source_file
-(select_statement
-  (select_clause
-    (select_clause_body
-      (identifier)
-      (identifier)
-      (identifier)))
-  (from_clause
-    (from_item
-      (join_operation
-        (from_item
-          (join_operation
-            (from_item
-              (join_operation
-                (from_item
-                  (join_operation
-                    (from_item
-                      (join_operation
-                        (from_item
-                          (join_operation
-                            (from_item
-                              (join_operation
-                                (from_item
-                                  (join_operation
-                                    (from_item
-                                      (join_operation
-                                        (from_item
-                                          (identifier)
-                                          (as_alias
-                                            (identifier)))
-                                        (from_item
-                                          (identifier))
-                                        (binary_expression
-                                          (identifier)
-                                          (identifier))))
-                                    (join_type)
-                                    (from_item
-                                      (identifier))
-                                    (binary_expression
-                                      (identifier)
-                                      (identifier))))
-                                (from_item
-                                  (identifier)
-                                  (as_alias
-                                    (identifier)))))
-                            (ERROR)
-                            (join_type)
-                            (from_item
-                              (identifier))
-                            (binary_expression
-                              (identifier)
-                              (identifier))))
-                        (join_type)
-                        (from_item
-                          (identifier))
-                        (binary_expression
-                          (identifier)
-                          (identifier))))
-                    (join_type)
-                    (from_item
-                      (identifier))
-                    (binary_expression
-                      (identifier)
-                      (identifier))))
-                (join_type)
-                (from_item
-                  (identifier))
-                (binary_expression
-                  (identifier)
-                  (identifier))))
-            (join_type)
-            (from_item
-              (identifier))
-            (binary_expression
-              (identifier)
-              (identifier))))
-        (join_type)
-        (from_item
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (identifier)
+          (identifier)
           (identifier))
-        (binary_expression
-          (identifier)
-          (identifier)))))))
-
-
-================================================================================
-SELECT element from array
-================================================================================
-
-SELECT a[0];
-
---------------------------------------------------------------------------------
-
-(source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (array_element_access
-          (identifier)
-          (number))))))
+        (from_clause
+          (from_item
+            (join_operation
+              (from_item
+                (join_operation
+                  (from_item
+                    (join_operation
+                      (from_item
+                        (join_operation
+                          (from_item
+                            (join_operation
+                              (from_item
+                                (join_operation
+                                  (from_item
+                                    (join_operation
+                                      (from_item
+                                        (join_operation
+                                          (from_item
+                                            (identifier)
+                                            (as_alias
+                                              (identifier)))
+                                          (from_item
+                                            (identifier))
+                                          (binary_expression
+                                            (identifier)
+                                            (identifier))))
+                                      (join_type)
+                                      (from_item
+                                        (identifier))
+                                      (binary_expression
+                                        (identifier)
+                                        (identifier))))
+                                  (join_type)
+                                  (from_item
+                                    (identifier))
+                                  (binary_expression
+                                    (identifier)
+                                    (identifier))))
+                              (join_type)
+                              (from_item
+                                (identifier))
+                              (binary_expression
+                                (identifier)
+                                (identifier))))
+                          (join_type)
+                          (from_item
+                            (identifier))
+                          (binary_expression
+                            (identifier)
+                            (identifier))))
+                      (join_type)
+                      (from_item
+                        (identifier))
+                      (binary_expression
+                        (identifier)
+                        (identifier))))
+                  (join_type)
+                  (from_item
+                    (identifier))
+                  (binary_expression
+                    (identifier)
+                    (identifier))))
+              (join_type)
+              (from_item
+                (identifier))
+              (binary_expression
+                (identifier)
+                (identifier)))))))))
 
 ================================================================================
 SELECT with cross join
@@ -141,31 +262,32 @@ FROM table1 AS t, table2 t2, table3
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (alias
-          (identifier)
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (alias
+            (identifier)
+            (identifier))
+          (alias
+            (identifier)
+            (identifier))
           (identifier))
-        (alias
-          (identifier)
-          (identifier))
-        (identifier)))
-    (from_clause
-      (from_item
-        (join_operation
+        (from_clause
           (from_item
             (join_operation
               (from_item
-                (identifier)
-                (as_alias
-                  (identifier)))
+                (join_operation
+                  (from_item
+                    (identifier)
+                    (as_alias
+                      (identifier)))
+                  (from_item
+                    (identifier)
+                    (as_alias
+                      (identifier)))))
               (from_item
-                (identifier)
-                (as_alias
-                  (identifier)))))
-          (from_item
-            (identifier)))))))
+                (identifier)))))))))
 
 ================================================================================
 SELECT with CTE
@@ -182,61 +304,34 @@ select * from cte2
 
 --------------------------------------------------------------------------------
 
-
 (source_file
-  (select_statement
-    (cte_clause
-      (identifier)
-      (select_clause_body
-        (select_subexpression
-          (select_statement
-            (select_clause
-              (select_clause_body
-                (alias
-                  (number)
-                  (identifier)))))))
-      (identifier)
-      (select_clause_body
-        (select_subexpression
-          (select_statement
-            (select_clause
-              (select_clause_body
-                (asterisk_expression)))
-            (from_clause
-              (from_item (identifier)))))))
-    (select_clause
-      (select_clause_body
+ (query_statement
+  (query_expr
+   (cte_clause
+    (identifier)
+    (query_expr
+     (select
+      (select_list
+       (alias
+        (number)
+        (identifier)))))
+    (identifier)
+    (query_expr
+     (select
+      (select_list
+       (select_all
         (asterisk_expression)))
+      (from_clause
+       (from_item
+        (identifier))))))
+   (select
+    (select_list
+     (select_all
+      (asterisk_expression)))
     (from_clause
-      (from_item (identifier)))))
+     (from_item
+      (identifier)))))))
 
-================================================================================
-SELECT statement
-================================================================================
-
-SELECT;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (select_statement
-    (select_clause)))
-
-================================================================================
-SELECT statement with distinct expression
-================================================================================
-
-SELECT 1 IS DISTINCT FROM NULL;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (binary_expression
-          (number)
-          (NULL))))))
 
 ================================================================================
 SELECT statement FROM clause
@@ -247,13 +342,15 @@ SELECT a, b FROM table1;
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (identifier)
-        (identifier)))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (identifier)
+     (identifier))
     (from_clause
-      (from_item (identifier)))))
+     (from_item
+      (identifier)))))))
 
 ================================================================================
 SELECT statement with SELECT subexpression
@@ -264,16 +361,18 @@ SELECT (SELECT 1) AS a
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (alias
-          (select_subexpression
-            (select_statement
-              (select_clause
-                (select_clause_body
-                  (number)))))
-          (identifier))))))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (alias
+      (select_subexpression
+       (query_statement
+        (query_expr
+         (select
+          (select_list
+           (number))))))
+      (identifier)))))))
 
 ================================================================================
 SELECT statement with aliases
@@ -284,18 +383,20 @@ SELECT a, b AS c FROM table1 AS t;
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (identifier)
-        (alias
+  (query_statement
+    (query_expr
+      (select
+        (select_list
           (identifier)
-          (identifier))))
-    (from_clause
-      (from_item
-        (identifier)
-        (as_alias
-          (identifier))))))
+          (alias
+            (identifier)
+            (identifier)))
+        (from_clause
+          (from_item
+            (identifier)
+            (as_alias
+              (identifier))))))))
+
 
 ================================================================================
 SELECT statement with group by
@@ -308,19 +409,21 @@ GROUP BY lower(a), b;
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (identifier)
-        (identifier)))
-    (from_clause
-      (from_item (identifier)))
-    (group_by_clause
-      (group_by_clause_body
-        (function_call
+  (query_statement
+    (query_expr
+      (select
+        (select_list
           (identifier)
           (identifier))
-        (identifier)))))
+        (from_clause
+          (from_item
+            (identifier)))
+        (group_by_clause
+          (group_by_clause_body
+            (function_call
+              (identifier)
+              (identifier))
+            (identifier)))))))
 
 ================================================================================
 SELECT statement with order by
@@ -333,19 +436,21 @@ ORDER BY lower(a), b;
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (identifier)
-        (identifier)))
-    (from_clause
-      (from_item (identifier)))
-    (order_by_clause
-      (order_by_clause_body
-        (function_call
+  (query_statement
+    (query_expr
+      (select
+        (select_list
           (identifier)
           (identifier))
-        (identifier)))))
+        (from_clause
+          (from_item
+            (identifier))))
+      (order_by_clause
+        (order_by_clause_body
+          (function_call
+            (identifier)
+            (identifier))
+          (identifier))))))
 
 ================================================================================
 SELECT statement FROM multiple tables
@@ -356,61 +461,19 @@ SELECT a, b FROM table1, table2;
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (identifier)
-        (identifier)))
-    (from_clause
-     (from_item 
-      (join_operation 
-        (from_item (identifier))
-        (from_item (identifier)))))))
-
-================================================================================
-SELECT statement with numbers
-================================================================================
-
-SELECT 1, 2;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (number)
-        (number)))))
-
-================================================================================
-SELECT statement with expression
-================================================================================
-
-SELECT 1 + 2;
-
---------------------------------------------------------------------------------
-
-(source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (binary_expression
-          (number)
-          (number))))))
-
-================================================================================
-SELECT statement with empty string
-================================================================================
-
-SELECT '';
-
---------------------------------------------------------------------------------
-
-(source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (string)))))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (identifier)
+          (identifier))
+        (from_clause
+          (from_item
+            (join_operation
+              (from_item
+                (identifier))
+              (from_item
+                (identifier)))))))))
 
 ================================================================================
 SELECT statement with columns
@@ -421,28 +484,12 @@ SELECT a, b;
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (identifier)
-        (identifier)))))
-
-
-
-================================================================================
-SELECT string
-================================================================================
-
-SELECT 'aaaa'
-
---------------------------------------------------------------------------------
-
-(source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (string)))))
-
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (identifier)
+          (identifier))))))
 
 ================================================================================
 Can parse subquery
@@ -459,24 +506,27 @@ WHERE id < (
 ---
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (identifier)))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (identifier))
     (from_clause
-      (from_item (identifier)))
+     (from_item
+      (identifier)))
     (where_clause
-      (binary_expression
-        (identifier)
-        (select_subexpression
-          (select_statement
-            (select_clause
-              (select_clause_body
-                (identifier)))
-            (from_clause
-              (from_item (identifier)))
-            (limit_clause))
-            )))))
+     (binary_expression
+      (identifier)
+      (select_subexpression
+       (query_statement
+        (query_expr
+         (select
+          (select_list
+           (identifier))
+          (from_clause
+           (from_item
+            (identifier))))
+         (limit_clause))))))))))
 
 ================================================================================
 SELECT asterisk expressions
@@ -490,36 +540,46 @@ SELECT COUNT(a.*) FROM Customers;
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (asterisk_expression)))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (select_all
+      (asterisk_expression)))
     (from_clause
-      (from_item (identifier))))
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (asterisk_expression)))
+     (from_item
+      (identifier))))))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (select_all
+      (asterisk_expression)))
     (from_clause
-      (from_item (identifier))))
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (function_call
-          (identifier)
-          (asterisk_expression))))
+     (from_item
+      (identifier))))))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (function_call
+      (identifier)
+      (asterisk_expression)))
     (from_clause
-      (from_item (identifier))))
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (function_call
-          (identifier)
-          (asterisk_expression))))
+     (from_item
+      (identifier))))))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (function_call
+      (identifier)
+      (asterisk_expression)))
     (from_clause
-      (from_item (identifier)))))
+     (from_item
+      (identifier)))))))
 
- 
+
 ================================================================================
 UNNEST
 ================================================================================
@@ -530,40 +590,47 @@ select * from unnest(field_path) as hoge with offset;
 
 --------------------------------------------------------------------------------
 
+
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (asterisk_expression)))
-    (from_clause
-     (from_item (unnest_clause
-       (unnest_operator
-        (array
-         (number)
-         (number)
-         (number)))))))
- (select_statement
-  (select_clause
-   (select_clause_body
-    (asterisk_expression)))
-  (from_clause
-   (from_item 
-    (unnest_clause
-     (unnest_operator (array))
-     (identifier)
-     (unnest_withoffset)))))
- (select_statement
-  (select_clause
-   (select_clause_body
-    (asterisk_expression)))
-  (from_clause
-   (from_item 
-      (unnest_clause
-      (unnest_operator)
-      (identifier)
-      (unnest_withoffset)))
-   ))
- )
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_all
+            (asterisk_expression)))
+        (from_clause
+          (from_item
+            (unnest_clause
+              (unnest_operator
+                (array
+                  (number)
+                  (number)
+                  (number)))))))))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_all
+            (asterisk_expression)))
+        (from_clause
+          (from_item
+            (unnest_clause
+              (unnest_operator
+                (array))
+              (identifier)
+              (unnest_withoffset)))))))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_all
+            (asterisk_expression)))
+        (from_clause
+          (from_item
+            (unnest_clause
+              (unnest_operator)
+              (identifier)
+              (unnest_withoffset))))))))
 
 ================================================================================
 TABLESAMPLE operator
@@ -574,14 +641,16 @@ SELECT * FROM dataset.my_table TABLESAMPLE SYSTEM (10 PERCENT)
 --------------------------------------------------------------------------------
 
 (source_file
-    (select_statement
-    (select_clause
-        (select_clause_body
-        (asterisk_expression)))
-    (from_clause
-      (from_item
-        (identifier))
-        (tablesample_operator))))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_all
+            (asterisk_expression)))
+        (from_clause
+          (from_item
+            (identifier))
+          (tablesample_operator))))))
 
 ==================
 One cte
@@ -597,21 +666,23 @@ FROM my_cte;
 ---
 
 (source_file
-    (select_statement
-    (cte_clause
-        (identifier)
-        (select_clause_body
-        (select_subexpression
-            (select_statement
-            (select_clause
-                (select_clause_body
-                (identifier)
-                (identifier)))
-            (from_clause
-                (from_item (identifier)))))))
-    (select_clause
-        (select_clause_body
-        (asterisk_expression)))
+ (query_statement
+  (query_expr
+   (cte_clause
+    (identifier)
+    (query_expr
+     (select
+      (select_list
+       (identifier)
+       (identifier))
+      (from_clause
+       (from_item
+        (identifier))))))
+   (select
+    (select_list
+     (select_all
+      (asterisk_expression)))
     (from_clause
-      (from_item (identifier)))))
+     (from_item
+      (identifier)))))))
 

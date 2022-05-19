@@ -16,24 +16,24 @@ select
 --------------------------------------------------------------------------------
 
 (source_file
- (select_statement
-  (select_clause
-   (select_clause_body
-    (number)
-    (number)
-    (unary_expression
-     (number))
-    (unary_expression
-     (TRUE))
-    (unary_expression
-     (NULL)
-     (TRUE))
-    (unary_expression
-     (FALSE)
-     (FALSE))
-    (unary_expression
-     (identifier)
-     (NULL))))))
+ (query_statement
+  (query_expr
+   (select (select_list
+     (number)
+     (number)
+     (unary_expression
+      (number))
+     (unary_expression
+      (TRUE))
+     (unary_expression
+      (NULL)
+      (TRUE))
+     (unary_expression
+      (FALSE)
+      (FALSE))
+     (unary_expression
+      (identifier)
+      (NULL)))))))
 
 
 ================================================================================
@@ -50,30 +50,31 @@ select
 --------------------------------------------------------------------------------
 
 (source_file
- (select_statement
-  (select_clause
-   (select_clause_body
-    (binary_expression
-     (number)
+ (query_statement
+  (query_expr
+   (select 
+    (select_list
+     (binary_expression
+      (number)
+      (binary_expression
+       (binary_expression
+        (number)
+        (number))
+       (number)))
+     (binary_expression
+      (string)
+      (identifier))
      (binary_expression
       (binary_expression
        (number)
        (number))
-      (number)))
-    (binary_expression
-     (string)
-     (identifier))
-    (binary_expression
-     (binary_expression
-      (number)
       (number))
-     (number))
-    (binary_expression
-     (TRUE)
-     (unary_expression
+     (binary_expression
+      (TRUE)
       (unary_expression
-       (NULL)
-       (TRUE))))))))
+       (unary_expression
+        (NULL)
+        (TRUE)))))))))
 
 ================================================================================
 OPERATORS: EXISTS operator
@@ -85,23 +86,26 @@ SELECT EXISTS ( SELECT value FROM Words WHERE direction = 'south' ) as result;
 --------------------------------------------------------------------------------
 
 (source_file
- (select_statement
-  (select_clause
-   (select_clause_body
-    (alias
-     (unary_expression
-      (select_subexpression
-       (select_statement
-        (select_clause
-         (select_clause_body
-          (identifier)))
-        (from_clause
-         (from_item (identifier)))
-        (where_clause
-         (binary_expression
-          (identifier)
-          (string))))))
-     (identifier))))))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (alias
+      (unary_expression
+       (select_subexpression
+        (query_statement
+         (query_expr
+          (select
+           (select_list
+            (identifier))
+           (from_clause
+            (from_item
+             (identifier)))
+           (where_clause
+            (binary_expression
+             (identifier)
+             (string))))))))
+      (identifier)))))))
 
 ================================================================================
 OPERATORS: LIKE operator
@@ -112,12 +116,13 @@ SELECT x LIKE "hoge";
 --------------------------------------------------------------------------------
 
 (source_file
- (select_statement
-  (select_clause
-   (select_clause_body
-    (binary_expression
-     (identifier)
-     (string))))))
+ (query_statement
+  (query_expr
+   (select 
+    (select_list
+     (binary_expression
+      (identifier)
+      (string)))))))
 
 
 ================================================================================
@@ -130,27 +135,27 @@ SELECT 1 IN UNNEST([1, 2]);
 --------------------------------------------------------------------------------
 
 (source_file
- (select_statement
-  (select_clause
-   (select_clause_body
-    (binary_expression
-     (number)
-     (struct
+ (query_statement
+  (query_expr
+   (select (select_list
+     (binary_expression
       (number)
-      (number))))))
- (select_statement
-  (select_clause
-   (select_clause_body
-    (binary_expression
-     (number)
-     (unnest_clause
-      (unnest_operator
-       (array
-        (number)
-        (number)))))))))
+      (struct
+       (number)
+       (number)))))))
+ (query_statement
+  (query_expr
+   (select (select_list
+     (binary_expression
+      (number)
+      (unnest_clause
+       (unnest_operator
+        (array
+         (number)
+         (number))))))))))
 
 ================================================================================
-OPERATORS: statement with comparison expression
+OPERATORS: statement with a comparator
 ================================================================================
 
 SELECT 1 < 2;
@@ -158,12 +163,12 @@ SELECT 1 < 2;
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (binary_expression
-          (number)
-          (number))))))
+ (query_statement
+  (query_expr
+   (select (select_list
+            (binary_expression
+             (number)
+             (number)))))))
 
 ================================================================================
 OPERATORS:SELECT statement with is expression
@@ -174,18 +179,19 @@ SELECT a IS TRUE, b IS NOT NULL, c IS FALSE;
 --------------------------------------------------------------------------------
 
 (source_file
- (select_statement
-  (select_clause
-   (select_clause_body
-    (unary_expression
-     (identifier)
-     (TRUE))
-    (unary_expression
-     (identifier)
-     (NULL))
-    (unary_expression
-     (identifier)
-     (FALSE))))))
+ (query_statement
+  (query_expr
+   (select 
+    (select_list
+     (unary_expression
+      (identifier)
+      (TRUE))
+     (unary_expression
+      (identifier)
+      (NULL))
+     (unary_expression
+      (identifier)
+      (FALSE)))))))
 
 ================================================================================
 OPERATORS: field
@@ -196,10 +202,11 @@ SELECT foo.bar;
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (identifier)))))
+ (query_statement
+  (query_expr
+   (select 
+    (select_list
+     (identifier))))))
 
 ================================================================================
 OPERATORS: statement with comparison expression and is expression
@@ -210,14 +217,15 @@ SELECT 1 < 2 IS TRUE;
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (unary_expression
-          (binary_expression
-            (number)
-            (number))
-          (TRUE))))))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (unary_expression
+      (binary_expression
+       (number)
+       (number))
+      (TRUE)))))))
 
 ================================================================================
 SELECT expression with function
@@ -228,15 +236,16 @@ SELECT foo(bar, baz) < 10;
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
+(query_statement
+(query_expr
+    (select
+    (select_list
         (binary_expression
-          (function_call
+        (function_call
             (identifier)
             (identifier)
             (identifier))
-          (number))))))
+        (number)))))))
 
 ================================================================================
 SELECT expression with function without args
@@ -247,11 +256,12 @@ SELECT foo();
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (function_call
-          (identifier))))))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (function_call
+      (identifier)))))))
 
 ================================================================================
 SELECT comparison expression boolean
@@ -262,21 +272,23 @@ SELECT TRUE AND foo(1) OR FALSE AND NOT a = b.c;
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (binary_expression
+      (binary_expression
+       (TRUE)
+       (function_call
+        (identifier)
+        (number)))
+      (binary_expression
+       (FALSE)
+       (unary_expression
         (binary_expression
-          (binary_expression
-            (TRUE)
-            (function_call
-              (identifier)
-              (number)))
-          (binary_expression
-            (FALSE)
-            (unary_expression 
-              (binary_expression
-               (identifier)
-               (identifier)))))))))
+         (identifier)
+         (identifier))))))))))
+
 
 ================================================================================
 SELECT parenthesized expression
@@ -287,13 +299,14 @@ SELECT (TRUE);
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (TRUE)))))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (TRUE))))))
 
 ================================================================================
-SELECT parenthesized expression 2
+OPERATORS: parenthesized expression 2
 ================================================================================
 
 SELECT TRUE AND (foo(1) OR FALSE);
@@ -301,13 +314,52 @@ SELECT TRUE AND (foo(1) OR FALSE);
 --------------------------------------------------------------------------------
 
 (source_file
-  (select_statement
-    (select_clause
-      (select_clause_body
-        (binary_expression
-          (TRUE)
-          (binary_expression
-            (function_call
-              (identifier)
-              (number))
-            (FALSE)))))))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (binary_expression
+      (TRUE)
+      (binary_expression
+       (function_call
+        (identifier)
+        (number))
+       (FALSE))))))))
+
+
+================================================================================
+OPERATORS: IS DISTINCT FROM
+================================================================================
+
+SELECT 1 IS DISTINCT FROM NULL;
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (binary_expression
+      (number)
+      (NULL)))))))
+
+
+================================================================================
+OPERATORS: SELECT element from array
+================================================================================
+
+SELECT a[SAFE_OFFSET(0)];
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (array_element_access
+      (identifier)
+      (function_call
+       (identifier)
+       (number))))))))
