@@ -50,6 +50,10 @@ module.exports = grammar({
   rules: {
     source_file: ($) => repeat($._statement),
 
+    /**************************************************************************
+     *                              Keywords
+     ***************************************************************************/
+
     keyword_if_not_exists: _ => kw('IF NOT EXISTS'),
     keyword_temporary: _ => choice(kw('TEMP'), kw('TEMPORARY')),
     keyword_replace: _ => kw("OR REPLACE"),
@@ -206,9 +210,9 @@ module.exports = grammar({
         ),
       ),
 
-    _direction_keywords: (_) => field("order", choice(kw("ASC"), kw("DESC"))),
-
-    // SELECT
+    /********************************************************************************* 
+     *  Query Statement
+     *******************************************************************************/
     query_statement: ($) => $.query_expr,
     set_operation: $ => prec.right(seq(
       $.query_expr, field("operator", choice(
@@ -220,7 +224,6 @@ module.exports = grammar({
     query_expr: ($) => prec(10, seq(
       optional($.cte_clause),
       choice($.select, seq("(", $.query_expr ,")"), $.set_operation),
-      // choice($.select),
       optional($.order_by_clause),
       optional($.limit_clause),
     )),
@@ -266,6 +269,7 @@ module.exports = grammar({
     ),
     window_clause: ($) => seq(kw("WINDOW"), $.named_window_expression),
     order_by_clause_body: ($) => commaSep1(seq($._expression, optional($._direction_keywords))),
+    _direction_keywords: (_) => field("order", choice(kw("ASC"), kw("DESC"))),
     order_by_clause: ($) => seq(kw("ORDER BY"), $.order_by_clause_body),
     where_clause: ($) => seq(kw("WHERE"), $._expression),
     _aliased_expression: $ =>
@@ -358,28 +362,6 @@ module.exports = grammar({
 
     select_subexpression: ($) => seq("(", $.query_statement, ")"),
 
-    // UPDATE
-    update_statement: ($) =>
-      seq(kw("UPDATE"), $.identifier, $.set_clause, optional($.where_clause)),
-
-    set_clause: ($) => seq(kw("SET"), $.set_clause_body),
-    set_clause_body: ($) => seq(commaSep1($.assigment_expression)),
-    assigment_expression: ($) => seq($.identifier, "=", $._expression),
-
-    // INSERT
-    insert_statement: ($) =>
-      seq(kw("INSERT"), kw("INTO"), $.identifier, $.values_clause),
-    values_clause: ($) => seq(kw("VALUES"), "(", $.values_clause_body, ")"),
-    values_clause_body: ($) => commaSep1($._expression),
-    tuple: ($) =>
-      seq(
-        // TODO: maybe collapse with function arguments, but make sure to preserve clarity
-        "(",
-        field("elements", commaSep1($._expression)),
-        ")",
-      ),
-    parameter: ($) => seq($.identifier, $._type),
-    parameters: ($) => seq("(", commaSep1($.parameter), ")"),
     function_call: ($) =>
       // FIXME: precedence
       prec(10, seq(
@@ -388,6 +370,7 @@ module.exports = grammar({
         optional(field("arguments", commaSep1(choice($._expression, $.asterisk_expression)))),
         ")",
       )),
+
     unnest_operator: $ => choice(
         seq(kw("UNNEST"), "(", $.array, ")"),
         seq(kw("UNNEST"), "(", $._identifier, ")"),
@@ -399,6 +382,36 @@ module.exports = grammar({
       , optional($.unnest_withoffset)
     )),
     unnest_withoffset: $ => prec.left(2, seq(kw("WITH OFFSET"), optional(seq($._keyword_as, $._identifier)))),
+
+    /********************************************************************************* 
+     *  DML Statement
+     *******************************************************************************/
+    update_statement: ($) =>
+      seq(kw("UPDATE"), $.identifier, $.set_clause, optional($.where_clause)),
+
+    set_clause: ($) => seq(kw("SET"), $.set_clause_body),
+    set_clause_body: ($) => seq(commaSep1($.assigment_expression)),
+    assigment_expression: ($) => seq($.identifier, "=", $._expression),
+
+    // INSERT
+    insert_statement: ($) =>
+      seq(kw("INSERT"), optional(kw("INTO")), field("table_name", $.identifier),
+        optional($.insert_columns),
+        $.values_clause,
+      ),
+    insert_columns: $ => seq("(", commaSep1($.identifier), ")"),
+    values_clause: ($) => choice(
+      seq(kw("VALUES"), commaSep1($.value_element)),
+      $.query_statement
+    ),
+    value_element: ($) => seq("(", commaSep1($._expression), ")"),
+    tuple: ($) =>
+      seq(
+        // TODO: maybe collapse with function arguments, but make sure to preserve clarity
+        "(",
+        field("elements", commaSep1($._expression)),
+        ")",
+      ),
 
     /* *******************************************************************
      *                           Literals
@@ -511,6 +524,7 @@ module.exports = grammar({
       token(
         choice(seq("#", /.*/), seq("--", /.*/), seq("/*", /[^*]*\*+([^/*][^*]*\*+)*/, "/")),
       ),
+
     /* *******************************************************************
      *                           Operators
      * ********************************************************************/

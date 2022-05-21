@@ -1,287 +1,69 @@
 ================================================================================
-DML: SCHEMA with options
+DML: INSERT statement
 ================================================================================
 
-CREATE SCHEMA mydataset OPTIONS();
-CREATE SCHEMA mydataset
-OPTIONS(
-  location="hoge",
-  labels=[("label1","value1"),("label2","value2")]
-);
+INSERT dataset.Inventory (product, quantity)
+VALUES
+    ('top load washer', 10),
+    ('front load washer', 20),
+    ('dryer', 30),
+    ('refrigerator', 10),
+    ('microwave', 20),
+    ('dishwasher', 30),
+    ('oven', 5)
+    ;
 
---------------------------------------------------------------------------------
-
-(source_file 
-    (create_schema_statement
-        (identifier)
-        (option_list))
-    (create_schema_statement
-        (identifier)
-        (option_list 
-            (option_item (identifier) (string))
-            (option_item (identifier) (array
-              (struct (string) (string))
-              (struct (string) (string))))))
-    )
-
-================================================================================
-DML: SCHEMA IF NOT EXISTS
-================================================================================
-
-CREATE SCHEMA IF NOT EXISTS mydataset 
-
---------------------------------------------------------------------------------
-
-(source_file 
-    (create_schema_statement 
-        (keyword_if_not_exists) 
-        (identifier)))
-
-================================================================================
-DML: CREATE TABLE 
-================================================================================
-
-CREATE TABLE my_table (col1 INT64);
-CREATE OR REPLACE TABLE my_table (col1 INT64);
-CREATE TABLE IF NOT EXISTS my_table (col1 INT64);
-CREATE TEMPORARY TABLE IF NOT EXISTS my_table (col1 INT64);
+INSERT dataset.DetailedInventory (product, quantity, supply_constrained)
+SELECT product, quantity, false
+FROM dataset.Inventory
+;
 
 --------------------------------------------------------------------------------
 
 (source_file
- (create_table_statement
+ (insert_statement
   (identifier)
-  (create_table_parameters
-   (column_definition
-    (identifier)
-    (column_type))))
- (create_table_statement
-  (keyword_replace)
+  (insert_columns
    (identifier)
-  (create_table_parameters
-   (column_definition
-    (identifier)
-    (column_type))))
- (create_table_statement
-  (keyword_if_not_exists)
-   (identifier)
-  (create_table_parameters
-   (column_definition
-    (identifier)
-    (column_type))))
-    (create_table_statement
-     (keyword_temporary)
-     (keyword_if_not_exists)
-     (identifier)
-     (create_table_parameters
-      (column_definition
-       (identifier)
-       (column_type))))
-    )
-
-
-
-================================================================================
-DML: CREATE TABLE with table options
-================================================================================
-
-CREATE TABLE my_table (timestamp TIMESTAMP)
-PARTITION BY DATE(timestamp);
-
-CREATE TABLE my_table (col1 INT, col2 INT)
-CLUSTER BY col1, col2;
-
-CREATE TABLE my_table (col1 INT)
-OPTIONS(description="text description");
-
---------------------------------------------------------------------------------
-
-(source_file
- (create_table_statement
-  (identifier)
-  (create_table_parameters
-   (column_definition
-    (identifier)
-    (column_type)))
-  (table_partition_clause
-   (partition_expression
-    (identifier))))
- (create_table_statement
-  (identifier)
-  (create_table_parameters
-   (column_definition
-    (identifier)
-    (column_type))
-   (column_definition
-    (identifier)
-    (column_type)))
-  (table_cluster_clause
-   (identifier)
-   (identifier)))
-    (create_table_statement
-     (identifier)
-     (create_table_parameters
-      (column_definition
-       (identifier)
-       (column_type)))
-     (option_list
-      (option_item
-       (identifier)
-       (string)))))
-
-
-================================================================================
-DML: CREATE TABLE with SELECT
-================================================================================
-
-CREATE TABLE my_table AS SELECT "2022-01-01";
-CREATE TABLE my_table(date DATE) AS SELECT "2022-01-01";
-
---------------------------------------------------------------------------------
-
-(source_file
- (create_table_statement
-  (identifier)
-  (query_statement
-   (query_expr
-    (select
-     (select_list
-      (string))))))
- (create_table_statement
-  (identifier)
-  (create_table_parameters
-   (column_definition
-    (identifier)
-    (column_type)))
-  (query_statement
-   (query_expr
-    (select
-     (select_list
-      (string)))))))
-
-
-================================================================================
-DML: CREATE TABLE on BigQuery Examples #1
-================================================================================
-
-CREATE TABLE mydataset.newtable
-(
-  x INT64 OPTIONS(description="An optional INTEGER field"),
-  y STRUCT<
-    a ARRAY<STRING> OPTIONS(description="A repeated STRING field"),
-    b BOOL
-  >
-)
-PARTITION BY _PARTITIONDATE
-OPTIONS(
-  expiration_timestamp=TIMESTAMP "2025-01-01 00:00:00 UTC",
-  partition_expiration_days=1,
-  description="a table that expires in 2025, with each partition living for 24 hours",
-  labels=[("org_unit", "development")]
-)
-
---------------------------------------------------------------------------------
-
-(source_file
- (create_table_statement
-  (identifier)
-  (create_table_parameters
-   (column_definition
-    (identifier)
-    (column_type)
-    (option_list
-     (option_item
-      (identifier)
-      (string))))
-   (column_definition
-    (identifier)
-    (column_type
-     (column_definition
-      (identifier)
-      (column_type)
-      (option_list
-       (option_item
-        (identifier)
-        (string))))
-     (column_definition
-      (identifier)
-      (column_type)))))
-  (table_partition_clause
-   (partition_expression))
-  (option_list
-   (option_item
-    (identifier)
-    (time
-     (string)))
-   (option_item
-    (identifier)
+   (identifier))
+  (values_clause
+   (value_element
+    (string)
     (number))
-   (option_item
+   (value_element
+    (string)
+    (number))
+   (value_element
+    (string)
+    (number))
+   (value_element
+    (string)
+    (number))
+   (value_element
+    (string)
+    (number))
+   (value_element
+    (string)
+    (number))
+   (value_element
+    (string)
+    (number))))
+  (insert_statement
+   (identifier)
+   (insert_columns
     (identifier)
-    (string))
-   (option_item
     (identifier)
-    (array
-     (struct
-      (string)
-      (string)))))))
-
-
-================================================================================
-DML: CREATE FUNCTION with SQL UDF
-================================================================================
-
-CREATE FUNCTION mydataset.multiplyInputs(x FLOAT64, y FLOAT64)
-RETURNS FLOAT64
-AS (x * y);
-
---------------------------------------------------------------------------------
-
-  (source_file
-    (create_function_statement
-      (identifier)
-      (create_function_parameters
-        (create_function_parameter
-          (identifier)
-          (type
-            (identifier)))
-        (create_function_parameter
-          (identifier)
-          (type
-            (identifier))))
-      (type
-        (identifier))
-      (binary_expression
+    (identifier))
+   (values_clause
+    (query_statement
+     (query_expr
+      (select
+       (select_list
         (identifier)
-        (identifier))))
-
-================================================================================
-DML: CREATE FUNCTION with Javascript UDF
-================================================================================
-
-CREATE TEMP FUNCTION multiplyInputs(x FLOAT64, y FLOAT64)
-RETURNS FLOAT64
-LANGUAGE js
-AS r"""
-  return x*y;
-""";
-
---------------------------------------------------------------------------------
-
-(source_file
-  (create_function_statement
-    (keyword_temporary)
-    (identifier)
-    (create_function_parameters
-      (create_function_parameter
         (identifier)
-        (type
-          (identifier)))
-      (create_function_parameter
-        (identifier)
-        (type
-          (identifier))))
-    (type
-      (identifier))
-    (language)
-    (string)))
+        (FALSE))
+       (from_clause
+        (from_item
+          (identifier)))))))))
+
+

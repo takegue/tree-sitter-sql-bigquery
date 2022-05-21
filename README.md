@@ -30,16 +30,6 @@ npm test
 ### Debbuging
 
 * `npm run parse <file.sql>` outputs a syntax tree
-* `npm run extract-error <file.sql>` shows first offending line
-
-### Goals
-
-This parser is supposed to be used in text editors or SQL analysis tools for BigQuery. 
-
-As a result:
-
-* it's very lax in what it considers valid SQL parse
-* adding extra nodes to have convenient selection anchors is okay
 
 # Supported BigQuery SQL feature
 
@@ -83,7 +73,9 @@ As a result:
     - [ ] DELETE syntax for any
     - [ ] ALTER sytnax for any
 
-- [ ] BigQuery Sript
+- [ ] DCL Statements
+- [ ] Procedural Lalnguage
+- [ ] BigQuery ML
 
 
 ### Other projects
