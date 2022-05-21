@@ -3,7 +3,8 @@
 
 # tree-sitter for BigQuery's SQL
 
-This project supports StandardSQL in BigQuery
+This project supports StandardSQL in BigQuery.
+You could try out the demo on [Github Pages](https://tkngue.github.io/tree-sitter-sql-bigquery/)
 
 ## Development
 
