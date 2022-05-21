@@ -53,9 +53,16 @@ module.exports = grammar({
     keyword_if_not_exists: _ => kw('IF NOT EXISTS'),
     keyword_temporary: _ => choice(kw('TEMP'), kw('TEMPORARY')),
     keyword_replace: _ => kw("OR REPLACE"),
+    _keyword_begin: _ => kw("BEGIN"),
+    _keyword_end: _ => kw("END"),
     _keyword_struct: _ => kw("STRUCT"),
     _keyword_array: _ => kw("ARRAY"),
     _keyword_returns: _ => kw("RETURNS"),
+    _keyword_between: _ => kw("BETWEEN"),
+    _keyword_case: _ => kw("CASE"),
+    _keyword_when: _ => kw("WHEN"),
+    _keyword_then: _ => kw("THEN"),
+    _keyword_else: _ => kw("ELSE"),
     _keyword_is: _ => kw("IS"),
     _keyword_in: _ => kw("IN"),
     _keyword_not: _ => kw("NOT"),
@@ -300,7 +307,7 @@ module.exports = grammar({
     multi_column_unpivot: $ => prec.right(seq(
       "(", commaSep1(alias($.identifier, $.unpivot_value)), ")",
       kw("FOR"), alias($.identifier, $.name_column),
-      kw("IN"), "(", commaSep1($.unpivot_column), ")", 
+      kw("IN"), "(", (commaSep1($.unpivot_column)), ")", 
     )),
     unpivot_column: $ => seq(
       choice($.struct, $.identifier),
@@ -509,9 +516,8 @@ module.exports = grammar({
      * ********************************************************************/
     _expression: ($) => choice(
           $.unary_expression,
-          // $.ternary_expression,
+          $.conditional_expression,
           prec(1, $._literal),
-          // $.asterisk_expression
           $.function_call,
           $.identifier,
           $.unnest_clause,
@@ -534,11 +540,24 @@ module.exports = grammar({
         $._expression, $._keyword_is, optional($._keyword_not), choice($.NULL, $.TRUE, $.FALSE)
       )),
     ),
-    ternary_expression: $ => choice(
+    casewhen_clause: $ => 
+          seq($._keyword_when, 
+            field("match_condition", $._expression), 
+            $._keyword_then, 
+            field("match_result", $._expression)
+          ),
+    caseelse_clause: $ => seq($._keyword_else, field("else_result", $._expression)),
+    conditional_expression: $ => choice(
         prec.left('operator_compare', seq(
-          $._expression,
-          optional($._keyword_not), kw("BETWEEN"),
-          $._expression, $._keyword_and, $._expression
+          field("exp1", $._expression),
+          optional($._keyword_not), field("operator", $._keyword_between),
+          field("exp2", $._expression), $._keyword_and, field("exp3", $._expression)
+        )),
+        prec.left('clause_connective', seq(
+          $._keyword_case, optional(field("expr", $._expression)), 
+          repeat1($.casewhen_clause),
+          optional($.caseelse_clause),
+          $._keyword_end
         ))
     ),
     binary_expression: $ => {
@@ -550,8 +569,8 @@ module.exports = grammar({
         ['binary_bitwise_and', '&'],
         ['binary_bitwise_xor', '^'],
         ['binary_bitwise_or', '|'],
-        ['binary_and', kw('AND')],
-        ['binary_or', kw('OR')],
+        ['binary_and', $._keyword_and],
+        ['binary_or', $._keyword_or],
         ['operator_compare', seq(optional($._keyword_not), $._keyword_in)],
         ['operator_compare', seq(optional($._keyword_not), $._keyword_like)],
         ['operator_compare', seq($._keyword_is, optional($._keyword_not), kw("DISTINCT FROM"))],

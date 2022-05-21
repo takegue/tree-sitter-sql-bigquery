@@ -108,10 +108,10 @@ SELECT EXISTS ( SELECT value FROM Words WHERE direction = 'south' ) as result;
       (identifier)))))))
 
 ================================================================================
-OPERATORS: LIKE operator
+operators: like operator
 ================================================================================
 
-SELECT x LIKE "hoge";
+select x like "hoge";
 
 --------------------------------------------------------------------------------
 
@@ -363,3 +363,69 @@ SELECT a[SAFE_OFFSET(0)];
       (function_call
        (identifier)
        (number))))))))
+
+
+================================================================================
+OPERATORS: BETWEEN Operartor
+================================================================================
+
+SELECT 1 BETWEEN 1 and 10
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (conditional_expression
+      (number)
+      (number)
+      (number)))))))
+
+================================================================================
+OPERATORS: CASE expressions
+================================================================================
+
+SELECT
+  CASE 40
+    WHEN 90 THEN 'red'
+    WHEN 50 THEN 'blue'
+    ELSE 'green'
+  END,
+  CASE
+    WHEN A > 60 THEN 'red'
+    WHEN A > 30 THEN 'blue'
+    ELSE 'green'
+    END
+
+--------------------------------------------------------------------------------
+ 
+(source_file
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (conditional_expression
+      (number)
+      (casewhen_clause
+       (number)
+       (string))
+      (casewhen_clause
+       (number)
+       (string))
+      (caseelse_clause
+       (string)))
+     (conditional_expression
+      (casewhen_clause
+       (binary_expression
+        (identifier)
+        (number))
+       (string))
+      (casewhen_clause
+       (binary_expression
+        (identifier)
+        (number))
+       (string))
+      (caseelse_clause
+       (string))))))))

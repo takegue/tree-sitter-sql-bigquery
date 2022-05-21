@@ -51,9 +51,9 @@ As a result:
     - [x] Comments
     - [x] Struct
     - [x] Array
-    - [ ] CASE expr
-    - [ ] CASE 
-    - [ ] BETWEEN Operator
+    - [x] CASE expr
+    - [x] CASE 
+    - [x] BETWEEN Operator
     - [ ] INTERVAL types
 
 - [ ] Query Statement
