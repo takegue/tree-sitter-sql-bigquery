@@ -437,7 +437,6 @@ module.exports = grammar({
     // MERGE statement
     merge_statement: $ => seq(
       kw("MERGE"), optional(kw("INTO")), field("table_name", $.identifier), optional($.as_alias),
-      // FIXME: source_name can be subquery and aliasable
       kw("USING"), choice(
         seq(field("source_name", $.identifier), optional($.as_alias)),
         seq($.select_subexpression, optional($.as_alias)),

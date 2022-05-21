@@ -56,7 +56,7 @@ npm test
       - [ ] EXTRACT 
     - [x] Pivot/Unpivot Operator
     - [ ] Analytics functions
-    - [ ] Other Not GA features
+    - [ ] Pre-GA features
         - [ ] Collation
 
 - [ ] DML Statements
