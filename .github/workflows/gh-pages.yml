@@ -28,7 +28,7 @@ jobs:
           done
 
       - name: Download aseets
-        run: wget -P public -nH -r https://127.0.0.1:8000/{,tree-sitter.wasm,tree-sitter-parser.wasm}
+        run: wget -T 10 -P public -nH -r https://127.0.0.1:8000/{,tree-sitter.wasm,tree-sitter-parser.wasm}
 
       - name: Modify assets
         run: sed -i 's,LANGUAGE_BASE_URL = "";,LANGUAGE_BASE_URL = new URL(window.location.href).pathname;,' public/index.html
