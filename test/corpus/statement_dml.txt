@@ -67,3 +67,239 @@ FROM dataset.Inventory
           (identifier)))))))))
 
 
+================================================================================
+DML: DELETE statement
+================================================================================
+
+DELETE `dataset.inventory`
+WHERE quantity = 0
+;
+
+DELETE dataset.Inventory i
+WHERE i.product NOT IN (SELECT product from dataset.NewArrivals)
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (delete_statement
+  (identifier)
+  (where_clause
+   (binary_expression
+    (identifier)
+    (number))))
+ (delete_statement
+  (identifier)
+  (as_alias
+   (identifier))
+  (where_clause
+   (binary_expression
+    (identifier)
+    (select_subexpression
+     (query_statement
+      (query_expr
+       (select
+        (select_list
+         (identifier))
+        (from_clause
+         (from_item
+          (identifier)))))))))))
+
+
+================================================================================
+DML: DELETE statement
+================================================================================
+
+UPDATE dataset.Inventory
+SET quantity = quantity - 10
+WHERE product like '%washer%'
+;
+
+UPDATE dataset.DetailedInventory
+SET supply_constrained = true
+FROM dataset.NewArrivals, dataset.Warehouse
+WHERE DetailedInventory.product = NewArrivals.product AND
+      NewArrivals.warehouse = Warehouse.warehouse AND
+      Warehouse.state = 'WA'
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (update_statement
+  (identifier)
+  (set_clause
+   (update_item
+    (identifier)
+    (binary_expression
+     (identifier)
+     (number))))
+  (where_clause
+   (binary_expression
+    (identifier)
+    (string))))
+ (update_statement
+  (identifier)
+  (set_clause
+   (update_item
+    (identifier)
+    (TRUE)))
+  (from_clause
+   (from_item
+    (join_operation
+     (from_item
+      (identifier))
+     (from_item
+      (identifier)))))
+  (where_clause
+   (binary_expression
+    (binary_expression
+     (binary_expression
+      (identifier)
+      (identifier))
+     (binary_expression
+      (identifier)
+      (identifier)))
+    (binary_expression
+     (identifier)
+      (string))))))
+
+
+================================================================================
+DML: MERGE statement
+================================================================================
+
+MERGE dataset.DetailedInventory T
+USING dataset.Inventory S
+ON T.product = S.product
+WHEN NOT MATCHED AND quantity < 20 THEN
+  INSERT(product, quantity, supply_constrained, comments)
+  VALUES(product, quantity, true, ARRAY<STRUCT<created DATE, comment STRING>>[(DATE('2016-01-01'), 'comment1')])
+WHEN NOT MATCHED THEN
+  INSERT(product, quantity, supply_constrained)
+  VALUES(product, quantity, false)
+;
+
+MERGE dataset.Inventory T
+USING dataset.NewArrivals S
+ON FALSE
+WHEN NOT MATCHED AND product LIKE '%washer%' THEN
+  INSERT (product, quantity) VALUES(product, quantity)
+WHEN NOT MATCHED BY SOURCE AND product LIKE '%washer%' THEN
+  DELETE
+;
+
+MERGE dataset.NewArrivals
+USING (SELECT * FROM UNNEST([('microwave', 10, 'warehouse #1'),
+                             ('dryer', 30, 'warehouse #1'),
+                             ('oven', 20, 'warehouse #2')]))
+ON FALSE
+WHEN NOT MATCHED THEN
+  INSERT ROW
+WHEN NOT MATCHED BY SOURCE THEN
+  DELETE
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (merge_statement
+  (identifier)
+  (as_alias
+   (identifier))
+  (identifier)
+  (as_alias
+   (identifier))
+  (merge_condition
+   (binary_expression
+    (identifier)
+    (identifier)))
+  (merge_not_matched_by_target_clause
+   (search_condition
+    (binary_expression
+     (identifier)
+     (number)))
+   (merge_insert_clause
+    (insert_columns
+     (identifier)
+     (identifier)
+     (identifier)
+     (identifier))
+    (values_clause
+     (value_element
+      (identifier)
+      (identifier)
+      (TRUE)
+      (array
+       (struct
+        (ERROR)
+        (string)
+        (string)))))))
+  (merge_not_matched_by_target_clause
+   (merge_insert_clause
+    (insert_columns
+     (identifier)
+     (identifier)
+     (identifier))
+    (values_clause
+     (value_element
+      (identifier)
+      (identifier)
+      (FALSE))))))
+  (merge_statement
+   (identifier)
+   (as_alias
+    (identifier))
+   (identifier)
+   (as_alias
+    (identifier))
+   (merge_condition
+    (FALSE))
+   (merge_not_matched_by_target_clause
+    (search_condition
+     (binary_expression
+      (identifier)
+      (string)))
+    (merge_insert_clause
+     (insert_columns
+      (identifier)
+      (identifier))
+     (values_clause
+      (value_element
+       (identifier)
+       (identifier)))))
+   (merge_not_matched_by_source_clause
+    (search_condition
+     (binary_expression
+      (identifier)
+      (string)))
+    (merge_delete_clause)))
+  (merge_statement
+   (identifier)
+   (select_subexpression
+    (query_statement
+     (query_expr
+      (select
+       (select_list
+        (select_all
+         (asterisk_expression)))
+       (from_clause
+        (from_item
+         (unnest_clause
+          (unnest_operator
+           (array
+            (struct
+             (string)
+             (number)
+             (string))
+            (struct
+             (string)
+             (number)
+             (string))
+            (struct
+             (string)
+             (number)
+             (string)))))))))))
+  (merge_condition
+   (FALSE))
+  (merge_not_matched_by_target_clause
+   (merge_insert_clause))
+  (merge_not_matched_by_source_clause
+   (merge_delete_clause))))

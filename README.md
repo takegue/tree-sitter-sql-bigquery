@@ -60,11 +60,11 @@ npm test
         - [ ] Collation
 
 - [ ] DML Statements
-    - [ ] INSERT
-    - [ ] UPDATE
-    - [ ] TRUNCATE TABLE
-    - [ ] DELETE
-    - [ ] MERGE
+    - [x] INSERT
+    - [x] UPDATE 
+    - [x] TRUNCATE TABLE 
+    - [x] DELETE 
+    - [x] MERGE 
 
 - [ ] DDL Statements
     - [x] CREATE syntax for TABLE/VIEW/MATERIALIZED_VIEW
@@ -83,3 +83,4 @@ npm test
 * https://github.com/m-novikov/tree-sitter-sql
 * https://github.com/DerekStride/tree-sitter-sql
 * https://github.com/dhcmrlchtdj/tree-sitter-sqlite
+* https://github.com/google/zetasql

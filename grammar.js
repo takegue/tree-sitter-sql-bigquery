@@ -57,6 +57,7 @@ module.exports = grammar({
     keyword_if_not_exists: _ => kw('IF NOT EXISTS'),
     keyword_temporary: _ => choice(kw('TEMP'), kw('TEMPORARY')),
     keyword_replace: _ => kw("OR REPLACE"),
+    _keyword_delete: _ => kw("DELETE"),
     _keyword_begin: _ => kw("BEGIN"),
     _keyword_end: _ => kw("END"),
     _keyword_struct: _ => kw("STRUCT"),
@@ -86,8 +87,11 @@ module.exports = grammar({
           $.create_table_statement,
           $.create_function_statement,
           $.query_statement,
-          $.update_statement,
           $.insert_statement,
+          $.delete_statement,
+          $.truncate_statement,
+          $.update_statement,
+          $.merge_statement,
         ),
         optional(";"),
       ),
@@ -386,12 +390,6 @@ module.exports = grammar({
     /********************************************************************************* 
      *  DML Statement
      *******************************************************************************/
-    update_statement: ($) =>
-      seq(kw("UPDATE"), $.identifier, $.set_clause, optional($.where_clause)),
-
-    set_clause: ($) => seq(kw("SET"), $.set_clause_body),
-    set_clause_body: ($) => seq(commaSep1($.assigment_expression)),
-    assigment_expression: ($) => seq($.identifier, "=", $._expression),
 
     // INSERT
     insert_statement: ($) =>
@@ -412,6 +410,85 @@ module.exports = grammar({
         field("elements", commaSep1($._expression)),
         ")",
       ),
+
+    // DELETE
+    delete_statement: $ => 
+      seq($._keyword_delete, optional(kw("FROM")),
+        field("table_name", $.identifier), optional($.as_alias),
+        $.where_clause
+      ),
+
+    // TRUNCATE
+    truncate_statement: $ => 
+      seq(kw("TRUNCATE TABLE"), field("table_name", $.identifier)),
+
+    // UPDATE
+    update_statement: ($) =>
+      seq(kw("UPDATE"), field("table_name", $.identifier), optional($.as_alias),
+        $.set_clause, 
+        optional($.from_clause),
+        $.where_clause
+      ),
+
+    set_clause: ($) => seq(kw("SET"), commaSep1($.update_item)),
+    update_item: ($) => $._assigment_expression,
+    _assigment_expression: ($) => seq($.identifier, "=", $._expression),
+
+    // MERGE statement
+    merge_statement: $ => seq(
+      kw("MERGE"), optional(kw("INTO")), field("table_name", $.identifier), optional($.as_alias),
+      // FIXME: source_name can be subquery and aliasable
+      kw("USING"), choice(
+        seq(field("source_name", $.identifier), optional($.as_alias)),
+        seq($.select_subexpression, optional($.as_alias)),
+      ), optional($.as_alias),
+      kw("ON"), alias($._expression, $.merge_condition),
+      repeat1(choice(
+        $.merge_matched_clause,
+        $.merge_not_matched_by_target_clause,
+        $.merge_not_matched_by_source_clause,
+      ))
+    ),
+    merge_matched_clause: $ => choice(
+        seq(
+          kw("WHEN MATCHED"),
+          optional(seq($._keyword_and, alias($._expression, $.search_condition))),
+          kw("THEN"),
+          choice(
+            $.merge_update_clause,
+            $.merge_delete_clause,
+          )
+        )
+      )
+    ,
+    merge_not_matched_by_target_clause: $ => seq(
+          kw("WHEN NOT MATCHED"), optional(kw("BY TARGET")),
+          optional(seq($._keyword_and, alias($._expression, $.search_condition))),
+          kw("THEN"),
+          choice(
+            $.merge_insert_clause,
+          )
+    ),
+    merge_not_matched_by_source_clause: $ => choice(
+        seq(
+          kw("WHEN NOT MATCHED BY SOURCE"),
+          optional(seq($._keyword_and, alias($._expression, $.search_condition))),
+          kw("THEN"),
+          choice(
+            $.merge_update_clause,
+            $.merge_delete_clause,
+          )
+        )
+      )
+    ,
+    merge_update_clause: $ => seq(kw("UPDATE SET"), commaSep1($.update_item)),
+    merge_delete_clause: $ => $._keyword_delete,
+    merge_insert_clause: $ => 
+      seq(kw("INSERT"), optional($.insert_columns),
+        choice($.values_clause, kw("ROW"))
+      ),
+
+    insert_columns: $ => seq("(", commaSep1($.identifier), ")"),
 
     /* *******************************************************************
      *                           Literals
