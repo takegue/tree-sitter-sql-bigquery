@@ -24,7 +24,7 @@ jobs:
         run: | 
           npm run playground &
           while ! nc -z localhost 8000; do
-            sleep 0.5
+            sleep 3
           done
 
       - name: Download aseets
