@@ -116,6 +116,10 @@
           "named": true
         },
         {
+          "type": "conditional_expression",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -247,6 +251,10 @@
           "named": true
         },
         {
+          "type": "conditional_expression",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -325,85 +333,6 @@
     }
   },
   {
-    "type": "assigment_expression",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "FALSE",
-          "named": true
-        },
-        {
-          "type": "NULL",
-          "named": true
-        },
-        {
-          "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "argument_reference",
-          "named": true
-        },
-        {
-          "type": "array",
-          "named": true
-        },
-        {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "query_parameter",
-          "named": true
-        },
-        {
-          "type": "select_subexpression",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "struct",
-          "named": true
-        },
-        {
-          "type": "time",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
-          "named": true
-        },
-        {
-          "type": "unnest_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "asterisk_expression",
     "named": true,
     "fields": {}
@@ -450,6 +379,10 @@
           },
           {
             "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_expression",
             "named": true
           },
           {
@@ -637,6 +570,280 @@
             "named": true
           },
           {
+            "type": "conditional_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "query_parameter",
+            "named": true
+          },
+          {
+            "type": "select_subexpression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
+            "named": true
+          },
+          {
+            "type": "time",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "unnest_clause",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "caseelse_clause",
+    "named": true,
+    "fields": {
+      "else_result": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "FALSE",
+            "named": true
+          },
+          {
+            "type": "NULL",
+            "named": true
+          },
+          {
+            "type": "TRUE",
+            "named": true
+          },
+          {
+            "type": "argument_reference",
+            "named": true
+          },
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "array_element_access",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "query_parameter",
+            "named": true
+          },
+          {
+            "type": "select_subexpression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
+            "named": true
+          },
+          {
+            "type": "time",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "unnest_clause",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "casewhen_clause",
+    "named": true,
+    "fields": {
+      "match_condition": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "FALSE",
+            "named": true
+          },
+          {
+            "type": "NULL",
+            "named": true
+          },
+          {
+            "type": "TRUE",
+            "named": true
+          },
+          {
+            "type": "argument_reference",
+            "named": true
+          },
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "array_element_access",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "query_parameter",
+            "named": true
+          },
+          {
+            "type": "select_subexpression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
+            "named": true
+          },
+          {
+            "type": "time",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "unnest_clause",
+            "named": true
+          }
+        ]
+      },
+      "match_result": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "FALSE",
+            "named": true
+          },
+          {
+            "type": "NULL",
+            "named": true
+          },
+          {
+            "type": "TRUE",
+            "named": true
+          },
+          {
+            "type": "argument_reference",
+            "named": true
+          },
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "array_element_access",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_expression",
+            "named": true
+          },
+          {
             "type": "function_call",
             "named": true
           },
@@ -732,6 +939,380 @@
     }
   },
   {
+    "type": "conditional_expression",
+    "named": true,
+    "fields": {
+      "exp1": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "FALSE",
+            "named": true
+          },
+          {
+            "type": "NULL",
+            "named": true
+          },
+          {
+            "type": "TRUE",
+            "named": true
+          },
+          {
+            "type": "argument_reference",
+            "named": true
+          },
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "array_element_access",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "query_parameter",
+            "named": true
+          },
+          {
+            "type": "select_subexpression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
+            "named": true
+          },
+          {
+            "type": "time",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "unnest_clause",
+            "named": true
+          }
+        ]
+      },
+      "exp2": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "FALSE",
+            "named": true
+          },
+          {
+            "type": "NULL",
+            "named": true
+          },
+          {
+            "type": "TRUE",
+            "named": true
+          },
+          {
+            "type": "argument_reference",
+            "named": true
+          },
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "array_element_access",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "query_parameter",
+            "named": true
+          },
+          {
+            "type": "select_subexpression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
+            "named": true
+          },
+          {
+            "type": "time",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "unnest_clause",
+            "named": true
+          }
+        ]
+      },
+      "exp3": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "FALSE",
+            "named": true
+          },
+          {
+            "type": "NULL",
+            "named": true
+          },
+          {
+            "type": "TRUE",
+            "named": true
+          },
+          {
+            "type": "argument_reference",
+            "named": true
+          },
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "array_element_access",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "query_parameter",
+            "named": true
+          },
+          {
+            "type": "select_subexpression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
+            "named": true
+          },
+          {
+            "type": "time",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "unnest_clause",
+            "named": true
+          }
+        ]
+      },
+      "expr": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "FALSE",
+            "named": true
+          },
+          {
+            "type": "NULL",
+            "named": true
+          },
+          {
+            "type": "TRUE",
+            "named": true
+          },
+          {
+            "type": "argument_reference",
+            "named": true
+          },
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "array_element_access",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "query_parameter",
+            "named": true
+          },
+          {
+            "type": "select_subexpression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
+            "named": true
+          },
+          {
+            "type": "time",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "unnest_clause",
+            "named": true
+          }
+        ]
+      },
+      "operator": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "BETWEEN",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "caseelse_clause",
+          "named": true
+        },
+        {
+          "type": "casewhen_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "create_function_parameter",
     "named": true,
     "fields": {},
@@ -814,6 +1395,10 @@
         },
         {
           "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "conditional_expression",
           "named": true
         },
         {
@@ -1002,6 +1587,36 @@
     }
   },
   {
+    "type": "delete_statement",
+    "named": true,
+    "fields": {
+      "table_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "as_alias",
+          "named": true
+        },
+        {
+          "type": "where_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "from_clause",
     "named": true,
     "fields": {},
@@ -1014,7 +1629,15 @@
           "named": true
         },
         {
+          "type": "pivot_operator",
+          "named": true
+        },
+        {
           "type": "tablesample_operator",
+          "named": true
+        },
+        {
+          "type": "unpivot_operator",
           "named": true
         }
       ]
@@ -1108,6 +1731,10 @@
           },
           {
             "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_expression",
             "named": true
           },
           {
@@ -1216,6 +1843,10 @@
           "named": true
         },
         {
+          "type": "conditional_expression",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1295,6 +1926,10 @@
           "named": true
         },
         {
+          "type": "conditional_expression",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1343,7 +1978,12 @@
     "fields": {}
   },
   {
-    "type": "insert_statement",
+    "type": "input_column",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "insert_columns",
     "named": true,
     "fields": {},
     "children": {
@@ -1352,6 +1992,32 @@
       "types": [
         {
           "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "insert_statement",
+    "named": true,
+    "fields": {
+      "table_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "insert_columns",
           "named": true
         },
         {
@@ -1411,6 +2077,10 @@
           },
           {
             "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_expression",
             "named": true
           },
           {
@@ -1517,6 +2187,277 @@
   },
   {
     "type": "limit_clause",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "merge_condition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "FALSE",
+          "named": true
+        },
+        {
+          "type": "NULL",
+          "named": true
+        },
+        {
+          "type": "TRUE",
+          "named": true
+        },
+        {
+          "type": "argument_reference",
+          "named": true
+        },
+        {
+          "type": "array",
+          "named": true
+        },
+        {
+          "type": "array_element_access",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "conditional_expression",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "query_parameter",
+          "named": true
+        },
+        {
+          "type": "select_subexpression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "struct",
+          "named": true
+        },
+        {
+          "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "unnest_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "merge_delete_clause",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "merge_insert_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "insert_columns",
+          "named": true
+        },
+        {
+          "type": "values_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "merge_matched_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "merge_delete_clause",
+          "named": true
+        },
+        {
+          "type": "merge_update_clause",
+          "named": true
+        },
+        {
+          "type": "search_condition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "merge_not_matched_by_source_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "merge_delete_clause",
+          "named": true
+        },
+        {
+          "type": "merge_update_clause",
+          "named": true
+        },
+        {
+          "type": "search_condition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "merge_not_matched_by_target_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "merge_insert_clause",
+          "named": true
+        },
+        {
+          "type": "search_condition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "merge_statement",
+    "named": true,
+    "fields": {
+      "source_name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "table_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "as_alias",
+          "named": true
+        },
+        {
+          "type": "merge_condition",
+          "named": true
+        },
+        {
+          "type": "merge_matched_clause",
+          "named": true
+        },
+        {
+          "type": "merge_not_matched_by_source_clause",
+          "named": true
+        },
+        {
+          "type": "merge_not_matched_by_target_clause",
+          "named": true
+        },
+        {
+          "type": "select_subexpression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "merge_update_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "update_item",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "multi_column_unpivot",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "name_column",
+          "named": true
+        },
+        {
+          "type": "unpivot_column",
+          "named": true
+        },
+        {
+          "type": "unpivot_value",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "name_column",
     "named": true,
     "fields": {}
   },
@@ -1699,6 +2640,10 @@
           "named": true
         },
         {
+          "type": "conditional_expression",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1736,29 +2681,6 @@
         },
         {
           "type": "unnest_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "parameter",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "array_type",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "type",
           "named": true
         }
       ]
@@ -1801,6 +2723,10 @@
           "named": true
         },
         {
+          "type": "conditional_expression",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1844,6 +2770,139 @@
     }
   },
   {
+    "type": "pivot_column",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "FALSE",
+          "named": true
+        },
+        {
+          "type": "NULL",
+          "named": true
+        },
+        {
+          "type": "TRUE",
+          "named": true
+        },
+        {
+          "type": "alias",
+          "named": true
+        },
+        {
+          "type": "argument_reference",
+          "named": true
+        },
+        {
+          "type": "array",
+          "named": true
+        },
+        {
+          "type": "array_element_access",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "conditional_expression",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "query_parameter",
+          "named": true
+        },
+        {
+          "type": "select_subexpression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "struct",
+          "named": true
+        },
+        {
+          "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "unnest_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "pivot_operator",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "as_alias",
+          "named": true
+        },
+        {
+          "type": "input_column",
+          "named": true
+        },
+        {
+          "type": "pivot_column",
+          "named": true
+        },
+        {
+          "type": "pivot_value",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "pivot_value",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "as_alias",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "qualify_clause",
     "named": true,
     "fields": {},
@@ -1877,6 +2936,10 @@
         },
         {
           "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "conditional_expression",
           "named": true
         },
         {
@@ -1978,6 +3041,89 @@
     }
   },
   {
+    "type": "search_condition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "FALSE",
+          "named": true
+        },
+        {
+          "type": "NULL",
+          "named": true
+        },
+        {
+          "type": "TRUE",
+          "named": true
+        },
+        {
+          "type": "argument_reference",
+          "named": true
+        },
+        {
+          "type": "array",
+          "named": true
+        },
+        {
+          "type": "array_element_access",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "conditional_expression",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "query_parameter",
+          "named": true
+        },
+        {
+          "type": "select_subexpression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "struct",
+          "named": true
+        },
+        {
+          "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "unnest_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "select",
     "named": true,
     "fields": {},
@@ -2068,6 +3214,10 @@
           },
           {
             "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_expression",
             "named": true
           },
           {
@@ -2165,6 +3315,10 @@
           "named": true
         },
         {
+          "type": "conditional_expression",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -2231,26 +3385,11 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "set_clause_body",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "set_clause_body",
-    "named": true,
-    "fields": {},
-    "children": {
       "multiple": true,
       "required": true,
       "types": [
         {
-          "type": "assigment_expression",
+          "type": "update_item",
           "named": true
         }
       ]
@@ -2295,6 +3434,29 @@
     }
   },
   {
+    "type": "single_column_unpivot",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "name_column",
+          "named": true
+        },
+        {
+          "type": "unpivot_column",
+          "named": true
+        },
+        {
+          "type": "unpivot_value",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "source_file",
     "named": true,
     "fields": {},
@@ -2315,11 +3477,23 @@
           "named": true
         },
         {
+          "type": "delete_statement",
+          "named": true
+        },
+        {
           "type": "insert_statement",
           "named": true
         },
         {
+          "type": "merge_statement",
+          "named": true
+        },
+        {
           "type": "query_statement",
+          "named": true
+        },
+        {
+          "type": "truncate_statement",
           "named": true
         },
         {
@@ -2372,6 +3546,10 @@
         },
         {
           "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "conditional_expression",
           "named": true
         },
         {
@@ -2451,6 +3629,10 @@
         },
         {
           "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "conditional_expression",
           "named": true
         },
         {
@@ -2543,6 +3725,22 @@
     }
   },
   {
+    "type": "truncate_statement",
+    "named": true,
+    "fields": {
+      "table_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "type",
     "named": true,
     "fields": {},
@@ -2632,6 +3830,10 @@
             "named": true
           },
           {
+            "type": "conditional_expression",
+            "named": true
+          },
+          {
             "type": "function_call",
             "named": true
           },
@@ -2704,6 +3906,10 @@
         },
         {
           "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "conditional_expression",
           "named": true
         },
         {
@@ -2797,11 +4003,22 @@
     "fields": {}
   },
   {
-    "type": "update_statement",
+    "type": "unpivot_column",
     "named": true,
-    "fields": {},
+    "fields": {
+      "alias": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
@@ -2809,33 +4026,42 @@
           "named": true
         },
         {
-          "type": "set_clause",
-          "named": true
-        },
-        {
-          "type": "where_clause",
+          "type": "struct",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "values_clause",
+    "type": "unpivot_operator",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
-          "type": "values_clause_body",
+          "type": "as_alias",
+          "named": true
+        },
+        {
+          "type": "multi_column_unpivot",
+          "named": true
+        },
+        {
+          "type": "single_column_unpivot",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "values_clause_body",
+    "type": "unpivot_value",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "update_item",
     "named": true,
     "fields": {},
     "children": {
@@ -2868,6 +4094,10 @@
         },
         {
           "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "conditional_expression",
           "named": true
         },
         {
@@ -2914,6 +4144,146 @@
     }
   },
   {
+    "type": "update_statement",
+    "named": true,
+    "fields": {
+      "table_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "as_alias",
+          "named": true
+        },
+        {
+          "type": "from_clause",
+          "named": true
+        },
+        {
+          "type": "set_clause",
+          "named": true
+        },
+        {
+          "type": "where_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "value_element",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "FALSE",
+          "named": true
+        },
+        {
+          "type": "NULL",
+          "named": true
+        },
+        {
+          "type": "TRUE",
+          "named": true
+        },
+        {
+          "type": "argument_reference",
+          "named": true
+        },
+        {
+          "type": "array",
+          "named": true
+        },
+        {
+          "type": "array_element_access",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "conditional_expression",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "query_parameter",
+          "named": true
+        },
+        {
+          "type": "select_subexpression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "struct",
+          "named": true
+        },
+        {
+          "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "unnest_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "values_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "query_statement",
+          "named": true
+        },
+        {
+          "type": "value_element",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "where_clause",
     "named": true,
     "fields": {},
@@ -2947,6 +4317,10 @@
         },
         {
           "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "conditional_expression",
           "named": true
         },
         {
@@ -3124,6 +4498,10 @@
     "named": false
   },
   {
+    "type": "BEGIN",
+    "named": false
+  },
+  {
     "type": "BETWEEN",
     "named": false
   },
@@ -3133,6 +4511,14 @@
   },
   {
     "type": "BIGNUMERIC",
+    "named": false
+  },
+  {
+    "type": "BY_TARGET",
+    "named": false
+  },
+  {
+    "type": "CASE",
     "named": false
   },
   {
@@ -3176,6 +4562,10 @@
     "named": false
   },
   {
+    "type": "DELETE",
+    "named": false
+  },
+  {
     "type": "DESC",
     "named": false
   },
@@ -3188,6 +4578,14 @@
     "named": false
   },
   {
+    "type": "ELSE",
+    "named": false
+  },
+  {
+    "type": "END",
+    "named": false
+  },
+  {
     "type": "EXCEPT",
     "named": false
   },
@@ -3196,11 +4594,19 @@
     "named": false
   },
   {
+    "type": "EXCLUDE_NULLS",
+    "named": false
+  },
+  {
     "type": "EXISTS",
     "named": false
   },
   {
     "type": "FALSE",
+    "named": false
+  },
+  {
+    "type": "FOR",
     "named": false
   },
   {
@@ -3237,6 +4643,10 @@
   },
   {
     "type": "IN",
+    "named": false
+  },
+  {
+    "type": "INCLUDE_NULLS",
     "named": false
   },
   {
@@ -3281,6 +4691,10 @@
   },
   {
     "type": "MATERIALIZED_VIEW",
+    "named": false
+  },
+  {
+    "type": "MERGE",
     "named": false
   },
   {
@@ -3332,6 +4746,10 @@
     "named": false
   },
   {
+    "type": "PIVOT",
+    "named": false
+  },
+  {
     "type": "QUALIFY",
     "named": false
   },
@@ -3353,6 +4771,10 @@
   },
   {
     "type": "ROLLUP",
+    "named": false
+  },
+  {
+    "type": "ROW",
     "named": false
   },
   {
@@ -3388,6 +4810,10 @@
     "named": false
   },
   {
+    "type": "THEN",
+    "named": false
+  },
+  {
     "type": "TIME",
     "named": false
   },
@@ -3404,6 +4830,10 @@
     "named": false
   },
   {
+    "type": "TRUNCATE_TABLE",
+    "named": false
+  },
+  {
     "type": "UNION_ALL",
     "named": false
   },
@@ -3416,7 +4846,15 @@
     "named": false
   },
   {
+    "type": "UNPIVOT",
+    "named": false
+  },
+  {
     "type": "UPDATE",
+    "named": false
+  },
+  {
+    "type": "UPDATE_SET",
     "named": false
   },
   {
@@ -3433,6 +4871,22 @@
   },
   {
     "type": "VIEW",
+    "named": false
+  },
+  {
+    "type": "WHEN",
+    "named": false
+  },
+  {
+    "type": "WHEN_MATCHED",
+    "named": false
+  },
+  {
+    "type": "WHEN_NOT_MATCHED",
+    "named": false
+  },
+  {
+    "type": "WHEN_NOT_MATCHED_BY_SOURCE",
     "named": false
   },
   {
