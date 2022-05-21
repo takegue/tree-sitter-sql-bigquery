@@ -6527,7 +6527,11 @@
       "value": "[\\s\\f\\uFEFF\\u2060\\u200B]|\\\\\\r?\\n"
     }
   ],
-  "conflicts": [["query_expr"]],
+  "conflicts": [
+    [
+      "query_expr"
+    ]
+  ],
   "precedences": [
     [
       {
@@ -6592,3 +6596,4 @@
   "inline": [],
   "supertypes": []
 }
+
