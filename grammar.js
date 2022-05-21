@@ -6,9 +6,7 @@ const multiplicative_operators = ["*", "/", "||"],
   additive_operators = ["+", "-"],
   unary_operators = ["~", "+", "-"],
   unquoted_identifier = (_) => /[_a-zA-Z][_a-zA-Z0-9]*/,
-  quoted_identifier = (_) => /`[a-zA-Z0-9._-]+`/
-
-;
+  quoted_identifier = (_) => /`[a-zA-Z0-9._-]+`/;
 
 module.exports = grammar({
   name: "sql_bigquery",
