@@ -1,12 +1,6 @@
-<!-- [![Node.js CI](https://github.com/m-novikov/tree-sitter-sql/actions/workflows/node.js.yml/badge.svg)](https://github.com/m-novikov/tree-sitter-sql/actions/workflows/node.js.yml) -->
+# tree-sitter for BigQuery's SQL
 
-# SQL syntax for tree-sitter
-
-This project initially focuses on BigQuery flavor of SQL
-
-<!-- ## Try it out -->
-
-<!-- You can try out the parser here: [Tree Sitter SQL Playground](https://m-novikov.github.io/tree-sitter-sql/) -->
+This project supports StandardSQL in BigQuery
 
 ## Development
 
@@ -29,58 +23,61 @@ npm test
 
 ### Debbuging
 
-* `npm run parse <file.sql>` outputs a syntax tree
+- `npm run parse <file.sql>` outputs a syntax tree
 
 # Supported BigQuery SQL feature
 
 - [ ] Basic Literals/Expressions
-    - [x] Literals
-    - [x] Architemic operators
-    - [x] Logical operators
-    - [x] Query Paramter
-    - [x] Comments
-    - [x] Struct
-    - [x] Array
-    - [x] CASE expr
-    - [x] CASE 
-    - [x] BETWEEN Operator
-    - [ ] INTERVAL types
+
+  - [x] Literals
+  - [x] Architemic operators
+  - [x] Logical operators
+  - [x] Query Paramter
+  - [x] Comments
+  - [x] Struct
+  - [x] Array
+  - [x] CASE expr
+  - [x] CASE
+  - [x] BETWEEN Operator
+  - [ ] INTERVAL types
 
 - [ ] Query Statement
-    - [x] SELECT
-    - [x] JOIN
-    - [x] CTEs
-    - [x] TABLESAMPLE Operator
-    - [x] Typical syntax Function Calls
-    - [ ] Special syntax Function Calls
-      - [ ] EXTRACT 
-    - [x] Pivot/Unpivot Operator
-    - [ ] Analytics functions
-    - [ ] Pre-GA features
-        - [ ] Collation
+
+  - [x] SELECT
+  - [x] JOIN
+  - [x] CTEs
+  - [x] TABLESAMPLE Operator
+  - [x] Typical syntax Function Calls
+  - [ ] Special syntax Function Calls
+    - [ ] EXTRACT
+  - [x] Pivot/Unpivot Operator
+  - [ ] Analytics functions
+  - [ ] Pre-GA features
+    - [ ] Collation
 
 - [ ] DML Statements
-    - [x] INSERT
-    - [x] UPDATE 
-    - [x] TRUNCATE TABLE 
-    - [x] DELETE 
-    - [x] MERGE 
+
+  - [x] INSERT
+  - [x] UPDATE
+  - [x] TRUNCATE TABLE
+  - [x] DELETE
+  - [x] MERGE
 
 - [ ] DDL Statements
-    - [x] CREATE syntax for TABLE/VIEW/MATERIALIZED_VIEW
-    - [x] CREATE synteax for FUNCTION
-    - [x] CREATE syntax for TABLE FUNCTION
-    - [ ] DELETE syntax for any
-    - [ ] ALTER sytnax for any
+
+  - [x] CREATE syntax for TABLE/VIEW/MATERIALIZED_VIEW
+  - [x] CREATE synteax for FUNCTION
+  - [x] CREATE syntax for TABLE FUNCTION
+  - [ ] DELETE syntax for any
+  - [ ] ALTER sytnax for any
 
 - [ ] DCL Statements
 - [ ] Procedural Lalnguage
 - [ ] BigQuery ML
 
-
 ### Other projects
 
-* https://github.com/m-novikov/tree-sitter-sql
-* https://github.com/DerekStride/tree-sitter-sql
-* https://github.com/dhcmrlchtdj/tree-sitter-sqlite
-* https://github.com/google/zetasql
+- https://github.com/m-novikov/tree-sitter-sql
+- https://github.com/DerekStride/tree-sitter-sql
+- https://github.com/dhcmrlchtdj/tree-sitter-sqlite
+- https://github.com/google/zetasql

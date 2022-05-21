@@ -1,5 +1,5 @@
 {
-  "name": "sql",
+  "name": "sql_bigquery",
   "word": "_unquoted_identifier",
   "rules": {
     "source_file": {
@@ -6527,11 +6527,7 @@
       "value": "[\\s\\f\\uFEFF\\u2060\\u200B]|\\\\\\r?\\n"
     }
   ],
-  "conflicts": [
-    [
-      "query_expr"
-    ]
-  ],
+  "conflicts": [["query_expr"]],
   "precedences": [
     [
       {
@@ -6596,4 +6592,3 @@
   "inline": [],
   "supertypes": []
 }
-

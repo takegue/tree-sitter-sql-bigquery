@@ -1,5 +1,5 @@
 {
-  "name": "tree-sitter-sql",
+  "name": "tree-sitter-sql-bigquery",
   "version": "0.1.0",
   "description": "SQL grammar fom tree-sitter",
   "main": "bindings/node",
@@ -10,25 +10,24 @@
     "parse": "tree-sitter parse",
     "prettier": "prettier --write .",
     "build-wasm": "tree-sitter build-wasm",
-    "update-playground": "tree-sitter build-wasm",
-    "playground": "rm -f tree-sitter-sql.wasm && npm run update-playground && tree-sitter playground",
-    "extract-error": "node ./scripts/extract_error.js"
+    "playground": "rm -f tree-sitter-sql-bigquery.wasm && npm run build-wasm && tree-sitter playground"
   },
   "keywords": [
     "parser",
     "lexer",
-    "sql"
+    "sql",
+    "bigquery"
   ],
-  "repository": "https://github.com/m-novikov/tree-sitter-sql",
-  "author": "Maksim Novikov <mnovikov.work@gmail.com>",
+  "repository": "https://github.com/TKNGUE/tree-sitter-sql-bigquery",
+  "author": "TKNGUE <takegue@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "graphviz": "^0.0.9",
     "nan": "^2.14.2",
     "nopt": "^5.0.0",
     "tree-sitter": "^0.20.0"
   },
   "devDependencies": {
+    "graphviz": "^0.0.9",
     "prettier": "^2.4.1",
     "tree-sitter-cli": "^0.20.6"
   },

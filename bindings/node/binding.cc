@@ -4,7 +4,7 @@
 
 using namespace v8;
 
-extern "C" TSLanguage * tree_sitter_sql();
+extern "C" TSLanguage * tree_sitter_sql_bigquery();
 
 namespace {
 
@@ -17,7 +17,7 @@ void Init(Local<Object> exports, Local<Object> module) {
 
   Local<Function> constructor = Nan::GetFunction(tpl).ToLocalChecked();
   Local<Object> instance = constructor->NewInstance(Nan::GetCurrentContext()).ToLocalChecked();
-  Nan::SetInternalFieldPointer(instance, 0, tree_sitter_sql());
+  Nan::SetInternalFieldPointer(instance, 0, tree_sitter_sql_bigquery());
 
   Nan::Set(instance, Nan::New("name").ToLocalChecked(), Nan::New("sql").ToLocalChecked());
   Nan::Set(module, Nan::New("exports").ToLocalChecked(), instance);

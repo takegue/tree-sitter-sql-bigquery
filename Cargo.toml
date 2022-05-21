@@ -1,11 +1,11 @@
 [package]
-name = "tree-sitter-sql"
-description = "SQL grammar for the tree-sitter parsing library"
-authors = ["Maksim Novikov <mnovikov.work@gmail.com>"]
-version = "0.0.2"
-keywords = ["incremental", "parsing", "sql"]
+name = "tree-sitter-sql-bigquery"
+description = "BigQuery SQL grammar for the tree-sitter parsing library"
+authors = ["TKNGUE <takegue@gmail.com>"]
+version = "0.0.1"
+keywords = ["incremental", "parsing", "sql", "bigquery", "tree-sitter"]
 categories = ["parsing", "text-editors"]
-repository = "https://github.com/m-novikov/tree-sitter-sql"
+repository = "https://github.com/TKNGUE/tree-sitter-sql-bigquery"
 edition = "2018"
 license = "MIT"
 
