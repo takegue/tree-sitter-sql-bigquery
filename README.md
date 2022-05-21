@@ -1,8 +1,13 @@
+![Node](https://github.com/github/docs/actions/workflows/node.js/badge.svg)
+![Rust](https://github.com/github/docs/actions/workflows/rust/badge.svg)
+![Github Pages](https://github.com/github/docs/actions/workflows/gh-pages.svg)
+
 # tree-sitter for BigQuery's SQL
 
 This project supports StandardSQL in BigQuery
 
 ## Development
+
 
 File describing grammar is [grammar.js](./grammar.js)
 
