@@ -1,6 +1,6 @@
-![Node](https://github.com/github/docs/actions/workflows/node.js/badge.svg)
-![Rust](https://github.com/github/docs/actions/workflows/rust/badge.svg)
-![Github Pages](https://github.com/github/docs/actions/workflows/gh-pages.svg)
+![Node](https://github.com/TKNGUE/tree-sitter-sql-bigquery/actions/workflows/node.js.yml/badge.svg)
+![Rust](https://github.com/TKNGUE/tree-sitter-sql-bigquery/actions/workflows/rust.yml/badge.svg)
+![Github Pages](https://github.com/TKNGUE/tree-sitter-sql-bigquery/actions/workflows/gh-pages.yml/badge.svg)
 
 # tree-sitter for BigQuery's SQL
 
