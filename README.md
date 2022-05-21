@@ -36,7 +36,7 @@ npm test
 - [ ] Basic Literals/Expressions
     - [x] Literals
     - [x] Architemic operators
-    - [x] Logical operators    
+    - [x] Logical operators
     - [x] Query Paramter
     - [x] Comments
     - [x] Struct

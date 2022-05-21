@@ -96,6 +96,30 @@ module.exports = grammar({
         optional(";"),
       ),
 
+    /********************************************************************************* 
+     *  DDL Statement
+     *******************************************************************************/
+    create_schema_statement: $ => seq(
+      kw("CREATE SCHEMA"),
+      optional($.keyword_if_not_exists),
+      field("name", $.identifier),
+      optional($.option_list),
+    ),
+    create_table_statement: ($) => prec.right(seq(
+      kw("CREATE"),
+      optional($.keyword_replace),
+      optional($.keyword_temporary),
+      choice(kw("TABLE"), kw("VIEW"), kw("MATERIALIZED VIEW")),
+      optional($.keyword_if_not_exists),
+      field("name", $.identifier),
+      optional($.create_table_parameters),
+      optional($.table_partition_clause),
+      optional($.table_cluster_clause),
+      optional($.option_list),
+      optional(seq($._keyword_as, $.query_statement)),
+    )),
+
+    create_table_parameters: ($) => seq("(", commaSep1($.column_definition), ")"),
     option_item: $ => seq(field("key", $.identifier), "=", field("value", $._literal)),
     option_list: $ => seq(token(kw('OPTIONS')), '(', optional(sep1($.option_item, ',')), ')'),
 
@@ -119,27 +143,6 @@ module.exports = grammar({
       $._keyword_struct, "<", commaSep1($.column_definition, ','), ">"
     ),
 
-    create_schema_statement: $ => seq(
-      kw("CREATE SCHEMA"),
-      optional($.keyword_if_not_exists),
-      field("name", $.identifier),
-      optional($.option_list),
-    ),
-    create_table_statement: ($) => prec.right(seq(
-      kw("CREATE"),
-      optional($.keyword_replace),
-      optional($.keyword_temporary),
-      choice(kw("TABLE"), kw("VIEW"), kw("MATERIALIZED VIEW")),
-      optional($.keyword_if_not_exists),
-      field("name", $.identifier),
-      optional($.create_table_parameters),
-      optional($.table_partition_clause),
-      optional($.table_cluster_clause),
-      optional($.option_list),
-      optional(seq($._keyword_as, $.query_statement)),
-    )),
-
-    create_table_parameters: ($) => seq("(", commaSep1($.column_definition), ")"),
 
     partition_expression: $ => choice(
       kw("_PARTITIONDATE"),
