@@ -61,7 +61,9 @@ module.exports = grammar({
     _keyword_or: (_) => kw("OR"),
     _keyword_like: (_) => kw("LIKE"),
     _keyword_as: (_) => kw("AS"),
-    _keyword_cast: (_) => kw("CAST"),
+    _keyword_cast: (_) => choice(kw("CAST"), kw("SAFE_CAST")),
+    _keyword_window: (_) => kw("WINDOW"),
+    _keyword_partition_by: (_) => kw("PARTITION BY"),
 
     /**************************************************************************
      *                              Statements
@@ -161,7 +163,7 @@ module.exports = grammar({
         )
       ),
     table_partition_clause: ($) =>
-      seq(kw("PARTITION BY"), $.partition_expression),
+      seq($._keyword_partition_by, $.partition_expression),
     table_cluster_clause: ($) =>
       seq(kw("CLUSTER BY"), sep1($._expression, ",")),
 
@@ -282,7 +284,8 @@ module.exports = grammar({
         optional($.where_clause),
         optional($.group_by_clause),
         optional($.having_clause),
-        optional($.qualify_clause)
+        optional($.qualify_clause),
+        optional($.window_clause),
       ),
 
     select_list: ($) =>
@@ -323,19 +326,68 @@ module.exports = grammar({
           seq(kw("ROLLUP"), "(", $.group_by_clause_body, ")")
         )
       ),
-    window_specification: ($) =>
-      seq(
-        $.identifier,
-        optional(kw("PARTITION BY")),
-        optional($.order_by_clause)
-      ),
+    analytic_expression: $ => seq(
+      $.function_call, kw("OVER"), $.over_clause),
+    over_clause: $ => choice(
+      $.identifier, 
+      $.window_specification
+    ),
+    window_specification: ($) => seq(
+      "(",
+      optional($.identifier),
+      optional(alias($.table_partition_clause, $.partition_by)),
+      optional($.order_by_clause),
+      optional($.window_frame_clause),
+      ")",
+    ),
+    window_frame_clause: $ => seq(
+      $.rows_range,
+      choice(optional($.window_frame_start), $.window_frame_between)
+    ),
+    rows_range: _ => choice(kw("ROWS"), kw("RANGE")),
+    window_frame_start: $ => seq(
+      choice(
+        $.window_numeric_preceding,
+        $.keyword_unbounded_preceding,
+        $.keyword_current_row
+      )
+    ),
+    window_frame_between: $ => seq(
+      $._keyword_between,
+      choice(
+        seq(alias(choice($.keyword_unbounded_preceding, $.window_numeric_preceding), $.between_from), $._keyword_and, alias($._window_frame_end_a, $.between_to)),
+        seq(alias($.keyword_current_row, $.between_from), $._keyword_and, $._window_frame_end_b),
+        seq(alias($.window_numeric_following, $.between_from), $._keyword_and, alias($._window_frame_end_c, $.between_to)),
+      )
+    ),
+    _window_frame_end_a: $ => choice(
+        $.window_numeric_preceding,
+        $.keyword_current_row,
+        $.window_numeric_following,
+        $.keyword_unbounded_preceding,
+    ),
+    _window_frame_end_b: $ => choice(
+        $.keyword_current_row,
+        $.window_numeric_following,
+        $.keyword_unbounded_following,
+    ),
+    _window_frame_end_c: $ => choice(
+        $.window_numeric_following,
+        $.keyword_unbounded_following,
+    ),
+    window_numeric_preceding: $ => seq($.number, kw("PRECEDING")),
+    window_numeric_following: $ => seq($.number, kw("FOLLOWING")),
+    keyword_unbounded_preceding: _ => kw("UNBOUNDED PRECEDING"),
+    keyword_unbounded_following: _ => kw("UNBOUNDED FOLLOWING"),
+    keyword_current_row: _ => kw("CURRENT ROW"),
+
     named_window_expression: ($) =>
       seq(
         $.identifier,
         $._keyword_as,
         choice($.identifier, $.window_specification)
       ),
-    window_clause: ($) => seq(kw("WINDOW"), $.named_window_expression),
+    window_clause: ($) => seq($._keyword_window, $.named_window_expression),
     order_by_clause_body: ($) =>
       commaSep1(seq($._expression, optional($._direction_keywords))),
     _direction_keywords: (_) => field("order", choice(kw("ASC"), kw("DESC"))),
@@ -748,6 +800,7 @@ module.exports = grammar({
         $.between_operator,
         $.casewhen_expression,
         $._literal,
+        $.analytic_expression,
         $.function_call,
         $.identifier,
         $.unnest_clause,
@@ -821,12 +874,12 @@ module.exports = grammar({
     },
     between_operator: $ => prec.left("operator_compare",
       seq(
-        field("exp1", $._expression),
+        field("exp", $._expression),
         optional($._keyword_not),
         $._keyword_between,
-        field("exp2", $._expression),
+        field("from", alias($._expression, $.between_from)),
         $._keyword_and,
-        field("exp3", $._expression)
+        field("to", alias($._expression, $.between_to))
     )),
     casewhen_expression: $ => prec.left(
       "clause_connective",

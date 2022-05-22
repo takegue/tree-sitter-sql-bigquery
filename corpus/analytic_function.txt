@@ -1,0 +1,110 @@
+================================================================================
+ANALYTIC FUNCTIOIN: 
+================================================================================
+
+SELECT book, LAST_VALUE(item) OVER (ORDER BY year) FROM Library;
+SELECT book, LAST_VALUE(item)
+  OVER (
+    ORDER BY year
+    RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
+FROM Library
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (identifier)
+     (analytic_expression
+      (function_call
+       (identifier)
+       (identifier))
+      (over_clause
+       (window_specification
+        (order_by_clause
+         (order_by_clause_body
+          (identifier)))))))
+    (from_clause
+     (from_item
+      (identifier))))))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (identifier)
+     (analytic_expression
+      (function_call
+       (identifier)
+       (identifier))
+      (over_clause
+       (window_specification
+        (order_by_clause
+         (order_by_clause_body
+          (identifier)))
+        (window_frame_clause
+         (rows_range)
+         (window_frame_between
+          (between_from)
+          (between_to
+           (keyword_current_row))))))))
+    (from_clause
+     (from_item
+      (identifier)))))))
+
+================================================================================
+ANALYTIC FUNCTIOIN: With WINDOW clause
+================================================================================
+
+SELECT item, purchases, category, LAST_VALUE(item)
+  OVER (
+      item_window
+      ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING
+      ) AS most_popular
+  FROM Produce
+  WINDOW item_window AS (
+      PARTITION BY category
+      ORDER BY purchases)
+
+--------------------------------------------------------------------------------
+ 
+(source_file
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (identifier)
+     (identifier)
+     (identifier)
+     (alias
+      (analytic_expression
+       (function_call
+        (identifier)
+        (identifier))
+       (over_clause
+        (window_specification
+         (identifier)
+         (window_frame_clause
+          (rows_range)
+          (window_frame_between
+           (between_from
+            (number))
+           (between_to
+            (window_numeric_following
+             (number))))))))
+      (identifier)))
+    (from_clause
+     (from_item
+      (identifier)))
+    (window_clause
+     (named_window_expression
+      (identifier)
+      (window_specification
+       (partition_by
+        (partition_expression
+         (identifier)))
+       (order_by_clause
+        (order_by_clause_body
+          (identifier))))))))))
+

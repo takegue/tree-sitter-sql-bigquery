@@ -380,8 +380,10 @@ SELECT 1 BETWEEN 1 and 10
     (select_list
      (between_operator
       (number)
-      (number)
-      (number)))))))
+      (between_from
+       (number))
+      (between_to
+       (number))))))))
 
 ================================================================================
 OPERATORS: CASE expressions
