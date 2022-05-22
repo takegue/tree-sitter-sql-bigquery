@@ -44,8 +44,6 @@ npm test
     - [ ] EXTRACT
   - [x] Pivot/Unpivot Operator
   - [ ] Analytics functions
-  - [ ] Pre-GA features
-    - [ ] Collation
 
 - [ ] DML Statements
 
@@ -66,6 +64,10 @@ npm test
 - [ ] DCL Statements
 - [ ] Procedural Lalnguage
 - [ ] BigQuery ML
+
+- [ ] Pre-GA features
+    - [ ] JSON Literal
+    - [ ] Collation
 
 ### References
 

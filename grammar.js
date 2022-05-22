@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 const multiplicative_operators = ["*", "/", "||"],
   shift_operators = ["<<", ">>"],
   comparative_operators = ["<", "<=", "<>", "=", ">", ">=", "!="],
@@ -14,7 +12,7 @@ module.exports = grammar({
 
   // Reference:
   //   Operator Precedence: https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#operator_precedence
-  precedences: ($) => [
+  precedences: _ => [
     [
       "unary_exp",
       "binary_times",
