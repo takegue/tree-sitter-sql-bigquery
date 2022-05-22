@@ -234,6 +234,15 @@
       "named": false,
       "value": "AS"
     },
+    "_keyword_cast": {
+      "type": "ALIAS",
+      "content": {
+        "type": "PATTERN",
+        "value": "[cC][aA][sS][tT]"
+      },
+      "named": false,
+      "value": "CAST"
+    },
     "_statement": {
       "type": "SEQ",
       "members": [
@@ -3545,7 +3554,7 @@
     },
     "function_call": {
       "type": "PREC",
-      "value": 10,
+      "value": 1,
       "content": {
         "type": "SEQ",
         "members": [
@@ -5580,12 +5589,8 @@
           "name": "casewhen_expression"
         },
         {
-          "type": "PREC",
-          "value": 1,
-          "content": {
-            "type": "SYMBOL",
-            "name": "_literal"
-          }
+          "type": "SYMBOL",
+          "name": "_literal"
         },
         {
           "type": "SYMBOL",
@@ -5618,6 +5623,10 @@
         {
           "type": "SYMBOL",
           "name": "select_subexpression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "cast_expression"
         }
       ]
     },
@@ -6486,6 +6495,69 @@
             "type": "SYMBOL",
             "name": "_expression"
           }
+        }
+      ]
+    },
+    "cast_expression": {
+      "type": "PREC_RIGHT",
+      "value": 10,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_keyword_cast"
+          },
+          {
+            "type": "STRING",
+            "value": "("
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_keyword_as"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_identifier"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "cast_format_clause"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "STRING",
+            "value": ")"
+          }
+        ]
+      }
+    },
+    "cast_format_clause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[fF][oO][rR][mM][aA][tT]"
+          },
+          "named": false,
+          "value": "FORMAT"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string"
         }
       ]
     },

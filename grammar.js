@@ -61,6 +61,7 @@ module.exports = grammar({
     _keyword_or: (_) => kw("OR"),
     _keyword_like: (_) => kw("LIKE"),
     _keyword_as: (_) => kw("AS"),
+    _keyword_cast: (_) => kw("CAST"),
 
     /**************************************************************************
      *                              Statements
@@ -476,7 +477,7 @@ module.exports = grammar({
     function_call: ($) =>
       // FIXME: precedence
       prec(
-        10,
+        1,
         seq(
           field("function", $.identifier),
           "(",
@@ -746,7 +747,7 @@ module.exports = grammar({
         $.unary_expression,
         $.between_operator,
         $.casewhen_expression,
-        prec(1, $._literal),
+        $._literal,
         $.function_call,
         $.identifier,
         $.unnest_clause,
@@ -754,7 +755,8 @@ module.exports = grammar({
         $.binary_expression,
         $.array_element_access,
         $.argument_reference,
-        $.select_subexpression
+        $.select_subexpression,
+        $.cast_expression,
       ),
 
     _parenthesized_expression: ($) => prec(20, seq("(", $._expression, ")")),
@@ -845,7 +847,10 @@ module.exports = grammar({
       ),
     caseelse_clause: ($) =>
       seq($._keyword_else, field("else_result", $._expression)),
-
+    cast_expression: $ => prec.right(10, seq(
+        $._keyword_cast, "(", $._expression, $._keyword_as, $._identifier, optional($.cast_format_clause),")"
+      )),
+    cast_format_clause: $ => seq(kw("FORMAT"), $.string),
     asterisk_expression: ($) => seq(optional($._dotted_identifier), "*"),
     argument_reference: ($) => seq("$", /\d+/),
   },

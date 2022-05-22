@@ -429,3 +429,31 @@ SELECT
        (string))
       (caseelse_clause
        (string))))))))
+
+================================================================================
+OPERATORS: CAST expressions
+================================================================================
+
+SELECT CAST('Hello' AS BYTES )s;
+SELECT CAST('Hello' AS BYTES FORMAT 'ASCII');
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (alias
+      (cast_expression
+       (string))
+      (identifier))))))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (cast_expression
+      (string)
+      (cast_format_clause
+       (string))))))))
+
