@@ -873,20 +873,6 @@ function kw(keyword) {
   }
 }
 
-function createOrReplace(item) {
-  if (item.toUpperCase() != item) {
-    throw new Error(`Expected upper case item got ${item}`);
-  }
-  return alias(
-    seq(
-      createCaseInsensitiveRegex("CREATE"),
-      field("replace", optional(createCaseInsensitiveRegex("OR REPLACE"))),
-      createCaseInsensitiveRegex(item)
-    ),
-    `CREATE_OR_REPLACE_${item}`
-  );
-}
-
 function createCaseInsensitiveRegex(word) {
   return new RegExp(
     word
