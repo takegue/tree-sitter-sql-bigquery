@@ -426,7 +426,6 @@ module.exports = grammar({
         kw("PERCENT"),
         ")"
       ),
-    // TODO: pivot_operators, unpivot_operators
     from_item: ($) =>
       seq(
         choice(
@@ -531,13 +530,6 @@ module.exports = grammar({
     values_clause: ($) =>
       choice(seq(kw("VALUES"), commaSep1($.value_element)), $.query_statement),
     value_element: ($) => seq("(", commaSep1($._expression), ")"),
-    tuple: ($) =>
-      seq(
-        // TODO: maybe collapse with function arguments, but make sure to preserve clarity
-        "(",
-        field("elements", commaSep1($._expression)),
-        ")"
-      ),
 
     // DELETE
     delete_statement: ($) =>
@@ -729,10 +721,10 @@ module.exports = grammar({
         ),
         "_string"
       ),
-    // field_access: ($) => seq($.identifier, "->>", $.string),
     ordered_expression: ($) => seq($._expression, $._direction_keywords),
     array_type: ($) => seq($._type, "[", "]"),
     _type: ($) => choice($.type, $.array_type),
+
     // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890
     comment: ($) =>
       token(
