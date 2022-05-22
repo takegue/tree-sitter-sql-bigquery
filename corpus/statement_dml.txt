@@ -106,7 +106,7 @@ WHERE i.product NOT IN (SELECT product from dataset.NewArrivals)
 
 
 ================================================================================
-DML: DELETE statement
+DML: UPDATE statement
 ================================================================================
 
 UPDATE dataset.Inventory
