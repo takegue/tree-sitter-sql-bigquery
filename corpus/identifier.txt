@@ -212,28 +212,28 @@ select
 --------------------------------------------------------------------------------
  
 (source_file
-  (query_statement
-    (query_expr
-      (select
-        (select_list
-          (interval
-            (string)
-            (datetime_part))
-          (interval
-            (string)
-            (datetime_part))
-          (interval
-            (string)
-            (datetime_part)
-            (datetime_part))
-          (interval
-            (string)
-            (datetime_part)
-            (datetime_part))
-          (interval
-            (string)
-            (datetime_part)
-            (datetime_part)))))))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (interval
+      (string)
+      (datetime_part))
+     (interval
+      (string)
+      (datetime_part))
+     (interval
+      (string)
+      (datetime_part)
+      (datetime_part))
+     (interval
+      (string)
+      (datetime_part)
+      (datetime_part))
+     (interval
+      (string)
+      (datetime_part)
+      (datetime_part)))))))
 
 
 =======================================================
