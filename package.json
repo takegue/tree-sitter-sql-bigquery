@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-sql-bigquery",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "SQL grammar fom tree-sitter",
   "main": "bindings/node",
   "scripts": {
@@ -22,9 +22,7 @@
   "author": "TKNGUE <takegue@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "nan": "^2.14.2",
-    "nopt": "^5.0.0",
-    "tree-sitter": "^0.20.0"
+    "nan": "^2.14.2"
   },
   "devDependencies": {
     "graphviz": "^0.0.9",
