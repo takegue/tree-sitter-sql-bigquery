@@ -8,26 +8,8 @@ You could try out the demo on [Github Pages](https://tkngue.github.io/tree-sitte
 # Supported BigQuery SQL feature
 
 - [x] Basic Literals/Expressions
-
-- [ ] Query Statement
-
-  - [x] SELECT
-  - [x] JOIN
-  - [x] CTEs
-  - [x] TABLESAMPLE Operator
-  - [x] Typical syntax Function Calls
-  - [ ] Special syntax Function Calls
-    - [ ] EXTRACT
-  - [x] Pivot/Unpivot Operator
-  - [ ] Analytics functions
-
-- [ ] DML Statements
-
-  - [x] INSERT
-  - [x] UPDATE
-  - [x] TRUNCATE TABLE
-  - [x] DELETE
-  - [x] MERGE
+- [x] Query Statement 
+- [x] DML Statements 
 
 - [ ] DDL Statements
 
