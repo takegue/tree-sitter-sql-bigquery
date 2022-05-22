@@ -378,7 +378,7 @@ SELECT 1 BETWEEN 1 and 10
   (query_expr
    (select
     (select_list
-     (conditional_expression
+     (between_operator
       (number)
       (number)
       (number)))))))
@@ -406,7 +406,7 @@ SELECT
   (query_expr
    (select
     (select_list
-     (conditional_expression
+     (casewhen_expression
       (number)
       (casewhen_clause
        (number)
@@ -416,7 +416,7 @@ SELECT
        (string))
       (caseelse_clause
        (string)))
-     (conditional_expression
+     (casewhen_expression
       (casewhen_clause
        (binary_expression
         (identifier)

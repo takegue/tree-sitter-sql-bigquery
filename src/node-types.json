@@ -112,11 +112,15 @@
           "named": true
         },
         {
+          "type": "between_operator",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
         {
-          "type": "conditional_expression",
+          "type": "casewhen_expression",
           "named": true
         },
         {
@@ -255,11 +259,15 @@
           "named": true
         },
         {
+          "type": "between_operator",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
         {
-          "type": "conditional_expression",
+          "type": "casewhen_expression",
           "named": true
         },
         {
@@ -350,6 +358,294 @@
     "fields": {}
   },
   {
+    "type": "between_operator",
+    "named": true,
+    "fields": {
+      "exp1": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "FALSE",
+            "named": true
+          },
+          {
+            "type": "NULL",
+            "named": true
+          },
+          {
+            "type": "TRUE",
+            "named": true
+          },
+          {
+            "type": "argument_reference",
+            "named": true
+          },
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "array_element_access",
+            "named": true
+          },
+          {
+            "type": "between_operator",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "casewhen_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "interval",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "query_parameter",
+            "named": true
+          },
+          {
+            "type": "select_subexpression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
+            "named": true
+          },
+          {
+            "type": "time",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "unnest_clause",
+            "named": true
+          }
+        ]
+      },
+      "exp2": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "FALSE",
+            "named": true
+          },
+          {
+            "type": "NULL",
+            "named": true
+          },
+          {
+            "type": "TRUE",
+            "named": true
+          },
+          {
+            "type": "argument_reference",
+            "named": true
+          },
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "array_element_access",
+            "named": true
+          },
+          {
+            "type": "between_operator",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "casewhen_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "interval",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "query_parameter",
+            "named": true
+          },
+          {
+            "type": "select_subexpression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
+            "named": true
+          },
+          {
+            "type": "time",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "unnest_clause",
+            "named": true
+          }
+        ]
+      },
+      "exp3": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "FALSE",
+            "named": true
+          },
+          {
+            "type": "NULL",
+            "named": true
+          },
+          {
+            "type": "TRUE",
+            "named": true
+          },
+          {
+            "type": "argument_reference",
+            "named": true
+          },
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "array_element_access",
+            "named": true
+          },
+          {
+            "type": "between_operator",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "casewhen_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "interval",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "query_parameter",
+            "named": true
+          },
+          {
+            "type": "select_subexpression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
+            "named": true
+          },
+          {
+            "type": "time",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "unnest_clause",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "binary_expression",
     "named": true,
     "fields": {
@@ -390,11 +686,15 @@
             "named": true
           },
           {
+            "type": "between_operator",
+            "named": true
+          },
+          {
             "type": "binary_expression",
             "named": true
           },
           {
-            "type": "conditional_expression",
+            "type": "casewhen_expression",
             "named": true
           },
           {
@@ -582,11 +882,15 @@
             "named": true
           },
           {
+            "type": "between_operator",
+            "named": true
+          },
+          {
             "type": "binary_expression",
             "named": true
           },
           {
-            "type": "conditional_expression",
+            "type": "casewhen_expression",
             "named": true
           },
           {
@@ -678,11 +982,15 @@
             "named": true
           },
           {
+            "type": "between_operator",
+            "named": true
+          },
+          {
             "type": "binary_expression",
             "named": true
           },
           {
-            "type": "conditional_expression",
+            "type": "casewhen_expression",
             "named": true
           },
           {
@@ -774,11 +1082,15 @@
             "named": true
           },
           {
+            "type": "between_operator",
+            "named": true
+          },
+          {
             "type": "binary_expression",
             "named": true
           },
           {
-            "type": "conditional_expression",
+            "type": "casewhen_expression",
             "named": true
           },
           {
@@ -864,11 +1176,15 @@
             "named": true
           },
           {
+            "type": "between_operator",
+            "named": true
+          },
+          {
             "type": "binary_expression",
             "named": true
           },
           {
-            "type": "conditional_expression",
+            "type": "casewhen_expression",
             "named": true
           },
           {
@@ -917,6 +1233,120 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "casewhen_expression",
+    "named": true,
+    "fields": {
+      "expr": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "FALSE",
+            "named": true
+          },
+          {
+            "type": "NULL",
+            "named": true
+          },
+          {
+            "type": "TRUE",
+            "named": true
+          },
+          {
+            "type": "argument_reference",
+            "named": true
+          },
+          {
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "array_element_access",
+            "named": true
+          },
+          {
+            "type": "between_operator",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "casewhen_expression",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "interval",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "query_parameter",
+            "named": true
+          },
+          {
+            "type": "select_subexpression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "struct",
+            "named": true
+          },
+          {
+            "type": "time",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "unnest_clause",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "caseelse_clause",
+          "named": true
+        },
+        {
+          "type": "casewhen_clause",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -965,396 +1395,6 @@
       "types": [
         {
           "type": "column_definition",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "conditional_expression",
-    "named": true,
-    "fields": {
-      "exp1": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "(",
-            "named": false
-          },
-          {
-            "type": ")",
-            "named": false
-          },
-          {
-            "type": "FALSE",
-            "named": true
-          },
-          {
-            "type": "NULL",
-            "named": true
-          },
-          {
-            "type": "TRUE",
-            "named": true
-          },
-          {
-            "type": "argument_reference",
-            "named": true
-          },
-          {
-            "type": "array",
-            "named": true
-          },
-          {
-            "type": "array_element_access",
-            "named": true
-          },
-          {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "conditional_expression",
-            "named": true
-          },
-          {
-            "type": "function_call",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "interval",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "query_parameter",
-            "named": true
-          },
-          {
-            "type": "select_subexpression",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "struct",
-            "named": true
-          },
-          {
-            "type": "time",
-            "named": true
-          },
-          {
-            "type": "unary_expression",
-            "named": true
-          },
-          {
-            "type": "unnest_clause",
-            "named": true
-          }
-        ]
-      },
-      "exp2": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "(",
-            "named": false
-          },
-          {
-            "type": ")",
-            "named": false
-          },
-          {
-            "type": "FALSE",
-            "named": true
-          },
-          {
-            "type": "NULL",
-            "named": true
-          },
-          {
-            "type": "TRUE",
-            "named": true
-          },
-          {
-            "type": "argument_reference",
-            "named": true
-          },
-          {
-            "type": "array",
-            "named": true
-          },
-          {
-            "type": "array_element_access",
-            "named": true
-          },
-          {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "conditional_expression",
-            "named": true
-          },
-          {
-            "type": "function_call",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "interval",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "query_parameter",
-            "named": true
-          },
-          {
-            "type": "select_subexpression",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "struct",
-            "named": true
-          },
-          {
-            "type": "time",
-            "named": true
-          },
-          {
-            "type": "unary_expression",
-            "named": true
-          },
-          {
-            "type": "unnest_clause",
-            "named": true
-          }
-        ]
-      },
-      "exp3": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "(",
-            "named": false
-          },
-          {
-            "type": ")",
-            "named": false
-          },
-          {
-            "type": "FALSE",
-            "named": true
-          },
-          {
-            "type": "NULL",
-            "named": true
-          },
-          {
-            "type": "TRUE",
-            "named": true
-          },
-          {
-            "type": "argument_reference",
-            "named": true
-          },
-          {
-            "type": "array",
-            "named": true
-          },
-          {
-            "type": "array_element_access",
-            "named": true
-          },
-          {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "conditional_expression",
-            "named": true
-          },
-          {
-            "type": "function_call",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "interval",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "query_parameter",
-            "named": true
-          },
-          {
-            "type": "select_subexpression",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "struct",
-            "named": true
-          },
-          {
-            "type": "time",
-            "named": true
-          },
-          {
-            "type": "unary_expression",
-            "named": true
-          },
-          {
-            "type": "unnest_clause",
-            "named": true
-          }
-        ]
-      },
-      "expr": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "(",
-            "named": false
-          },
-          {
-            "type": ")",
-            "named": false
-          },
-          {
-            "type": "FALSE",
-            "named": true
-          },
-          {
-            "type": "NULL",
-            "named": true
-          },
-          {
-            "type": "TRUE",
-            "named": true
-          },
-          {
-            "type": "argument_reference",
-            "named": true
-          },
-          {
-            "type": "array",
-            "named": true
-          },
-          {
-            "type": "array_element_access",
-            "named": true
-          },
-          {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "conditional_expression",
-            "named": true
-          },
-          {
-            "type": "function_call",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "interval",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "query_parameter",
-            "named": true
-          },
-          {
-            "type": "select_subexpression",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "struct",
-            "named": true
-          },
-          {
-            "type": "time",
-            "named": true
-          },
-          {
-            "type": "unary_expression",
-            "named": true
-          },
-          {
-            "type": "unnest_clause",
-            "named": true
-          }
-        ]
-      },
-      "operator": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "BETWEEN",
-            "named": false
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "caseelse_clause",
-          "named": true
-        },
-        {
-          "type": "casewhen_clause",
           "named": true
         }
       ]
@@ -1442,11 +1482,15 @@
           "named": true
         },
         {
+          "type": "between_operator",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
         {
-          "type": "conditional_expression",
+          "type": "casewhen_expression",
           "named": true
         },
         {
@@ -1782,11 +1826,15 @@
             "named": true
           },
           {
+            "type": "between_operator",
+            "named": true
+          },
+          {
             "type": "binary_expression",
             "named": true
           },
           {
-            "type": "conditional_expression",
+            "type": "casewhen_expression",
             "named": true
           },
           {
@@ -1895,11 +1943,15 @@
           "named": true
         },
         {
+          "type": "between_operator",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
         {
-          "type": "conditional_expression",
+          "type": "casewhen_expression",
           "named": true
         },
         {
@@ -1982,11 +2034,15 @@
           "named": true
         },
         {
+          "type": "between_operator",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
         {
-          "type": "conditional_expression",
+          "type": "casewhen_expression",
           "named": true
         },
         {
@@ -2159,11 +2215,15 @@
             "named": true
           },
           {
+            "type": "between_operator",
+            "named": true
+          },
+          {
             "type": "binary_expression",
             "named": true
           },
           {
-            "type": "conditional_expression",
+            "type": "casewhen_expression",
             "named": true
           },
           {
@@ -2310,11 +2370,15 @@
           "named": true
         },
         {
+          "type": "between_operator",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
         {
-          "type": "conditional_expression",
+          "type": "casewhen_expression",
           "named": true
         },
         {
@@ -2731,11 +2795,15 @@
           "named": true
         },
         {
+          "type": "between_operator",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
         {
-          "type": "conditional_expression",
+          "type": "casewhen_expression",
           "named": true
         },
         {
@@ -2818,11 +2886,15 @@
           "named": true
         },
         {
+          "type": "between_operator",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
         {
-          "type": "conditional_expression",
+          "type": "casewhen_expression",
           "named": true
         },
         {
@@ -2909,11 +2981,15 @@
           "named": true
         },
         {
+          "type": "between_operator",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
         {
-          "type": "conditional_expression",
+          "type": "casewhen_expression",
           "named": true
         },
         {
@@ -3042,11 +3118,15 @@
           "named": true
         },
         {
+          "type": "between_operator",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
         {
-          "type": "conditional_expression",
+          "type": "casewhen_expression",
           "named": true
         },
         {
@@ -3184,11 +3264,15 @@
           "named": true
         },
         {
+          "type": "between_operator",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
         {
-          "type": "conditional_expression",
+          "type": "casewhen_expression",
           "named": true
         },
         {
@@ -3328,11 +3412,15 @@
             "named": true
           },
           {
+            "type": "between_operator",
+            "named": true
+          },
+          {
             "type": "binary_expression",
             "named": true
           },
           {
-            "type": "conditional_expression",
+            "type": "casewhen_expression",
             "named": true
           },
           {
@@ -3430,11 +3518,15 @@
           "named": true
         },
         {
+          "type": "between_operator",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
         {
-          "type": "conditional_expression",
+          "type": "casewhen_expression",
           "named": true
         },
         {
@@ -3668,11 +3760,15 @@
           "named": true
         },
         {
+          "type": "between_operator",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
         {
-          "type": "conditional_expression",
+          "type": "casewhen_expression",
           "named": true
         },
         {
@@ -3755,11 +3851,15 @@
           "named": true
         },
         {
+          "type": "between_operator",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
         {
-          "type": "conditional_expression",
+          "type": "casewhen_expression",
           "named": true
         },
         {
@@ -3957,11 +4057,15 @@
             "named": true
           },
           {
+            "type": "between_operator",
+            "named": true
+          },
+          {
             "type": "binary_expression",
             "named": true
           },
           {
-            "type": "conditional_expression",
+            "type": "casewhen_expression",
             "named": true
           },
           {
@@ -4040,11 +4144,15 @@
           "named": true
         },
         {
+          "type": "between_operator",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
         {
-          "type": "conditional_expression",
+          "type": "casewhen_expression",
           "named": true
         },
         {
@@ -4232,11 +4340,15 @@
           "named": true
         },
         {
+          "type": "between_operator",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
         {
-          "type": "conditional_expression",
+          "type": "casewhen_expression",
           "named": true
         },
         {
@@ -4357,11 +4469,15 @@
           "named": true
         },
         {
+          "type": "between_operator",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
         {
-          "type": "conditional_expression",
+          "type": "casewhen_expression",
           "named": true
         },
         {
@@ -4463,11 +4579,15 @@
           "named": true
         },
         {
+          "type": "between_operator",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
         {
-          "type": "conditional_expression",
+          "type": "casewhen_expression",
           "named": true
         },
         {

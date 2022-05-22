@@ -5573,7 +5573,11 @@
         },
         {
           "type": "SYMBOL",
-          "name": "conditional_expression"
+          "name": "between_operator"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "casewhen_expression"
         },
         {
           "type": "PREC",
@@ -5798,166 +5802,6 @@
                     "name": "FALSE"
                   }
                 ]
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "casewhen_clause": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_keyword_when"
-        },
-        {
-          "type": "FIELD",
-          "name": "match_condition",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_expression"
-          }
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_keyword_then"
-        },
-        {
-          "type": "FIELD",
-          "name": "match_result",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_expression"
-          }
-        }
-      ]
-    },
-    "caseelse_clause": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_keyword_else"
-        },
-        {
-          "type": "FIELD",
-          "name": "else_result",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_expression"
-          }
-        }
-      ]
-    },
-    "conditional_expression": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PREC_LEFT",
-          "value": "operator_compare",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "FIELD",
-                "name": "exp1",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "_expression"
-                }
-              },
-              {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "_keyword_not"
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
-              },
-              {
-                "type": "FIELD",
-                "name": "operator",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "_keyword_between"
-                }
-              },
-              {
-                "type": "FIELD",
-                "name": "exp2",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "_expression"
-                }
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_keyword_and"
-              },
-              {
-                "type": "FIELD",
-                "name": "exp3",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "_expression"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "PREC_LEFT",
-          "value": "clause_connective",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_keyword_case"
-              },
-              {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "FIELD",
-                    "name": "expr",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "_expression"
-                    }
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
-              },
-              {
-                "type": "REPEAT1",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "casewhen_clause"
-                }
-              },
-              {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "caseelse_clause"
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_keyword_end"
               }
             ]
           }
@@ -6490,6 +6334,157 @@
                 }
               }
             ]
+          }
+        }
+      ]
+    },
+    "between_operator": {
+      "type": "PREC_LEFT",
+      "value": "operator_compare",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "exp1",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expression"
+            }
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_keyword_not"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_keyword_between"
+          },
+          {
+            "type": "FIELD",
+            "name": "exp2",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expression"
+            }
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_keyword_and"
+          },
+          {
+            "type": "FIELD",
+            "name": "exp3",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expression"
+            }
+          }
+        ]
+      }
+    },
+    "casewhen_expression": {
+      "type": "PREC_LEFT",
+      "value": "clause_connective",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_keyword_case"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "expr",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_expression"
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "REPEAT1",
+            "content": {
+              "type": "SYMBOL",
+              "name": "casewhen_clause"
+            }
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "caseelse_clause"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_keyword_end"
+          }
+        ]
+      }
+    },
+    "casewhen_clause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_keyword_when"
+        },
+        {
+          "type": "FIELD",
+          "name": "match_condition",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_expression"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_keyword_then"
+        },
+        {
+          "type": "FIELD",
+          "name": "match_result",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_expression"
+          }
+        }
+      ]
+    },
+    "caseelse_clause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_keyword_else"
+        },
+        {
+          "type": "FIELD",
+          "name": "else_result",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_expression"
           }
         }
       ]

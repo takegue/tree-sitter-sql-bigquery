@@ -744,7 +744,8 @@ module.exports = grammar({
     _expression: ($) =>
       choice(
         $.unary_expression,
-        $.conditional_expression,
+        $.between_operator,
+        $.casewhen_expression,
         prec(1, $._literal),
         $.function_call,
         $.identifier,
@@ -784,39 +785,6 @@ module.exports = grammar({
           )
         )
       ),
-    casewhen_clause: ($) =>
-      seq(
-        $._keyword_when,
-        field("match_condition", $._expression),
-        $._keyword_then,
-        field("match_result", $._expression)
-      ),
-    caseelse_clause: ($) =>
-      seq($._keyword_else, field("else_result", $._expression)),
-    conditional_expression: ($) =>
-      choice(
-        prec.left(
-          "operator_compare",
-          seq(
-            field("exp1", $._expression),
-            optional($._keyword_not),
-            field("operator", $._keyword_between),
-            field("exp2", $._expression),
-            $._keyword_and,
-            field("exp3", $._expression)
-          )
-        ),
-        prec.left(
-          "clause_connective",
-          seq(
-            $._keyword_case,
-            optional(field("expr", $._expression)),
-            repeat1($.casewhen_clause),
-            optional($.caseelse_clause),
-            $._keyword_end
-          )
-        )
-      ),
     binary_expression: ($) => {
       const table = [
         ["binary_times", choice(...multiplicative_operators)],
@@ -849,6 +817,34 @@ module.exports = grammar({
         )
       );
     },
+    between_operator: $ => prec.left("operator_compare",
+      seq(
+        field("exp1", $._expression),
+        optional($._keyword_not),
+        $._keyword_between,
+        field("exp2", $._expression),
+        $._keyword_and,
+        field("exp3", $._expression)
+    )),
+    casewhen_expression: $ => prec.left(
+      "clause_connective",
+      seq(
+        $._keyword_case,
+        optional(field("expr", $._expression)),
+        repeat1($.casewhen_clause),
+        optional($.caseelse_clause),
+        $._keyword_end
+      )
+    ),
+    casewhen_clause: ($) =>
+      seq(
+        $._keyword_when,
+        field("match_condition", $._expression),
+        $._keyword_then,
+        field("match_result", $._expression)
+      ),
+    caseelse_clause: ($) =>
+      seq($._keyword_else, field("else_result", $._expression)),
 
     asterisk_expression: ($) => seq(optional($._dotted_identifier), "*"),
     argument_reference: ($) => seq("$", /\d+/),
