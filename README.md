@@ -80,9 +80,10 @@ npm test
 - [ ] Procedural Lalnguage
 - [ ] BigQuery ML
 
-### Other projects
+### References
 
-- https://github.com/m-novikov/tree-sitter-sql
-- https://github.com/DerekStride/tree-sitter-sql
-- https://github.com/dhcmrlchtdj/tree-sitter-sqlite
-- https://github.com/google/zetasql
+- ZetaSQL: https://github.com/google/zetasql/blob/master/docs/README.md
+- Other SQL Projects :
+    * https://github.com/m-novikov/tree-sitter-sql
+    * https://github.com/DerekStride/tree-sitter-sql
+    * https://github.com/dhcmrlchtdj/tree-sitter-sqlite
