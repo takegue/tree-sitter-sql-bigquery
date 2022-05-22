@@ -22,84 +22,51 @@ SELECT * FROM `bigquery-public-data.austin_311.311_service_requests` LIMIT 1000
 SELECT statement with REPLACE
 ================================================================================
 
-WITH orders AS
-  (SELECT 5 as order_id,
-  "sprocket" as item_name,
-  200 as quantity)
 SELECT * REPLACE (quantity * 2 as quantity2)
 FROM orders;
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (query_statement
-    (query_expr
-      (cte_clause
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (select_all
+      (asterisk_expression)
+      (select_all_replace
+       (binary_expression
         (identifier)
-        (query_expr
-          (select
-            (select_list
-              (alias
-                (number)
-                (identifier))
-              (alias
-                (string)
-                (identifier))
-              (alias
-                (number)
-                (identifier))))))
-      (select
-        (select_list
-          (select_all
-            (asterisk_expression)
-            (binary_expression
-              (identifier)
-              (number))
-            (as_alias
-              (identifier))))
-        (from_clause
-          (from_item
-            (identifier)))))))
+        (number))
+       (as_alias
+        (identifier)))))
+    (from_clause
+     (from_item
+      (identifier)))))))
 
 
 ================================================================================
 SELECT statement with EXCEPT
 ================================================================================
 
-WITH orders AS
-  (SELECT 5 as order_id,
-  "sprocket" as item_name,
-  200 as quantity)
 SELECT * EXCEPT (order_id)
 FROM orders;
 
 --------------------------------------------------------------------------------
- 
+
 (source_file
-  (query_statement
-    (query_expr
-      (cte_clause
-        (identifier)
-        (query_expr
-          (select
-            (select_list
-              (alias
-                (number)
-                (identifier))
-              (alias
-                (string)
-                (identifier))
-              (alias
-                (number)
-                (identifier))))))
-      (select
-        (select_list
-          (select_all
-            (asterisk_expression)
-            (identifier)))
-        (from_clause
-          (from_item
-            (identifier)))))))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (select_all
+      (asterisk_expression)
+      (select_all_except
+       (identifier))))
+    (from_clause
+     (from_item
+      (identifier)))))))
+
 
 ================================================================================
 SELECT statement with Set Operators
@@ -308,22 +275,24 @@ select * from cte2
  (query_statement
   (query_expr
    (cte_clause
-    (identifier)
-    (query_expr
-     (select
-      (select_list
-       (alias
-        (number)
-        (identifier)))))
-    (identifier)
-    (query_expr
-     (select
-      (select_list
-       (select_all
-        (asterisk_expression)))
-      (from_clause
-       (from_item
-        (identifier))))))
+    (non_recursive_cte
+     (identifier)
+     (query_expr
+      (select
+       (select_list
+        (alias
+         (number)
+         (identifier))))))
+    (non_recursive_cte
+     (identifier)
+     (query_expr
+      (select
+       (select_list
+        (select_all
+         (asterisk_expression)))
+       (from_clause
+        (from_item
+         (identifier)))))))
    (select
     (select_list
      (select_all
@@ -652,39 +621,6 @@ SELECT * FROM dataset.my_table TABLESAMPLE SYSTEM (10 PERCENT)
             (identifier))
           (tablesample_operator))))))
 
-================================================================================
-One cte
-================================================================================
-
-WITH my_cte AS (
-  SELECT one, two
-  FROM my_table
-)
-SELECT *
-FROM my_cte;
-
----
-
-(source_file
- (query_statement
-  (query_expr
-   (cte_clause
-    (identifier)
-    (query_expr
-     (select
-      (select_list
-       (identifier)
-       (identifier))
-      (from_clause
-       (from_item
-        (identifier))))))
-   (select
-    (select_list
-     (select_all
-      (asterisk_expression)))
-    (from_clause
-     (from_item
-      (identifier)))))))
 
 ================================================================================
 SELECT: pivot operator

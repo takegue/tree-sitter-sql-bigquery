@@ -294,24 +294,12 @@ module.exports = grammar({
       prec.right(
         seq(
           seq($.asterisk_expression),
-          optional(
-            seq(
-              kw("EXCEPT"),
-              "(",
-              commaSep1(field("except_key", $.identifier)),
-              ")"
-            )
-          ),
-          optional(
-            seq(
-              kw("REPLACE"),
-              "(",
-              commaSep1(field("replace_exp", seq($._expression, $.as_alias))),
-              ")"
-            )
-          )
+          optional($.select_all_except),
+          optional($.select_all_replace),
         )
       ),
+    select_all_except: $ => seq(kw("EXCEPT"), "(", commaSep1(field("except_key", $.identifier)), ")"),
+    select_all_replace: $ => seq(kw("REPLACE"), "(", commaSep1(field("replace_exp", seq($._expression, $.as_alias))), ")"),
     select_expr: ($) => seq($._expression, $.as_alias),
     having_clause: ($) => seq(kw("HAVING"), $._expression),
     qualify_clause: ($) => seq(kw("QUALIFY"), $._expression),
@@ -404,8 +392,10 @@ module.exports = grammar({
     cte_clause: ($) =>
       seq(
         kw("WITH"),
-        commaSep1(seq($.identifier, $._keyword_as, "(", $.query_expr, ")"))
+        commaSep1($.non_recursive_cte)
       ),
+    non_recursive_cte: $ => 
+      seq(field("alias_name", $.identifier), $._keyword_as, "(", $.query_expr, ")"),
     from_clause: ($) =>
       seq(
         kw("FROM"),

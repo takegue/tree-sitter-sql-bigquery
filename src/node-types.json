@@ -1939,11 +1939,7 @@
       "required": true,
       "types": [
         {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "query_expr",
+          "type": "non_recursive_cte",
           "named": true
         }
       ]
@@ -2958,6 +2954,32 @@
     }
   },
   {
+    "type": "non_recursive_cte",
+    "named": true,
+    "fields": {
+      "alias_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "query_expr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "number",
     "named": true,
     "fields": {},
@@ -3765,20 +3787,49 @@
   {
     "type": "select_all",
     "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "asterisk_expression",
+          "named": true
+        },
+        {
+          "type": "select_all_except",
+          "named": true
+        },
+        {
+          "type": "select_all_replace",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "select_all_except",
+    "named": true,
     "fields": {
       "except_key": {
         "multiple": true,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "identifier",
             "named": true
           }
         ]
-      },
+      }
+    }
+  },
+  {
+    "type": "select_all_replace",
+    "named": true,
+    "fields": {
       "replace_exp": {
         "multiple": true,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "(",
@@ -3882,16 +3933,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "asterisk_expression",
-          "named": true
-        }
-      ]
     }
   },
   {
