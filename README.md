@@ -20,7 +20,7 @@ You could try out the demo on [Github Pages](https://tkngue.github.io/tree-sitte
   - [ ] ALTER sytnax for any
 
 - [ ] DCL Statements
-- [ ] Procedural Lalnguage
+- [ ] Procedural Language
 - [ ] BigQuery ML
 
 - [ ] Pre-GA features
