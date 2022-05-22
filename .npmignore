@@ -1,5 +1,9 @@
 corpus
 build
+examples
 script
 examples
 target
+.github
+.gitignore
+.prettierignore
