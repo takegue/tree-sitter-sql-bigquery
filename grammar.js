@@ -632,6 +632,7 @@ module.exports = grammar({
         $.query_parameter,
         $.array,
         $.struct,
+        $.interval,
         $.time,
         $.string,
         $.TRUE,
@@ -664,6 +665,10 @@ module.exports = grammar({
         )
       ),
     _number: ($) => choice($._integer, $._float, $.numeric),
+    interval: ($) => seq(
+        kw("INTERVAL"), $.string, alias($._unquoted_identifier, $.datetime_part),
+        optional(seq(kw('TO'), alias($._unquoted_identifier, $.datetime_part)))
+      ),
     time: ($) =>
       seq(
         choice(kw("DATE"), kw("TIME"), kw("DATETIME"), kw("TIMESTAMP")),

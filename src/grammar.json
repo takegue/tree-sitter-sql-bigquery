@@ -4709,6 +4709,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "interval"
+        },
+        {
+          "type": "SYMBOL",
           "name": "time"
         },
         {
@@ -4893,6 +4897,64 @@
         {
           "type": "SYMBOL",
           "name": "numeric"
+        }
+      ]
+    },
+    "interval": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[iI][nN][tT][eE][rR][vV][aA][lL]"
+          },
+          "named": false,
+          "value": "INTERVAL"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_unquoted_identifier"
+          },
+          "named": true,
+          "value": "datetime_part"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "[tT][oO]"
+                  },
+                  "named": false,
+                  "value": "TO"
+                },
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_unquoted_identifier"
+                  },
+                  "named": true,
+                  "value": "datetime_part"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },

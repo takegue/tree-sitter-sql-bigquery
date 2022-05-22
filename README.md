@@ -32,19 +32,7 @@ npm test
 
 # Supported BigQuery SQL feature
 
-- [ ] Basic Literals/Expressions
-
-  - [x] Literals
-  - [x] Architemic operators
-  - [x] Logical operators
-  - [x] Query Paramter
-  - [x] Comments
-  - [x] Struct
-  - [x] Array
-  - [x] CASE expr
-  - [x] CASE
-  - [x] BETWEEN Operator
-  - [ ] INTERVAL types
+- [x] Basic Literals/Expressions
 
 - [ ] Query Statement
 

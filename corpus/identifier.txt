@@ -198,6 +198,43 @@ select
      (time (string))
     )))))
 
+=======================================================
+IDENTIFIER: INTERVAL literals
+=======================================================
+
+select
+  INTERVAL '5' DAY,
+  INTERVAL '0.001' SECOND,
+  INTERVAL '10:20:30' HOUR TO SECOND,
+  INTERVAL '1-2' YEAR TO MONTH,
+  INTERVAL '1 15' MONTH TO DAY
+
+--------------------------------------------------------------------------------
+ 
+(source_file
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (interval
+            (string)
+            (datetime_part))
+          (interval
+            (string)
+            (datetime_part))
+          (interval
+            (string)
+            (datetime_part)
+            (datetime_part))
+          (interval
+            (string)
+            (datetime_part)
+            (datetime_part))
+          (interval
+            (string)
+            (datetime_part)
+            (datetime_part)))))))
+
 
 =======================================================
 IDENTIFIER: Query parameter
@@ -217,5 +254,6 @@ select
      (query_parameter)
      (query_parameter)
     )))))
+
 
 
