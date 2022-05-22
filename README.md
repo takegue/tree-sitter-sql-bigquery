@@ -1,5 +1,4 @@
-[![Node.js CI](https://github.com/TKNGUE/tree-sitter-sql-bigquery/actions/workflows/node.js.yml/badge.svg)](https://github.com/TKNGUE/tree-sitter-sql-bigquery/actions/workflows/node.js.yml)
-[![Rust](https://github.com/TKNGUE/tree-sitter-sql-bigquery/actions/workflows/rust.yml/badge.svg)](https://github.com/TKNGUE/tree-sitter-sql-bigquery/actions/workflows/rust.yml)
+[![Build/Test](https://github.com/TKNGUE/tree-sitter-sql-bigquery/actions/workflows/ci.yml/badge.svg)](https://github.com/TKNGUE/tree-sitter-sql-bigquery/actions/workflows/ci.yml)
 
 # tree-sitter for BigQuery's SQL
 
