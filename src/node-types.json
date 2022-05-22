@@ -1,54 +1,8 @@
 [
   {
-    "type": "$.create_table_function_parameters",
-    "named": false,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "create_function_parameter",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "$.returns",
     "named": false,
-    "fields": {
-      "name": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "option": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "option_list",
-            "named": true
-          }
-        ]
-      },
-      "type": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "column_type",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": false,
       "required": false,
@@ -1832,6 +1786,88 @@
     }
   },
   {
+    "type": "create_procedure_statement",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "create_function_statement",
+          "named": true
+        },
+        {
+          "type": "create_procedure_statement",
+          "named": true
+        },
+        {
+          "type": "create_schema_statement",
+          "named": true
+        },
+        {
+          "type": "create_table_function_statement",
+          "named": true
+        },
+        {
+          "type": "create_table_statement",
+          "named": true
+        },
+        {
+          "type": "delete_statement",
+          "named": true
+        },
+        {
+          "type": "insert_statement",
+          "named": true
+        },
+        {
+          "type": "keyword_if_not_exists",
+          "named": true
+        },
+        {
+          "type": "keyword_replace",
+          "named": true
+        },
+        {
+          "type": "merge_statement",
+          "named": true
+        },
+        {
+          "type": "option_list",
+          "named": true
+        },
+        {
+          "type": "procedure_argument",
+          "named": true
+        },
+        {
+          "type": "query_statement",
+          "named": true
+        },
+        {
+          "type": "truncate_statement",
+          "named": true
+        },
+        {
+          "type": "update_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "create_schema_statement",
     "named": true,
     "fields": {
@@ -1856,6 +1892,82 @@
         },
         {
           "type": "option_list",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "create_table_function_parameters",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "create_function_parameter",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "create_table_function_returns",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "column_definition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "create_table_function_statement",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "create_table_function_parameters",
+          "named": true
+        },
+        {
+          "type": "create_table_function_returns",
+          "named": true
+        },
+        {
+          "type": "keyword_if_not_exists",
+          "named": true
+        },
+        {
+          "type": "keyword_replace",
+          "named": true
+        },
+        {
+          "type": "option_list",
+          "named": true
+        },
+        {
+          "type": "query_statement",
           "named": true
         }
       ]
@@ -3488,6 +3600,48 @@
     }
   },
   {
+    "type": "procedure_argument",
+    "named": true,
+    "fields": {
+      "argument_mode": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "IN",
+            "named": false
+          },
+          {
+            "type": "INOUT",
+            "named": false
+          },
+          {
+            "type": "OUT",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "array_type",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "qualify_clause",
     "named": true,
     "fields": {},
@@ -4146,7 +4300,15 @@
           "named": true
         },
         {
+          "type": "create_procedure_statement",
+          "named": true
+        },
+        {
           "type": "create_schema_statement",
+          "named": true
+        },
+        {
+          "type": "create_table_function_statement",
           "named": true
         },
         {
@@ -5589,6 +5751,10 @@
     "named": false
   },
   {
+    "type": "INOUT",
+    "named": false
+  },
+  {
     "type": "INSERT",
     "named": false
   },
@@ -5673,6 +5839,10 @@
     "named": false
   },
   {
+    "type": "OUT",
+    "named": false
+  },
+  {
     "type": "OUTER",
     "named": false
   },
@@ -5694,6 +5864,10 @@
   },
   {
     "type": "PRECEDING",
+    "named": false
+  },
+  {
+    "type": "PROCEDURE",
     "named": false
   },
   {

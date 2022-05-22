@@ -75,6 +75,8 @@ module.exports = grammar({
           $.create_schema_statement,
           $.create_table_statement,
           $.create_function_statement,
+          $.create_table_function_statement,
+          $.create_procedure_statement,
           $.query_statement,
           $.insert_statement,
           $.delete_statement,
@@ -198,7 +200,7 @@ module.exports = grammar({
         )
       ),
 
-    create_table_function_function_statement: ($) =>
+    create_table_function_statement: ($) =>
       prec.left(
         seq(
           kw("CREATE"),
@@ -208,25 +210,14 @@ module.exports = grammar({
           field("name", $.identifier),
           alias(
             $.create_function_parameters,
-            "$.create_table_function_parameters"
+            $.create_table_function_parameters
           ),
-          optional($.column_type),
           optional($.option_list),
-          seq(
-            optional(
-              alias(
-                seq($._keyword_returns, kw("TABLE"), $.column_definition),
-                "$.returns"
-              )
-            ),
-            $._keyword_as,
-            "(",
-            choice(seq($._keyword_as, $.query_statement)),
-            ")"
-          )
-        )
-      ),
+          optional($.create_table_function_returns),
+          seq($._keyword_as, $.query_statement),
+      )),
 
+    create_table_function_returns: $ => seq($._keyword_returns, kw("TABLE"), "<", commaSep1($.column_definition), ">"),
     create_function_parameters: ($) =>
       seq("(", commaSep1($.column_definition), ")"),
     _function_language: ($) =>
@@ -243,6 +234,25 @@ module.exports = grammar({
           seq("'", $.query_statement, optional(";"), "'")
         )
       ),
+
+    create_procedure_statement: ($) => (
+        seq(
+          kw("CREATE"),
+          optional($.keyword_replace),
+          kw("PROCEDURE"),
+          optional($.keyword_if_not_exists),
+          field("name", $.identifier),
+          "(", optional(commaSep1($.procedure_argument)), ")",
+          optional($.option_list),
+          "BEGIN",
+          repeat($._statement),
+          "END"
+        )
+      ),
+    procedure_argument: $ => seq(
+      optional(field("argument_mode", choice(kw("IN"), kw("OUT"), kw("INOUT")))),
+      $.identifier, $._type
+    ),
 
     /*********************************************************************************
      *  Query Statement
