@@ -94,7 +94,7 @@ module.exports = grammar({
       seq(
         kw("CREATE SCHEMA"),
         optional($.keyword_if_not_exists),
-        field("name", $.identifier),
+        field("schema_name", $.identifier),
         optional($.option_list)
       ),
     create_table_statement: ($) =>
@@ -105,7 +105,7 @@ module.exports = grammar({
           optional($.keyword_temporary),
           choice(kw("TABLE"), kw("VIEW"), kw("MATERIALIZED VIEW")),
           optional($.keyword_if_not_exists),
-          field("name", $.identifier),
+          field("table_name", $.identifier),
           optional($.create_table_parameters),
           optional($.table_partition_clause),
           optional($.table_cluster_clause),
@@ -123,8 +123,8 @@ module.exports = grammar({
 
     column_definition: ($) =>
       seq(
-        field("name", $.identifier),
-        field("type", $.column_type),
+        field("column_name", $.identifier),
+        field("column_type", $.column_type),
         optional(field("option", $.option_list))
       ),
     column_type: ($) =>
@@ -177,7 +177,7 @@ module.exports = grammar({
           optional($.keyword_temporary),
           kw("FUNCTION"),
           optional($.keyword_if_not_exists),
-          field("name", $.identifier),
+          field("routine_name", $.identifier),
           $.create_function_parameters,
           optional($.option_list),
           choice(
@@ -207,7 +207,7 @@ module.exports = grammar({
           optional($.keyword_replace),
           kw("TABLE FUNCTION"),
           optional($.keyword_if_not_exists),
-          field("name", $.identifier),
+          field("routine_name", $.identifier),
           alias(
             $.create_function_parameters,
             $.create_table_function_parameters
@@ -241,7 +241,7 @@ module.exports = grammar({
           optional($.keyword_replace),
           kw("PROCEDURE"),
           optional($.keyword_if_not_exists),
-          field("name", $.identifier),
+          field("routine_name", $.identifier),
           "(", optional(commaSep1($.procedure_argument)), ")",
           optional($.option_list),
           "BEGIN",
