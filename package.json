@@ -10,7 +10,7 @@
     "parse": "tree-sitter parse",
     "prettier": "prettier --write .",
     "build-wasm": "tree-sitter build-wasm",
-    "playground": "rm -f tree-sitter-sql-bigquery.wasm && npm run build-wasm && tree-sitter playground"
+    "playground": "tree-sitter generate && rm -f tree-sitter-sql-bigquery.wasm && npm run build-wasm && tree-sitter playground"
   },
   "keywords": [
     "parser",
