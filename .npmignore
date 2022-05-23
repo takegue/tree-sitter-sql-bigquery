@@ -7,3 +7,5 @@ target
 .github
 .gitignore
 .prettierignore
+*.wasm
+docs
