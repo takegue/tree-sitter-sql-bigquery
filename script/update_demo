@@ -1,6 +1,9 @@
 #!/bin/bash
 
-npm run playground &
+set -exEu
+
+npx tree-sitter build-wasm
+timeout 3s npx tree-sitter playground &
 job=$!
 
 while ! nc -z localhost 8000; do
@@ -10,4 +13,4 @@ done
 wget -P docs -nH -r http://127.0.0.1:8000/{,tree-sitter.wasm,tree-sitter-parser.wasm}
 sed -i 's,LANGUAGE_BASE_URL = "";,LANGUAGE_BASE_URL = new URL(window.location.href).pathname;,' docs/index.html
 
-kill "$job"
+wait $job
