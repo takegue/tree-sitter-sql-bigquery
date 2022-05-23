@@ -385,7 +385,7 @@
         },
         {
           "type": "FIELD",
-          "name": "name",
+          "name": "schema_name",
           "content": {
             "type": "SYMBOL",
             "name": "identifier"
@@ -499,7 +499,7 @@
           },
           {
             "type": "FIELD",
-            "name": "name",
+            "name": "table_name",
             "content": {
               "type": "SYMBOL",
               "name": "identifier"
@@ -703,7 +703,7 @@
       "members": [
         {
           "type": "FIELD",
-          "name": "name",
+          "name": "column_name",
           "content": {
             "type": "SYMBOL",
             "name": "identifier"
@@ -711,7 +711,7 @@
         },
         {
           "type": "FIELD",
-          "name": "type",
+          "name": "column_type",
           "content": {
             "type": "SYMBOL",
             "name": "column_type"
@@ -1164,7 +1164,7 @@
           },
           {
             "type": "FIELD",
-            "name": "name",
+            "name": "routine_name",
             "content": {
               "type": "SYMBOL",
               "name": "identifier"
@@ -1340,7 +1340,7 @@
           },
           {
             "type": "FIELD",
-            "name": "name",
+            "name": "routine_name",
             "content": {
               "type": "SYMBOL",
               "name": "identifier"
@@ -1652,7 +1652,7 @@
         },
         {
           "type": "FIELD",
-          "name": "name",
+          "name": "routine_name",
           "content": {
             "type": "SYMBOL",
             "name": "identifier"

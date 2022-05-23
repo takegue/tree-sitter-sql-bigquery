@@ -1566,12 +1566,22 @@
     "type": "column_definition",
     "named": true,
     "fields": {
-      "name": {
+      "column_name": {
         "multiple": false,
         "required": true,
         "types": [
           {
             "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "column_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "column_type",
             "named": true
           }
         ]
@@ -1582,16 +1592,6 @@
         "types": [
           {
             "type": "option_list",
-            "named": true
-          }
-        ]
-      },
-      "type": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "column_type",
             "named": true
           }
         ]
@@ -1655,7 +1655,7 @@
     "type": "create_function_statement",
     "named": true,
     "fields": {
-      "name": {
+      "routine_name": {
         "multiple": false,
         "required": true,
         "types": [
@@ -1789,7 +1789,7 @@
     "type": "create_procedure_statement",
     "named": true,
     "fields": {
-      "name": {
+      "routine_name": {
         "multiple": false,
         "required": true,
         "types": [
@@ -1871,7 +1871,7 @@
     "type": "create_schema_statement",
     "named": true,
     "fields": {
-      "name": {
+      "schema_name": {
         "multiple": false,
         "required": true,
         "types": [
@@ -1931,7 +1931,7 @@
     "type": "create_table_function_statement",
     "named": true,
     "fields": {
-      "name": {
+      "routine_name": {
         "multiple": false,
         "required": true,
         "types": [
@@ -1992,7 +1992,7 @@
     "type": "create_table_statement",
     "named": true,
     "fields": {
-      "name": {
+      "table_name": {
         "multiple": false,
         "required": true,
         "types": [
