@@ -299,7 +299,7 @@ module.exports = grammar({
       ),
 
     select_list: ($) =>
-      prec.left(commaSep1(choice($.select_all, $._aliasable_expression))),
+      prec.left(commaSep1(choice($.select_all, alias($._aliasable_expression, $.select_expression)))),
     select_all: ($) =>
       prec.right(
         seq(
@@ -309,7 +309,8 @@ module.exports = grammar({
         )
       ),
     select_all_except: $ => seq(kw("EXCEPT"), "(", commaSep1(field("except_key", $.identifier)), ")"),
-    select_all_replace: $ => seq(kw("REPLACE"), "(", commaSep1(field("replace_exp", seq($._expression, $.as_alias))), ")"),
+    select_all_replace: $ => seq(kw("REPLACE"), "(", commaSep1($.select_replace_expression), ")"),
+    select_replace_expression: $ => seq($._expression, $.as_alias),
     select_expr: ($) => seq($._expression, $.as_alias),
     having_clause: ($) => seq(kw("HAVING"), $._expression),
     qualify_clause: ($) => seq(kw("QUALIFY"), $._expression),
@@ -391,10 +392,7 @@ module.exports = grammar({
     _direction_keywords: (_) => field("order", choice(kw("ASC"), kw("DESC"))),
     order_by_clause: ($) => seq(kw("ORDER BY"), $.order_by_clause_body),
     where_clause: ($) => seq(kw("WHERE"), $._expression),
-    _aliased_expression: ($) =>
-      seq($._expression, optional($._keyword_as), $.identifier),
-    _aliasable_expression: ($) =>
-      choice($._expression, alias($._aliased_expression, $.alias)),
+    _aliasable_expression: ($) => seq($._expression, optional($.as_alias)),
 
     as_alias: ($) =>
       seq(optional($._keyword_as), field("alias_name", $.identifier)),

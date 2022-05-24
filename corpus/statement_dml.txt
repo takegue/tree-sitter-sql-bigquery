@@ -59,9 +59,10 @@ FROM dataset.Inventory
      (query_expr
       (select
        (select_list
-        (identifier)
-        (identifier)
-        (FALSE))
+        (select_expression 
+          (identifier))
+        (select_expression (identifier))
+        (select_expression (FALSE)))
        (from_clause
         (from_item
           (identifier)))))))))
@@ -99,7 +100,8 @@ WHERE i.product NOT IN (SELECT product from dataset.NewArrivals)
       (query_expr
        (select
         (select_list
-         (identifier))
+         (select_expression 
+           (identifier)))
         (from_clause
          (from_item
           (identifier)))))))))))

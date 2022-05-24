@@ -146,7 +146,8 @@ CREATE TABLE my_table(date DATE) AS SELECT "2022-01-01";
    (query_expr
     (select
      (select_list
-      (string))))))
+      (select_expression 
+        (string)))))))
  (create_table_statement
   (identifier)
   (create_table_parameters
@@ -157,7 +158,8 @@ CREATE TABLE my_table(date DATE) AS SELECT "2022-01-01";
    (query_expr
     (select
      (select_list
-      (string)))))))
+      (select_expression 
+        (string))))))))
 
 
 ================================================================================
@@ -323,13 +325,16 @@ AS
    (query_expr
     (select
      (select_list
-      (identifier)
-      (identifier)
-      (alias
+      (select_expression
+       (identifier))
+      (select_expression
+       (identifier))
+      (select_expression
        (function_call
         (identifier)
         (identifier))
-       (identifier)))
+       (as_alias
+        (identifier))))
      (from_clause
       (from_item
        (identifier)))
@@ -341,7 +346,6 @@ AS
       (group_by_clause_body
        (identifier)
        (identifier))))))))
-
 
 ================================================================================
 DDL: CREATE PROCEDURE 

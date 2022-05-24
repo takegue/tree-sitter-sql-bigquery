@@ -34,105 +34,6 @@
     "fields": {}
   },
   {
-    "type": "alias",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "FALSE",
-          "named": true
-        },
-        {
-          "type": "NULL",
-          "named": true
-        },
-        {
-          "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
-          "named": true
-        },
-        {
-          "type": "argument_reference",
-          "named": true
-        },
-        {
-          "type": "array",
-          "named": true
-        },
-        {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
-          "type": "between_operator",
-          "named": true
-        },
-        {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "casewhen_expression",
-          "named": true
-        },
-        {
-          "type": "cast_expression",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "interval",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "query_parameter",
-          "named": true
-        },
-        {
-          "type": "select_subexpression",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "struct",
-          "named": true
-        },
-        {
-          "type": "time",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
-          "named": true
-        },
-        {
-          "type": "unnest_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "analytic_expression",
     "named": true,
     "fields": {},
@@ -3455,7 +3356,7 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
@@ -3468,10 +3369,6 @@
         },
         {
           "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "alias",
           "named": true
         },
         {
@@ -3488,6 +3385,10 @@
         },
         {
           "type": "array_element_access",
+          "named": true
+        },
+        {
+          "type": "as_alias",
           "named": true
         },
         {
@@ -3980,117 +3881,20 @@
   {
     "type": "select_all_replace",
     "named": true,
-    "fields": {
-      "replace_exp": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "(",
-            "named": false
-          },
-          {
-            "type": ")",
-            "named": false
-          },
-          {
-            "type": "FALSE",
-            "named": true
-          },
-          {
-            "type": "NULL",
-            "named": true
-          },
-          {
-            "type": "TRUE",
-            "named": true
-          },
-          {
-            "type": "analytic_expression",
-            "named": true
-          },
-          {
-            "type": "argument_reference",
-            "named": true
-          },
-          {
-            "type": "array",
-            "named": true
-          },
-          {
-            "type": "array_element_access",
-            "named": true
-          },
-          {
-            "type": "as_alias",
-            "named": true
-          },
-          {
-            "type": "between_operator",
-            "named": true
-          },
-          {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "casewhen_expression",
-            "named": true
-          },
-          {
-            "type": "cast_expression",
-            "named": true
-          },
-          {
-            "type": "function_call",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "interval",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "query_parameter",
-            "named": true
-          },
-          {
-            "type": "select_subexpression",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "struct",
-            "named": true
-          },
-          {
-            "type": "time",
-            "named": true
-          },
-          {
-            "type": "unary_expression",
-            "named": true
-          },
-          {
-            "type": "unnest_clause",
-            "named": true
-          }
-        ]
-      }
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "select_replace_expression",
+          "named": true
+        }
+      ]
     }
   },
   {
-    "type": "select_list",
+    "type": "select_expression",
     "named": true,
     "fields": {},
     "children": {
@@ -4110,10 +3914,6 @@
           "named": true
         },
         {
-          "type": "alias",
-          "named": true
-        },
-        {
           "type": "analytic_expression",
           "named": true
         },
@@ -4127,6 +3927,10 @@
         },
         {
           "type": "array_element_access",
+          "named": true
+        },
+        {
+          "type": "as_alias",
           "named": true
         },
         {
@@ -4166,7 +3970,125 @@
           "named": true
         },
         {
+          "type": "select_subexpression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "struct",
+          "named": true
+        },
+        {
+          "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "unnest_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "select_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
           "type": "select_all",
+          "named": true
+        },
+        {
+          "type": "select_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "select_replace_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "FALSE",
+          "named": true
+        },
+        {
+          "type": "NULL",
+          "named": true
+        },
+        {
+          "type": "TRUE",
+          "named": true
+        },
+        {
+          "type": "analytic_expression",
+          "named": true
+        },
+        {
+          "type": "argument_reference",
+          "named": true
+        },
+        {
+          "type": "array",
+          "named": true
+        },
+        {
+          "type": "array_element_access",
+          "named": true
+        },
+        {
+          "type": "as_alias",
+          "named": true
+        },
+        {
+          "type": "between_operator",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "casewhen_expression",
+          "named": true
+        },
+        {
+          "type": "cast_expression",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "interval",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "query_parameter",
           "named": true
         },
         {
@@ -4368,10 +4290,6 @@
           "named": true
         },
         {
-          "type": "alias",
-          "named": true
-        },
-        {
           "type": "analytic_expression",
           "named": true
         },
@@ -4385,6 +4303,10 @@
         },
         {
           "type": "array_element_access",
+          "named": true
+        },
+        {
+          "type": "as_alias",
           "named": true
         },
         {

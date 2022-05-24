@@ -26,7 +26,7 @@ Smile and wave
   (comment))
 
 ==================
-Can parse comments
+COMMENT: Can parse comments
 ==================
 
 -- hello
@@ -40,10 +40,11 @@ SELECT 1;
     (query_expr
       (select
         (select_list
-          (number))))))
+          (select_expression
+            (number)))))))
 
 ==================
-Can parse comments anywhere...
+COMMENT: Can parse comments anywhere...
 ==================
 
 -- hello
@@ -55,13 +56,13 @@ SELECT 1; --hi
 (source_file
   (comment)
   (query_statement
-    (query_expr
-      (select
-        (select_list
-          (number)))))
-   (comment)
-   (comment))
-
+  (query_expr
+    (select
+    (select_list
+      (select_expression
+      (number))))))
+  (comment)
+  (comment))
 
 ==================
 Simple marginalia
@@ -79,7 +80,8 @@ FROM my_table;
   (query_expr
     (select
     (select_list
-      (identifier))
+      (select_expression
+      (identifier)))
     (comment)
     (from_clause
       (from_item

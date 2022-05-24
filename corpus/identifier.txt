@@ -13,13 +13,16 @@ select
 (source_file
  (query_statement
   (query_expr
-   (select 
+   (select
     (select_list
-     (identifier)
-     (identifier)
-     (identifier)
-     (identifier)
-    )))))
+     (select_expression
+      (identifier))
+     (select_expression
+      (identifier))
+     (select_expression
+      (identifier))
+     (select_expression
+      (identifier)))))))
 
 
 =======================================================
@@ -39,15 +42,20 @@ select
 (source_file
  (query_statement
   (query_expr
-   (select 
+   (select
     (select_list
-     (string)
-     (string)
-     (string)
-     (string)
-     (string)
-     (string)
-    )))))
+     (select_expression
+      (string))
+     (select_expression
+      (string))
+     (select_expression
+      (string))
+     (select_expression
+      (string))
+     (select_expression
+      (string))
+     (select_expression
+      (string)))))))
 
 
 =======================================================
@@ -73,22 +81,44 @@ select
 (source_file
  (query_statement
   (query_expr
-   (select 
+   (select
     (select_list
-     (number (numeric))
-     (number (numeric))
-     (number (numeric))
-     (number (numeric))
-     (number (numeric))
-     (number (numeric))
-     (number (numeric))
-     (number (numeric))
-     (number (numeric))
-     (number (numeric))
-     (number (numeric))
-     (number (numeric))
-    )))))
-
+     (select_expression
+      (number
+       (numeric)))
+     (select_expression
+      (number
+       (numeric)))
+     (select_expression
+      (number
+       (numeric)))
+     (select_expression
+      (number
+       (numeric)))
+     (select_expression
+      (number
+       (numeric)))
+     (select_expression
+      (number
+       (numeric)))
+     (select_expression
+      (number
+       (numeric)))
+     (select_expression
+      (number
+       (numeric)))
+     (select_expression
+      (number
+       (numeric)))
+     (select_expression
+      (number
+       (numeric)))
+     (select_expression
+      (number
+       (numeric)))
+     (select_expression
+      (number
+       (numeric))))))))
 
 =======================================================
 IDENTIFIER: Floating point
@@ -105,13 +135,16 @@ select
 (source_file
  (query_statement
   (query_expr
-   (select 
+   (select
     (select_list
-     (number)
-     (number)
-     (number)
-     (number)
-    )))))
+     (select_expression
+      (number))
+     (select_expression
+      (number))
+     (select_expression
+      (number))
+     (select_expression
+      (number)))))))
 
 
 =======================================================
@@ -132,16 +165,35 @@ select
 (source_file
  (query_statement
   (query_expr
-   (select 
+   (select
     (select_list
-     (array (number) (number) (number))
-     (array (string) (string) (string))
-     (array (number) (number) (number))
-     (array (string) (string) (string))
-     (array)
-     (array)
-     (array)
-    )))))
+     (select_expression
+      (array
+       (number)
+       (number)
+       (number)))
+     (select_expression
+      (array
+       (string)
+       (string)
+       (string)))
+     (select_expression
+      (array
+       (number)
+       (number)
+       (number)))
+     (select_expression
+      (array
+       (string)
+       (string)
+       (string)))
+     (select_expression
+      (array))
+     (select_expression
+      (array))
+     (select_expression
+      (array)))))))
+
 
 =======================================================
 IDENTIFIER: Struct literals
@@ -162,18 +214,41 @@ select
 (source_file
  (query_statement
   (query_expr
-   (select 
+   (select
     (select_list
-     (struct (number) (number) (number))
-     (struct (number) (string))
-     (struct (alias (number) (identifier)) (alias (string) (identifier)))
-     (struct (number) (number))
-     (struct (number))
-     (struct (number))
-     (struct (number))
-     (struct (number))
-    )))))
-
+     (select_expression
+      (struct
+       (number)
+       (number)
+       (number)))
+     (select_expression
+      (struct
+       (number)
+       (string)))
+     (select_expression
+      (struct
+       (number)
+       (as_alias
+        (identifier))
+       (string)
+       (as_alias
+        (identifier))))
+     (select_expression
+      (struct
+       (number)
+       (number)))
+     (select_expression
+      (struct
+       (number)))
+     (select_expression
+      (struct
+       (number)))
+     (select_expression
+      (struct
+       (number)))
+     (select_expression
+      (struct
+       (number))))))))
 
 =======================================================
 IDENTIFIER: DATE/TIME/DATETIME/TIMESTAMP/INTERVAL literals
@@ -186,17 +261,24 @@ select
   TIMESTAMP '2014-09-27 12:30:00.45-08'
 
 --------------------------------------------------------------------------------
-
+ 
 (source_file
  (query_statement
   (query_expr
-   (select 
+   (select
     (select_list
-     (time (string))
-     (time (string))
-     (time (string))
-     (time (string))
-    )))))
+     (select_expression
+      (time
+       (string)))
+     (select_expression
+      (time
+       (string)))
+     (select_expression
+      (time
+       (string)))
+     (select_expression
+      (time
+       (string))))))))
 
 =======================================================
 IDENTIFIER: INTERVAL literals
@@ -210,32 +292,38 @@ select
   INTERVAL '1 15' MONTH TO DAY
 
 --------------------------------------------------------------------------------
- 
+
+
 (source_file
  (query_statement
   (query_expr
    (select
     (select_list
-     (interval
-      (string)
-      (datetime_part))
-     (interval
-      (string)
-      (datetime_part))
-     (interval
-      (string)
-      (datetime_part)
-      (datetime_part))
-     (interval
-      (string)
-      (datetime_part)
-      (datetime_part))
-     (interval
-      (string)
-      (datetime_part)
-      (datetime_part)))))))
+     (select_expression
+      (interval
+       (string)
+       (datetime_part)))
+     (select_expression
+      (interval
+       (string)
+       (datetime_part)))
+     (select_expression
+      (interval
+       (string)
+       (datetime_part)
+       (datetime_part)))
+     (select_expression
+      (interval
+       (string)
+       (datetime_part)
+       (datetime_part)))
+     (select_expression
+      (interval
+       (string)
+       (datetime_part)
+       (datetime_part))))))))
 
-
+ 
 =======================================================
 IDENTIFIER: Query parameter
 =======================================================
@@ -251,8 +339,10 @@ select
   (query_expr
    (select 
     (select_list
-     (query_parameter)
-     (query_parameter)
+     (select_expression 
+       (query_parameter))
+     (select_expression
+       (query_parameter))
     )))))
 
 

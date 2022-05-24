@@ -10,22 +10,24 @@ SELECT book, LAST_VALUE(item)
 FROM Library
 
 --------------------------------------------------------------------------------
-
+ 
 (source_file
  (query_statement
   (query_expr
    (select
     (select_list
-     (identifier)
-     (analytic_expression
-      (function_call
-       (identifier)
-       (identifier))
-      (over_clause
-       (window_specification
-        (order_by_clause
-         (order_by_clause_body
-          (identifier)))))))
+     (select_expression
+      (identifier))
+     (select_expression
+      (analytic_expression
+       (function_call
+        (identifier)
+        (identifier))
+       (over_clause
+        (window_specification
+         (order_by_clause
+          (order_by_clause_body
+           (identifier))))))))
     (from_clause
      (from_item
       (identifier))))))
@@ -33,25 +35,28 @@ FROM Library
   (query_expr
    (select
     (select_list
-     (identifier)
-     (analytic_expression
-      (function_call
-       (identifier)
-       (identifier))
-      (over_clause
-       (window_specification
-        (order_by_clause
-         (order_by_clause_body
-          (identifier)))
-        (window_frame_clause
-         (rows_range)
-         (window_frame_between
-          (between_from)
-          (between_to
-           (keyword_current_row))))))))
+     (select_expression
+      (identifier))
+     (select_expression
+      (analytic_expression
+       (function_call
+        (identifier)
+        (identifier))
+       (over_clause
+        (window_specification
+         (order_by_clause
+          (order_by_clause_body
+           (identifier)))
+         (window_frame_clause
+          (rows_range)
+          (window_frame_between
+           (between_from)
+           (between_to
+            (keyword_current_row)))))))))
     (from_clause
      (from_item
       (identifier)))))))
+
 
 ================================================================================
 ANALYTIC FUNCTIOIN: With WINDOW clause
@@ -74,10 +79,13 @@ SELECT item, purchases, category, LAST_VALUE(item)
   (query_expr
    (select
     (select_list
-     (identifier)
-     (identifier)
-     (identifier)
-     (alias
+     (select_expression
+      (identifier))
+     (select_expression
+      (identifier))
+     (select_expression
+      (identifier))
+     (select_expression
       (analytic_expression
        (function_call
         (identifier)
@@ -93,18 +101,18 @@ SELECT item, purchases, category, LAST_VALUE(item)
            (between_to
             (window_numeric_following
              (number))))))))
-      (identifier)))
-    (from_clause
-     (from_item
-      (identifier)))
-    (window_clause
-     (named_window_expression
-      (identifier)
-      (window_specification
-       (partition_by
-        (partition_expression
-         (identifier)))
-       (order_by_clause
-        (order_by_clause_body
-          (identifier))))))))))
-
+      (as_alias
+       (identifier))))
+  (from_clause
+   (from_item
+    (identifier)))
+  (window_clause
+   (named_window_expression
+    (identifier)
+    (window_specification
+     (partition_by
+      (partition_expression
+       (identifier)))
+     (order_by_clause
+      (order_by_clause_body
+       (identifier))))))))))

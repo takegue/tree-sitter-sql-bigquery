@@ -1,4 +1,3 @@
-
 ================================================================================
 OPERATORS: Unary Operators
 ================================================================================
@@ -18,23 +17,30 @@ select
 (source_file
  (query_statement
   (query_expr
-   (select (select_list
-     (number)
-     (number)
-     (unary_expression
+   (select
+    (select_list
+     (select_expression
       (number))
-     (unary_expression
-      (TRUE))
-     (unary_expression
-      (NULL)
-      (TRUE))
-     (unary_expression
-      (FALSE)
-      (FALSE))
-     (unary_expression
-      (identifier)
-      (NULL)))))))
-
+     (select_expression
+      (number))
+     (select_expression
+      (unary_expression
+       (number)))
+     (select_expression
+      (unary_expression
+       (TRUE)))
+     (select_expression
+      (unary_expression
+       (NULL)
+       (TRUE)))
+     (select_expression
+      (unary_expression
+       (FALSE)
+       (FALSE)))
+     (select_expression
+      (unary_expression
+       (identifier)
+       (NULL))))))))
 
 ================================================================================
 OPERATORS: Binary Operators
@@ -52,34 +58,37 @@ select
 (source_file
  (query_statement
   (query_expr
-   (select 
+   (select
     (select_list
-     (binary_expression
-      (number)
+     (select_expression
+      (binary_expression
+       (number)
+       (binary_expression
+        (binary_expression
+         (number)
+         (number))
+        (number))))
+     (select_expression
+      (binary_expression
+       (string)
+       (identifier)))
+     (select_expression
       (binary_expression
        (binary_expression
         (number)
         (number))
        (number)))
-     (binary_expression
-      (string)
-      (identifier))
-     (binary_expression
+     (select_expression
       (binary_expression
-       (number)
-       (number))
-      (number))
-     (binary_expression
-      (TRUE)
-      (unary_expression
+       (TRUE)
        (unary_expression
-        (NULL)
-        (TRUE)))))))))
+        (unary_expression
+         (NULL)
+          (TRUE))))))))))
 
 ================================================================================
 OPERATORS: EXISTS operator
 ================================================================================
-
 
 SELECT EXISTS ( SELECT value FROM Words WHERE direction = 'south' ) as result;
 
@@ -90,14 +99,15 @@ SELECT EXISTS ( SELECT value FROM Words WHERE direction = 'south' ) as result;
   (query_expr
    (select
     (select_list
-     (alias
+     (select_expression
       (unary_expression
        (select_subexpression
         (query_statement
          (query_expr
           (select
            (select_list
-            (identifier))
+            (select_expression
+             (identifier)))
            (from_clause
             (from_item
              (identifier)))
@@ -105,7 +115,8 @@ SELECT EXISTS ( SELECT value FROM Words WHERE direction = 'south' ) as result;
             (binary_expression
              (identifier)
              (string))))))))
-      (identifier)))))))
+      (as_alias
+       (identifier))))))))
 
 ================================================================================
 operators: like operator
@@ -120,9 +131,10 @@ select x like "hoge";
   (query_expr
    (select 
     (select_list
-     (binary_expression
-      (identifier)
-      (string)))))))
+     (select_expression 
+       (binary_expression
+       (identifier)
+       (string))))))))
 
 
 ================================================================================
@@ -137,22 +149,26 @@ SELECT 1 IN UNNEST([1, 2]);
 (source_file
  (query_statement
   (query_expr
-   (select (select_list
-     (binary_expression
-      (number)
-      (struct
+   (select 
+    (select_list
+     (select_expression 
+      (binary_expression
        (number)
-       (number)))))))
+       (struct
+        (number)
+        (number))))))))
  (query_statement
   (query_expr
-   (select (select_list
-     (binary_expression
-      (number)
-      (unnest_clause
-       (unnest_operator
-        (array
-         (number)
-         (number))))))))))
+   (select 
+    (select_list
+     (select_expression 
+      (binary_expression
+       (number)
+       (unnest_clause
+        (unnest_operator
+         (array
+          (number)
+          (number)))))))))))
 
 ================================================================================
 OPERATORS: statement with a comparator
@@ -165,13 +181,15 @@ SELECT 1 < 2;
 (source_file
  (query_statement
   (query_expr
-   (select (select_list
-            (binary_expression
-             (number)
-             (number)))))))
+   (select 
+    (select_list
+     (select_expression 
+      (binary_expression
+       (number)
+       (number))))))))
 
 ================================================================================
-OPERATORS:SELECT statement with is expression
+OPERATORS:SELECT statement with IS expression
 ================================================================================
 
 SELECT a IS TRUE, b IS NOT NULL, c IS FALSE;
@@ -183,15 +201,18 @@ SELECT a IS TRUE, b IS NOT NULL, c IS FALSE;
   (query_expr
    (select 
     (select_list
-     (unary_expression
-      (identifier)
-      (TRUE))
-     (unary_expression
-      (identifier)
-      (NULL))
-     (unary_expression
-      (identifier)
-      (FALSE)))))))
+     (select_expression 
+      (unary_expression
+       (identifier)
+       (TRUE)))
+     (select_expression
+        (unary_expression
+       (identifier)
+       (NULL)))
+     (select_expression 
+       (unary_expression
+       (identifier)
+       (FALSE))))))))
 
 ================================================================================
 OPERATORS: field
@@ -206,7 +227,8 @@ SELECT foo.bar;
   (query_expr
    (select 
     (select_list
-     (identifier))))))
+     (select_expression 
+       (identifier)))))))
 
 ================================================================================
 OPERATORS: statement with comparison expression and is expression
@@ -221,11 +243,12 @@ SELECT 1 < 2 IS TRUE;
   (query_expr
    (select
     (select_list
-     (unary_expression
-      (binary_expression
-       (number)
-       (number))
-      (TRUE)))))))
+     (select_expression 
+      (unary_expression
+       (binary_expression
+        (number)
+        (number))
+       (TRUE))))))))
 
 ================================================================================
 SELECT expression with function
@@ -236,16 +259,17 @@ SELECT foo(bar, baz) < 10;
 --------------------------------------------------------------------------------
 
 (source_file
-(query_statement
-(query_expr
-    (select
+ (query_statement
+  (query_expr
+   (select
     (select_list
-        (binary_expression
-        (function_call
-            (identifier)
-            (identifier)
-            (identifier))
-        (number)))))))
+     (select_expression
+      (binary_expression
+       (function_call
+        (identifier)
+        (identifier)
+        (identifier))
+       (number))))))))
 
 ================================================================================
 SELECT expression with function without args
@@ -260,8 +284,9 @@ SELECT foo();
   (query_expr
    (select
     (select_list
-     (function_call
-      (identifier)))))))
+     (select_expression 
+      (function_call
+       (identifier))))))))
 
 ================================================================================
 SELECT comparison expression boolean
@@ -276,18 +301,19 @@ SELECT TRUE AND foo(1) OR FALSE AND NOT a = b.c;
   (query_expr
    (select
     (select_list
-     (binary_expression
-      (binary_expression
-       (TRUE)
-       (function_call
-        (identifier)
-        (number)))
-      (binary_expression
-       (FALSE)
-       (unary_expression
-        (binary_expression
+     (select_expression 
+       (binary_expression
+       (binary_expression
+        (TRUE)
+        (function_call
          (identifier)
-         (identifier))))))))))
+         (number)))
+       (binary_expression
+        (FALSE)
+        (unary_expression
+         (binary_expression
+          (identifier)
+          (identifier)))))))))))
 
 
 ================================================================================
@@ -303,7 +329,8 @@ SELECT (TRUE);
   (query_expr
    (select
     (select_list
-     (TRUE))))))
+     (select_expression 
+       (TRUE)))))))
 
 ================================================================================
 OPERATORS: parenthesized expression 2
@@ -318,14 +345,14 @@ SELECT TRUE AND (foo(1) OR FALSE);
   (query_expr
    (select
     (select_list
-     (binary_expression
-      (TRUE)
+     (select_expression
       (binary_expression
-       (function_call
-        (identifier)
-        (number))
-       (FALSE))))))))
-
+       (TRUE)
+       (binary_expression
+        (function_call
+         (identifier)
+         (number))
+        (FALSE)))))))))
 
 ================================================================================
 OPERATORS: IS DISTINCT FROM
@@ -340,9 +367,10 @@ SELECT 1 IS DISTINCT FROM NULL;
   (query_expr
    (select
     (select_list
-     (binary_expression
-      (number)
-      (NULL)))))))
+     (select_expression 
+      (binary_expression
+       (number)
+       (NULL))))))))
 
 
 ================================================================================
@@ -358,11 +386,13 @@ SELECT a[SAFE_OFFSET(0)];
   (query_expr
    (select
     (select_list
-     (array_element_access
-      (identifier)
-      (function_call
+     (select_expression
+      (array_element_access
        (identifier)
-       (number))))))))
+       (function_call
+        (identifier)
+        (number)))))))))
+
 
 
 ================================================================================
@@ -378,12 +408,13 @@ SELECT 1 BETWEEN 1 and 10
   (query_expr
    (select
     (select_list
-     (between_operator
-      (number)
-      (between_from
-       (number))
-      (between_to
-       (number))))))))
+     (select_expression
+      (between_operator
+       (number)
+       (between_from
+        (number))
+       (between_to
+        (number)))))))))
 
 ================================================================================
 OPERATORS: CASE expressions
@@ -408,30 +439,32 @@ SELECT
   (query_expr
    (select
     (select_list
-     (casewhen_expression
-      (number)
-      (casewhen_clause
+     (select_expression
+      (casewhen_expression
        (number)
-       (string))
-      (casewhen_clause
-       (number)
-       (string))
-      (caseelse_clause
-       (string)))
-     (casewhen_expression
-      (casewhen_clause
-       (binary_expression
-        (identifier)
-        (number))
-       (string))
-      (casewhen_clause
-       (binary_expression
-        (identifier)
-        (number))
-       (string))
-      (caseelse_clause
-       (string))))))))
-
+       (casewhen_clause
+        (number)
+        (string))
+       (casewhen_clause
+        (number)
+        (string))
+       (caseelse_clause
+        (string))))
+     (select_expression
+      (casewhen_expression
+       (casewhen_clause
+        (binary_expression
+         (identifier)
+         (number))
+        (string))
+       (casewhen_clause
+        (binary_expression
+         (identifier)
+         (number))
+        (string))
+       (caseelse_clause
+        (string)))))))))
+ 
 ================================================================================
 OPERATORS: CAST expressions
 ================================================================================
@@ -446,16 +479,17 @@ SELECT CAST('Hello' AS BYTES FORMAT 'ASCII');
   (query_expr
    (select
     (select_list
-     (alias
+     (select_expression
       (cast_expression
        (string))
-      (identifier))))))
+      (as_alias
+       (identifier)))))))
  (query_statement
   (query_expr
    (select
     (select_list
-     (cast_expression
-      (string)
-      (cast_format_clause
-       (string))))))))
-
+     (select_expression
+      (cast_expression
+       (string)
+       (cast_format_clause
+        (string)))))))))
