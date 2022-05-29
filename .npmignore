@@ -1,11 +1,10 @@
-corpus
-build
-examples
-script
-examples
-target
+*.wasm
 .github
 .gitignore
 .prettierignore
-*.wasm
+build
+corpus
 docs
+examples
+script
+target
