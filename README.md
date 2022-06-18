@@ -3,13 +3,13 @@
 # tree-sitter for BigQuery's SQL
 
 This project supports StandardSQL in BigQuery.
-You could try out the demo on [Github Pages](https://tkngue.github.io/tree-sitter-sql-bigquery/)
+You could try out the demo on [Github Pages](https://takegue.github.io/tree-sitter-sql-bigquery/)
 
 # Supported BigQuery SQL feature
 
 - [x] Basic Literals/Expressions
-- [x] Query Statement 
-- [x] DML Statements 
+- [x] Query Statement
+- [x] DML Statements
 
 - [ ] DDL Statements
 
@@ -47,4 +47,3 @@ npm test
 ### Debbuging
 
 - `npm run parse <file.sql>` outputs a syntax tree
-
