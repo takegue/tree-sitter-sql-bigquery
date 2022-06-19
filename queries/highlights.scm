@@ -1,8 +1,12 @@
 (string) @string
 (number) @number
 (comment) @comment
-(kw_type) @type.builtin
+(struct) @type.builtin
+(array) @type.builtin
+(interval) @type.builtin
+(type_identifier) @type.builtin
 (type) @type.builtin
+
 
 [
   ";"
@@ -12,7 +16,6 @@
 [
  "ALL"
  "AND"
- "ARRAY"
  "AS"
  "ASC"
  "BETWEEN"
@@ -54,7 +57,6 @@
  "ROWS"
  "SELECT"
  "SET"
- "STRUCT"
  "THEN"
  "TO"
  "TRUE"

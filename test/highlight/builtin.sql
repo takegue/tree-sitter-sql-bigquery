@@ -1,14 +1,9 @@
 SELECT 
-    cast(a01 as array<string>)
---              ^ type.builtin
-    cast(a02 as array<struct<int64, int64>>)
---              ^ type.builtin
-    cast(a03 as array<struct<array<int64>>>)
---              ^ type.builtin
+-- ^ keyword
     cast(a04 as bool),
---              ^ type.builtin
+--               ^ type.builtin
     cast(a05 as bytes),
---              ^ type.builtin
+--               ^ type.builtin
     cast(a06 as date),
 --              ^ type.builtin
     cast(a07 as datetime),
@@ -35,4 +30,5 @@ SELECT
 --              ^type.builtin
     cast(a18 as struct<string>),
 --              ^ type.builtin
-
+    cast(a01 as array<string>)
+--              ^ type.builtin
