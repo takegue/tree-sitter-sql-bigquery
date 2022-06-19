@@ -385,3 +385,71 @@ END;
    (type
     (identifier)))))
 
+
+
+================================================================================
+DDL: DROP SCEHMA Statements
+================================================================================
+
+DROP SCHEMA dataset_name; 
+DROP SCHEMA IF EXISTS dataset_name; 
+DROP SCHEMA dataset_name CASCADE; 
+DROP SCHEMA dataset_name RESTRICT; 
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (drop_schema_statement
+  (identifier))
+ (drop_schema_statement
+  (keyword_if_exists)
+  (identifier))
+ (drop_schema_statement
+  (identifier)
+  (drop_schema_option))
+ (drop_schema_statement
+  (identifier)
+  (drop_schema_option)))
+
+
+================================================================================
+DDL: DROP TABLE/SNAPSHOT/VIEW/MATERIALIZED/VIEW Statements
+================================================================================
+
+DROP TABLE `dataset_name.table`; 
+DROP TABLE IF EXISTS `dataset_name.table`; 
+DROP VIEW dataset_name.view; 
+DROP MATERIALIZED VIEW dataset_name.mview; 
+
+--------------------------------------------------------------------------------
+ 
+(source_file
+ (drop_table_statement
+  (identifier))
+ (drop_table_statement
+  (keyword_if_exists)
+  (identifier))
+ (drop_table_statement
+  (identifier))
+ (drop_table_statement
+  (identifier)))
+
+
+================================================================================
+DDL: DROP TABLE FUNCTION Statements
+================================================================================
+
+DROP TABLE FUNCTION dataset_name.my_routine_name; 
+DROP FUNCTION dataset_name.my_routine_name; 
+DROP PROCEDURE dataset_name.my_routine_name; 
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (drop_table_function_statement
+  (identifier))
+ (drop_function_statement
+  (identifier))
+ (drop_procedure_statement
+  (identifier)))
+

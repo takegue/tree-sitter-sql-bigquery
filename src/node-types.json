@@ -1730,6 +1730,26 @@
           "named": true
         },
         {
+          "type": "drop_function_statement",
+          "named": true
+        },
+        {
+          "type": "drop_procedure_statement",
+          "named": true
+        },
+        {
+          "type": "drop_schema_statement",
+          "named": true
+        },
+        {
+          "type": "drop_table_function_statement",
+          "named": true
+        },
+        {
+          "type": "drop_table_statement",
+          "named": true
+        },
+        {
           "type": "insert_statement",
           "named": true
         },
@@ -1983,6 +2003,145 @@
         },
         {
           "type": "where_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "drop_function_statement",
+    "named": true,
+    "fields": {
+      "routine_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "keyword_if_exists",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "drop_procedure_statement",
+    "named": true,
+    "fields": {
+      "routine_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "keyword_if_exists",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "drop_schema_option",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "drop_schema_statement",
+    "named": true,
+    "fields": {
+      "schema_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "drop_schema_option",
+          "named": true
+        },
+        {
+          "type": "keyword_if_exists",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "drop_table_function_statement",
+    "named": true,
+    "fields": {
+      "routine_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "keyword_if_exists",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "drop_table_statement",
+    "named": true,
+    "fields": {
+      "table_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "keyword_if_exists",
           "named": true
         }
       ]
@@ -2627,6 +2786,11 @@
   },
   {
     "type": "keyword_current_row",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "keyword_if_exists",
     "named": true,
     "fields": {}
   },
@@ -4242,6 +4406,26 @@
           "named": true
         },
         {
+          "type": "drop_function_statement",
+          "named": true
+        },
+        {
+          "type": "drop_procedure_statement",
+          "named": true
+        },
+        {
+          "type": "drop_schema_statement",
+          "named": true
+        },
+        {
+          "type": "drop_table_function_statement",
+          "named": true
+        },
+        {
+          "type": "drop_table_statement",
+          "named": true
+        },
+        {
           "type": "insert_statement",
           "named": true
         },
@@ -5521,6 +5705,10 @@
     "named": false
   },
   {
+    "type": "CASCADE",
+    "named": false
+  },
+  {
     "type": "CASE",
     "named": false
   },
@@ -5589,6 +5777,14 @@
     "named": false
   },
   {
+    "type": "DROP",
+    "named": false
+  },
+  {
+    "type": "DROP_SCHEMA",
+    "named": false
+  },
+  {
     "type": "ELSE",
     "named": false
   },
@@ -5654,6 +5850,10 @@
   },
   {
     "type": "HOUR",
+    "named": false
+  },
+  {
+    "type": "IF_EXISTS",
     "named": false
   },
   {
@@ -5809,6 +6009,10 @@
     "named": false
   },
   {
+    "type": "RESTRICT",
+    "named": false
+  },
+  {
     "type": "RETURNS",
     "named": false
   },
@@ -5838,6 +6042,10 @@
   },
   {
     "type": "SET",
+    "named": false
+  },
+  {
+    "type": "SNAPSHOT_TABLE",
     "named": false
   },
   {

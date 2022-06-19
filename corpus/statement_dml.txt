@@ -76,12 +76,22 @@ DELETE `dataset.inventory`
 WHERE quantity = 0
 ;
 
+DELETE FROM `dataset.inventory`
+WHERE quantity = 0
+;
+
 DELETE dataset.Inventory i
 WHERE i.product NOT IN (SELECT product from dataset.NewArrivals)
 
 --------------------------------------------------------------------------------
 
 (source_file
+ (delete_statement
+  (identifier)
+  (where_clause
+   (binary_expression
+    (identifier)
+    (number))))
  (delete_statement
   (identifier)
   (where_clause

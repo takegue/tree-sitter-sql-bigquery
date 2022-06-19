@@ -41,6 +41,7 @@ module.exports = grammar({
      ***************************************************************************/
 
     keyword_if_not_exists: (_) => kw("IF NOT EXISTS"),
+    keyword_if_exists: (_) => kw("IF EXISTS"),
     keyword_temporary: (_) => choice(kw("TEMP"), kw("TEMPORARY")),
     keyword_replace: (_) => kw("OR REPLACE"),
     _keyword_delete: (_) => kw("DELETE"),
@@ -74,9 +75,14 @@ module.exports = grammar({
         choice(
           $.create_schema_statement,
           $.create_table_statement,
+          $.drop_table_statement,
           $.create_function_statement,
+          $.drop_function_statement,
           $.create_table_function_statement,
+          $.drop_table_function_statement,
           $.create_procedure_statement,
+          $.drop_procedure_statement,
+          $.drop_schema_statement,
           $.query_statement,
           $.insert_statement,
           $.delete_statement,
@@ -97,6 +103,14 @@ module.exports = grammar({
         field("schema_name", $.identifier),
         optional($.option_list)
       ),
+    drop_schema_statement: ($) =>
+      seq(
+        kw("DROP SCHEMA"),
+        optional($.keyword_if_exists),
+        field("schema_name", $.identifier),
+        optional($.drop_schema_option)
+      ),
+    drop_schema_option: $ => choice(kw("CASCADE"), kw("RESTRICT")),
     create_table_statement: ($) =>
       prec.right(
         seq(
@@ -112,6 +126,13 @@ module.exports = grammar({
           optional($.option_list),
           optional(seq($._keyword_as, $.query_statement))
         )
+      ),
+    drop_table_statement: ($) =>
+      seq(
+        kw("DROP"),
+        choice(kw("TABLE"), kw("SNAPSHOT TABLE"), kw("VIEW"), kw("MATERIALIZED VIEW")),
+        optional($.keyword_if_exists),
+        field("table_name", $.identifier),
       ),
 
     create_table_parameters: ($) =>
@@ -200,6 +221,15 @@ module.exports = grammar({
         )
       ),
 
+    drop_function_statement: ($) =>
+      seq(
+        kw("DROP"),
+        kw("FUNCTION"),
+        optional($.keyword_if_exists),
+        field("routine_name", $.identifier),
+      ),
+
+
     create_table_function_statement: ($) =>
       prec.left(
         seq(
@@ -216,6 +246,14 @@ module.exports = grammar({
           optional($.create_table_function_returns),
           seq($._keyword_as, $.query_statement),
       )),
+
+    drop_table_function_statement: ($) =>
+      seq(
+        kw("DROP"),
+        kw("TABLE FUNCTION"),
+        optional($.keyword_if_exists),
+        field("routine_name", $.identifier),
+      ),
 
     create_table_function_returns: $ => seq($._keyword_returns, kw("TABLE"), "<", commaSep1($.column_definition), ">"),
     create_function_parameters: ($) =>
@@ -253,6 +291,15 @@ module.exports = grammar({
       optional(field("argument_mode", choice(kw("IN"), kw("OUT"), kw("INOUT")))),
       $.identifier, $._type
     ),
+
+    drop_procedure_statement: ($) =>
+      seq(
+        kw("DROP"),
+        kw("PROCEDURE"),
+        optional($.keyword_if_exists),
+        field("routine_name", $.identifier),
+      ),
+
 
     /*********************************************************************************
      *  Query Statement
