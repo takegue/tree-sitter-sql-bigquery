@@ -18,8 +18,8 @@
     "sql",
     "bigquery"
   ],
-  "repository": "https://github.com/TKNGUE/tree-sitter-sql-bigquery",
-  "author": "TKNGUE <takegue@gmail.com>",
+  "repository": "https://github.com/takegue/tree-sitter-sql-bigquery",
+  "author": "takegue <takegue@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "nan": "^2.14.2"
