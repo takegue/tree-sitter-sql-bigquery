@@ -10,19 +10,10 @@ You could try out the demo on [Github Pages](https://takegue.github.io/tree-sitt
 - [x] Basic Literals/Expressions
 - [x] Query Statement
 - [x] DML Statements
-
 - [ ] DDL Statements
-
-  - [x] CREATE syntax for TABLE/VIEW/MATERIALIZED_VIEW
-  - [x] CREATE synteax for FUNCTION
-  - [x] CREATE syntax for TABLE FUNCTION
-  - [ ] DELETE syntax for any
+  - [x] CREATE/DROP Stametens 
   - [ ] ALTER sytnax for any
-
-- [ ] DCL Statements
-- [ ] Procedural Language
-- [ ] BigQuery ML
-
+- [ ] DCL Statements/Procedural Language/BigQuery ML
 - [ ] Pre-GA features
 
 ### References
