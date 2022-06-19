@@ -1,9 +1,7 @@
-SELECT a, b::INT;
+SELECT a, b;
 -- <- keyword
---         ^ operator
---            ^ type.builtin
 
-SELECT a, b  ::  INT;
+SELECT a, b;
 --           ^ operator
 --               ^ type.builtin
 --        ^ variable

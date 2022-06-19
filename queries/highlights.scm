@@ -1,18 +1,44 @@
 (string) @string
 (number) @number
 (comment) @comment
+
+; types
 (struct) @type.builtin
 (array) @type.builtin
 (interval) @type.builtin
 (type_identifier) @type.builtin
-(type) @type.builtin
 
+(type) @type.builtin
+(identifier) @variable
+
+(as_alias 
+  alias_name: (identifier) @property) 
 
 [
   ";"
   "."
 ] @punctuation.delimiter
 
+
+; operators
+[
+  "-"
+  "*"
+  "/"
+  "^"
+  "+"
+  "<"
+  "="
+  "!="
+  ">"
+  ">>"
+  "<<"
+  "||"
+  "~"
+] @operator
+
+
+; keywords
 [
  "ALL"
  "AND"
@@ -50,6 +76,10 @@
  "OUTER"
  "OVER"
  "PRECEDING"
+ "OR_REPLACE"
+ "PARTITION_BY"
+ "IF_NOT_EXISTS"
+ "IF_EXISTS"
  "QUALIFY"
  "RANGE"
  "RIGHT"
