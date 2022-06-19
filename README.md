@@ -12,7 +12,7 @@ You could try out the demo on [Github Pages](https://takegue.github.io/tree-sitt
 - [x] DML Statements
 - [ ] DDL Statements
   - [x] CREATE/DROP Statements
-  - [ ] ALTER sytnax for any
+  - [ ] ALTER syntax for any
 - [ ] DCL Statements/Procedural Language/BigQuery ML
 - [ ] Pre-GA features
 
