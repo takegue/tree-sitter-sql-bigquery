@@ -1,5 +1,5 @@
 =======================================================
-IDENTIFIER: basic names
+LITERALS: basic identifier
 =======================================================
 
 select 
@@ -26,7 +26,7 @@ select
 
 
 =======================================================
-IDENTIFIER: String literals
+LITERALS: String literals
 =======================================================
 
 select 
@@ -59,7 +59,7 @@ select
 
 
 =======================================================
-IDENTIFIER: NUMERIC literals
+LITERALS: NUMERIC literals
 =======================================================
 
 select 
@@ -121,7 +121,7 @@ select
        (numeric))))))))
 
 =======================================================
-IDENTIFIER: Floating point
+LITERALS: Floating point
 =======================================================
 
 select 
@@ -148,7 +148,7 @@ select
 
 
 =======================================================
-IDENTIFIER: Array literals
+LITERALS: Array literals
 =======================================================
 
 select
@@ -196,7 +196,7 @@ select
 
 
 =======================================================
-IDENTIFIER: Struct literals
+LITERALS: Struct literals
 =======================================================
 
 select
@@ -251,7 +251,7 @@ select
        (number))))))))
 
 =======================================================
-IDENTIFIER: DATE/TIME/DATETIME/TIMESTAMP/INTERVAL literals
+LITERALS: DATE/TIME/DATETIME/TIMESTAMP/INTERVAL literals
 =======================================================
 
 select
@@ -281,7 +281,7 @@ select
        (string))))))))
 
 =======================================================
-IDENTIFIER: INTERVAL literals
+LITERALS: INTERVAL literals
 =======================================================
 
 select
@@ -325,7 +325,7 @@ select
 
  
 =======================================================
-IDENTIFIER: Query parameter
+LITERALS: Query parameter
 =======================================================
 
 select 

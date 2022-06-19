@@ -44,6 +44,7 @@ module.exports = grammar({
     keyword_if_exists: (_) => kw("IF EXISTS"),
     keyword_temporary: (_) => choice(kw("TEMP"), kw("TEMPORARY")),
     keyword_replace: (_) => kw("OR REPLACE"),
+    _keyword_format: (_) => kw("FORMAT"),
     _keyword_delete: (_) => kw("DELETE"),
     _keyword_begin: (_) => kw("BEGIN"),
     _keyword_end: (_) => kw("END"),
@@ -946,9 +947,9 @@ module.exports = grammar({
     caseelse_clause: ($) =>
       seq($._keyword_else, field("else_result", $._expression)),
     cast_expression: $ => prec.right(10, seq(
-        $._keyword_cast, "(", $._expression, $._keyword_as, $._identifier, optional($.cast_format_clause),")"
+        $._keyword_cast, "(", $._expression, $._keyword_as, alias($._identifier, $.kw_type), optional($.cast_format_clause),")"
       )),
-    cast_format_clause: $ => seq(kw("FORMAT"), $.string),
+    cast_format_clause: $ => seq($._keyword_format, field("format_type", $.string)),
     asterisk_expression: ($) => seq(optional($._dotted_identifier), "*"),
     argument_reference: ($) => seq("$", /\d+/),
   },

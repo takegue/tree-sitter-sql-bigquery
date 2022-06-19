@@ -33,8 +33,10 @@
     {
       "scope": "source.sql",
       "file-types": [
-        "sql"
-      ]
+        "sql",
+        "bqsql"
+      ],
+      "content-regex": "select|SELECT"
     }
   ]
 }

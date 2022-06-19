@@ -469,7 +469,7 @@ SELECT
 OPERATORS: CAST expressions
 ================================================================================
 
-SELECT CAST('Hello' AS BYTES )s;
+SELECT CAST('Hello' AS BYTES);
 SELECT CAST('Hello' AS BYTES FORMAT 'ASCII');
 
 --------------------------------------------------------------------------------
@@ -481,9 +481,8 @@ SELECT CAST('Hello' AS BYTES FORMAT 'ASCII');
     (select_list
      (select_expression
       (cast_expression
-       (string))
-      (as_alias
-       (identifier)))))))
+       (string)
+       (kw_type)))))))
  (query_statement
   (query_expr
    (select
@@ -491,5 +490,6 @@ SELECT CAST('Hello' AS BYTES FORMAT 'ASCII');
      (select_expression
       (cast_expression
        (string)
+      (kw_type)
        (cast_format_clause
         (string)))))))))

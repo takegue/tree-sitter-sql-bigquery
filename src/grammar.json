@@ -90,6 +90,15 @@
       "named": false,
       "value": "OR_REPLACE"
     },
+    "_keyword_format": {
+      "type": "ALIAS",
+      "content": {
+        "type": "PATTERN",
+        "value": "[fF][oO][rR][mM][aA][tT]"
+      },
+      "named": false,
+      "value": "FORMAT"
+    },
     "_keyword_delete": {
       "type": "ALIAS",
       "content": {
@@ -7437,8 +7446,13 @@
             "name": "_keyword_as"
           },
           {
-            "type": "SYMBOL",
-            "name": "_identifier"
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_identifier"
+            },
+            "named": true,
+            "value": "kw_type"
           },
           {
             "type": "CHOICE",
@@ -7463,17 +7477,16 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[fF][oO][rR][mM][aA][tT]"
-          },
-          "named": false,
-          "value": "FORMAT"
+          "type": "SYMBOL",
+          "name": "_keyword_format"
         },
         {
-          "type": "SYMBOL",
-          "name": "string"
+          "type": "FIELD",
+          "name": "format_type",
+          "content": {
+            "type": "SYMBOL",
+            "name": "string"
+          }
         }
       ]
     },

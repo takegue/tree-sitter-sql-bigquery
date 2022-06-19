@@ -1414,6 +1414,10 @@
           "named": true
         },
         {
+          "type": "kw_type",
+          "named": true
+        },
+        {
           "type": "number",
           "named": true
         },
@@ -1451,16 +1455,17 @@
   {
     "type": "cast_format_clause",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "string",
-          "named": true
-        }
-      ]
+    "fields": {
+      "format_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -2816,6 +2821,11 @@
   },
   {
     "type": "keyword_unbounded_preceding",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "kw_type",
     "named": true,
     "fields": {}
   },

@@ -1,6 +1,8 @@
 (string) @string
 (number) @number
 (comment) @comment
+(kw_type) @type.builtin
+(type) @type.builtin
 
 [
   ";"

@@ -1,99 +1,38 @@
 SELECT 
-    a00 :: bigint,
---         ^ type.builtin
-    a01 :: int8,
---         ^ type.builtin
-    a02 :: bigserial,
---         ^ type.builtin
-    a03 :: serial8,
---         ^ type.builtin
-    a04 :: bit,
---         ^ type.builtin
-    a05 :: varbit,
---         ^ type.builtin
-    a06 :: boolean,
---         ^ type.builtin
-    a07 :: bool,
---         ^ type.builtin
-    a08 :: box,
---         ^ type.builtin
-    a09 :: bytea,
---         ^ type.builtin
-    a10 :: character,
---         ^ type.builtin
-    a11 :: char,
---         ^ type.builtin
-    a12 :: varchar,
---         ^ type.builtin
-    a13 :: cidr,
---         ^ type.builtin
-    a14 :: circle,
---         ^ type.builtin
-    a15 :: date,
---         ^ type.builtin
-    a16 :: float8,
---         ^ type.builtin
-    a17 :: inet,
---         ^ type.builtin
-    a18 :: integer,
---         ^ type.builtin
-    a19 :: int,
---         ^ type.builtin
-    a20 :: int4,
---         ^ type.builtin
-    a21 :: interval,
---         ^ type.builtin
-    a22 :: json,
---         ^ type.builtin
-    a23 :: jsonb,
---         ^ type.builtin
-    a24 :: line,
---         ^ type.builtin
-    a25 :: lseg,
---         ^ type.builtin
-    a26 :: macaddr,
---         ^ type.builtin
-    a27 :: money,
---         ^ type.builtin
-    a28 :: numeric,
---         ^ type.builtin
-    a29 :: decimal,
---         ^ type.builtin
-    a30 :: path,
---         ^ type.builtin
-    a31 :: pg_lsn,
---         ^ type.builtin
-    a32 :: point,
---         ^ type.builtin
-    a33 :: polygon,
---         ^ type.builtin
-    a34 :: real,
---         ^ type.builtin
-    a35 :: float4,
---         ^ type.builtin
-    a36 :: smallint,
---         ^ type.builtin
-    a37 :: int2,
---         ^ type.builtin
-    a38 :: smallserial,
---         ^ type.builtin
-    a39 :: serial2,
---         ^ type.builtin
-    a40 :: serial,
---         ^ type.builtin
-    a41 :: serial4,
---         ^ type.builtin
-    a42 :: text,
---         ^ type.builtin
-    a43 :: time,
---         ^ type.builtin
-    a44 :: time,
---         ^ type.builtin
-    a45 :: timestamp,
---         ^ type.builtin
-    a46 :: tsquery,
---         ^ type.builtin
-    a47 :: tsvector,
---         ^ type.builtin
-    a48 :: txid_snapshot,
---         ^ type.builtin
+    cast(a01 as array<string>)
+--              ^ type.builtin
+    cast(a02 as array<struct<int64, int64>>)
+--              ^ type.builtin
+    cast(a03 as array<struct<array<int64>>>)
+--              ^ type.builtin
+    cast(a04 as bool),
+--              ^ type.builtin
+    cast(a05 as bytes),
+--              ^ type.builtin
+    cast(a06 as date),
+--              ^ type.builtin
+    cast(a07 as datetime),
+--              ^ type.builtin
+    cast(a08 as time),
+--              ^ type.builtin
+    cast(a09 as timestamp),
+--              ^ type.builtin
+    cast(a10 as interval),
+--              ^ type.builtin
+    cast(a11 as json),
+--              ^ type.builtin
+    cast(a12 as int64),
+--              ^ type.builtin
+    cast(a13 as numeric),
+--              ^ type.builtin
+    cast(a14 as decimal),
+--              ^ type.builtin
+    cast(a15 as bignumeric),
+--              ^ type.builtin
+    cast(a16 as float64),
+--              ^ type.builtin
+    cast(a17 as string),
+--              ^type.builtin
+    cast(a18 as struct<string>),
+--              ^ type.builtin
+
