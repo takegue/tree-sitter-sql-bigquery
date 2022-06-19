@@ -470,10 +470,12 @@ OPERATORS: CAST expressions
 ================================================================================
 
 SELECT CAST('Hello' AS BYTES);
+SELECT CAST(('a','b') AS STRUCT<string, string>) as a;
+SELECT CAST(['hoge'] AS ARRAY<STRING>) as a;
 SELECT CAST('Hello' AS BYTES FORMAT 'ASCII');
 
 --------------------------------------------------------------------------------
-
+ 
 (source_file
  (query_statement
   (query_expr
@@ -482,7 +484,30 @@ SELECT CAST('Hello' AS BYTES FORMAT 'ASCII');
      (select_expression
       (cast_expression
        (string)
-       (kw_type)))))))
+       (type_identifier)))))))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (select_expression
+      (cast_expression
+       (struct
+        (string)
+        (string))
+       (type_identifier))
+      (as_alias
+       (identifier)))))))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (select_expression
+      (cast_expression
+       (array
+        (string))
+       (type_identifier))
+      (as_alias
+       (identifier)))))))
  (query_statement
   (query_expr
    (select
@@ -490,6 +515,6 @@ SELECT CAST('Hello' AS BYTES FORMAT 'ASCII');
      (select_expression
       (cast_expression
        (string)
-      (kw_type)
+       (type_identifier)
        (cast_format_clause
         (string)))))))))

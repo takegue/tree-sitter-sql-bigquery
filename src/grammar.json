@@ -7448,11 +7448,24 @@
           {
             "type": "ALIAS",
             "content": {
-              "type": "SYMBOL",
-              "name": "_identifier"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_type_struct"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_type_array"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_identifier"
+                }
+              ]
             },
             "named": true,
-            "value": "kw_type"
+            "value": "type_identifier"
           },
           {
             "type": "CHOICE",

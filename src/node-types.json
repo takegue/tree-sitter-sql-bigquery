@@ -1414,10 +1414,6 @@
           "named": true
         },
         {
-          "type": "kw_type",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
@@ -1439,6 +1435,10 @@
         },
         {
           "type": "time",
+          "named": true
+        },
+        {
+          "type": "type_identifier",
           "named": true
         },
         {
@@ -2821,11 +2821,6 @@
   },
   {
     "type": "keyword_unbounded_preceding",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "kw_type",
     "named": true,
     "fields": {}
   },
@@ -4745,6 +4740,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "type_identifier",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "unary_expression",

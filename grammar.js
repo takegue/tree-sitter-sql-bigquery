@@ -947,7 +947,10 @@ module.exports = grammar({
     caseelse_clause: ($) =>
       seq($._keyword_else, field("else_result", $._expression)),
     cast_expression: $ => prec.right(10, seq(
-        $._keyword_cast, "(", $._expression, $._keyword_as, alias($._identifier, $.kw_type), optional($.cast_format_clause),")"
+        $._keyword_cast, "(", $._expression,
+        $._keyword_as,
+        alias(choice($._type_struct, $._type_array, $._identifier), $.type_identifier),
+        optional($.cast_format_clause),")"
       )),
     cast_format_clause: $ => seq($._keyword_format, field("format_type", $.string)),
     asterisk_expression: ($) => seq(optional($._dotted_identifier), "*"),
