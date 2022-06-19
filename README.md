@@ -24,8 +24,6 @@ You could try out the demo on [Github Pages](https://takegue.github.io/tree-sitt
 - [ ] BigQuery ML
 
 - [ ] Pre-GA features
-    - [ ] JSON Literal
-    - [ ] Collation
 
 ### References
 
