@@ -11,7 +11,7 @@ You could try out the demo on [Github Pages](https://takegue.github.io/tree-sitt
 - [x] Query Statement
 - [x] DML Statements
 - [ ] DDL Statements
-  - [x] CREATE/DROP Stametens 
+  - [x] CREATE/DROP Statements
   - [ ] ALTER sytnax for any
 - [ ] DCL Statements/Procedural Language/BigQuery ML
 - [ ] Pre-GA features
