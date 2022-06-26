@@ -34,6 +34,128 @@
     "fields": {}
   },
   {
+    "type": "alter_column_drop_not_nulls_statement",
+    "named": true,
+    "fields": {
+      "column_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "table_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "keyword_if_exists",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "alter_column_set_data_type_statement",
+    "named": true,
+    "fields": {
+      "column_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "column_schema": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "column_type",
+            "named": true
+          }
+        ]
+      },
+      "table_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "keyword_if_exists",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "alter_column_set_options_statement",
+    "named": true,
+    "fields": {
+      "column_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "table_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "keyword_if_exists",
+          "named": true
+        },
+        {
+          "type": "option_list",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "alter_schema_statement",
     "named": true,
     "fields": {
@@ -58,6 +180,72 @@
         },
         {
           "type": "option_list",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "alter_table_column_statement",
+    "named": true,
+    "fields": {
+      "table_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "column_definition",
+          "named": true
+        },
+        {
+          "type": "keyword_if_not_exists",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "alter_table_rename_statement",
+    "named": true,
+    "fields": {
+      "new_table_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "table_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "keyword_if_exists",
           "named": true
         }
       ]
@@ -1575,6 +1763,10 @@
         {
           "type": "column_definition",
           "named": true
+        },
+        {
+          "type": "number",
+          "named": true
         }
       ]
     }
@@ -1771,7 +1963,27 @@
       "required": false,
       "types": [
         {
+          "type": "alter_column_drop_not_nulls_statement",
+          "named": true
+        },
+        {
+          "type": "alter_column_set_data_type_statement",
+          "named": true
+        },
+        {
+          "type": "alter_column_set_options_statement",
+          "named": true
+        },
+        {
           "type": "alter_schema_statement",
+          "named": true
+        },
+        {
+          "type": "alter_table_column_statement",
+          "named": true
+        },
+        {
+          "type": "alter_table_rename_statement",
           "named": true
         },
         {
@@ -4529,7 +4741,27 @@
       "required": false,
       "types": [
         {
+          "type": "alter_column_drop_not_nulls_statement",
+          "named": true
+        },
+        {
+          "type": "alter_column_set_data_type_statement",
+          "named": true
+        },
+        {
+          "type": "alter_column_set_options_statement",
+          "named": true
+        },
+        {
           "type": "alter_schema_statement",
+          "named": true
+        },
+        {
+          "type": "alter_table_column_statement",
+          "named": true
+        },
+        {
+          "type": "alter_table_rename_statement",
           "named": true
         },
         {
@@ -5825,15 +6057,23 @@
     "named": false
   },
   {
+    "type": "ADD_COLUMN",
+    "named": false
+  },
+  {
     "type": "ALL",
     "named": false
   },
   {
-    "type": "ALTER_SCHEMA",
+    "type": "ALTER",
     "named": false
   },
   {
-    "type": "ALTER_TABLE",
+    "type": "ALTER_COLUMN",
+    "named": false
+  },
+  {
+    "type": "ALTER_SCHEMA",
     "named": false
   },
   {
@@ -5946,6 +6186,10 @@
   },
   {
     "type": "DROP",
+    "named": false
+  },
+  {
+    "type": "DROP_NOT_NULL",
     "named": false
   },
   {
@@ -6185,6 +6429,10 @@
     "named": false
   },
   {
+    "type": "RENAME_TO",
+    "named": false
+  },
+  {
     "type": "REPLACE",
     "named": false
   },
@@ -6222,6 +6470,10 @@
   },
   {
     "type": "SET",
+    "named": false
+  },
+  {
+    "type": "SET_DATA_TYPE",
     "named": false
   },
   {

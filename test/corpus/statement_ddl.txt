@@ -501,3 +501,105 @@ SET OPTIONS (
    (option_item
     (identifier)
     (string)))))
+
+
+================================================================================
+DDL: ALTER TABLE COLUMN on BigQuery Examples #1
+================================================================================
+
+ ALTER TABLE mydataset.mytable
+  ADD COLUMN A STRING,
+  ADD COLUMN IF NOT EXISTS B GEOGRAPHY,
+  ADD COLUMN C ARRAY<NUMERIC>,
+  ADD COLUMN D DATE OPTIONS(description="my description")
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (alter_table_column_statement
+  (identifier)
+  (column_definition
+   (identifier)
+   (column_type))
+  (keyword_if_not_exists)
+  (column_definition
+   (identifier)
+   (column_type))
+  (column_definition
+   (identifier)
+   (column_type))
+  (column_definition
+   (identifier)
+   (column_type)
+   (option_list
+    (option_item
+     (identifier)
+     (string))))))
+
+
+================================================================================
+DDL: ALTER TABLE RENAME TO on BigQuery Examples #1
+================================================================================
+
+ALTER TABLE mydataset.mytable RENAME TO mynewtable
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (alter_table_rename_statement
+  (identifier)
+  (identifier)))
+
+================================================================================
+DDL: ALTER COLUMN SET OPTIONS on BigQuery Examples #1
+================================================================================
+
+ALTER TABLE mydataset.mytable
+ALTER COLUMN price
+SET OPTIONS (
+  description="Price per unit"
+)
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (alter_column_set_options_statement
+  (identifier)
+  (identifier)
+  (option_list
+   (option_item
+    (identifier)
+    (string)))))
+
+================================================================================
+DDL: ALTER COLUMN DROP NOT NULL on BigQuery Examples #1
+================================================================================
+
+ALTER TABLE mydataset.mytable
+ALTER COLUMN mycolumn
+DROP NOT NULL
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (alter_column_drop_not_nulls_statement
+  (identifier)
+  (identifier)))
+
+================================================================================
+DDL: ALTER COLUMN SET DATA TYPE on BigQuery Examples #1
+================================================================================
+
+ALTER TABLE dataset.table
+ALTER COLUMN pt
+SET DATA TYPE NUMERIC(8,2);
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (alter_column_set_data_type_statement
+  (identifier)
+  (identifier)
+  (column_type
+   (number)
+   (number))))

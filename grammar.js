@@ -45,6 +45,7 @@ module.exports = grammar({
     keyword_if_exists: (_) => kw("IF EXISTS"),
     keyword_temporary: (_) => choice(kw("TEMP"), kw("TEMPORARY")),
     keyword_replace: (_) => kw("OR REPLACE"),
+    _keyword_alter: (_) => kw("ALTER"),
     _keyword_format: (_) => kw("FORMAT"),
     _keyword_delete: (_) => kw("DELETE"),
     _keyword_tablesuffix: (_) => kw("_TABLE_SUFFIX"),
@@ -81,6 +82,11 @@ module.exports = grammar({
           $.drop_schema_statement,
           $.create_table_statement,
           $.alter_table_statement,
+          $.alter_table_column_statement,
+          $.alter_table_rename_statement,
+          $.alter_column_set_options_statement,
+          $.alter_column_drop_not_nulls_statement,
+          $.alter_column_set_data_type_statement,
           $.drop_table_statement,
           $.create_function_statement,
           $.drop_function_statement,
@@ -141,11 +147,61 @@ module.exports = grammar({
       ),
     alter_table_statement: ($) =>
       seq(
-        kw("ALTER TABLE"),
+        $._keyword_alter,
+        choice(kw("TABLE"), kw("VIEW"), kw("MATERIALIZED VIEW")),
         optional($.keyword_if_exists),
         field("table_name", $.identifier),
         kw("SET"), optional($.option_list)
       ),
+    alter_table_column_statement: ($) =>
+      seq(
+        $._keyword_alter, kw("TABLE"),
+        field("table_name", $.identifier),
+        commaSep1(
+          seq(kw("ADD COLUMN"),
+          optional($.keyword_if_not_exists),
+          $.column_definition)
+        ),
+      ),
+    alter_table_rename_statement: ($) =>
+      seq(
+        $._keyword_alter, kw("TABLE"),
+        optional($.keyword_if_exists),
+        field("table_name", $.identifier),
+        kw("RENAME TO"), field("new_table_name", $.identifier)
+      ),
+    alter_column_set_options_statement: ($) =>
+      seq(
+        $._keyword_alter, kw("TABLE"),
+        optional($.keyword_if_exists),
+        field("table_name", $.identifier),
+        kw("ALTER COLUMN"), 
+        field("column_name", $.identifier),
+        optional($.keyword_if_exists),
+        kw("SET"), $.option_list
+      ),
+    alter_column_drop_not_nulls_statement: ($) =>
+      seq(
+        $._keyword_alter, kw("TABLE"),
+        optional($.keyword_if_exists),
+        field("table_name", $.identifier),
+        kw("ALTER COLUMN"),
+        optional($.keyword_if_exists),
+        field("column_name", $.identifier),
+        kw("DROP NOT NULL")
+      ),
+    alter_column_set_data_type_statement: ($) =>
+      seq(
+        $._keyword_alter, kw("TABLE"),
+        optional($.keyword_if_exists),
+        field("table_name", $.identifier),
+        kw("ALTER COLUMN"),
+        optional($.keyword_if_exists),
+        field("column_name", $.identifier),
+        kw("SET DATA TYPE"),
+        field("column_schema", $.column_type),
+      ),
+
     drop_table_statement: ($) =>
       seq(
         kw("DROP"),
@@ -156,10 +212,10 @@ module.exports = grammar({
 
     create_table_parameters: ($) =>
       seq("(", commaSep1($.column_definition), ")"),
-    option_item: ($) =>
-      seq(field("key", $.identifier), "=", field("value", $._expression)),
     option_list: ($) =>
       seq(kw("OPTIONS"), "(", optional(sep1($.option_item, ",")), ")"),
+    option_item: ($) =>
+      seq(field("key", $.identifier), "=", field("value", $._expression)),
 
     column_definition: ($) =>
       seq(
@@ -169,6 +225,7 @@ module.exports = grammar({
       ),
     column_type: ($) =>
       choice(
+        prec(1, seq($._unquoted_identifier, "(", commaSep1($.number), ")")),
         $._column_definition_type_array,
         $._unquoted_identifier,
         $._column_definition_type_struct
