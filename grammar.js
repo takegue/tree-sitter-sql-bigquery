@@ -438,8 +438,9 @@ module.exports = grammar({
       ),
     window_clause: ($) => seq($._keyword_window, $.named_window_expression),
     order_by_clause_body: ($) =>
-      commaSep1(seq($._expression, optional($._direction_keywords))),
+      commaSep1(seq($._expression, optional($._direction_keywords), optional($._nulls_preference))),
     _direction_keywords: (_) => field("order", choice(kw("ASC"), kw("DESC"))),
+    _nulls_preference: (_) => field("nulls_preference", choice(kw("NULLS FIRST"), kw("NULLS LAST"))),
     order_by_clause: ($) => seq(kw("ORDER BY"), $.order_by_clause_body),
     where_clause: ($) => seq(kw("WHERE"), $._expression),
     _aliasable_expression: ($) => seq($._expression, optional($.as_alias)),

@@ -494,6 +494,9 @@ SELECT statement with order by
 SELECT * FROM table1
 ORDER BY lower(a), b;
 
+SELECT * FROM table1
+ORDER BY a nulls first, b;
+
 --------------------------------------------------------------------------------
 
 (source_file
@@ -511,7 +514,21 @@ ORDER BY lower(a), b;
      (function_call
       (identifier)
       (identifier))
+     (identifier)))))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (select_all
+      (asterisk_expression)))
+    (from_clause
+     (from_item
+      (identifier))))
+   (order_by_clause
+    (order_by_clause_body
+     (identifier)
      (identifier))))))
+
 
 ================================================================================
 SELECT statement FROM multiple tables

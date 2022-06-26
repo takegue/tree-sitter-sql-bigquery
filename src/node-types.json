@@ -3277,6 +3277,20 @@
     "type": "order_by_clause_body",
     "named": true,
     "fields": {
+      "nulls_preference": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "NULLS_FIRST",
+            "named": false
+          },
+          {
+            "type": "NULLS_LAST",
+            "named": false
+          }
+        ]
+      },
       "order": {
         "multiple": true,
         "required": false,
@@ -5944,6 +5958,14 @@
   },
   {
     "type": "NULL",
+    "named": false
+  },
+  {
+    "type": "NULLS_FIRST",
+    "named": false
+  },
+  {
+    "type": "NULLS_LAST",
     "named": false
   },
   {

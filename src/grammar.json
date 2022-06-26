@@ -3331,6 +3331,18 @@
                   "type": "BLANK"
                 }
               ]
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_nulls_preference"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
             }
           ]
         },
@@ -3356,6 +3368,18 @@
                       {
                         "type": "SYMBOL",
                         "name": "_direction_keywords"
+                      },
+                      {
+                        "type": "BLANK"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "_nulls_preference"
                       },
                       {
                         "type": "BLANK"
@@ -3392,6 +3416,51 @@
             },
             "named": false,
             "value": "DESC"
+          }
+        ]
+      }
+    },
+    "_nulls_preference": {
+      "type": "FIELD",
+      "name": "nulls_preference",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "PATTERN",
+                  "value": "[nN][uU][lL][lL][sS]"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "[fF][iI][rR][sS][tT]"
+                }
+              ]
+            },
+            "named": false,
+            "value": "NULLS_FIRST"
+          },
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "PATTERN",
+                  "value": "[nN][uU][lL][lL][sS]"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "[lL][aA][sS][tT]"
+                }
+              ]
+            },
+            "named": false,
+            "value": "NULLS_LAST"
           }
         ]
       }
