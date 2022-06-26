@@ -100,7 +100,14 @@ module.exports = grammar({
           $.truncate_statement,
           $.update_statement,
           $.merge_statement,
+          // procedural language
           $.declare_statement,
+          $.set_statement,
+          $.begin_end_statement,
+          $.begin_exception_end_statement,
+          $.call_statement,
+          $.return_satement,
+          $.assert_statement,
         ),
         optional(";")
       ),
@@ -114,6 +121,40 @@ module.exports = grammar({
       commaSep1($.identifier),
       field("variable_type", alias($._unquoted_identifier, $.variable_type)),
       optional(alias(seq(kw("DEFAULT"), $._expression), $.default_clause)),
+    ),
+
+    set_statement: $ => choice(
+      seq(kw("SET"), $.identifier, kw("="), $._expression),
+      seq(kw("SET"), 
+        "(", commaSep1($.identifier), ")", 
+        kw("="), 
+        "(", commaSep1($._expression), ")"
+      ),
+    ),
+
+    return_satement: $ => seq(kw("RETURN")),
+
+    call_statement: $ => seq(
+      kw("CALL"), $.identifier, "(", optional(commaSep1($._expression)), ")"
+    ),
+
+    begin_end_statement: $ => seq(
+      choice(kw("BEGIN")),
+      repeat1($._statement),
+      kw("END"),
+    ),
+
+    begin_exception_end_statement: $ => seq(
+      choice(kw("BEGIN")),
+      repeat1($._statement),
+      kw("EXCEPTION WHEN ERROR THEN"),
+      repeat1($._statement),
+      kw("END"),
+    ),
+
+    assert_statement: $ => seq(
+      kw("ASSERT"), $._expression,
+      optional(seq($._keyword_as, $.string)),
     ),
 
     /*********************************************************************************
@@ -392,7 +433,7 @@ module.exports = grammar({
     /*********************************************************************************
      *  Query Statement
      *******************************************************************************/
-    query_statement: ($) => $.query_expr,
+    query_statement: $ => $.query_expr,
     set_operation: ($) =>
       prec.right(
         seq(
@@ -814,6 +855,7 @@ module.exports = grammar({
      * ********************************************************************/
     _literal: ($) =>
       choice(
+        $.system_variable,
         $.query_parameter,
         $.array,
         $.struct,
@@ -860,6 +902,8 @@ module.exports = grammar({
         $.string
       ),
     number: ($) => $._number,
+
+    system_variable: () => /@@[_a-zA-Z][._a-zA-Z0-9]*/,
     query_parameter: ($) =>
       choice($._named_query_parameter, $._positional_query_parameter),
     _named_query_parameter: (_) => /@+[_a-zA-Z][_a-zA-Z0-9]*/,
@@ -1077,8 +1121,4 @@ function commaSep1(rule) {
 
 function sep1(rule, separator) {
   return seq(rule, repeat(seq(separator, rule)));
-}
-
-function sep2(rule, separator) {
-  return seq(rule, repeat1(seq(separator, rule)));
 }
