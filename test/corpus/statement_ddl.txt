@@ -453,3 +453,51 @@ DROP PROCEDURE dataset_name.my_routine_name;
  (drop_procedure_statement
   (identifier)))
 
+
+================================================================================
+DDL: ALTER SCHEMA on BigQuery Examples #1
+================================================================================
+
+ALTER SCHEMA mydataset
+SET OPTIONS(
+  default_table_expiration_days=3.75
+)
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (alter_schema_statement
+  (identifier)
+  (option_list
+   (option_item
+    (identifier)
+    (number)))))
+
+================================================================================
+DDL: ALTER TABLE on BigQuery Examples #1
+================================================================================
+
+ALTER TABLE mydataset.mytable
+SET OPTIONS (
+  expiration_timestamp=TIMESTAMP_ADD(CURRENT_TIMESTAMP(), INTERVAL 7 DAY),
+  description="Table that expires seven days from now"
+)
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (alter_table_statement
+  (identifier)
+  (option_list
+   (option_item
+    (identifier)
+    (function_call
+     (identifier)
+     (function_call
+      (identifier))
+     (interval
+      (number)
+      (datetime_part))))
+   (option_item
+    (identifier)
+    (string)))))

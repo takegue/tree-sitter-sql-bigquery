@@ -77,7 +77,10 @@ module.exports = grammar({
       seq(
         choice(
           $.create_schema_statement,
+          $.alter_schema_statement,
+          $.drop_schema_statement,
           $.create_table_statement,
+          $.alter_table_statement,
           $.drop_table_statement,
           $.create_function_statement,
           $.drop_function_statement,
@@ -85,7 +88,6 @@ module.exports = grammar({
           $.drop_table_function_statement,
           $.create_procedure_statement,
           $.drop_procedure_statement,
-          $.drop_schema_statement,
           $.query_statement,
           $.insert_statement,
           $.delete_statement,
@@ -105,6 +107,13 @@ module.exports = grammar({
         optional($.keyword_if_not_exists),
         field("schema_name", $.identifier),
         optional($.option_list)
+      ),
+    alter_schema_statement: ($) =>
+      seq(
+        kw("ALTER SCHEMA"),
+        optional($.keyword_if_exists),
+        field("schema_name", $.identifier),
+        kw("SET"), optional($.option_list)
       ),
     drop_schema_statement: ($) =>
       seq(
@@ -130,6 +139,13 @@ module.exports = grammar({
           optional(seq($._keyword_as, $.query_statement))
         )
       ),
+    alter_table_statement: ($) =>
+      seq(
+        kw("ALTER TABLE"),
+        optional($.keyword_if_exists),
+        field("table_name", $.identifier),
+        kw("SET"), optional($.option_list)
+      ),
     drop_table_statement: ($) =>
       seq(
         kw("DROP"),
@@ -141,7 +157,7 @@ module.exports = grammar({
     create_table_parameters: ($) =>
       seq("(", commaSep1($.column_definition), ")"),
     option_item: ($) =>
-      seq(field("key", $.identifier), "=", field("value", $._literal)),
+      seq(field("key", $.identifier), "=", field("value", $._expression)),
     option_list: ($) =>
       seq(kw("OPTIONS"), "(", optional(sep1($.option_item, ",")), ")"),
 
