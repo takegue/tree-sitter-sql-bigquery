@@ -99,10 +99,22 @@ module.exports = grammar({
           $.delete_statement,
           $.truncate_statement,
           $.update_statement,
-          $.merge_statement
+          $.merge_statement,
+          $.declare_statement,
         ),
         optional(";")
       ),
+
+
+    /**************************************************************************
+     *                      PROCEDURAL LANGUAGE
+     ***************************************************************************/
+    declare_statement: $ => seq(
+      kw("DECLARE"),
+      commaSep1($.identifier),
+      field("variable_type", alias($._unquoted_identifier, $.variable_type)),
+      optional(alias(seq(kw("DEFAULT"), $._expression), $.default_clause)),
+    ),
 
     /*********************************************************************************
      *  DDL Statement
