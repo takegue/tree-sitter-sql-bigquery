@@ -104,6 +104,7 @@ module.exports = grammar({
           // procedural language
           $.declare_statement,
           $.set_statement,
+          $.execute_immadiate_statement,
           $.begin_end_statement,
           $.begin_exception_end_statement,
           $.if_statement,
@@ -141,6 +142,19 @@ module.exports = grammar({
         kw("="), 
         "(", commaSep1($._expression), ")"
       ),
+    ),
+
+    execute_immadiate_statement: $ => seq(
+      kw("EXECUTE IMMEDIATE"),
+      // FIXME: Inner query statement is not supported
+      $.string,
+      optional($.into_clause),
+      optional($.using_clause),
+    ),
+    into_clause: $ => seq(kw("INTO"), commaSep1($.identifier)),
+    using_clause: $ => seq(
+      kw("USING"), commaSep1(
+      alias($._aliasable_expression, $.using_expression))
     ),
 
     return_satement: $ => seq(kw("RETURN")),

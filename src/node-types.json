@@ -715,6 +715,10 @@
           "named": true
         },
         {
+          "type": "execute_immadiate_statement",
+          "named": true
+        },
+        {
           "type": "for_in_statement",
           "named": true
         },
@@ -883,6 +887,10 @@
         },
         {
           "type": "drop_table_statement",
+          "named": true
+        },
+        {
+          "type": "execute_immadiate_statement",
           "named": true
         },
         {
@@ -2673,6 +2681,10 @@
           "named": true
         },
         {
+          "type": "execute_immadiate_statement",
+          "named": true
+        },
+        {
           "type": "for_in_statement",
           "named": true
         },
@@ -3352,6 +3364,10 @@
           "named": true
         },
         {
+          "type": "execute_immadiate_statement",
+          "named": true
+        },
+        {
           "type": "for_in_statement",
           "named": true
         },
@@ -3567,6 +3583,10 @@
           "named": true
         },
         {
+          "type": "execute_immadiate_statement",
+          "named": true
+        },
+        {
           "type": "for_in_statement",
           "named": true
         },
@@ -3678,6 +3698,29 @@
     }
   },
   {
+    "type": "execute_immadiate_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "into_clause",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "using_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "for_in_statement",
     "named": true,
     "fields": {},
@@ -3783,6 +3826,10 @@
         },
         {
           "type": "drop_table_statement",
+          "named": true
+        },
+        {
+          "type": "execute_immadiate_statement",
           "named": true
         },
         {
@@ -4434,6 +4481,10 @@
           "named": true
         },
         {
+          "type": "execute_immadiate_statement",
+          "named": true
+        },
+        {
           "type": "for_in_statement",
           "named": true
         },
@@ -4612,6 +4663,21 @@
         },
         {
           "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "into_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
           "named": true
         }
       ]
@@ -4936,6 +5002,10 @@
         },
         {
           "type": "drop_table_statement",
+          "named": true
+        },
+        {
+          "type": "execute_immadiate_statement",
           "named": true
         },
         {
@@ -6343,6 +6413,10 @@
           "named": true
         },
         {
+          "type": "execute_immadiate_statement",
+          "named": true
+        },
+        {
           "type": "for_in_statement",
           "named": true
         },
@@ -7148,6 +7222,10 @@
         },
         {
           "type": "drop_table_statement",
+          "named": true
+        },
+        {
+          "type": "execute_immadiate_statement",
           "named": true
         },
         {
@@ -8100,6 +8178,128 @@
     }
   },
   {
+    "type": "using_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "using_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "using_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "FALSE",
+          "named": true
+        },
+        {
+          "type": "NULL",
+          "named": true
+        },
+        {
+          "type": "TRUE",
+          "named": true
+        },
+        {
+          "type": "analytic_expression",
+          "named": true
+        },
+        {
+          "type": "argument_reference",
+          "named": true
+        },
+        {
+          "type": "array",
+          "named": true
+        },
+        {
+          "type": "array_element_access",
+          "named": true
+        },
+        {
+          "type": "as_alias",
+          "named": true
+        },
+        {
+          "type": "between_operator",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "casewhen_expression",
+          "named": true
+        },
+        {
+          "type": "cast_expression",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "interval",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "query_parameter",
+          "named": true
+        },
+        {
+          "type": "select_subexpression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "struct",
+          "named": true
+        },
+        {
+          "type": "system_variable",
+          "named": true
+        },
+        {
+          "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "unnest_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "value_element",
     "named": true,
     "fields": {},
@@ -8474,6 +8674,10 @@
         },
         {
           "type": "drop_table_statement",
+          "named": true
+        },
+        {
+          "type": "execute_immadiate_statement",
           "named": true
         },
         {
@@ -9042,6 +9246,10 @@
   },
   {
     "type": "EXCLUDE_NULLS",
+    "named": false
+  },
+  {
+    "type": "EXECUTE_IMMEDIATE",
     "named": false
   },
   {

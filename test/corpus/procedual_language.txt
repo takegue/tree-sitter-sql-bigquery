@@ -88,6 +88,46 @@ SET (a, b, c) = (1 + 3, 'foo', false);
   (string)
   (FALSE)))
 
+
+================================================================================
+PROCEDURAL LANGUAGE: EXECUTE IMMEDIATE statement
+================================================================================
+
+-- y = 1 * (3 + 2) = 5
+EXECUTE IMMEDIATE "SELECT ? * (? + 2)" INTO y USING 1, 3;
+
+-- y = 1 * (3 + 2) = 5
+EXECUTE IMMEDIATE "SELECT @a * (@b + 2)" INTO y USING 1 as a, 3 as b;
+
+--------------------------------------------------------------------------------
+
+  (source_file
+   (comment)
+   (execute_immadiate_statement
+    (string)
+    (into_clause
+     (identifier))
+    (using_clause
+     (using_expression
+      (number))
+     (using_expression
+      (number))))
+   (comment)
+   (execute_immadiate_statement
+    (string)
+    (into_clause
+     (identifier))
+    (using_clause
+     (using_expression
+      (number)
+      (as_alias
+       (identifier)))
+     (using_expression
+      (number)
+      (as_alias
+       (identifier))))))
+
+
 ================================================================================
 PROCEDURAL LANGUAGE: BEGIN...END statement
 ================================================================================
