@@ -65,6 +65,7 @@ module.exports = grammar({
     _keyword_and: (_) => kw("AND"),
     _keyword_or: (_) => kw("OR"),
     _keyword_like: (_) => kw("LIKE"),
+    _keyword_repeat: (_) => kw("REPEAT"),
     _keyword_as: (_) => kw("AS"),
     _keyword_cast: (_) => choice(kw("CAST"), kw("SAFE_CAST")),
     _keyword_window: (_) => kw("WINDOW"),
@@ -105,7 +106,11 @@ module.exports = grammar({
           $.set_statement,
           $.begin_end_statement,
           $.begin_exception_end_statement,
+          $.if_statement,
           $.loop_statement,
+          $.repeat_statement,
+          $.while_statement,
+          $.for_in_statement,
           $.break_statement,
           $.continue_statement,
           $.iterate_statement,
@@ -157,10 +162,42 @@ module.exports = grammar({
       kw("END"),
     ),
 
+    if_statement: $ => seq(
+      kw("IF"), $._expression, kw("THEN"), optional(repeat1($._statement)),
+      optional(repeat1(alias(seq(kw("ELSEIF"), $._expression, kw("THEN"), optional(repeat1($._statement))), $.elseif_statement))),
+      optional(alias(seq(kw("ELSE"), repeat1($._statement)), $.else_statement)),
+      kw("END IF"),
+    ),
+
     loop_statement: $ => seq(
-      choice(kw("LOOP")),
+      kw("LOOP"),
       repeat1($._statement),
       kw("END LOOP"),
+    ),
+
+    repeat_statement: $ => seq(
+      $._keyword_repeat,
+      repeat1($._statement),
+      alias(seq(kw("UNTIL"), $._expression), $.until_clause),
+      kw("END REPEAT"),
+    ),
+
+    repeat_statement: $ => seq(
+      $._keyword_repeat,
+      repeat1($._statement),
+      alias(seq(kw("UNTIL"), $._expression), $.until_clause),
+      kw("END REPEAT"),
+    ),
+
+    while_statement: $ => seq(
+      kw("WHILE"), $._expression, kw("DO"), repeat1($._statement), kw("END WHILE"),
+    ),
+
+    for_in_statement: $ => seq(
+      kw("FOR"), $.identifier, $._keyword_in, "(", $.query_statement, ")", 
+      kw("DO"), 
+      repeat1($._statement), 
+      kw("END FOR"),
     ),
 
     break_statement: $ => kw("BREAK"),

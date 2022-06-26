@@ -215,6 +215,229 @@ SELECT retCode;
 
 
 ================================================================================
+PROCEDURAL LANGUAGE: IF statement
+================================================================================
+
+DECLARE target_product_id INT64 DEFAULT 103;
+IF EXISTS(SELECT 1 FROM schema.products
+           WHERE product_id = target_product_id) THEN
+  SELECT CONCAT('found product ', CAST(target_product_id AS STRING));
+  ELSEIF EXISTS(SELECT 1 FROM schema.more_products
+           WHERE product_id = target_product_id) THEN
+  SELECT CONCAT('found product from more_products table',
+  CAST(target_product_id AS STRING));
+ELSE
+  SELECT CONCAT('did not find product ', CAST(target_product_id AS STRING));
+END IF;
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (declare_statement
+  (identifier)
+  (variable_type)
+  (default_clause
+   (number)))
+ (if_statement
+  (unary_expression
+   (select_subexpression
+    (query_expr
+     (select
+      (select_list
+       (select_expression
+        (number)))
+      (from_clause
+       (from_item
+        (identifier)))
+      (where_clause
+       (binary_expression
+        (identifier)
+        (identifier)))))))
+  (query_statement
+   (query_expr
+    (select
+     (select_list
+      (select_expression
+       (function_call
+        (identifier)
+        (string)
+        (cast_expression
+         (identifier)
+         (type_identifier))))))))
+  (elseif_statement
+   (unary_expression
+    (select_subexpression
+     (query_expr
+      (select
+       (select_list
+        (select_expression
+         (number)))
+       (from_clause
+        (from_item
+         (identifier)))
+       (where_clause
+        (binary_expression
+         (identifier)
+         (identifier))))))))
+  (elseif_statement
+   (query_statement
+    (query_expr
+     (select
+      (select_list
+       (select_expression
+        (function_call
+         (identifier)
+         (string)
+         (cast_expression
+          (identifier)
+          (type_identifier)))))))))
+  (else_statement
+   (query_statement
+    (query_expr
+     (select
+      (select_list
+       (select_expression
+        (function_call
+         (identifier)
+         (string)
+         (cast_expression
+          (identifier)
+            (type_identifier)))))))))))
+
+
+
+================================================================================
+PROCEDURAL LANGUAGE: LOOP statement
+================================================================================
+
+DECLARE x INT64 DEFAULT 0;
+LOOP
+  SET x = x + 1;
+  IF x >= 10 THEN
+    LEAVE;
+  END IF;
+END LOOP;
+SELECT x;
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (declare_statement
+  (identifier)
+  (variable_type)
+  (default_clause
+   (number)))
+ (loop_statement
+  (set_statement
+   (identifier)
+   (binary_expression
+    (identifier)
+    (number)))
+  (if_statement
+   (binary_expression
+    (identifier)
+    (number))
+   (leave_statement)))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (select_expression
+      (identifier)))))))
+
+================================================================================
+PROCEDURAL LANGUAGE: REPEAT statement
+================================================================================
+
+REPEAT
+  SET x = x + 1;
+  SELECT x;
+  UNTIL x >= 3
+END REPEAT;
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (repeat_statement
+  (set_statement
+   (identifier)
+   (binary_expression
+    (identifier)
+    (number)))
+  (query_statement
+   (query_expr
+    (select
+     (select_list
+      (select_expression
+       (identifier))))))
+  (until_clause
+   (binary_expression
+    (identifier)
+    (number)))))
+
+
+================================================================================
+PROCEDURAL LANGUAGE: WHILE statement
+================================================================================
+
+WHILE x >= 3 DO
+  SET x = x + 1
+END WHILE;
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (while_statement
+  (binary_expression
+   (identifier)
+   (number))
+  (set_statement
+   (identifier)
+   (binary_expression
+    (identifier)
+    (number)))))
+
+
+================================================================================
+PROCEDURAL LANGUAGE: FOR-IN statement
+================================================================================
+
+FOR record IN
+  (SELECT word, word_count
+   FROM `bigquery-public-data.samples.shakespeare`
+   LIMIT 5)
+DO
+  SELECT record.word, record.word_count;
+END FOR;
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (for_in_statement
+  (identifier)
+  (query_statement
+   (query_expr
+    (select
+     (select_list
+      (select_expression
+       (identifier))
+      (select_expression
+       (identifier)))
+     (from_clause
+      (from_item
+       (identifier))))
+    (limit_clause)))
+  (query_statement
+   (query_expr
+    (select
+     (select_list
+      (select_expression
+       (identifier))
+      (select_expression
+       (identifier))))))))
+
+
+================================================================================
 PROCEDURAL LANGUAGE: ASSERT statement
 ================================================================================
 
