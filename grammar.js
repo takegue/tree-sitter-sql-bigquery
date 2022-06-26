@@ -105,6 +105,11 @@ module.exports = grammar({
           $.set_statement,
           $.begin_end_statement,
           $.begin_exception_end_statement,
+          $.loop_statement,
+          $.break_statement,
+          $.continue_statement,
+          $.iterate_statement,
+          $.leave_statement,
           $.call_statement,
           $.return_satement,
           $.assert_statement,
@@ -151,6 +156,17 @@ module.exports = grammar({
       repeat1($._statement),
       kw("END"),
     ),
+
+    loop_statement: $ => seq(
+      choice(kw("LOOP")),
+      repeat1($._statement),
+      kw("END LOOP"),
+    ),
+
+    break_statement: $ => kw("BREAK"),
+    leave_statement: $ => kw("LEAVE"),
+    continue_statement: $ => kw("CONTINUE"),
+    iterate_statement: $ => kw("ITERATE"),
 
     assert_statement: $ => seq(
       kw("ASSERT"), $._expression,
