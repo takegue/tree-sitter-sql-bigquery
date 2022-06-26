@@ -766,7 +766,7 @@ module.exports = grammar({
       ),
     _number: ($) => choice($._integer, $._float, $.numeric),
     interval: ($) => seq(
-        kw("INTERVAL"), $.string, alias($._unquoted_identifier, $.datetime_part),
+        kw("INTERVAL"), choice($.string, $.number), alias($._unquoted_identifier, $.datetime_part),
         optional(seq(kw('TO'), alias($._unquoted_identifier, $.datetime_part)))
       ),
     time: ($) =>
