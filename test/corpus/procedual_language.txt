@@ -213,3 +213,58 @@ SELECT retCode;
      (select_expression
       (identifier)))))))
 
+
+================================================================================
+PROCEDURAL LANGUAGE: ASSERT statement
+================================================================================
+
+ASSERT (
+  (select 1) > 5
+) AS 'Table must contain more than 5 rows.';
+
+ASSERT
+  EXISTS(
+    SELECT X
+    FROM UNNEST([7877, 7879, 7883, 7901, 7907]) AS X
+    WHERE X = 7919
+  )
+AS 'Column X must contain the value 7919';
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (assert_statement
+  (binary_expression
+   (select_subexpression
+    (query_expr
+     (select
+      (select_list
+       (select_expression
+        (number))))))
+   (number))
+  (string))
+ (assert_statement
+  (unary_expression
+   (select_subexpression
+    (query_expr
+     (select
+      (select_list
+       (select_expression
+        (identifier)))
+      (from_clause
+       (from_item
+        (unnest_clause
+         (unnest_operator
+          (array
+           (number)
+           (number)
+           (number)
+           (number)
+           (number)))
+         (identifier))))
+      (where_clause
+       (binary_expression
+        (identifier)
+        (number)))))))
+      (string)))
+

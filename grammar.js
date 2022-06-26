@@ -528,7 +528,7 @@ module.exports = grammar({
     _nulls_preference: (_) => field("nulls_preference", choice(kw("NULLS FIRST"), kw("NULLS LAST"))),
     order_by_clause: ($) => seq(kw("ORDER BY"), $.order_by_clause_body),
     where_clause: ($) => seq(kw("WHERE"), $._expression),
-    _aliasable_expression: ($) => seq($._expression, optional($.as_alias)),
+    _aliasable_expression: ($) => prec.right(seq($._expression, optional($.as_alias))),
 
     as_alias: ($) =>
       seq(optional($._keyword_as), field("alias_name", $.identifier)),
@@ -658,7 +658,7 @@ module.exports = grammar({
         )
       ),
 
-    select_subexpression: ($) => seq("(", $.query_statement, ")"),
+    select_subexpression: $ => seq("(", $.query_expr, ")"),
 
     function_call: ($) =>
       // FIXME: precedence
@@ -946,7 +946,7 @@ module.exports = grammar({
         $.cast_expression,
       ),
 
-    _parenthesized_expression: ($) => prec(20, seq("(", $._expression, ")")),
+    _parenthesized_expression: ($) => prec("unary_exp", seq("(", $._expression, ")")),
     array_element_access: ($) =>
       seq(choice($.identifier, $.argument_reference), "[", $._expression, "]"),
 
