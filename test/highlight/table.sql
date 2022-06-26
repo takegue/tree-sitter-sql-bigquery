@@ -1,43 +1,37 @@
-CREATE TABLE accounts (
+CREATE TABLE mydataset.newtable
 -- <- keyword
----    ^ keyword
----          ^ variable
-user_id serial PRIMARY KEY,
--- <- variable
---        ^ type.builtin
---               ^ keyword
---                    ^ keyword
-username VARCHAR UNIQUE NOT NULL,
--- <- variable
---       ^ type.builtin
---               ^ keyword
---                      ^ keyword
---                           ^ constant.builtin
-password VARCHAR NOT NULL,
--- <- variable
---       ^ type.builtin
---               ^ keyword
---                   ^ constant.builtin
-email VARCHAR UNIQUE NOT NULL,
--- <- variable
+---     ^ keyword
+---            ^ variable
+(
+  x INT64 OPTIONS(description="An optional INTEGER field"),
+--^ variable
+--  ^ type.builtin
+--        ^ keyword
+--                 ^variable.parameter
+--                           ^operator
+--                              ^string
+  y STRUCT<
+--   ^ type.builtin
+    a ARRAY<STRING> OPTIONS(description="A repeated STRING field"),
+--  ^ variable
 --    ^ type.builtin
---            ^ keyword
---                   ^ keyword
---                       ^ constant.builtin
-created_on TIMESTAMP NOT NULL,
--- <- variable
---         ^ type.builtin
---                   ^ keyword
---                       ^ constant.builtin
-last_login TIMESTAMP,
--- <- variable
---         ^ type.builtin
-created_at TIMESTAMP WITH TIME ZONE,
---                   ^ keyword
---                        ^ keyword
---                             ^ keyword
-updated_at TIMESTAMP WITHOUT TIME ZONE
---                   ^ keyword
---                           ^ keyword
---                                ^ keyword
-);
+--          ^ type.builtin
+--                  ^ keyword
+    b BOOL
+--  ^ variable
+--    ^ type.builtin
+  >
+)
+PARTITION BY _PARTITIONDATE
+-- ^keyword
+--           ^variable.system  
+OPTIONS(
+  expiration_timestamp=TIMESTAMP "2025-01-01 00:00:00 UTC",
+--^variable.parameter
+--                     ^type.builtin
+--                               ^string
+  partition_expiration_days=1,
+--                          ^number
+)
+
+

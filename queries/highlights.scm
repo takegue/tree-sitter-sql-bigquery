@@ -2,13 +2,19 @@
 (number) @number
 (comment) @comment
 
+; functions
+(function_call function: (identifier) @function) 
+(function_call arguments: (identifier) @variable.parameter)
+
 ; types
 (struct) @type.builtin
 (array) @type.builtin
 (interval) @type.builtin
 (type_identifier) @type.builtin
 
+(option_item key: (identifier) @variable.parameter)
 (type) @type.builtin
+(column_type) @type.builtin
 (identifier) @variable
 
 (as_alias 
@@ -19,6 +25,26 @@
   "."
 ] @punctuation.delimiter
 
+
+[
+    "_PARTITIONDATE"
+    "_PARTITIONTIME"
+    "_TABLE_SUFFIX"
+] @variable.system
+
+[
+  "DATE"
+  "TIME"
+  "DATETIME"
+  "TIMESTAMP"
+
+  "NUMERIC"
+  "BIGNUMERIC"
+  "DECIMAL"
+  "BIGDECIMAL"
+
+  "INTERVAL"
+] @type.builtin
 
 ; operators
 [
@@ -48,6 +74,7 @@
  "CASE"
  "CAST"
  "CREATE"
+ "CREATE_SCHEMA"
  "DESC"
  "DISTINCT"
  "ELSE"
@@ -59,6 +86,8 @@
  "FROM"
  "FULL"
  "HAVING"
+ "IF_EXISTS"
+ "IF_NOT_EXISTS"
  "IN"
  "INNER"
  "INTERVAL"
@@ -72,14 +101,13 @@
  "NOT"
  "NULL"
  "ON"
+ "OPTIONS"
  "OR"
+ "OR_REPLACE"
  "OUTER"
  "OVER"
- "PRECEDING"
- "OR_REPLACE"
  "PARTITION_BY"
- "IF_NOT_EXISTS"
- "IF_EXISTS"
+ "PRECEDING"
  "QUALIFY"
  "RANGE"
  "RIGHT"
@@ -87,6 +115,7 @@
  "ROWS"
  "SELECT"
  "SET"
+ "TABLE"
  "THEN"
  "TO"
  "TRUE"
@@ -94,6 +123,8 @@
  "USING"
  "WHEN"
  "WHERE"
+ "GROUP_BY"
+ "ORDER_BY"
  "WINDOW"
  "WITH"
 ] @keyword

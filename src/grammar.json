@@ -108,6 +108,15 @@
       "named": false,
       "value": "DELETE"
     },
+    "_keyword_tablesuffix": {
+      "type": "ALIAS",
+      "content": {
+        "type": "PATTERN",
+        "value": "[__][tT][aA][bB][lL][eE][__][sS][uU][fF][fF][iI][xX]"
+      },
+      "named": false,
+      "value": "_TABLE_SUFFIX"
+    },
     "_keyword_begin": {
       "type": "ALIAS",
       "content": {
@@ -862,16 +871,13 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "TOKEN",
+          "type": "ALIAS",
           "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "PATTERN",
-              "value": "[oO][pP][tT][iI][oO][nN][sS]"
-            },
-            "named": false,
-            "value": "OPTIONS"
-          }
+            "type": "PATTERN",
+            "value": "[oO][pP][tT][iI][oO][nN][sS]"
+          },
+          "named": false,
+          "value": "OPTIONS"
         },
         {
           "type": "STRING",

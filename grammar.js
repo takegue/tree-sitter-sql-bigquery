@@ -6,6 +6,7 @@ const multiplicative_operators = ["*", "/", "||"],
   unquoted_identifier = (_) => /[_a-zA-Z][_a-zA-Z0-9]*/,
   quoted_identifier = (_) => /`[a-zA-Z0-9._-]+`/;
 
+
 module.exports = grammar({
   name: "sql_bigquery",
   extras: ($) => [/\s\n/, /\s/, $.comment, /[\s\f\uFEFF\u2060\u200B]|\\\r?\n/],
@@ -46,6 +47,7 @@ module.exports = grammar({
     keyword_replace: (_) => kw("OR REPLACE"),
     _keyword_format: (_) => kw("FORMAT"),
     _keyword_delete: (_) => kw("DELETE"),
+    _keyword_tablesuffix: (_) => kw("_TABLE_SUFFIX"),
     _keyword_begin: (_) => kw("BEGIN"),
     _keyword_end: (_) => kw("END"),
     _keyword_struct: (_) => kw("STRUCT"),
@@ -141,7 +143,7 @@ module.exports = grammar({
     option_item: ($) =>
       seq(field("key", $.identifier), "=", field("value", $._literal)),
     option_list: ($) =>
-      seq(token(kw("OPTIONS")), "(", optional(sep1($.option_item, ",")), ")"),
+      seq(kw("OPTIONS"), "(", optional(sep1($.option_item, ",")), ")"),
 
     column_definition: ($) =>
       seq(

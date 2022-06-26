@@ -5959,6 +5959,10 @@
     "named": false
   },
   {
+    "type": "OPTIONS",
+    "named": false
+  },
+  {
     "type": "OR",
     "named": false
   },
@@ -6212,6 +6216,10 @@
   },
   {
     "type": "_PARTITIONTIME",
+    "named": false
+  },
+  {
+    "type": "_TABLE_SUFFIX",
     "named": false
   },
   {
