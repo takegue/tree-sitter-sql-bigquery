@@ -1,6 +1,14 @@
+; constant
+
+[
+    "NULL"
+    "TRUE"
+    "FALSE"
+] @constant
 (string) @string
 (number) @number
 (comment) @comment
+
 
 ; functions
 (function_call function: (identifier) @function) 
@@ -30,7 +38,7 @@
     "_PARTITIONDATE"
     "_PARTITIONTIME"
     "_TABLE_SUFFIX"
-] @variable.system
+] @variable.builtin
 
 [
   "DATE"

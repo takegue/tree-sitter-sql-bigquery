@@ -24,7 +24,7 @@ CREATE TABLE mydataset.newtable
 )
 PARTITION BY _PARTITIONDATE
 -- ^keyword
---           ^variable.system  
+--           ^variable.builtin
 OPTIONS(
   expiration_timestamp=TIMESTAMP "2025-01-01 00:00:00 UTC",
 --^variable.parameter
