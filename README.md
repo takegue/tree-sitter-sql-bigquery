@@ -11,7 +11,8 @@ You could try out the demo on [Github Pages](https://takegue.github.io/tree-sitt
 - [x] Query Statement
 - [x] DML Statements
 - [x] DDL Statements 
-- [ ] DCL Statements/Procedural Language/BigQuery ML
+- [x] Procedural Language
+- [ ] DCL Statements/BigQuery ML
 - [ ] Pre-GA features
 
 ### References
