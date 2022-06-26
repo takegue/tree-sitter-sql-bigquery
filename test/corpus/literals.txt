@@ -342,7 +342,7 @@ select
      (select_expression 
        (query_parameter))
      (select_expression
-       (query_parameter))
+       (system_variable))
     )))))
 
 

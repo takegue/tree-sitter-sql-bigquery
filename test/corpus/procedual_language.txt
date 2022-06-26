@@ -1,0 +1,215 @@
+================================================================================
+PROCEDURAL LANGUAGE: multi statement
+================================================================================
+
+select 1;
+select 1;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (number))))))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (number)))))))
+
+================================================================================
+PROCEDURAL LANGUAGE: DECLARE statement
+================================================================================
+
+DECLARE x INT64;
+DECLARE d DATE DEFAULT CURRENT_DATE();
+DECLARE x, y, z INT64 DEFAULT 0;
+DECLARE item DEFAULT (SELECT item FROM schema1.products LIMIT 1);
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (declare_statement
+  (identifier)
+  (variable_type))
+ (declare_statement
+  (identifier)
+  (variable_type)
+  (default_clause
+   (function_call
+    (identifier))))
+ (declare_statement
+  (identifier)
+  (identifier)
+  (identifier)
+  (variable_type)
+  (default_clause
+   (number)))
+ (declare_statement
+  (identifier)
+  (variable_type))
+ (query_statement
+  (query_expr
+   (query_expr
+    (select
+     (select_list
+      (select_expression
+       (identifier)))
+     (from_clause
+      (from_item
+       (identifier))))
+      (limit_clause)))))
+
+
+================================================================================
+PROCEDURAL LANGUAGE: SET statement
+================================================================================
+
+SET x = 5;
+SET (a, b, c) = (1 + 3, 'foo', false);
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (set_statement
+  (identifier)
+  (number))
+ (set_statement
+  (identifier)
+  (identifier)
+  (identifier)
+  (binary_expression
+   (number)
+   (number))
+  (string)
+  (FALSE)))
+
+================================================================================
+PROCEDURAL LANGUAGE: BEGIN...END statement
+================================================================================
+
+DECLARE x INT64 DEFAULT 10;
+BEGIN
+  DECLARE y INT64;
+  SET y = x;
+  SELECT y;
+END;
+SELECT x;
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (declare_statement
+  (identifier)
+  (variable_type)
+  (default_clause
+   (number)))
+ (begin_end_statement
+  (declare_statement
+   (identifier)
+   (variable_type))
+  (set_statement
+   (identifier)
+   (identifier))
+  (query_statement
+   (query_expr
+    (select
+     (select_list
+      (select_expression
+       (identifier)))))))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (select_expression
+      (identifier)))))))
+
+================================================================================
+PROCEDURAL LANGUAGE: BEGIN...END statement
+================================================================================
+
+CREATE OR REPLACE PROCEDURE schema1.proc1() BEGIN
+  SELECT 1/0;
+END;
+
+CREATE OR REPLACE PROCEDURE schema1.proc2() BEGIN
+  CALL schema1.proc1();
+END;
+
+BEGIN
+  CALL schema1.proc2();
+EXCEPTION WHEN ERROR THEN
+  SELECT
+    @@error.message,
+    @@error.stack_trace,
+    @@error.statement_text,
+    @@error.formatted_stack_trace;
+END;
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (create_procedure_statement
+  (keyword_replace)
+  (identifier)
+  (query_statement
+   (query_expr
+    (select
+     (select_list
+      (select_expression
+       (binary_expression
+        (number)
+        (number))))))))
+ (create_procedure_statement
+  (keyword_replace)
+  (identifier)
+  (call_statement
+   (identifier)))
+ (begin_exception_end_statement
+  (call_statement
+   (identifier))
+  (query_statement
+   (query_expr
+    (select
+     (select_list
+      (select_expression
+       (system_variable))
+      (select_expression
+       (system_variable))
+      (select_expression
+       (system_variable))
+      (select_expression
+       (system_variable))))))))
+
+
+================================================================================
+PROCEDURAL LANGUAGE: CALL statement
+================================================================================
+
+DECLARE retCode INT64;
+-- Procedure signature: (IN account_id STRING, OUT retCode INT64)
+CALL mySchema.UpdateSomeTables('someAccountId', retCode);
+SELECT retCode;
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (declare_statement
+  (identifier)
+  (variable_type))
+ (comment)
+ (call_statement
+  (identifier)
+  (string)
+  (identifier))
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (select_expression
+      (identifier)))))))
+

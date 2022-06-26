@@ -34,6 +34,8 @@
 ] @punctuation.delimiter
 
 
+(system_variable) @variable.system
+
 [
     "_PARTITIONDATE"
     "_PARTITIONTIME"
