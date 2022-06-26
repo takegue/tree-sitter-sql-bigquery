@@ -350,6 +350,10 @@
           "named": true
         },
         {
+          "type": "system_variable",
+          "named": true
+        },
+        {
           "type": "time",
           "named": true
         }
@@ -441,6 +445,10 @@
           "named": true
         },
         {
+          "type": "system_variable",
+          "named": true
+        },
+        {
           "type": "time",
           "named": true
         },
@@ -491,9 +499,374 @@
     }
   },
   {
+    "type": "assert_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "FALSE",
+          "named": true
+        },
+        {
+          "type": "NULL",
+          "named": true
+        },
+        {
+          "type": "TRUE",
+          "named": true
+        },
+        {
+          "type": "analytic_expression",
+          "named": true
+        },
+        {
+          "type": "argument_reference",
+          "named": true
+        },
+        {
+          "type": "array",
+          "named": true
+        },
+        {
+          "type": "array_element_access",
+          "named": true
+        },
+        {
+          "type": "between_operator",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "casewhen_expression",
+          "named": true
+        },
+        {
+          "type": "cast_expression",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "interval",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "query_parameter",
+          "named": true
+        },
+        {
+          "type": "select_subexpression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "struct",
+          "named": true
+        },
+        {
+          "type": "system_variable",
+          "named": true
+        },
+        {
+          "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "unnest_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "asterisk_expression",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "begin_end_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "alter_column_drop_not_nulls_statement",
+          "named": true
+        },
+        {
+          "type": "alter_column_set_data_type_statement",
+          "named": true
+        },
+        {
+          "type": "alter_column_set_options_statement",
+          "named": true
+        },
+        {
+          "type": "alter_schema_statement",
+          "named": true
+        },
+        {
+          "type": "alter_table_column_statement",
+          "named": true
+        },
+        {
+          "type": "alter_table_rename_statement",
+          "named": true
+        },
+        {
+          "type": "alter_table_statement",
+          "named": true
+        },
+        {
+          "type": "assert_statement",
+          "named": true
+        },
+        {
+          "type": "begin_end_statement",
+          "named": true
+        },
+        {
+          "type": "begin_exception_end_statement",
+          "named": true
+        },
+        {
+          "type": "call_statement",
+          "named": true
+        },
+        {
+          "type": "create_function_statement",
+          "named": true
+        },
+        {
+          "type": "create_procedure_statement",
+          "named": true
+        },
+        {
+          "type": "create_schema_statement",
+          "named": true
+        },
+        {
+          "type": "create_table_function_statement",
+          "named": true
+        },
+        {
+          "type": "create_table_statement",
+          "named": true
+        },
+        {
+          "type": "declare_statement",
+          "named": true
+        },
+        {
+          "type": "delete_statement",
+          "named": true
+        },
+        {
+          "type": "drop_function_statement",
+          "named": true
+        },
+        {
+          "type": "drop_procedure_statement",
+          "named": true
+        },
+        {
+          "type": "drop_schema_statement",
+          "named": true
+        },
+        {
+          "type": "drop_table_function_statement",
+          "named": true
+        },
+        {
+          "type": "drop_table_statement",
+          "named": true
+        },
+        {
+          "type": "insert_statement",
+          "named": true
+        },
+        {
+          "type": "merge_statement",
+          "named": true
+        },
+        {
+          "type": "query_statement",
+          "named": true
+        },
+        {
+          "type": "return_satement",
+          "named": true
+        },
+        {
+          "type": "set_statement",
+          "named": true
+        },
+        {
+          "type": "truncate_statement",
+          "named": true
+        },
+        {
+          "type": "update_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "begin_exception_end_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "alter_column_drop_not_nulls_statement",
+          "named": true
+        },
+        {
+          "type": "alter_column_set_data_type_statement",
+          "named": true
+        },
+        {
+          "type": "alter_column_set_options_statement",
+          "named": true
+        },
+        {
+          "type": "alter_schema_statement",
+          "named": true
+        },
+        {
+          "type": "alter_table_column_statement",
+          "named": true
+        },
+        {
+          "type": "alter_table_rename_statement",
+          "named": true
+        },
+        {
+          "type": "alter_table_statement",
+          "named": true
+        },
+        {
+          "type": "assert_statement",
+          "named": true
+        },
+        {
+          "type": "begin_end_statement",
+          "named": true
+        },
+        {
+          "type": "begin_exception_end_statement",
+          "named": true
+        },
+        {
+          "type": "call_statement",
+          "named": true
+        },
+        {
+          "type": "create_function_statement",
+          "named": true
+        },
+        {
+          "type": "create_procedure_statement",
+          "named": true
+        },
+        {
+          "type": "create_schema_statement",
+          "named": true
+        },
+        {
+          "type": "create_table_function_statement",
+          "named": true
+        },
+        {
+          "type": "create_table_statement",
+          "named": true
+        },
+        {
+          "type": "declare_statement",
+          "named": true
+        },
+        {
+          "type": "delete_statement",
+          "named": true
+        },
+        {
+          "type": "drop_function_statement",
+          "named": true
+        },
+        {
+          "type": "drop_procedure_statement",
+          "named": true
+        },
+        {
+          "type": "drop_schema_statement",
+          "named": true
+        },
+        {
+          "type": "drop_table_function_statement",
+          "named": true
+        },
+        {
+          "type": "drop_table_statement",
+          "named": true
+        },
+        {
+          "type": "insert_statement",
+          "named": true
+        },
+        {
+          "type": "merge_statement",
+          "named": true
+        },
+        {
+          "type": "query_statement",
+          "named": true
+        },
+        {
+          "type": "return_satement",
+          "named": true
+        },
+        {
+          "type": "set_statement",
+          "named": true
+        },
+        {
+          "type": "truncate_statement",
+          "named": true
+        },
+        {
+          "type": "update_statement",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "between_from",
@@ -577,6 +950,10 @@
         },
         {
           "type": "struct",
+          "named": true
+        },
+        {
+          "type": "system_variable",
           "named": true
         },
         {
@@ -684,6 +1061,10 @@
           },
           {
             "type": "struct",
+            "named": true
+          },
+          {
+            "type": "system_variable",
             "named": true
           },
           {
@@ -819,6 +1200,10 @@
           "named": true
         },
         {
+          "type": "system_variable",
+          "named": true
+        },
+        {
           "type": "time",
           "named": true
         },
@@ -931,6 +1316,10 @@
           },
           {
             "type": "struct",
+            "named": true
+          },
+          {
+            "type": "system_variable",
             "named": true
           },
           {
@@ -1138,6 +1527,10 @@
             "named": true
           },
           {
+            "type": "system_variable",
+            "named": true
+          },
+          {
             "type": "time",
             "named": true
           },
@@ -1151,6 +1544,109 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "call_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "FALSE",
+          "named": true
+        },
+        {
+          "type": "NULL",
+          "named": true
+        },
+        {
+          "type": "TRUE",
+          "named": true
+        },
+        {
+          "type": "analytic_expression",
+          "named": true
+        },
+        {
+          "type": "argument_reference",
+          "named": true
+        },
+        {
+          "type": "array",
+          "named": true
+        },
+        {
+          "type": "array_element_access",
+          "named": true
+        },
+        {
+          "type": "between_operator",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "casewhen_expression",
+          "named": true
+        },
+        {
+          "type": "cast_expression",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "interval",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "query_parameter",
+          "named": true
+        },
+        {
+          "type": "select_subexpression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "struct",
+          "named": true
+        },
+        {
+          "type": "system_variable",
+          "named": true
+        },
+        {
+          "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "unnest_clause",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1243,6 +1739,10 @@
           },
           {
             "type": "struct",
+            "named": true
+          },
+          {
+            "type": "system_variable",
             "named": true
           },
           {
@@ -1354,6 +1854,10 @@
             "named": true
           },
           {
+            "type": "system_variable",
+            "named": true
+          },
+          {
             "type": "time",
             "named": true
           },
@@ -1453,6 +1957,10 @@
           },
           {
             "type": "struct",
+            "named": true
+          },
+          {
+            "type": "system_variable",
             "named": true
           },
           {
@@ -1561,6 +2069,10 @@
           },
           {
             "type": "struct",
+            "named": true
+          },
+          {
+            "type": "system_variable",
             "named": true
           },
           {
@@ -1679,6 +2191,10 @@
         },
         {
           "type": "struct",
+          "named": true
+        },
+        {
+          "type": "system_variable",
           "named": true
         },
         {
@@ -1929,6 +2445,10 @@
           "named": true
         },
         {
+          "type": "system_variable",
+          "named": true
+        },
+        {
           "type": "time",
           "named": true
         },
@@ -1991,6 +2511,22 @@
           "named": true
         },
         {
+          "type": "assert_statement",
+          "named": true
+        },
+        {
+          "type": "begin_end_statement",
+          "named": true
+        },
+        {
+          "type": "begin_exception_end_statement",
+          "named": true
+        },
+        {
+          "type": "call_statement",
+          "named": true
+        },
+        {
           "type": "create_function_statement",
           "named": true
         },
@@ -2008,6 +2544,10 @@
         },
         {
           "type": "create_table_statement",
+          "named": true
+        },
+        {
+          "type": "declare_statement",
           "named": true
         },
         {
@@ -2060,6 +2600,14 @@
         },
         {
           "type": "query_statement",
+          "named": true
+        },
+        {
+          "type": "return_satement",
+          "named": true
+        },
+        {
+          "type": "set_statement",
           "named": true
         },
         {
@@ -2258,6 +2806,139 @@
       "types": [
         {
           "type": "non_recursive_cte",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "declare_statement",
+    "named": true,
+    "fields": {
+      "variable_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "variable_type",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "default_clause",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "default_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "FALSE",
+          "named": true
+        },
+        {
+          "type": "NULL",
+          "named": true
+        },
+        {
+          "type": "TRUE",
+          "named": true
+        },
+        {
+          "type": "analytic_expression",
+          "named": true
+        },
+        {
+          "type": "argument_reference",
+          "named": true
+        },
+        {
+          "type": "array",
+          "named": true
+        },
+        {
+          "type": "array_element_access",
+          "named": true
+        },
+        {
+          "type": "between_operator",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "casewhen_expression",
+          "named": true
+        },
+        {
+          "type": "cast_expression",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "interval",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "query_parameter",
+          "named": true
+        },
+        {
+          "type": "select_subexpression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "struct",
+          "named": true
+        },
+        {
+          "type": "system_variable",
+          "named": true
+        },
+        {
+          "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "unnest_clause",
           "named": true
         }
       ]
@@ -2598,6 +3279,10 @@
             "named": true
           },
           {
+            "type": "system_variable",
+            "named": true
+          },
+          {
             "type": "time",
             "named": true
           },
@@ -2723,6 +3408,10 @@
           "named": true
         },
         {
+          "type": "system_variable",
+          "named": true
+        },
+        {
           "type": "time",
           "named": true
         },
@@ -2819,6 +3508,10 @@
         },
         {
           "type": "struct",
+          "named": true
+        },
+        {
+          "type": "system_variable",
           "named": true
         },
         {
@@ -3015,6 +3708,10 @@
             "named": true
           },
           {
+            "type": "system_variable",
+            "named": true
+          },
+          {
             "type": "time",
             "named": true
           },
@@ -3195,6 +3892,10 @@
         },
         {
           "type": "struct",
+          "named": true
+        },
+        {
+          "type": "system_variable",
           "named": true
         },
         {
@@ -3568,6 +4269,10 @@
             "named": true
           },
           {
+            "type": "system_variable",
+            "named": true
+          },
+          {
             "type": "time",
             "named": true
           },
@@ -3727,6 +4432,10 @@
           "named": true
         },
         {
+          "type": "system_variable",
+          "named": true
+        },
+        {
           "type": "time",
           "named": true
         },
@@ -3860,6 +4569,10 @@
           "named": true
         },
         {
+          "type": "system_variable",
+          "named": true
+        },
+        {
           "type": "time",
           "named": true
         },
@@ -3960,6 +4673,10 @@
         },
         {
           "type": "struct",
+          "named": true
+        },
+        {
+          "type": "system_variable",
           "named": true
         },
         {
@@ -4150,6 +4867,10 @@
           "named": true
         },
         {
+          "type": "system_variable",
+          "named": true
+        },
+        {
           "type": "time",
           "named": true
         },
@@ -4218,6 +4939,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "return_satement",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "rows_range",
@@ -4306,6 +5032,10 @@
         },
         {
           "type": "struct",
+          "named": true
+        },
+        {
+          "type": "system_variable",
           "named": true
         },
         {
@@ -4505,6 +5235,10 @@
           "named": true
         },
         {
+          "type": "system_variable",
+          "named": true
+        },
+        {
           "type": "time",
           "named": true
         },
@@ -4627,6 +5361,10 @@
           "named": true
         },
         {
+          "type": "system_variable",
+          "named": true
+        },
+        {
           "type": "time",
           "named": true
         },
@@ -4650,7 +5388,7 @@
       "required": true,
       "types": [
         {
-          "type": "query_statement",
+          "type": "query_expr",
           "named": true
         }
       ]
@@ -4704,6 +5442,109 @@
       "types": [
         {
           "type": "query_expr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "set_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "FALSE",
+          "named": true
+        },
+        {
+          "type": "NULL",
+          "named": true
+        },
+        {
+          "type": "TRUE",
+          "named": true
+        },
+        {
+          "type": "analytic_expression",
+          "named": true
+        },
+        {
+          "type": "argument_reference",
+          "named": true
+        },
+        {
+          "type": "array",
+          "named": true
+        },
+        {
+          "type": "array_element_access",
+          "named": true
+        },
+        {
+          "type": "between_operator",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "casewhen_expression",
+          "named": true
+        },
+        {
+          "type": "cast_expression",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "interval",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "query_parameter",
+          "named": true
+        },
+        {
+          "type": "select_subexpression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "struct",
+          "named": true
+        },
+        {
+          "type": "system_variable",
+          "named": true
+        },
+        {
+          "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "unnest_clause",
           "named": true
         }
       ]
@@ -4769,6 +5610,22 @@
           "named": true
         },
         {
+          "type": "assert_statement",
+          "named": true
+        },
+        {
+          "type": "begin_end_statement",
+          "named": true
+        },
+        {
+          "type": "begin_exception_end_statement",
+          "named": true
+        },
+        {
+          "type": "call_statement",
+          "named": true
+        },
+        {
           "type": "create_function_statement",
           "named": true
         },
@@ -4786,6 +5643,10 @@
         },
         {
           "type": "create_table_statement",
+          "named": true
+        },
+        {
+          "type": "declare_statement",
           "named": true
         },
         {
@@ -4822,6 +5683,14 @@
         },
         {
           "type": "query_statement",
+          "named": true
+        },
+        {
+          "type": "return_satement",
+          "named": true
+        },
+        {
+          "type": "set_statement",
           "named": true
         },
         {
@@ -4929,6 +5798,10 @@
           "named": true
         },
         {
+          "type": "system_variable",
+          "named": true
+        },
+        {
           "type": "time",
           "named": true
         },
@@ -5025,6 +5898,10 @@
         },
         {
           "type": "struct",
+          "named": true
+        },
+        {
+          "type": "system_variable",
           "named": true
         },
         {
@@ -5247,6 +6124,10 @@
             "named": true
           },
           {
+            "type": "system_variable",
+            "named": true
+          },
+          {
             "type": "time",
             "named": true
           },
@@ -5339,6 +6220,10 @@
         },
         {
           "type": "struct",
+          "named": true
+        },
+        {
+          "type": "system_variable",
           "named": true
         },
         {
@@ -5546,6 +6431,10 @@
           "named": true
         },
         {
+          "type": "system_variable",
+          "named": true
+        },
+        {
           "type": "time",
           "named": true
         },
@@ -5683,6 +6572,10 @@
           "named": true
         },
         {
+          "type": "system_variable",
+          "named": true
+        },
+        {
           "type": "time",
           "named": true
         },
@@ -5798,6 +6691,10 @@
         },
         {
           "type": "struct",
+          "named": true
+        },
+        {
+          "type": "system_variable",
           "named": true
         },
         {
@@ -6093,6 +6990,10 @@
     "named": false
   },
   {
+    "type": "ASSERT",
+    "named": false
+  },
+  {
     "type": "BEGIN",
     "named": false
   },
@@ -6110,6 +7011,10 @@
   },
   {
     "type": "BY_TARGET",
+    "named": false
+  },
+  {
+    "type": "CALL",
     "named": false
   },
   {
@@ -6169,6 +7074,14 @@
     "named": false
   },
   {
+    "type": "DECLARE",
+    "named": false
+  },
+  {
+    "type": "DEFAULT",
+    "named": false
+  },
+  {
     "type": "DELETE",
     "named": false
   },
@@ -6206,6 +7119,10 @@
   },
   {
     "type": "EXCEPT",
+    "named": false
+  },
+  {
+    "type": "EXCEPTION_WHEN_ERROR_THEN",
     "named": false
   },
   {
@@ -6441,6 +7358,10 @@
     "named": false
   },
   {
+    "type": "RETURN",
+    "named": false
+  },
+  {
     "type": "RETURNS",
     "named": false
   },
@@ -6654,6 +7575,14 @@
   },
   {
     "type": "language",
+    "named": true
+  },
+  {
+    "type": "system_variable",
+    "named": true
+  },
+  {
+    "type": "variable_type",
     "named": true
   },
   {
