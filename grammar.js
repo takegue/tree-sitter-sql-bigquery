@@ -117,6 +117,7 @@ module.exports = grammar({
           $.leave_statement,
           $.call_statement,
           $.return_satement,
+          $.raise_statement,
           $.assert_statement,
         ),
         optional(";")
@@ -204,6 +205,10 @@ module.exports = grammar({
     leave_statement: $ => kw("LEAVE"),
     continue_statement: $ => kw("CONTINUE"),
     iterate_statement: $ => kw("ITERATE"),
+
+    raise_statement: $ => seq(
+      kw("RAISE"), optional(seq(kw("USING MESSAGE"), $._expression)),
+    ),
 
     assert_statement: $ => seq(
       kw("ASSERT"), $._expression,

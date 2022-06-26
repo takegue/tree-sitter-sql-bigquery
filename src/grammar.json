@@ -498,6 +498,10 @@
             },
             {
               "type": "SYMBOL",
+              "name": "raise_statement"
+            },
+            {
+              "type": "SYMBOL",
               "name": "assert_statement"
             }
           ]
@@ -1303,6 +1307,55 @@
       },
       "named": false,
       "value": "ITERATE"
+    },
+    "raise_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[rR][aA][iI][sS][eE]"
+          },
+          "named": false,
+          "value": "RAISE"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "PATTERN",
+                        "value": "[uU][sS][iI][nN][gG]"
+                      },
+                      {
+                        "type": "PATTERN",
+                        "value": "[mM][eE][sS][sS][aA][gG][eE]"
+                      }
+                    ]
+                  },
+                  "named": false,
+                  "value": "USING_MESSAGE"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_expression"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
     },
     "assert_statement": {
       "type": "SEQ",

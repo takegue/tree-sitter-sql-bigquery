@@ -747,6 +747,10 @@
           "named": true
         },
         {
+          "type": "raise_statement",
+          "named": true
+        },
+        {
           "type": "repeat_statement",
           "named": true
         },
@@ -911,6 +915,10 @@
         },
         {
           "type": "query_statement",
+          "named": true
+        },
+        {
+          "type": "raise_statement",
           "named": true
         },
         {
@@ -2713,6 +2721,10 @@
           "named": true
         },
         {
+          "type": "raise_statement",
+          "named": true
+        },
+        {
           "type": "repeat_statement",
           "named": true
         },
@@ -3372,6 +3384,10 @@
           "named": true
         },
         {
+          "type": "raise_statement",
+          "named": true
+        },
+        {
           "type": "repeat_statement",
           "named": true
         },
@@ -3603,6 +3619,10 @@
           "named": true
         },
         {
+          "type": "raise_statement",
+          "named": true
+        },
+        {
           "type": "repeat_statement",
           "named": true
         },
@@ -3799,6 +3819,10 @@
         },
         {
           "type": "query_statement",
+          "named": true
+        },
+        {
+          "type": "raise_statement",
           "named": true
         },
         {
@@ -4462,6 +4486,10 @@
           "named": true
         },
         {
+          "type": "raise_statement",
+          "named": true
+        },
+        {
           "type": "repeat_statement",
           "named": true
         },
@@ -4940,6 +4968,10 @@
         },
         {
           "type": "query_statement",
+          "named": true
+        },
+        {
+          "type": "raise_statement",
           "named": true
         },
         {
@@ -6100,6 +6132,109 @@
     }
   },
   {
+    "type": "raise_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "FALSE",
+          "named": true
+        },
+        {
+          "type": "NULL",
+          "named": true
+        },
+        {
+          "type": "TRUE",
+          "named": true
+        },
+        {
+          "type": "analytic_expression",
+          "named": true
+        },
+        {
+          "type": "argument_reference",
+          "named": true
+        },
+        {
+          "type": "array",
+          "named": true
+        },
+        {
+          "type": "array_element_access",
+          "named": true
+        },
+        {
+          "type": "between_operator",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "casewhen_expression",
+          "named": true
+        },
+        {
+          "type": "cast_expression",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "interval",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "query_parameter",
+          "named": true
+        },
+        {
+          "type": "select_subexpression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "struct",
+          "named": true
+        },
+        {
+          "type": "system_variable",
+          "named": true
+        },
+        {
+          "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "unnest_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "repeat_statement",
     "named": true,
     "fields": {},
@@ -6237,6 +6372,10 @@
         },
         {
           "type": "query_statement",
+          "named": true
+        },
+        {
+          "type": "raise_statement",
           "named": true
         },
         {
@@ -7041,6 +7180,10 @@
         },
         {
           "type": "query_statement",
+          "named": true
+        },
+        {
+          "type": "raise_statement",
           "named": true
         },
         {
@@ -8386,6 +8529,10 @@
           "named": true
         },
         {
+          "type": "raise_statement",
+          "named": true
+        },
+        {
           "type": "repeat_statement",
           "named": true
         },
@@ -9118,6 +9265,10 @@
     "named": false
   },
   {
+    "type": "RAISE",
+    "named": false
+  },
+  {
     "type": "RANGE",
     "named": false
   },
@@ -9275,6 +9426,10 @@
   },
   {
     "type": "USING",
+    "named": false
+  },
+  {
+    "type": "USING_MESSAGE",
     "named": false
   },
   {
