@@ -35,7 +35,7 @@ module.exports = grammar({
 
   word: ($) => $._unquoted_identifier,
   rules: {
-    source_file: ($) => repeat($._statement),
+    source_file: $ => repeat($._statement),
 
     /**************************************************************************
      *                              Keywords
@@ -124,6 +124,7 @@ module.exports = grammar({
         optional(";")
       ),
 
+    _statement_list: $ => repeat1($._statement),
 
     /**************************************************************************
      *                      PROCEDURAL LANGUAGE
@@ -165,53 +166,53 @@ module.exports = grammar({
 
     begin_end_statement: $ => seq(
       choice(kw("BEGIN")),
-      repeat1($._statement),
+      $._statement_list,
       kw("END"),
     ),
 
     begin_exception_end_statement: $ => seq(
       choice(kw("BEGIN")),
-      repeat1($._statement),
+      $._statement_list,
       kw("EXCEPTION WHEN ERROR THEN"),
-      repeat1($._statement),
+      $._statement_list,
       kw("END"),
     ),
 
     if_statement: $ => seq(
-      kw("IF"), $._expression, kw("THEN"), optional(repeat1($._statement)),
-      optional(repeat1(alias(seq(kw("ELSEIF"), $._expression, kw("THEN"), optional(repeat1($._statement))), $.elseif_statement))),
-      optional(alias(seq(kw("ELSE"), repeat1($._statement)), $.else_statement)),
+      kw("IF"), $._expression, kw("THEN"), optional($._statement_list),
+      optional(repeat1(alias(seq(kw("ELSEIF"), $._expression, kw("THEN"), optional($._statement_list)), $.elseif_statement))),
+      optional(alias(seq(kw("ELSE"), $._statement_list), $.else_statement)),
       kw("END IF"),
     ),
 
     loop_statement: $ => seq(
       kw("LOOP"),
-      repeat1($._statement),
+      $._statement_list,
       kw("END LOOP"),
     ),
 
     repeat_statement: $ => seq(
       $._keyword_repeat,
-      repeat1($._statement),
+      $._statement_list,
       alias(seq(kw("UNTIL"), $._expression), $.until_clause),
       kw("END REPEAT"),
     ),
 
     repeat_statement: $ => seq(
       $._keyword_repeat,
-      repeat1($._statement),
+      $._statement_list,
       alias(seq(kw("UNTIL"), $._expression), $.until_clause),
       kw("END REPEAT"),
     ),
 
     while_statement: $ => seq(
-      kw("WHILE"), $._expression, kw("DO"), repeat1($._statement), kw("END WHILE"),
+      kw("WHILE"), $._expression, kw("DO"), $._statement_list, kw("END WHILE"),
     ),
 
     for_in_statement: $ => seq(
       kw("FOR"), $.identifier, $._keyword_in, "(", $.query_statement, ")", 
       kw("DO"), 
-      repeat1($._statement), 
+      $._statement_list, 
       kw("END FOR"),
     ),
 
