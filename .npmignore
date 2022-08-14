@@ -1,5 +1,6 @@
 *.wasm
 .github
+Cargo.toml
 .gitignore
 .prettierignore
 build
