@@ -7863,8 +7863,8 @@
                           "type": "CHOICE",
                           "members": [
                             {
-                              "type": "PATTERN",
-                              "value": "[a-zA-Z0-9]+"
+                              "type": "SYMBOL",
+                              "name": "_identifier"
                             },
                             {
                               "type": "BLANK"
@@ -7902,8 +7902,8 @@
                                 "type": "CHOICE",
                                 "members": [
                                   {
-                                    "type": "PATTERN",
-                                    "value": "[a-zA-Z0-9]+"
+                                    "type": "SYMBOL",
+                                    "name": "_identifier"
                                   },
                                   {
                                     "type": "BLANK"
@@ -8305,6 +8305,10 @@
     "type": {
       "type": "CHOICE",
       "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_type_struct"
+        },
         {
           "type": "SYMBOL",
           "name": "_type_array"
