@@ -1030,7 +1030,7 @@ module.exports = grammar({
       ),
     ordered_expression: ($) => seq($._expression, $._direction_keywords),
     array_type: ($) => seq($.type, "[", "]"),
-    type: ($) => choice($.array_type, $._base_type),
+    type: ($) => choice($._type_array, $._base_type),
 
     // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890
     comment: ($) =>

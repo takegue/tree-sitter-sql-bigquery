@@ -1,24 +1,5 @@
 [
   {
-    "type": "$.returns",
-    "named": false,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "array_type",
-          "named": true
-        },
-        {
-          "type": "type",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "FALSE",
     "named": true,
     "fields": {}
@@ -458,25 +439,6 @@
         },
         {
           "type": "unnest_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "array_type",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "array_type",
-          "named": true
-        },
-        {
-          "type": "type",
           "named": true
         }
       ]
@@ -2394,10 +2356,6 @@
       "required": true,
       "types": [
         {
-          "type": "array_type",
-          "named": true
-        },
-        {
           "type": "identifier",
           "named": true
         },
@@ -2418,6 +2376,21 @@
       "types": [
         {
           "type": "create_function_parameter",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "create_function_retun_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "type",
           "named": true
         }
       ]
@@ -2488,6 +2461,10 @@
         },
         {
           "type": "create_function_parameters",
+          "named": true
+        },
+        {
+          "type": "create_function_retun_clause",
           "named": true
         },
         {
@@ -6029,10 +6006,6 @@
       "required": true,
       "types": [
         {
-          "type": "array_type",
-          "named": true
-        },
-        {
           "type": "identifier",
           "named": true
         },
@@ -7573,13 +7546,9 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
-      "required": true,
+      "multiple": false,
+      "required": false,
       "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
         {
           "type": "number",
           "named": true
@@ -8416,6 +8385,21 @@
         },
         {
           "type": "value_element",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "variable_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "number",
           "named": true
         }
       ]
@@ -9734,10 +9718,6 @@
   },
   {
     "type": "system_variable",
-    "named": true
-  },
-  {
-    "type": "variable_type",
     "named": true
   },
   {

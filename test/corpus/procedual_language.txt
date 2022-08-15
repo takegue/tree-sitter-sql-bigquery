@@ -28,6 +28,7 @@ PROCEDURAL LANGUAGE: DECLARE statement
 DECLARE x INT64;
 DECLARE d DATE DEFAULT CURRENT_DATE();
 DECLARE x, y, z INT64 DEFAULT 0;
+DECLARE x, y, z ARRAY<STRING>;
 DECLARE item DEFAULT (SELECT item FROM schema1.products LIMIT 1);
 
 --------------------------------------------------------------------------------
@@ -49,6 +50,11 @@ DECLARE item DEFAULT (SELECT item FROM schema1.products LIMIT 1);
   (variable_type)
   (default_clause
    (number)))
+ (declare_statement
+  (identifier)
+  (identifier)
+  (identifier)
+  (variable_type))
  (declare_statement
   (identifier)
   (variable_type))
@@ -530,4 +536,3 @@ AS 'Column X must contain the value 7919';
         (identifier)
         (number)))))))
       (string)))
-
