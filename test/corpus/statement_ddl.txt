@@ -11,13 +11,13 @@ OPTIONS(
 
 --------------------------------------------------------------------------------
 
-(source_file 
+(source_file
     (create_schema_statement
         (identifier)
         (option_list))
     (create_schema_statement
         (identifier)
-        (option_list 
+        (option_list
             (option_item (identifier) (string))
             (option_item (identifier) (array
               (struct (string) (string))
@@ -28,17 +28,17 @@ OPTIONS(
 DDL: SCHEMA IF NOT EXISTS
 ================================================================================
 
-CREATE SCHEMA IF NOT EXISTS mydataset 
+CREATE SCHEMA IF NOT EXISTS mydataset
 
 --------------------------------------------------------------------------------
 
-(source_file 
-    (create_schema_statement 
-        (keyword_if_not_exists) 
+(source_file
+    (create_schema_statement
+        (keyword_if_not_exists)
         (identifier)))
 
 ================================================================================
-DDL: CREATE TABLE 
+DDL: CREATE TABLE
 ================================================================================
 
 CREATE TABLE my_table (col1 INT64);
@@ -146,7 +146,7 @@ CREATE TABLE my_table(date DATE) AS SELECT "2022-01-01";
    (query_expr
     (select
      (select_list
-      (select_expression 
+      (select_expression
         (string)))))))
  (create_table_statement
   (identifier)
@@ -158,7 +158,7 @@ CREATE TABLE my_table(date DATE) AS SELECT "2022-01-01";
    (query_expr
     (select
      (select_list
-      (select_expression 
+      (select_expression
         (string))))))))
 
 
@@ -245,14 +245,12 @@ AS (x * y);
       (create_function_parameters
         (create_function_parameter
           (identifier)
-          (type
-            (identifier)))
+          (type))
         (create_function_parameter
           (identifier)
-          (type
-            (identifier))))
-      (type
-        (identifier))
+          (type)))
+      (create_function_retun_clause
+        (type))
       (binary_expression
         (identifier)
         (identifier))))
@@ -277,14 +275,12 @@ AS r"""
     (create_function_parameters
       (create_function_parameter
         (identifier)
-        (type
-          (identifier)))
+        (type))
       (create_function_parameter
         (identifier)
-        (type
-          (identifier))))
-    (type
-      (identifier))
+        (type)))
+    (create_function_retun_clause
+      (type))
     (language)
     (string)))
 
@@ -309,8 +305,7 @@ AS
   (create_table_function_parameters
    (create_function_parameter
     (identifier)
-    (type
-     (identifier))))
+    (type)))
   (create_table_function_returns
    (column_definition
     (identifier)
@@ -348,7 +343,7 @@ AS
        (identifier))))))))
 
 ================================================================================
-DDL: CREATE PROCEDURE 
+DDL: CREATE PROCEDURE
 ================================================================================
 
 CREATE PROCEDURE myProject.myDataset.QueryTable()
@@ -378,12 +373,10 @@ END;
   (identifier)
   (procedure_argument
    (identifier)
-   (type
-    (identifier)))
+   (type))
   (procedure_argument
    (identifier)
-   (type
-    (identifier)))))
+   (type))))
 
 
 
@@ -391,10 +384,10 @@ END;
 DDL: DROP SCEHMA Statements
 ================================================================================
 
-DROP SCHEMA dataset_name; 
-DROP SCHEMA IF EXISTS dataset_name; 
-DROP SCHEMA dataset_name CASCADE; 
-DROP SCHEMA dataset_name RESTRICT; 
+DROP SCHEMA dataset_name;
+DROP SCHEMA IF EXISTS dataset_name;
+DROP SCHEMA dataset_name CASCADE;
+DROP SCHEMA dataset_name RESTRICT;
 
 --------------------------------------------------------------------------------
 
@@ -416,13 +409,13 @@ DROP SCHEMA dataset_name RESTRICT;
 DDL: DROP TABLE/SNAPSHOT/VIEW/MATERIALIZED/VIEW Statements
 ================================================================================
 
-DROP TABLE `dataset_name.table`; 
-DROP TABLE IF EXISTS `dataset_name.table`; 
-DROP VIEW dataset_name.view; 
-DROP MATERIALIZED VIEW dataset_name.mview; 
+DROP TABLE `dataset_name.table`;
+DROP TABLE IF EXISTS `dataset_name.table`;
+DROP VIEW dataset_name.view;
+DROP MATERIALIZED VIEW dataset_name.mview;
 
 --------------------------------------------------------------------------------
- 
+
 (source_file
  (drop_table_statement
   (identifier))
@@ -439,9 +432,9 @@ DROP MATERIALIZED VIEW dataset_name.mview;
 DDL: DROP TABLE FUNCTION Statements
 ================================================================================
 
-DROP TABLE FUNCTION dataset_name.my_routine_name; 
-DROP FUNCTION dataset_name.my_routine_name; 
-DROP PROCEDURE dataset_name.my_routine_name; 
+DROP TABLE FUNCTION dataset_name.my_routine_name;
+DROP FUNCTION dataset_name.my_routine_name;
+DROP PROCEDURE dataset_name.my_routine_name;
 
 --------------------------------------------------------------------------------
 
