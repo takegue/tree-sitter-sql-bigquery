@@ -3968,7 +3968,7 @@
     "type": "function_call",
     "named": true,
     "fields": {
-      "arguments": {
+      "argument": {
         "multiple": true,
         "required": false,
         "types": [

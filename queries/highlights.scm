@@ -11,8 +11,11 @@
 
 
 ; functions
-(function_call function: (identifier) @function) 
-(function_call arguments: (identifier) @variable.parameter)
+(function_call function: (identifier) @function)
+(function_call argument: (identifier) @variable.parameter)
+
+(call_statement routine_name: (identifier) @function)
+(call_statement argument: (identifier) @variable.parameter)
 
 ; types
 (struct) @type.builtin
@@ -25,8 +28,8 @@
 (column_type) @type.builtin
 (identifier) @variable
 
-(as_alias 
-  alias_name: (identifier) @property) 
+(as_alias
+  alias_name: (identifier) @property)
 
 [
   ";"
