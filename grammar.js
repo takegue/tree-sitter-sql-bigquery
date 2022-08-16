@@ -801,9 +801,7 @@ module.exports = grammar({
 
     unnest_operator: ($) =>
       choice(
-        seq(kw("UNNEST"), "(", $.array, ")"),
-        seq(kw("UNNEST"), "(", $._identifier, ")"),
-        seq(kw("UNNEST"), "(", $.function_call, ")")
+        seq(kw("UNNEST"), "(", $._expression, ")"),
       ),
     unnest_clause: ($) =>
       prec.right(
