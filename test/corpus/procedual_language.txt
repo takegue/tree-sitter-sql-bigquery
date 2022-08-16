@@ -105,6 +105,8 @@ EXECUTE IMMEDIATE "SELECT ? * (? + 2)" INTO y USING 1, 3;
 -- y = 1 * (3 + 2) = 5
 EXECUTE IMMEDIATE "SELECT @a * (@b + 2)" INTO y USING 1 as a, 3 as b;
 
+EXECUTE IMMEDIATE (select "SELECT @a * (@b + 2)")
+
 --------------------------------------------------------------------------------
 
   (source_file
@@ -131,7 +133,14 @@ EXECUTE IMMEDIATE "SELECT @a * (@b + 2)" INTO y USING 1 as a, 3 as b;
      (using_expression
       (number)
       (as_alias
-       (identifier))))))
+       (identifier)))))
+   (execute_immadiate_statement
+    (select_subexpression
+     (query_expr
+      (select
+       (select_list
+        (select_expression
+         (string))))))))
 
 
 ================================================================================

@@ -148,7 +148,7 @@ module.exports = grammar({
     execute_immadiate_statement: $ => seq(
       kw("EXECUTE IMMEDIATE"),
       // FIXME: Inner query statement is not supported
-      $.string,
+      $._expression,
       optional($.into_clause),
       optional($.using_clause),
     ),
