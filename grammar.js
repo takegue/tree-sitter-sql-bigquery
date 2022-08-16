@@ -161,7 +161,15 @@ module.exports = grammar({
     return_satement: $ => seq(kw("RETURN")),
 
     call_statement: $ => seq(
-      kw("CALL"), $.identifier, "(", optional(commaSep1($._expression)), ")"
+      kw("CALL"), field("routine_name", $.identifier),
+      "(",
+      optional(
+        field(
+          "argument",
+          commaSep1($._expression)
+        ),
+      ),
+      ")"
     ),
 
     begin_end_statement: $ => seq(
@@ -783,7 +791,7 @@ module.exports = grammar({
           "(",
           optional(
             field(
-              "arguments",
+              "argument",
               commaSep1(choice($._expression, $.asterisk_expression))
             )
           ),
