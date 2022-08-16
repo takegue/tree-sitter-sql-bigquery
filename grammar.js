@@ -484,9 +484,9 @@ module.exports = grammar({
         field("routine_name", $.identifier),
         "(", optional(commaSep1($.procedure_argument)), ")",
         optional($.option_list),
-        "BEGIN",
+        kw("BEGIN"),
         repeat($._statement),
-        "END"
+        kw("END")
       )
     ),
     procedure_argument: $ => seq(
@@ -981,6 +981,9 @@ module.exports = grammar({
       choice($._named_query_parameter, $._positional_query_parameter),
     _named_query_parameter: (_) => /@+[_a-zA-Z][_a-zA-Z0-9]*/,
     _positional_query_parameter: (_) => /\?/,
+
+    type: ($) => $._bqtype,
+    _bqtype: ($) => choice($._type_struct, $._type_array, $._base_type),
     _type_struct: ($) =>
       seq(
         kw("STRUCT"),
@@ -990,7 +993,7 @@ module.exports = grammar({
             commaSep1(
               seq(
                 optional($._identifier),
-                choice(/[a-zA-Z0-9]+/, $._type_struct)
+                $._bqtype
               )
             ),
             ">"
@@ -1000,7 +1003,7 @@ module.exports = grammar({
     _type_array: ($) =>
       seq(
         kw("ARRAY"),
-        optional(seq("<", choice($._type_struct, $._unquoted_identifier), ">"))
+        optional(seq("<", $._bqtype, ">"))
       ),
     array: ($) =>
       seq(optional($._type_array), "[", optional(commaSep1($._literal)), "]"),
@@ -1029,8 +1032,6 @@ module.exports = grammar({
         "_string"
       ),
     ordered_expression: ($) => seq($._expression, $._direction_keywords),
-    array_type: ($) => seq($.type, "[", "]"),
-    type: ($) => choice($._type_struct, $._type_array, $._base_type),
 
     // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890
     comment: ($) =>
@@ -1154,12 +1155,12 @@ module.exports = grammar({
     cast_expression: $ => prec.right(10, seq(
       $._keyword_cast, "(", $._expression,
       $._keyword_as,
-      alias(choice($._type_struct, $._type_array, $._identifier), $.type_identifier),
+      alias($._bqtype, $.type_identifier),
       optional($.cast_format_clause), ")"
     )),
     cast_format_clause: $ => seq($._keyword_format, field("format_type", $.string)),
     asterisk_expression: ($) => seq(optional($._dotted_identifier), "*"),
-    argument_reference: ($) => seq("$", /\d+/),
+    argument_reference: () => seq("$", /\d+/),
   },
 });
 

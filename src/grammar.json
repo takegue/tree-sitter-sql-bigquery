@@ -3813,7 +3813,12 @@
           ]
         },
         {
-          "type": "STRING",
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[bB][eE][gG][iI][nN]"
+          },
+          "named": false,
           "value": "BEGIN"
         },
         {
@@ -3824,7 +3829,12 @@
           }
         },
         {
-          "type": "STRING",
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[eE][nN][dD]"
+          },
+          "named": false,
           "value": "END"
         }
       ]
@@ -7831,6 +7841,27 @@
       "type": "PATTERN",
       "value": "\\?"
     },
+    "type": {
+      "type": "SYMBOL",
+      "name": "_bqtype"
+    },
+    "_bqtype": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_type_struct"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_type_array"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_base_type"
+        }
+      ]
+    },
     "_type_struct": {
       "type": "SEQ",
       "members": [
@@ -7872,17 +7903,8 @@
                           ]
                         },
                         {
-                          "type": "CHOICE",
-                          "members": [
-                            {
-                              "type": "PATTERN",
-                              "value": "[a-zA-Z0-9]+"
-                            },
-                            {
-                              "type": "SYMBOL",
-                              "name": "_type_struct"
-                            }
-                          ]
+                          "type": "SYMBOL",
+                          "name": "_bqtype"
                         }
                       ]
                     },
@@ -7911,17 +7933,8 @@
                                 ]
                               },
                               {
-                                "type": "CHOICE",
-                                "members": [
-                                  {
-                                    "type": "PATTERN",
-                                    "value": "[a-zA-Z0-9]+"
-                                  },
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_type_struct"
-                                  }
-                                ]
+                                "type": "SYMBOL",
+                                "name": "_bqtype"
                               }
                             ]
                           }
@@ -7966,17 +7979,8 @@
                   "value": "<"
                 },
                 {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "_type_struct"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "_unquoted_identifier"
-                    }
-                  ]
+                  "type": "SYMBOL",
+                  "name": "_bqtype"
                 },
                 {
                   "type": "STRING",
@@ -8282,40 +8286,6 @@
         {
           "type": "SYMBOL",
           "name": "_direction_keywords"
-        }
-      ]
-    },
-    "array_type": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "type"
-        },
-        {
-          "type": "STRING",
-          "value": "["
-        },
-        {
-          "type": "STRING",
-          "value": "]"
-        }
-      ]
-    },
-    "type": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_type_struct"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_type_array"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_base_type"
         }
       ]
     },
@@ -9334,21 +9304,8 @@
           {
             "type": "ALIAS",
             "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "_type_struct"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "_type_array"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "_identifier"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "_bqtype"
             },
             "named": true,
             "value": "type_identifier"

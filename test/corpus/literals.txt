@@ -2,8 +2,8 @@
 LITERALS: basic identifier
 =======================================================
 
-select 
-  _5bc.dataField, 
+select
+  _5bc.dataField,
  `5abc`.dataField,
  `GROUP`.dataField,
  abc5.GROUP
@@ -29,10 +29,10 @@ select
 LITERALS: String literals
 =======================================================
 
-select 
+select
  "",
- "double quote", 
- "double quote", 
+ "double quote",
+ "double quote",
  'single "quote"',
  '''triple quoted ''',
  """triple quoted """
@@ -62,7 +62,7 @@ select
 LITERALS: NUMERIC literals
 =======================================================
 
-select 
+select
   NUMERIC '0',
   NUMERIC '123456',
   NUMERIC '-3.14',
@@ -124,7 +124,7 @@ select
 LITERALS: Floating point
 =======================================================
 
-select 
+select
   123.456e-67,
   .1E4,
   58.,
@@ -206,8 +206,9 @@ select
   STRUCT<INT32, INT64>(1, 2),
   STRUCT(1),
   STRUCT<INT64>(1),
-  STRUCT<x string>(1),
-  STRUCT<x struct<INT64>>(1)
+  STRUCT<x struct<INT64>>(1),
+  STRUCT<x struct<INT64>>(1),
+  STRUCT<x struct<ARRAY<string>>>(null)
 
 --------------------------------------------------------------------------------
 
@@ -248,7 +249,10 @@ select
        (number)))
      (select_expression
       (struct
-       (number))))))))
+       (number)))
+     (select_expression
+      (struct
+       (NULL))))))))
 
 =======================================================
 LITERALS: DATE/TIME/DATETIME/TIMESTAMP/INTERVAL literals
@@ -261,7 +265,7 @@ select
   TIMESTAMP '2014-09-27 12:30:00.45-08'
 
 --------------------------------------------------------------------------------
- 
+
 (source_file
  (query_statement
   (query_expr
@@ -323,12 +327,12 @@ select
        (datetime_part)
        (datetime_part))))))))
 
- 
+
 =======================================================
 LITERALS: Query parameter
 =======================================================
 
-select 
+select
   @user_used,
   @@system_used
 
@@ -337,13 +341,10 @@ select
 (source_file
  (query_statement
   (query_expr
-   (select 
+   (select
     (select_list
-     (select_expression 
+     (select_expression
        (query_parameter))
      (select_expression
        (system_variable))
     )))))
-
-
-
