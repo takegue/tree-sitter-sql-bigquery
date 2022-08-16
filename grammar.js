@@ -810,7 +810,7 @@ module.exports = grammar({
         50,
         seq(
           $.unnest_operator,
-          optional(seq($._keyword_as, $.identifier)),
+          optional($.as_alias),
           optional($.unnest_withoffset)
         )
       ),

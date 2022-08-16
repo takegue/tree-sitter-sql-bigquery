@@ -539,7 +539,8 @@ AS 'Column X must contain the value 7919';
            (number)
            (number)
            (number)))
-         (identifier))))
+          (as_alias
+            (identifier)))))
       (where_clause
        (binary_expression
         (identifier)
