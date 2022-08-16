@@ -762,7 +762,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "string"
+          "name": "_expression"
         },
         {
           "type": "CHOICE",
@@ -6519,17 +6519,8 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "_keyword_as"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "identifier"
-                  }
-                ]
+                "type": "SYMBOL",
+                "name": "as_alias"
               },
               {
                 "type": "BLANK"
