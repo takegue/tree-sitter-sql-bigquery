@@ -545,7 +545,7 @@ module.exports = grammar({
       seq(
         kw("SELECT"),
         optional(choice("ALL", "DISTINCT")),
-        optional(seq($._keyword_as, choice("STRUCT", "VALUE"))),
+        optional(seq($._keyword_as, choice($._keyword_struct, kw("VALUE")))),
         $.select_list,
         optional($.from_clause),
         optional($.where_clause),
@@ -994,7 +994,7 @@ module.exports = grammar({
     _bqtype: ($) => choice($._type_struct, $._type_array, $._base_type),
     _type_struct: ($) =>
       seq(
-        kw("STRUCT"),
+        $._keyword_struct,
         optional(
           seq(
             "<",
