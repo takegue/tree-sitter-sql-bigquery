@@ -786,16 +786,22 @@ module.exports = grammar({
       // FIXME: precedence
       prec(
         1,
-        seq(
-          field("function", $.identifier),
-          "(",
-          optional(
-            field(
-              "argument",
-              commaSep1(choice($._expression, $.asterisk_expression))
-            )
-          ),
-          ")"
+        choice(
+          seq(
+            field("function", $.identifier),
+            "(",
+            optional(
+              field(
+                "argument",
+                commaSep1(choice($._expression, $.asterisk_expression))
+              )
+            ),
+            ")"
+          )
+          // Special case for ARRAY
+          , seq(
+            kw('ARRAY'), $.select_subexpression
+          )
         )
       ),
 
@@ -1011,8 +1017,8 @@ module.exports = grammar({
         kw("ARRAY"),
         optional(seq("<", $._bqtype, ">"))
       ),
-    array: ($) =>
-      seq(optional($._type_array), "[", optional(commaSep1($._literal)), "]"),
+    array: ($) => seq(optional($._type_array), "[", optional(commaSep1($._literal)), "]"),
+
     struct: ($) =>
       seq(
         optional($._type_struct),

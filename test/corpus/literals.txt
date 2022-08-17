@@ -158,7 +158,8 @@ select
   ARRAY<string>['x', 'y', 'xy'],
   ARRAY<int64>[],
   ARRAY<struct<x INT64, y STRING>>[],
-  []
+  [],
+  ARRAY(select 1)
 
 --------------------------------------------------------------------------------
 
@@ -192,7 +193,16 @@ select
      (select_expression
       (array))
      (select_expression
-      (array)))))))
+      (array))
+     (select_expression
+      (function_call
+       (select_subexpression
+        (query_expr
+         (select
+          (select_list
+           (select_expression
+            (number)))))))))))))
+
 
 
 =======================================================
