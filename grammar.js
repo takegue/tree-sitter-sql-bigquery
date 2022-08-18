@@ -46,6 +46,7 @@ module.exports = grammar({
     keyword_temporary: (_) => choice(kw("TEMP"), kw("TEMPORARY")),
     keyword_replace: (_) => kw("OR REPLACE"),
     _keyword_alter: (_) => kw("ALTER"),
+    _keyword_distinct: (_) => kw("DISTINCT"),
     _keyword_format: (_) => kw("FORMAT"),
     _keyword_delete: (_) => kw("DELETE"),
     _keyword_tablesuffix: (_) => kw("_TABLE_SUFFIX"),
@@ -544,7 +545,7 @@ module.exports = grammar({
     select: ($) =>
       seq(
         kw("SELECT"),
-        optional(choice("ALL", "DISTINCT")),
+        optional(choice(kw("ALL"), $._keyword_distinct)),
         optional(seq($._keyword_as, choice($._keyword_struct, kw("VALUE")))),
         $.select_list,
         optional($.from_clause),
@@ -582,8 +583,6 @@ module.exports = grammar({
           seq(kw("ROLLUP"), "(", $.group_by_clause_body, ")")
         )
       ),
-    analytic_expression: $ => seq(
-      $.function_call, kw("OVER"), $.over_clause),
     over_clause: $ => choice(
       $.identifier,
       $.window_specification
@@ -766,21 +765,54 @@ module.exports = grammar({
         )
       ),
     _condition_join_operator: ($) =>
-      seq(
-        $.from_item,
-        optional($.join_type),
-        kw("JOIN"),
-        $.from_item,
-        field(
-          "join_condition",
-          choice(
-            seq(kw("ON"), $._expression),
-            seq(kw("USING"), "(", repeat1(field("keys", $.identifier)), ")")
+      prec.left(
+        "clause_connective",
+        seq(
+          $.from_item,
+          optional($.join_type),
+          kw("JOIN"),
+          $.from_item,
+          optional(
+            field(
+              "join_condition",
+              choice(
+                seq(kw("ON"), $._expression),
+                seq(kw("USING"), "(", repeat1(field("keys", $.identifier)), ")")
+              )
+            )
           )
         )
       ),
 
     select_subexpression: $ => seq("(", $.query_expr, ")"),
+
+    analytic_expression: $ => seq(
+      $.aggregate_function_call, optional(seq(kw("OVER"), $.over_clause))),
+
+    aggregate_function_call: $ =>
+      prec(
+        2,
+        choice(
+          seq(
+            field("function", $.identifier),
+            "(",
+            optional(alias($._keyword_distinct, $.distinct)),
+            field(
+              "argument",
+              commaSep1(choice($._expression, $.asterisk_expression))
+            ),
+            optional(seq(optional(choice(kw('IGNORE', 'RESPECT'))), kw('NULLS'))),
+            $.order_by_clause,
+            $.limit_clause,
+            ")"
+          )
+          // Special case for ARRAY
+          , seq(
+            kw('ARRAY'), $.select_subexpression
+          )
+        )
+      ),
+
 
     function_call: ($) =>
       // FIXME: precedence

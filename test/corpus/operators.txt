@@ -2,7 +2,7 @@
 OPERATORS: Unary Operators
 ================================================================================
 
-select 
+select
     +1,
     -1,
     ~1,
@@ -46,7 +46,7 @@ select
 OPERATORS: Binary Operators
 ================================================================================
 
-select 
+select
     1 - 2 * 3 / 10,
     "string1" || hoge2,
     (2 << 4) >> 2,
@@ -116,3 +116,23 @@ SELECT EXISTS ( SELECT value FROM Words WHERE direction = 'south' ) as result;
             (string)))))))
       (as_alias
        (identifier))))))))
+
+================================================================================
+OPERATORS: Function Calls
+================================================================================
+
+SELECT
+  A(1),
+  COUNT(DISTINCT 1, 2, 3 ignore nulls order by hoge limit 10)
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (select_expression
+      (function_call
+       (identifier)
+       (number))))))))
