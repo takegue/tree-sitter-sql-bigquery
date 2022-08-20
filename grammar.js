@@ -1040,7 +1040,7 @@ module.exports = grammar({
         kw("ARRAY"),
         optional(seq("<", $._bqtype, ">"))
       ),
-    array: ($) => seq(optional($._type_array), "[", optional(commaSep1($._literal)), "]"),
+    array: ($) => seq(optional($._type_array), "[", optional(commaSep1($._expression)), "]"),
 
     struct: ($) =>
       seq(

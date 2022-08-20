@@ -159,7 +159,8 @@ select
   ARRAY<int64>[],
   ARRAY<struct<x INT64, y STRING>>[],
   [],
-  ARRAY(select 1)
+  ARRAY(select 1),
+  [ifnull(1, 0), 2]
 
 --------------------------------------------------------------------------------
 
@@ -201,8 +202,14 @@ select
          (select
           (select_list
            (select_expression
-            (number)))))))))))))
-
+            (number))))))))
+     (select_expression
+      (array
+       (function_call
+        (identifier)
+        (number)
+        (number))
+       (number))))))))
 
 
 =======================================================
