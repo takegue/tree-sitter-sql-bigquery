@@ -263,17 +263,13 @@
     }
   },
   {
-    "type": "analytic_expression",
+    "type": "analytics_clause",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
-        {
-          "type": "function_call",
-          "named": true
-        },
         {
           "type": "over_clause",
           "named": true
@@ -359,10 +355,6 @@
         },
         {
           "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -478,10 +470,6 @@
         },
         {
           "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -939,10 +927,6 @@
           "named": true
         },
         {
-          "type": "analytic_expression",
-          "named": true
-        },
-        {
           "type": "argument_reference",
           "named": true
         },
@@ -1047,10 +1031,6 @@
           },
           {
             "type": "TRUE",
-            "named": true
-          },
-          {
-            "type": "analytic_expression",
             "named": true
           },
           {
@@ -1171,10 +1151,6 @@
         },
         {
           "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -1302,10 +1278,6 @@
           },
           {
             "type": "TRUE",
-            "named": true
-          },
-          {
-            "type": "analytic_expression",
             "named": true
           },
           {
@@ -1513,10 +1485,6 @@
             "named": true
           },
           {
-            "type": "analytic_expression",
-            "named": true
-          },
-          {
             "type": "argument_reference",
             "named": true
           },
@@ -1631,10 +1599,6 @@
           },
           {
             "type": "TRUE",
-            "named": true
-          },
-          {
-            "type": "analytic_expression",
             "named": true
           },
           {
@@ -1756,10 +1720,6 @@
             "named": true
           },
           {
-            "type": "analytic_expression",
-            "named": true
-          },
-          {
             "type": "argument_reference",
             "named": true
           },
@@ -1868,10 +1828,6 @@
             "named": true
           },
           {
-            "type": "analytic_expression",
-            "named": true
-          },
-          {
             "type": "argument_reference",
             "named": true
           },
@@ -1971,10 +1927,6 @@
           },
           {
             "type": "TRUE",
-            "named": true
-          },
-          {
-            "type": "analytic_expression",
             "named": true
           },
           {
@@ -2083,10 +2035,6 @@
           },
           {
             "type": "TRUE",
-            "named": true
-          },
-          {
-            "type": "analytic_expression",
             "named": true
           },
           {
@@ -2201,10 +2149,6 @@
         },
         {
           "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -2448,10 +2392,6 @@
         },
         {
           "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -3004,10 +2944,6 @@
           "named": true
         },
         {
-          "type": "analytic_expression",
-          "named": true
-        },
-        {
           "type": "argument_reference",
           "named": true
         },
@@ -3115,6 +3051,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "distinct",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "drop_function_statement",
@@ -3479,10 +3420,6 @@
           "named": true
         },
         {
-          "type": "analytic_expression",
-          "named": true
-        },
-        {
           "type": "argument_reference",
           "named": true
         },
@@ -3715,10 +3652,6 @@
         },
         {
           "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -4085,10 +4018,6 @@
             "named": true
           },
           {
-            "type": "analytic_expression",
-            "named": true
-          },
-          {
             "type": "argument_reference",
             "named": true
           },
@@ -4172,8 +4101,12 @@
       },
       "function": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
+          {
+            "type": "ARRAY",
+            "named": false
+          },
           {
             "type": "identifier",
             "named": true
@@ -4182,9 +4115,25 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "analytics_clause",
+          "named": true
+        },
+        {
+          "type": "distinct",
+          "named": true
+        },
+        {
+          "type": "limit_clause",
+          "named": true
+        },
+        {
+          "type": "order_by_clause",
+          "named": true
+        },
         {
           "type": "select_subexpression",
           "named": true
@@ -4225,10 +4174,6 @@
         },
         {
           "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -4328,10 +4273,6 @@
         },
         {
           "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -4464,10 +4405,6 @@
         },
         {
           "type": "alter_table_statement",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -4821,10 +4758,6 @@
           {
             "type": "USING",
             "named": false
-          },
-          {
-            "type": "analytic_expression",
-            "named": true
           },
           {
             "type": "argument_reference",
@@ -5187,10 +5120,6 @@
         },
         {
           "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -5564,10 +5493,6 @@
             "named": true
           },
           {
-            "type": "analytic_expression",
-            "named": true
-          },
-          {
             "type": "argument_reference",
             "named": true
           },
@@ -5727,10 +5652,6 @@
           "named": true
         },
         {
-          "type": "analytic_expression",
-          "named": true
-        },
-        {
           "type": "argument_reference",
           "named": true
         },
@@ -5864,10 +5785,6 @@
           "named": true
         },
         {
-          "type": "analytic_expression",
-          "named": true
-        },
-        {
           "type": "argument_reference",
           "named": true
         },
@@ -5964,10 +5881,6 @@
         },
         {
           "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -6158,10 +6071,6 @@
           "named": true
         },
         {
-          "type": "analytic_expression",
-          "named": true
-        },
-        {
           "type": "argument_reference",
           "named": true
         },
@@ -6313,10 +6222,6 @@
         },
         {
           "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -6608,10 +6513,6 @@
           "named": true
         },
         {
-          "type": "analytic_expression",
-          "named": true
-        },
-        {
           "type": "argument_reference",
           "named": true
         },
@@ -6804,10 +6705,6 @@
           "named": true
         },
         {
-          "type": "analytic_expression",
-          "named": true
-        },
-        {
           "type": "argument_reference",
           "named": true
         },
@@ -6927,10 +6824,6 @@
         },
         {
           "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -7102,10 +6995,6 @@
         },
         {
           "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -7411,10 +7300,6 @@
           "named": true
         },
         {
-          "type": "analytic_expression",
-          "named": true
-        },
-        {
           "type": "argument_reference",
           "named": true
         },
@@ -7515,10 +7400,6 @@
         },
         {
           "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -7747,10 +7628,6 @@
             "named": true
           },
           {
-            "type": "analytic_expression",
-            "named": true
-          },
-          {
             "type": "argument_reference",
             "named": true
           },
@@ -7843,10 +7720,6 @@
         },
         {
           "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -7969,10 +7842,6 @@
         },
         {
           "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -8138,10 +8007,6 @@
           "named": true
         },
         {
-          "type": "analytic_expression",
-          "named": true
-        },
-        {
           "type": "argument_reference",
           "named": true
         },
@@ -8238,10 +8103,6 @@
         },
         {
           "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -8397,10 +8258,6 @@
           "named": true
         },
         {
-          "type": "analytic_expression",
-          "named": true
-        },
-        {
           "type": "argument_reference",
           "named": true
         },
@@ -8501,10 +8358,6 @@
         },
         {
           "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -8641,10 +8494,6 @@
           "named": true
         },
         {
-          "type": "analytic_expression",
-          "named": true
-        },
-        {
           "type": "argument_reference",
           "named": true
         },
@@ -8769,10 +8618,6 @@
         },
         {
           "type": "alter_table_statement",
-          "named": true
-        },
-        {
-          "type": "analytic_expression",
           "named": true
         },
         {
@@ -9512,6 +9357,10 @@
     "named": false
   },
   {
+    "type": "IGNORE",
+    "named": false
+  },
+  {
     "type": "IN",
     "named": false
   },
@@ -9597,6 +9446,10 @@
   },
   {
     "type": "NULL",
+    "named": false
+  },
+  {
+    "type": "NULLS",
     "named": false
   },
   {
