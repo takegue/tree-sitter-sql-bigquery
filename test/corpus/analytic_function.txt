@@ -1,5 +1,5 @@
 ================================================================================
-ANALYTIC FUNCTIOIN: 
+ANALYTIC FUNCTIOIN:
 ================================================================================
 
 SELECT book, LAST_VALUE(item) OVER (ORDER BY year) FROM Library;
@@ -10,7 +10,7 @@ SELECT book, LAST_VALUE(item)
 FROM Library
 
 --------------------------------------------------------------------------------
- 
+
 (source_file
  (query_statement
   (query_expr
@@ -19,15 +19,15 @@ FROM Library
      (select_expression
       (identifier))
      (select_expression
-      (analytic_expression
-       (function_call
-        (identifier)
-        (identifier))
-       (over_clause
-        (window_specification
-         (order_by_clause
-          (order_by_clause_body
-           (identifier))))))))
+      (function_call
+       (identifier)
+       (identifier)
+       (analytics_clause
+        (over_clause
+         (window_specification
+          (order_by_clause
+           (order_by_clause_body
+            (identifier)))))))))
     (from_clause
      (from_item
       (identifier))))))
@@ -38,21 +38,21 @@ FROM Library
      (select_expression
       (identifier))
      (select_expression
-      (analytic_expression
-       (function_call
-        (identifier)
-        (identifier))
-       (over_clause
-        (window_specification
-         (order_by_clause
-          (order_by_clause_body
-           (identifier)))
-         (window_frame_clause
-          (rows_range)
-          (window_frame_between
-           (between_from)
-           (between_to
-            (keyword_current_row)))))))))
+      (function_call
+       (identifier)
+       (identifier)
+       (analytics_clause
+        (over_clause
+         (window_specification
+          (order_by_clause
+           (order_by_clause_body
+            (identifier)))
+          (window_frame_clause
+           (rows_range)
+           (window_frame_between
+            (between_from)
+            (between_to
+             (keyword_current_row))))))))))
     (from_clause
      (from_item
       (identifier)))))))
@@ -73,7 +73,7 @@ SELECT item, purchases, category, LAST_VALUE(item)
       ORDER BY purchases)
 
 --------------------------------------------------------------------------------
- 
+
 (source_file
  (query_statement
   (query_expr
@@ -86,21 +86,21 @@ SELECT item, purchases, category, LAST_VALUE(item)
      (select_expression
       (identifier))
      (select_expression
-      (analytic_expression
-       (function_call
+      (function_call
         (identifier)
-        (identifier))
-       (over_clause
-        (window_specification
-         (identifier)
-         (window_frame_clause
-          (rows_range)
-          (window_frame_between
-           (between_from
-            (number))
-           (between_to
-            (window_numeric_following
-             (number))))))))
+        (identifier)
+        (analytics_clause
+          (over_clause
+            (window_specification
+              (identifier)
+              (window_frame_clause
+                (rows_range)
+                (window_frame_between
+                  (between_from
+                    (number))
+                  (between_to
+                    (window_numeric_following
+                      (number)))))))))
       (as_alias
        (identifier))))
   (from_clause

@@ -135,4 +135,15 @@ SELECT
      (select_expression
       (function_call
        (identifier)
-       (number))))))))
+       (number)))
+     (select_expression
+      (function_call
+       (identifier)
+       (distinct)
+       (number)
+       (number)
+       (number)
+       (order_by_clause
+        (order_by_clause_body
+         (identifier)))
+       (limit_clause))))))))

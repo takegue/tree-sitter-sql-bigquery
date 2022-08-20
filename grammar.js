@@ -786,39 +786,30 @@ module.exports = grammar({
 
     select_subexpression: $ => seq("(", $.query_expr, ")"),
 
-    analytic_expression: $ => seq(
-      $.aggregate_function_call, optional(seq(kw("OVER"), $.over_clause))),
-
-    aggregate_function_call: $ =>
-      prec(
-        2,
-        choice(
-          seq(
-            field("function", $.identifier),
-            "(",
-            optional(alias($._keyword_distinct, $.distinct)),
-            field(
-              "argument",
-              commaSep1(choice($._expression, $.asterisk_expression))
-            ),
-            optional(seq(optional(choice(kw('IGNORE', 'RESPECT'))), kw('NULLS'))),
-            $.order_by_clause,
-            $.limit_clause,
-            ")"
-          )
-          // Special case for ARRAY
-          , seq(
-            kw('ARRAY'), $.select_subexpression
-          )
-        )
-      ),
-
+    analytics_clause: $ => seq(seq(kw("OVER"), $.over_clause)),
 
     function_call: ($) =>
       // FIXME: precedence
       prec(
-        1,
+        2,
         choice(
+          prec(
+            2,
+            seq(
+              field("function", $.identifier),
+              "(",
+              optional(alias($._keyword_distinct, $.distinct)),
+              field(
+                "argument",
+                commaSep1(choice($._expression, $.asterisk_expression))
+              ),
+              optional(seq(optional(choice(kw('IGNORE', 'RESPECT'))), kw('NULLS'))),
+              optional($.order_by_clause),
+              optional($.limit_clause),
+              ")",
+              optional($.analytics_clause)
+            )),
+
           seq(
             field("function", $.identifier),
             "(",
@@ -829,10 +820,10 @@ module.exports = grammar({
               )
             ),
             ")"
-          )
+          ),
           // Special case for ARRAY
-          , seq(
-            kw('ARRAY'), $.select_subexpression
+          seq(
+            field("function", kw('ARRAY')), $.select_subexpression
           )
         )
       ),
@@ -1096,7 +1087,6 @@ module.exports = grammar({
         $.between_operator,
         $.casewhen_expression,
         $._literal,
-        $.analytic_expression,
         $.function_call,
         $.identifier,
         $.unnest_clause,
