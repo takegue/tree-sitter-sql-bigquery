@@ -123,7 +123,8 @@ OPERATORS: Function Calls
 
 SELECT
   A(1),
-  COUNT(DISTINCT 1, 2, 3 ignore nulls order by hoge limit 10)
+  COUNT(DISTINCT 1, 2, 3 ignore nulls order by hoge limit 10),
+  EXTRACT(YEAR FROM NOW())
 
 --------------------------------------------------------------------------------
 
@@ -146,4 +147,10 @@ SELECT
        (order_by_clause
         (order_by_clause_body
          (identifier)))
-       (limit_clause))))))))
+       (limit_clause)))
+     (select_expression
+      (function_call
+       (identifier)
+       (datetime_part)
+       (function_call
+        (identifier)))))))))

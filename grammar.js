@@ -46,6 +46,7 @@ module.exports = grammar({
     keyword_temporary: (_) => choice(kw("TEMP"), kw("TEMPORARY")),
     keyword_replace: (_) => kw("OR REPLACE"),
     _keyword_alter: (_) => kw("ALTER"),
+    _keyword_from: (_) => kw("FROM"),
     _keyword_distinct: (_) => kw("DISTINCT"),
     _keyword_format: (_) => kw("FORMAT"),
     _keyword_delete: (_) => kw("DELETE"),
@@ -664,7 +665,7 @@ module.exports = grammar({
       seq(field("alias_name", $.identifier), $._keyword_as, "(", $.query_expr, ")"),
     from_clause: ($) =>
       seq(
-        kw("FROM"),
+        $._keyword_from,
         seq(
           $.from_item,
           optional(choice($.pivot_operator, $.unpivot_operator)),
@@ -826,6 +827,15 @@ module.exports = grammar({
             ),
             ")"
           ),
+          // EXTRACT
+          seq(
+            field("function", alias(kw('EXTRACT'), $.identifier)),
+            "(",
+            alias($._unquoted_identifier, $.datetime_part),
+            $._keyword_from,
+            $._expression,
+            ")"
+          ),
           // Special case for ARRAY
           seq(
             field("function", kw('ARRAY')), $.select_subexpression
@@ -874,7 +884,7 @@ module.exports = grammar({
     delete_statement: ($) =>
       seq(
         $._keyword_delete,
-        optional(kw("FROM")),
+        optional($._keyword_from),
         field("table_name", $.identifier),
         optional($.as_alias),
         $.where_clause
