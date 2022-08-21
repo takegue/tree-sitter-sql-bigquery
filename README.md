@@ -10,10 +10,9 @@ You could try out the demo on [Github Pages](https://takegue.github.io/tree-sitt
 - [x] Basic Literals/Expressions
 - [x] Query Statement
 - [x] DML Statements
-- [x] DDL Statements 
+- [x] DDL Statements
 - [x] Procedural Language
 - [ ] DCL Statements/BigQuery ML
-- [ ] Pre-GA features
 
 ### References
 
