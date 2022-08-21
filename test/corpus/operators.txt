@@ -154,3 +154,27 @@ SELECT
        (datetime_part)
        (function_call
         (identifier)))))))))
+
+================================================================================
+OPERATORS: JSON Functions
+================================================================================
+
+SELECT
+  INT64(json_number),
+  FLOAT64(json_number)
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (query_statement
+  (query_expr
+   (select
+    (select_list
+     (select_expression
+      (function_call
+       (identifier)
+       (identifier)))
+     (select_expression
+      (function_call
+       (identifier)
+       (identifier))))))))
