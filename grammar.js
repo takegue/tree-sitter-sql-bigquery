@@ -71,6 +71,7 @@ module.exports = grammar({
     _keyword_cast: (_) => choice(kw("CAST"), kw("SAFE_CAST")),
     _keyword_window: (_) => kw("WINDOW"),
     _keyword_partition_by: (_) => kw("PARTITION BY"),
+    _keyword_date: (_) => kw("DATE"),
 
     /**************************************************************************
      *                              Statements
@@ -378,7 +379,7 @@ module.exports = grammar({
     partition_expression: ($) =>
       choice(
         kw("_PARTITIONDATE"),
-        seq(kw("DATE"), "(", choice(kw("_PARTITIONTIME"), $.identifier), ")"),
+        seq($._keyword_date, "(", choice(kw("_PARTITIONTIME"), $.identifier), ")"),
         $.identifier,
         seq(
           choice(kw("DATETIME_TRUNC"), kw("TIMESTAMP_TRUNC"), kw("DATE_TRUNC")),
@@ -744,7 +745,7 @@ module.exports = grammar({
         )
       ),
     join_operation: ($) =>
-      choice($._cross_join_operation, $._condition_join_operator),
+      choice($._cross_join_operation, $._conditional_join_operator),
     join_type: ($) =>
       seq(
         choice(
@@ -764,7 +765,7 @@ module.exports = grammar({
           $.from_item
         )
       ),
-    _condition_join_operator: ($) =>
+    _conditional_join_operator: ($) =>
       prec.left(
         "clause_connective",
         seq(
@@ -791,27 +792,31 @@ module.exports = grammar({
     function_call: ($) =>
       // FIXME: precedence
       prec(
-        2,
+        1,
         choice(
-          prec(
-            2,
-            seq(
-              field("function", $.identifier),
-              "(",
-              optional(alias($._keyword_distinct, $.distinct)),
-              field(
-                "argument",
-                commaSep1(choice($._expression, $.asterisk_expression))
-              ),
-              optional(seq(optional(choice(kw('IGNORE', 'RESPECT'))), kw('NULLS'))),
-              optional($.order_by_clause),
-              optional($.limit_clause),
-              ")",
-              optional($.analytics_clause)
-            )),
-
           seq(
             field("function", $.identifier),
+            "(",
+            optional(alias($._keyword_distinct, $.distinct)),
+            field(
+              "argument",
+              commaSep1(choice($._expression, $.asterisk_expression))
+            ),
+            optional(seq(optional(choice(kw('IGNORE', 'RESPECT'))), kw('NULLS'))),
+            optional($.order_by_clause),
+            optional($.limit_clause),
+            ")",
+            optional($.analytics_clause)
+          ),
+
+          seq(
+            field(
+              "function",
+              choice(
+                $.identifier,
+                alias(choice($._keyword_date, kw("TIME"), kw("DATETIME"), kw("TIMESTAMP")), $.identifier)
+              ),
+            ),
             "(",
             optional(
               field(
@@ -824,7 +829,7 @@ module.exports = grammar({
           // Special case for ARRAY
           seq(
             field("function", kw('ARRAY')), $.select_subexpression
-          )
+          ),
         )
       ),
 
@@ -1001,12 +1006,12 @@ module.exports = grammar({
       ),
     _number: ($) => choice($._integer, $._float, $.numeric),
     interval: ($) => seq(
-      kw("INTERVAL"), choice($.string, $.number), alias($._unquoted_identifier, $.datetime_part),
+      kw("INTERVAL"), $._expression, alias($._unquoted_identifier, $.datetime_part),
       optional(seq(kw('TO'), alias($._unquoted_identifier, $.datetime_part)))
     ),
     time: ($) =>
       seq(
-        choice(kw("DATE"), kw("TIME"), kw("DATETIME"), kw("TIMESTAMP")),
+        choice($._keyword_date, kw("TIME"), kw("DATETIME"), kw("TIMESTAMP")),
         $.string
       ),
     number: ($) => $._number,
@@ -1053,8 +1058,7 @@ module.exports = grammar({
     _quoted_identifier: quoted_identifier,
     _identifier: ($) => choice($._quoted_identifier, $._unquoted_identifier),
     _dotted_identifier: ($) => seq($._identifier, token.immediate(".")),
-    identifier: ($) =>
-      prec.right(seq(repeat($._dotted_identifier), $._identifier)),
+    identifier: ($) => prec.right(seq(repeat($._dotted_identifier), $._identifier)),
     _base_type: ($) => prec.left(seq($._unquoted_identifier, optional(seq("(", $.number, ")")))),
     string: ($) =>
       alias(
@@ -1086,8 +1090,8 @@ module.exports = grammar({
         $.unary_expression,
         $.between_operator,
         $.casewhen_expression,
-        $._literal,
         $.function_call,
+        $._literal,
         $.identifier,
         $.unnest_clause,
         $._parenthesized_expression,

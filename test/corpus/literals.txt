@@ -279,7 +279,8 @@ select
   DATE '2014-09-27',
   TIME '12:30:00.45',
   DATETIME '2014-09-27 12:30:00.45',
-  TIMESTAMP '2014-09-27 12:30:00.45-08'
+  TIMESTAMP '2014-09-27 12:30:00.45-08',
+  DATE('2014-09-27')
 
 --------------------------------------------------------------------------------
 
@@ -299,7 +300,12 @@ select
        (string)))
      (select_expression
       (time
-       (string))))))))
+       (string)))
+      (select_expression
+        (function_call
+          (identifier)
+          (string)))
+     )))))
 
 =======================================================
 LITERALS: INTERVAL literals
@@ -307,13 +313,13 @@ LITERALS: INTERVAL literals
 
 select
   INTERVAL '5' DAY,
+  INTERVAL param.num DAY,
   INTERVAL '0.001' SECOND,
   INTERVAL '10:20:30' HOUR TO SECOND,
   INTERVAL '1-2' YEAR TO MONTH,
   INTERVAL '1 15' MONTH TO DAY
 
 --------------------------------------------------------------------------------
-
 
 (source_file
  (query_statement
@@ -323,6 +329,10 @@ select
      (select_expression
       (interval
        (string)
+       (datetime_part)))
+     (select_expression
+      (interval
+       (identifier)
        (datetime_part)))
      (select_expression
       (interval
@@ -343,7 +353,6 @@ select
        (string)
        (datetime_part)
        (datetime_part))))))))
-
 
 =======================================================
 LITERALS: Query parameter

@@ -59,7 +59,7 @@ FROM dataset.Inventory
      (query_expr
       (select
        (select_list
-        (select_expression 
+        (select_expression
           (identifier))
         (select_expression (identifier))
         (select_expression (FALSE)))
@@ -109,7 +109,7 @@ WHERE i.product NOT IN (SELECT product from dataset.NewArrivals)
      (query_expr
       (select
        (select_list
-        (select_expression 
+        (select_expression
          (identifier)))
        (from_clause
         (from_item
@@ -240,8 +240,9 @@ WHEN NOT MATCHED BY SOURCE THEN
       (TRUE)
       (array
        (struct
-        (ERROR)
-        (string)
+        (function_call
+         (identifier)
+         (string))
         (string)))))))
   (merge_not_matched_by_target_clause
    (merge_insert_clause
