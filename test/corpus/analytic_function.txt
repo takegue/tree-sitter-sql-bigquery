@@ -69,7 +69,7 @@ SELECT item, purchases, category, LAST_VALUE(item)
       ) AS most_popular
   FROM Produce
   WINDOW item_window AS (
-      PARTITION BY category
+      PARTITION BY category1, category2
       ORDER BY purchases)
 
 --------------------------------------------------------------------------------
@@ -87,20 +87,20 @@ SELECT item, purchases, category, LAST_VALUE(item)
       (identifier))
      (select_expression
       (function_call
-        (identifier)
-        (identifier)
-        (analytics_clause
-          (over_clause
-            (window_specification
-              (identifier)
-              (window_frame_clause
-                (rows_range)
-                (window_frame_between
-                  (between_from
-                    (number))
-                  (between_to
-                    (window_numeric_following
-                      (number)))))))))
+       (identifier)
+       (identifier)
+       (analytics_clause
+        (over_clause
+         (window_specification
+          (identifier)
+          (window_frame_clause
+           (rows_range)
+           (window_frame_between
+            (between_from
+             (number))
+            (between_to
+             (window_numeric_following
+              (number)))))))))
       (as_alias
        (identifier))))
   (from_clause
@@ -110,7 +110,9 @@ SELECT item, purchases, category, LAST_VALUE(item)
    (named_window_expression
     (identifier)
     (window_specification
-     (partition_by
+     (window_partition_clause
+      (partition_expression
+       (identifier))
       (partition_expression
        (identifier)))
      (order_by_clause

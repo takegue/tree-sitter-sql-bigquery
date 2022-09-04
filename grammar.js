@@ -592,10 +592,14 @@ module.exports = grammar({
     window_specification: ($) => seq(
       "(",
       optional($.identifier),
-      optional(alias($.table_partition_clause, $.partition_by)),
+      optional($.window_partition_clause),
       optional($.order_by_clause),
       optional($.window_frame_clause),
       ")",
+    ),
+    window_partition_clause: ($) => seq(
+      $._keyword_partition_by,
+      commaSep1(alias($._expression, $.partition_expression))
     ),
     window_frame_clause: $ => seq(
       $.rows_range,
