@@ -417,23 +417,24 @@ module.exports = grammar({
           choice(
             // SQL UDF
             seq(
-              optional($.create_function_retun_clause),
+              optional($.create_function_return_clause),
               $._keyword_as,
-              "(",
-              choice($._expression),
-              ")"
+              alias($._function_body_sql, $.create_function_body)
             ),
             // Javascript UDF
             seq(
-              optional($.create_function_retun_clause),
+              optional($.create_function_return_clause),
               $._function_language,
               $._keyword_as,
-              $.string
+              alias($._function_body_js, $.create_function_body)
             )
           )
         )
       ),
-    create_function_retun_clause: ($) => seq($._keyword_returns, $.type),
+
+    _function_body_sql: $ => seq("(", choice($._expression), ")"),
+    _function_body_js: $ => $.string,
+    create_function_return_clause: ($) => seq($._keyword_returns, $.type),
     drop_function_statement: ($) =>
       seq(
         kw("DROP"),
@@ -457,8 +458,9 @@ module.exports = grammar({
           optional($.option_list),
           optional($.create_table_function_returns),
           $._keyword_as
-          , $.query_statement,
+          , $.create_table_function_body,
         )),
+    create_table_function_body: ($) => $.query_statement,
 
     drop_table_function_statement: ($) =>
       seq(
@@ -475,15 +477,6 @@ module.exports = grammar({
       seq(optional($.identifier), choice($.type)),
     create_function_parameters: ($) =>
       seq("(", commaSep1($.create_function_parameter), ")"),
-    function_body: ($) =>
-      seq(
-        $._keyword_as,
-        choice(
-          seq("$$", $.query_statement, optional(";"), "$$"),
-          seq("'", $.query_statement, optional(";"), "'")
-        )
-      ),
-
     create_procedure_statement: ($) => (
       seq(
         kw("CREATE"),

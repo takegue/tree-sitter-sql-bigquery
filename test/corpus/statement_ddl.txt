@@ -239,21 +239,22 @@ AS (x * y);
 
 --------------------------------------------------------------------------------
 
-  (source_file
-    (create_function_statement
-      (identifier)
-      (create_function_parameters
-        (create_function_parameter
-          (identifier)
-          (type))
-        (create_function_parameter
-          (identifier)
-          (type)))
-      (create_function_retun_clause
-        (type))
-      (binary_expression
-        (identifier)
-        (identifier))))
+(source_file
+ (create_function_statement
+  (identifier)
+  (create_function_parameters
+   (create_function_parameter
+    (identifier)
+    (type))
+   (create_function_parameter
+    (identifier)
+    (type)))
+  (create_function_return_clause
+   (type))
+  (create_function_body
+   (binary_expression
+    (identifier)
+    (identifier)))))
 
 ================================================================================
 DDL: CREATE FUNCTION with Javascript UDF
@@ -269,20 +270,21 @@ AS r"""
 --------------------------------------------------------------------------------
 
 (source_file
-  (create_function_statement
-    (keyword_temporary)
+ (create_function_statement
+  (keyword_temporary)
+  (identifier)
+  (create_function_parameters
+   (create_function_parameter
     (identifier)
-    (create_function_parameters
-      (create_function_parameter
-        (identifier)
-        (type))
-      (create_function_parameter
-        (identifier)
-        (type)))
-    (create_function_retun_clause
-      (type))
-    (language)
-    (string)))
+    (type))
+   (create_function_parameter
+    (identifier)
+    (type)))
+  (create_function_return_clause
+   (type))
+  (language)
+  (create_function_body
+   (string))))
 
 ================================================================================
 DDL: TABLE FUNCTION
@@ -316,31 +318,33 @@ AS
    (column_definition
     (identifier)
     (column_type)))
-  (query_statement
-   (query_expr
-    (select
-     (select_list
-      (select_expression
-       (identifier))
-      (select_expression
-       (identifier))
-      (select_expression
-       (function_call
-        (identifier)
+  (create_table_function_body
+   (query_statement
+    (query_expr
+     (select
+      (select_list
+       (select_expression
         (identifier))
-       (as_alias
-        (identifier))))
-     (from_clause
-      (from_item
-       (identifier)))
-     (where_clause
-      (binary_expression
-       (identifier)
-       (identifier)))
-     (group_by_clause
-      (group_by_clause_body
-       (identifier)
-       (identifier))))))))
+       (select_expression
+        (identifier))
+       (select_expression
+        (function_call
+         (identifier)
+         (identifier))
+        (as_alias
+         (identifier))))
+      (from_clause
+       (from_item
+        (identifier)))
+      (where_clause
+       (binary_expression
+        (identifier)
+        (identifier)))
+      (group_by_clause
+       (group_by_clause_body
+        (identifier)
+        (identifier)))))))))
+
 
 ================================================================================
 DDL: CREATE PROCEDURE
