@@ -185,51 +185,59 @@ LEFT OUTER JOIN t7 ON t.a = t7.a;
                        (identifier)))
                      (from_item
                       (identifier))
-                     (binary_expression
-                      (identifier)
-                      (identifier))))
+                     (join_condition
+                      (binary_expression
+                       (identifier)
+                       (identifier)))))
                    (join_type)
                    (from_item
                     (identifier))
-                   (binary_expression
-                    (identifier)
-                    (identifier))))
-                 (join_type)
+                   (join_condition
+                    (binary_expression
+                     (identifier)
+                     (identifier)))))
+                  (join_type)
                     (from_item
                     (identifier))
+                    (join_condition
                     (binary_expression
-                    (identifier)
-                    (identifier))))
-                (join_type)
+                      (identifier)
+                      (identifier)))))
+                  (join_type)
                     (from_item
                     (identifier))
+                    (join_condition
                     (binary_expression
-                    (identifier)
-                    (identifier))))
-                (join_type)
+                      (identifier)
+                      (identifier)))))
+                  (join_type)
                     (from_item
                     (identifier))
+                    (join_condition
                     (binary_expression
-                    (identifier)
-                    (identifier))))
-                (join_type)
+                      (identifier)
+                      (identifier)))))
+                  (join_type)
                     (from_item
                     (identifier))
+                    (join_condition
                     (binary_expression
-                    (identifier)
-                    (identifier))))
-                (join_type)
+                      (identifier)
+                      (identifier)))))
+                  (join_type)
                     (from_item
                     (identifier))
+                    (join_condition
                     (binary_expression
-                    (identifier)
-                    (identifier))))
-                (join_type)
+                      (identifier)
+                      (identifier)))))
+                  (join_type)
                     (from_item
                     (identifier))
+                    (join_condition
                     (binary_expression
-                    (identifier)
-                    (identifier)))))))))
+                      (identifier)
+                      (identifier))))))))))
 
 
 ================================================================================
@@ -237,13 +245,12 @@ SELECT statement with nested joins
 ================================================================================
 
 SELECT a, t.a, t.b
-FROM ( (A JOIN B USING (x)) JOIN C USING (x) );
+FROM ( (A JOIN B USING (x)) JOIN C USING (x,y) );
 
 SELECT *
 FROM A, B JOIN (C JOIN D ON C.x = D.y) ON B.z = C.x
 
 --------------------------------------------------------------------------------
-
 
 (source_file
  (query_statement
@@ -265,37 +272,43 @@ FROM A, B JOIN (C JOIN D ON C.x = D.y) ON B.z = C.x
           (identifier))
          (from_item
           (identifier))
-         (identifier)))
+         (join_condition
+          (identifier))))
        (from_item
         (identifier))
-       (identifier)))))))
-    (query_statement
-     (query_expr
-      (select
-       (select_list
-        (select_all
-         (asterisk_expression)))
-       (from_clause
+       (join_condition
+        (identifier)
+        (identifier))))))))
+  (query_statement
+   (query_expr
+    (select
+     (select_list
+      (select_all
+       (asterisk_expression)))
+     (from_clause
+      (from_item
+       (join_operation
         (from_item
          (join_operation
           (from_item
-           (join_operation
-            (from_item
-             (identifier))
-            (from_item
-             (identifier))))
+           (identifier))
           (from_item
-           (join_operation
-            (from_item
-             (identifier))
-            (from_item
-             (identifier))
-            (binary_expression
-             (identifier)
-             (identifier))))
-          (binary_expression
-           (identifier)
-           (identifier)))))))))
+           (identifier))))
+        (from_item
+         (join_operation
+          (from_item
+           (identifier))
+          (from_item
+           (identifier))
+          (join_condition
+           (binary_expression
+            (identifier)
+            (identifier)))))
+        (join_condition
+         (binary_expression
+          (identifier)
+          (identifier))))))))))
+
 
 ================================================================================
 SELECT with cross join
@@ -305,6 +318,7 @@ SELECT a as b, c d, e
 FROM table1 AS t, table2 t2, table3
 
 --------------------------------------------------------------------------------
+
 
 (source_file
  (query_statement

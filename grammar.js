@@ -778,17 +778,13 @@ module.exports = grammar({
           optional($.join_type),
           kw("JOIN"),
           $.from_item,
-          optional(
-            field(
-              "join_condition",
-              choice(
-                seq(kw("ON"), $._expression),
-                seq(kw("USING"), "(", repeat1(field("keys", $.identifier)), ")")
-              )
-            )
-          )
+          optional($.join_condition)
         )
       ),
+    join_condition: $ => choice(
+      seq(kw("ON"), $._expression),
+      seq(kw("USING"), "(", commaSep1(field("keys", $.identifier)), ")")
+    ),
 
     select_subexpression: $ => seq("(", $.query_expr, ")"),
 
