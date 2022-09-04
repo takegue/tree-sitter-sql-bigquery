@@ -2,8 +2,8 @@
 
 # tree-sitter for BigQuery's SQL
 
-This project supports StandardSQL in BigQuery.
-You could try out the demo on [Github Pages](https://takegue.github.io/tree-sitter-sql-bigquery/)
+This project supports StandardSQL in BigQuery. You could try out the demo on
+[Github Pages](https://takegue.github.io/tree-sitter-sql-bigquery/)
 
 # Supported BigQuery SQL feature
 
@@ -18,9 +18,9 @@ You could try out the demo on [Github Pages](https://takegue.github.io/tree-sitt
 
 - ZetaSQL: https://github.com/google/zetasql/blob/master/docs/README.md
 - Other SQL Projects :
-    * https://github.com/m-novikov/tree-sitter-sql
-    * https://github.com/DerekStride/tree-sitter-sql
-    * https://github.com/dhcmrlchtdj/tree-sitter-sqlite
+  - https://github.com/m-novikov/tree-sitter-sql
+  - https://github.com/DerekStride/tree-sitter-sql
+  - https://github.com/dhcmrlchtdj/tree-sitter-sqlite
 
 ## Development
 

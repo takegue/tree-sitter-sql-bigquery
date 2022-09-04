@@ -8,6 +8,7 @@
     "gen": "tree-sitter generate",
     "hl": "tree-sitter highlight",
     "parse": "tree-sitter parse",
+    "fix": "deno fmt",
     "build-wasm": "tree-sitter build-wasm",
     "playground": "tree-sitter generate && rm -f tree-sitter-sql-bigquery.wasm && npm run build-wasm && tree-sitter playground"
   },
