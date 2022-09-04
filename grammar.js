@@ -442,7 +442,6 @@ module.exports = grammar({
         field("routine_name", $.identifier),
       ),
 
-
     create_table_function_statement: ($) =>
       prec.left(
         seq(
@@ -457,7 +456,8 @@ module.exports = grammar({
           ),
           optional($.option_list),
           optional($.create_table_function_returns),
-          seq($._keyword_as, $.query_statement),
+          $._keyword_as
+          , $.query_statement,
         )),
 
     drop_table_function_statement: ($) =>
@@ -469,8 +469,6 @@ module.exports = grammar({
       ),
 
     create_table_function_returns: $ => seq($._keyword_returns, kw("TABLE"), "<", commaSep1($.column_definition), ">"),
-    create_function_parameters: ($) =>
-      seq("(", commaSep1($.column_definition), ")"),
     _function_language: ($) =>
       seq(kw("LANGUAGE"), alias($._unquoted_identifier, $.language)),
     create_function_parameter: ($) =>
@@ -493,13 +491,13 @@ module.exports = grammar({
         kw("PROCEDURE"),
         optional($.keyword_if_not_exists),
         field("routine_name", $.identifier),
-        "(", optional(commaSep1($.procedure_argument)), ")",
+        $.procedure_parameters,
         optional($.option_list),
-        kw("BEGIN"),
-        repeat($._statement),
-        kw("END")
+        $.procedure_body
       )
     ),
+    procedure_parameters: $ => seq("(", optional(commaSep1($.procedure_argument)), ")"),
+    procedure_body: $ => seq(kw("BEGIN"), repeat($._statement), kw("END")),
     procedure_argument: $ => seq(
       optional(field("argument_mode", choice(kw("IN"), kw("OUT"), kw("INOUT")))),
       $.identifier, $.type

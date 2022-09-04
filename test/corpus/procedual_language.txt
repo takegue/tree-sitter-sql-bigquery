@@ -211,19 +211,23 @@ END;
  (create_procedure_statement
   (keyword_replace)
   (identifier)
-  (query_statement
-   (query_expr
-    (select
-     (select_list
-      (select_expression
-       (binary_expression
-        (number)
-        (number))))))))
+  (procedure_parameters)
+  (procedure_body
+   (query_statement
+    (query_expr
+     (select
+      (select_list
+       (select_expression
+        (binary_expression
+         (number)
+         (number)))))))))
  (create_procedure_statement
   (keyword_replace)
   (identifier)
-  (call_statement
-   (identifier)))
+  (procedure_parameters)
+  (procedure_body
+   (call_statement
+    (identifier))))
  (begin_exception_end_statement
   (call_statement
    (identifier))
@@ -246,7 +250,7 @@ PROCEDURAL LANGUAGE: CALL statement
 ================================================================================
 
 DECLARE retCode INT64;
--- Procedure signature: (IN account_id STRING, OUT retCode INT64)
+-- Procedure parameters: (IN account_id STRING, OUT retCode INT64)
 CALL mySchema.UpdateSomeTables('someAccountId', retCode);
 SELECT retCode;
 
