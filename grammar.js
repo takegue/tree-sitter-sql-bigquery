@@ -27,6 +27,7 @@ module.exports = grammar({
       'binary_and',
       'binary_or',
       'unary_not',
+      'statement',
       'clause_connective',
     ],
   ],
@@ -72,6 +73,8 @@ module.exports = grammar({
     _keyword_window: (_) => kw('WINDOW'),
     _keyword_partition_by: (_) => kw('PARTITION BY'),
     _keyword_date: (_) => kw('DATE'),
+    _keyword_for: (_) => kw('FOR'),
+    _keyword_system_as_of: (_) => kw('FOR SYSTEM_TIME AS OF'),
 
     /** ************************************************************************
      *                              Statements
@@ -84,6 +87,7 @@ module.exports = grammar({
           $.alter_schema_statement,
           $.drop_schema_statement,
           $.create_table_statement,
+          $.create_snapshot_table_statement,
           $.alter_table_statement,
           $.alter_table_column_statement,
           $.alter_table_rename_statement,
@@ -260,7 +264,7 @@ module.exports = grammar({
 
     for_in_statement: ($) =>
       seq(
-        kw('FOR'),
+        $._keyword_for,
         $.identifier,
         $._keyword_in,
         '(',
@@ -331,6 +335,21 @@ module.exports = grammar({
           optional(seq($._keyword_as, $.query_statement)),
         ),
       ),
+    create_snapshot_table_statement: ($) => prec.right(seq(
+          kw('CREATE'),
+          kw('SNAPSHOT TABLE'),
+          optional($.keyword_if_not_exists),
+          field('table_name', $.identifier),
+          kw('CLONE'),
+          field('source_table_name', $.identifier),
+          optional($.system_time_clause),
+          optional($.option_list),
+        )),
+
+    system_time_clause: ($) => seq(
+      $._keyword_system_as_of, $._expression
+    ),
+
     alter_table_statement: ($) =>
       seq(
         $._keyword_alter,
@@ -406,6 +425,7 @@ module.exports = grammar({
           kw('SNAPSHOT TABLE'),
           kw('VIEW'),
           kw('MATERIALIZED VIEW'),
+          kw('SNAPSHOST TABLE'),
         ),
         optional($.keyword_if_exists),
         field('table_name', $.identifier),
@@ -785,7 +805,7 @@ module.exports = grammar({
         kw('PIVOT'),
         '(',
         commaSep1($.pivot_value),
-        kw('FOR'),
+        $._keyword_for,
         alias($.identifier, $.input_column),
         kw('IN'),
         '(',
@@ -806,7 +826,7 @@ module.exports = grammar({
     single_column_unpivot: ($) =>
       seq(
         alias($.identifier, $.unpivot_value),
-        kw('FOR'),
+        $._keyword_for,
         alias($.identifier, $.name_column),
         kw('IN'),
         '(',
@@ -819,7 +839,7 @@ module.exports = grammar({
           '(',
           commaSep1(alias($.identifier, $.unpivot_value)),
           ')',
-          kw('FOR'),
+          $._keyword_for,
           alias($.identifier, $.name_column),
           kw('IN'),
           '(',
