@@ -301,7 +301,7 @@ module.exports = grammar({
         kw('CREATE SCHEMA'),
         optional($.keyword_if_not_exists),
         field('schema_name', $.identifier),
-        optional($.option_list),
+        optional($.option_clause),
       ),
     alter_schema_statement: ($) =>
       seq(
@@ -309,7 +309,7 @@ module.exports = grammar({
         optional($.keyword_if_exists),
         field('schema_name', $.identifier),
         kw('SET'),
-        optional($.option_list),
+        optional($.option_clause),
       ),
     drop_schema_statement: ($) =>
       seq(
@@ -331,7 +331,7 @@ module.exports = grammar({
           optional($.create_table_parameters),
           optional($.table_partition_clause),
           optional($.table_cluster_clause),
-          optional($.option_list),
+          optional($.option_clause),
           optional(seq($._keyword_as, $.query_statement)),
         ),
       ),
@@ -343,7 +343,7 @@ module.exports = grammar({
           kw('CLONE'),
           field('source_table_name', $.identifier),
           optional($.system_time_clause),
-          optional($.option_list),
+          optional($.option_clause),
         )),
 
     system_time_clause: ($) => seq(
@@ -357,7 +357,7 @@ module.exports = grammar({
         optional($.keyword_if_exists),
         field('table_name', $.identifier),
         kw('SET'),
-        optional($.option_list),
+        optional($.option_clause),
       ),
     alter_table_column_statement: ($) =>
       seq(
@@ -391,7 +391,7 @@ module.exports = grammar({
         field('column_name', $.identifier),
         optional($.keyword_if_exists),
         kw('SET'),
-        $.option_list,
+        $.option_clause,
       ),
     alter_column_drop_not_nulls_statement: ($) =>
       seq(
@@ -432,14 +432,14 @@ module.exports = grammar({
       ),
 
     create_table_parameters: ($) => seq('(', commaSep1($.column_definition), ')'),
-    option_list: ($) => seq(kw('OPTIONS'), '(', optional(sep1($.option_item, ',')), ')'),
+    option_clause: ($) => seq(kw('OPTIONS'), '(', optional(sep1($.option_item, ',')), ')'),
     option_item: ($) => seq(field('key', $.identifier), '=', field('value', $._expression)),
 
     column_definition: ($) =>
       seq(
         field('column_name', $.identifier),
         field('column_type', $.column_type),
-        optional(field('option', $.option_list)),
+        optional(field('option', $.option_clause)),
       ),
     column_type: ($) =>
       choice(
@@ -496,7 +496,7 @@ module.exports = grammar({
           optional($.keyword_if_not_exists),
           field('routine_name', $.identifier),
           $.create_function_parameters,
-          optional($.option_list),
+          optional($.option_clause),
           choice(
             // SQL UDF
             seq(
@@ -538,7 +538,7 @@ module.exports = grammar({
             $.create_function_parameters,
             $.create_table_function_parameters,
           ),
-          optional($.option_list),
+          optional($.option_clause),
           optional($.create_table_function_returns),
           $._keyword_as,
           $.create_table_function_body,
@@ -573,7 +573,7 @@ module.exports = grammar({
         optional($.keyword_if_not_exists),
         field('routine_name', $.identifier),
         $.procedure_parameters,
-        optional($.option_list),
+        optional($.option_clause),
         $.procedure_body,
       )
     ),

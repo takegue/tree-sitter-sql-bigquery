@@ -14,10 +14,10 @@ OPTIONS(
 (source_file
     (create_schema_statement
         (identifier)
-        (option_list))
+        (option_clause))
     (create_schema_statement
         (identifier)
-        (option_list
+        (option_clause
             (option_item (identifier) (string))
             (option_item (identifier) (array
               (struct (string) (string))
@@ -101,7 +101,7 @@ OPTIONS(
   (system_time_clause
    (time
     (string)))
-  (option_list
+  (option_clause
    (option_item
     (identifier)
     (time
@@ -151,7 +151,7 @@ OPTIONS(description="text description");
       (column_definition
        (identifier)
        (column_type)))
-     (option_list
+     (option_clause
       (option_item
        (identifier)
        (string)))))
@@ -218,7 +218,7 @@ OPTIONS(
    (column_definition
     (identifier)
     (column_type)
-    (option_list
+    (option_clause
      (option_item
       (identifier)
       (string))))
@@ -228,7 +228,7 @@ OPTIONS(
      (column_definition
       (identifier)
       (column_type)
-      (option_list
+      (option_clause
        (option_item
         (identifier)
         (string))))
@@ -237,7 +237,7 @@ OPTIONS(
       (column_type)))))
   (table_partition_clause
    (partition_expression))
-  (option_list
+  (option_clause
    (option_item
     (identifier)
     (time
@@ -494,7 +494,7 @@ SET OPTIONS(
 (source_file
  (alter_schema_statement
   (identifier)
-  (option_list
+  (option_clause
    (option_item
     (identifier)
     (number)))))
@@ -514,7 +514,7 @@ SET OPTIONS (
 (source_file
  (alter_table_statement
   (identifier)
-  (option_list
+  (option_clause
    (option_item
     (identifier)
     (function_call
@@ -557,7 +557,7 @@ DDL: ALTER TABLE COLUMN on BigQuery Examples #1
   (column_definition
    (identifier)
    (column_type)
-   (option_list
+   (option_clause
     (option_item
      (identifier)
      (string))))))
@@ -592,7 +592,7 @@ SET OPTIONS (
  (alter_column_set_options_statement
   (identifier)
   (identifier)
-  (option_list
+  (option_clause
    (option_item
     (identifier)
     (string)))))
