@@ -87,6 +87,7 @@ module.exports = grammar({
           $.alter_schema_statement,
           $.drop_schema_statement,
           $.create_table_statement,
+          $.create_table_clone_statement,
           $.create_snapshot_table_statement,
           $.alter_table_statement,
           $.alter_table_column_statement,
@@ -333,6 +334,20 @@ module.exports = grammar({
           optional($.table_cluster_clause),
           optional($.option_clause),
           optional(seq($._keyword_as, $.query_statement)),
+        ),
+      ),
+    create_table_clone_statement: ($) =>
+      prec.right(
+        seq(
+          kw('CREATE'),
+          optional($.keyword_replace),
+          choice(kw('TABLE')),
+          optional($.keyword_if_not_exists),
+          field('table_name', $.identifier),
+          kw('CLONE'),
+          field('source_table_name', $.identifier),
+          optional($.system_time_clause),
+          optional($.option_clause),
         ),
       ),
     create_snapshot_table_statement: ($) => prec.right(seq(
