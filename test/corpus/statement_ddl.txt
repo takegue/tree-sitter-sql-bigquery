@@ -80,6 +80,33 @@ CREATE TEMPORARY TABLE IF NOT EXISTS my_table (col1 INT64);
     )
 
 
+================================================================================
+DDL: CREATE SNAPSHOT TABLE
+================================================================================
+
+CREATE SNAPSHOT TABLE IF NOT EXISTS `sandbox.sample_table-2022-09-06T21_45_13`
+CLONE `sandbox.sample_table`
+FOR SYSTEM_TIME AS OF timestamp '2022-01-01'
+OPTIONS(
+  expiration_timestamp=TIMESTAMP "2022-10-06T12:45:28.168Z"
+)
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (create_snapshot_table_statement
+  (keyword_if_not_exists)
+  (identifier)
+  (identifier)
+  (system_time_clause
+   (time
+    (string)))
+  (option_list
+   (option_item
+    (identifier)
+    (time
+     (string))))))
+
 
 ================================================================================
 DDL: CREATE TABLE with table options
