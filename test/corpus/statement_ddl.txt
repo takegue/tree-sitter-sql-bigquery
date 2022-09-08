@@ -80,7 +80,7 @@ CREATE TEMPORARY TABLE IF NOT EXISTS my_table (col1 INT64);
     )
 
 ================================================================================
-DDL: CREATE SNAPSHOT TABLE
+DDL: CREATE TABLE CLONE
 ================================================================================
 
 CREATE TABLE `myproject.mydataset.mytable`
@@ -296,6 +296,84 @@ OPTIONS(
       (string)
       (string)))))))
 
+================================================================================
+DDL: CREATE EXTENRAL TABLE
+================================================================================
+
+CREATE EXTERNAL TABLE dataset.CsvTable OPTIONS (
+  format = 'CSV',
+  uris = ['gs://bucket/path1.csv', 'gs://bucket/path2.csv']
+);
+
+CREATE EXTERNAL TABLE dataset.AutoHivePartitionedTable
+WITH PARTITION COLUMNS
+OPTIONS (
+  uris=['gs://bucket/path/*'],
+  format=csv,
+  hive_partition_uri_prefix='gs://bucket/path'
+);
+
+CREATE EXTERNAL TABLE dataset.CustomHivePartitionedTable
+WITH PARTITION COLUMNS (
+  field_1 STRING,
+  field_2 INT64
+)
+OPTIONS (
+  uris=['gs://bucket/path/*'],
+  format=csv,
+  hive_partition_uri_prefix='gs://bucket/path'
+);
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (create_external_table_statement
+  (identifier)
+  (option_clause
+   (option_item
+    (identifier)
+    (string))
+   (option_item
+    (identifier)
+    (array
+     (string)
+     (string)))))
+ (create_external_table_statement
+  (identifier)
+  (partition_columns_clause)
+  (option_clause
+   (option_item
+    (identifier)
+    (array
+     (string)))
+   (option_item
+    (identifier)
+    (identifier))
+   (option_item
+    (identifier)
+    (string))))
+  (create_external_table_statement
+   (identifier)
+   (partition_columns_clause
+    (partition_columns
+     (column_definition
+      (identifier)
+      (column_type))
+     (column_definition
+      (identifier)
+      (column_type))))
+   (option_clause
+    (option_item
+     (identifier)
+     (array
+      (string)))
+    (option_item
+     (identifier)
+     (identifier))
+    (option_item
+     (identifier)
+      (string)))))
+
 
 ================================================================================
 DDL: CREATE FUNCTION with SQL UDF
@@ -353,6 +431,37 @@ AS r"""
   (language)
   (create_function_body
    (string))))
+
+================================================================================
+DDL: CREATE FUNCTION with REMOTE PATH
+================================================================================
+
+CREATE FUNCTION mydataset.remoteMultiplyInputs(x FLOAT64, y FLOAT64)
+RETURNS FLOAT64
+REMOTE WITH CONNECTION us.myconnection
+OPTIONS(endpoint="https://us-central1-myproject.cloudfunctions.net/multiply");
+
+--------------------------------------------------------------------------------
+
+
+(source_file
+ (create_remote_function_statement
+  (identifier)
+  (create_function_parameters
+   (create_function_parameter
+    (identifier)
+    (type))
+   (create_function_parameter
+    (identifier)
+    (type)))
+  (create_function_return_clause
+   (type))
+  (connection_path)
+  (option_clause
+   (option_item
+    (identifier)
+    (string)))))
+
 
 ================================================================================
 DDL: TABLE FUNCTION

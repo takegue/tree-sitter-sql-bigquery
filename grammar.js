@@ -89,6 +89,7 @@ module.exports = grammar({
           $.create_table_statement,
           $.create_table_clone_statement,
           $.create_snapshot_table_statement,
+          $.create_external_table_statement,
           $.alter_table_statement,
           $.alter_table_column_statement,
           $.alter_table_rename_statement,
@@ -97,6 +98,7 @@ module.exports = grammar({
           $.alter_column_set_data_type_statement,
           $.drop_table_statement,
           $.create_function_statement,
+          $.create_remote_function_statement,
           $.drop_function_statement,
           $.create_table_function_statement,
           $.drop_table_function_statement,
@@ -361,6 +363,24 @@ module.exports = grammar({
           optional($.option_clause),
         )),
 
+    create_external_table_statement: ($) => prec.right(
+      seq(
+          kw('CREATE'),
+          optional($.keyword_replace),
+          kw('EXTERNAL TABLE'),
+          optional($.keyword_if_not_exists),
+          field('table_name', $.identifier),
+          optional(alias(seq(kw('WITH'), kw('CONNECTION'), field('table_name', $.identifier)), $.connection_clause)),
+          optional($.partition_columns_clause),
+          optional($.option_clause),
+        )
+    ),
+
+    partition_columns_clause: ($) => prec.right(seq(
+        kw('WITH'), kw('PARTITION COLUMNS'),
+        optional(alias($.create_table_parameters, $.partition_columns))
+      )),
+
     system_time_clause: ($) => seq(
       $._keyword_system_as_of, $._expression
     ),
@@ -441,6 +461,7 @@ module.exports = grammar({
           kw('VIEW'),
           kw('MATERIALIZED VIEW'),
           kw('SNAPSHOST TABLE'),
+          kw('EXTERNAL TABLE'),
         ),
         optional($.keyword_if_exists),
         field('table_name', $.identifier),
@@ -529,6 +550,24 @@ module.exports = grammar({
           ),
         ),
       ),
+
+    create_remote_function_statement: ($) =>
+      prec.left(
+        seq(
+          kw('CREATE'),
+          optional($.keyword_replace),
+          optional($.keyword_temporary),
+          kw('FUNCTION'),
+          optional($.keyword_if_not_exists),
+          field('routine_name', $.identifier),
+          $.create_function_parameters,
+          $.create_function_return_clause,
+          kw('REMOTE WITH CONNECTION'),
+          field('connection_name', alias($.identifier, $.connection_path)),
+          optional($.option_clause),
+        ),
+      ),
+
 
     _function_body_sql: ($) => seq('(', choice($._expression), ')'),
     _function_body_js: ($) => $.string,
