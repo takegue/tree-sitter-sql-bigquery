@@ -729,7 +729,7 @@ module.exports = grammar({
       ),
 
     select_list: ($) =>
-      prec.left(
+      prec.right(
         seq(
           commaSep1(
             choice(
@@ -738,9 +738,8 @@ module.exports = grammar({
             ),
           ),
           // Allow trailing comma
-          optional(seq(',')),
-        )
-      ),
+          optional(',')
+        )),
     select_all: ($) =>
       prec.right(
         seq(

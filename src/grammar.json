@@ -5064,7 +5064,7 @@
       ]
     },
     "select_list": {
-      "type": "PREC_LEFT",
+      "type": "PREC_RIGHT",
       "value": 0,
       "content": {
         "type": "SEQ",
@@ -5126,13 +5126,8 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "STRING",
-                    "value": ","
-                  }
-                ]
+                "type": "STRING",
+                "value": ","
               },
               {
                 "type": "BLANK"
