@@ -1,6 +1,6 @@
-=======================================================
+================================================================================
 LITERALS: basic identifier
-=======================================================
+================================================================================
 
 select
   _5bc.dataField,
@@ -11,56 +11,53 @@ select
 --------------------------------------------------------------------------------
 
 (source_file
- (query_statement
-  (query_expr
-   (select
-    (select_list
-     (select_expression
-      (identifier))
-     (select_expression
-      (identifier))
-     (select_expression
-      (identifier))
-     (select_expression
-      (identifier)))))))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (identifier))
+          (select_expression
+            (identifier))
+          (select_expression
+            (identifier))
+          (select_expression
+            (identifier)))))))
 
-
-=======================================================
+================================================================================
 LITERALS: String literals
-=======================================================
+================================================================================
 
 select
  "",
  "double quote",
- "double quote",
- 'single "quote"',
- '''triple quoted ''',
- """triple quoted """
+ 'single "quote',
+ '''triple quoted''',
+ """
+ triple quoted
+ """
 
 --------------------------------------------------------------------------------
 
 (source_file
- (query_statement
-  (query_expr
-   (select
-    (select_list
-     (select_expression
-      (string))
-     (select_expression
-      (string))
-     (select_expression
-      (string))
-     (select_expression
-      (string))
-     (select_expression
-      (string))
-     (select_expression
-      (string)))))))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (string))
+          (select_expression
+            (string))
+          (select_expression
+            (string))
+          (select_expression
+            (string))
+          (select_expression
+            (string)))))))
 
-
-=======================================================
+================================================================================
 LITERALS: NUMERIC literals
-=======================================================
+================================================================================
 
 select
   NUMERIC '0',
@@ -79,50 +76,50 @@ select
 --------------------------------------------------------------------------------
 
 (source_file
- (query_statement
-  (query_expr
-   (select
-    (select_list
-     (select_expression
-      (number
-       (numeric)))
-     (select_expression
-      (number
-       (numeric)))
-     (select_expression
-      (number
-       (numeric)))
-     (select_expression
-      (number
-       (numeric)))
-     (select_expression
-      (number
-       (numeric)))
-     (select_expression
-      (number
-       (numeric)))
-     (select_expression
-      (number
-       (numeric)))
-     (select_expression
-      (number
-       (numeric)))
-     (select_expression
-      (number
-       (numeric)))
-     (select_expression
-      (number
-       (numeric)))
-     (select_expression
-      (number
-       (numeric)))
-     (select_expression
-      (number
-       (numeric))))))))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (number
+              (numeric)))
+          (select_expression
+            (number
+              (numeric)))
+          (select_expression
+            (number
+              (numeric)))
+          (select_expression
+            (number
+              (numeric)))
+          (select_expression
+            (number
+              (numeric)))
+          (select_expression
+            (number
+              (numeric)))
+          (select_expression
+            (number
+              (numeric)))
+          (select_expression
+            (number
+              (numeric)))
+          (select_expression
+            (number
+              (numeric)))
+          (select_expression
+            (number
+              (numeric)))
+          (select_expression
+            (number
+              (numeric)))
+          (select_expression
+            (number
+              (numeric))))))))
 
-=======================================================
+================================================================================
 LITERALS: Floating point
-=======================================================
+================================================================================
 
 select
   123.456e-67,
@@ -133,23 +130,22 @@ select
 --------------------------------------------------------------------------------
 
 (source_file
- (query_statement
-  (query_expr
-   (select
-    (select_list
-     (select_expression
-      (number))
-     (select_expression
-      (number))
-     (select_expression
-      (number))
-     (select_expression
-      (number)))))))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (number))
+          (select_expression
+            (number))
+          (select_expression
+            (number))
+          (select_expression
+            (number)))))))
 
-
-=======================================================
+================================================================================
 LITERALS: Array literals
-=======================================================
+================================================================================
 
 select
   [1, 2, 3],
@@ -165,56 +161,55 @@ select
 --------------------------------------------------------------------------------
 
 (source_file
- (query_statement
-  (query_expr
-   (select
-    (select_list
-     (select_expression
-      (array
-       (number)
-       (number)
-       (number)))
-     (select_expression
-      (array
-       (string)
-       (string)
-       (string)))
-     (select_expression
-      (array
-       (number)
-       (number)
-       (number)))
-     (select_expression
-      (array
-       (string)
-       (string)
-       (string)))
-     (select_expression
-      (array))
-     (select_expression
-      (array))
-     (select_expression
-      (array))
-     (select_expression
-      (function_call
-       (select_subexpression
-        (query_expr
-         (select
-          (select_list
-           (select_expression
-            (number))))))))
-     (select_expression
-      (array
-       (function_call
-        (identifier)
-        (number)
-        (number))
-       (number))))))))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (array
+              (number)
+              (number)
+              (number)))
+          (select_expression
+            (array
+              (string)
+              (string)
+              (string)))
+          (select_expression
+            (array
+              (number)
+              (number)
+              (number)))
+          (select_expression
+            (array
+              (string)
+              (string)
+              (string)))
+          (select_expression
+            (array))
+          (select_expression
+            (array))
+          (select_expression
+            (array))
+          (select_expression
+            (function_call
+              (select_subexpression
+                (query_expr
+                  (select
+                    (select_list
+                      (select_expression
+                        (number))))))))
+          (select_expression
+            (array
+              (function_call
+                (identifier)
+                (number)
+                (number))
+              (number))))))))
 
-
-=======================================================
+================================================================================
 LITERALS: Struct literals
-=======================================================
+================================================================================
 
 select
   (1, 2, 3),
@@ -230,50 +225,50 @@ select
 --------------------------------------------------------------------------------
 
 (source_file
- (query_statement
-  (query_expr
-   (select
-    (select_list
-     (select_expression
-      (struct
-       (number)
-       (number)
-       (number)))
-     (select_expression
-      (struct
-       (number)
-       (string)))
-     (select_expression
-      (struct
-       (number)
-       (as_alias
-        (identifier))
-       (string)
-       (as_alias
-        (identifier))))
-     (select_expression
-      (struct
-       (number)
-       (number)))
-     (select_expression
-      (struct
-       (number)))
-     (select_expression
-      (struct
-       (number)))
-     (select_expression
-      (struct
-       (number)))
-     (select_expression
-      (struct
-       (number)))
-     (select_expression
-      (struct
-       (NULL))))))))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (struct
+              (number)
+              (number)
+              (number)))
+          (select_expression
+            (struct
+              (number)
+              (string)))
+          (select_expression
+            (struct
+              (number)
+              (as_alias
+                (identifier))
+              (string)
+              (as_alias
+                (identifier))))
+          (select_expression
+            (struct
+              (number)
+              (number)))
+          (select_expression
+            (struct
+              (number)))
+          (select_expression
+            (struct
+              (number)))
+          (select_expression
+            (struct
+              (number)))
+          (select_expression
+            (struct
+              (number)))
+          (select_expression
+            (struct
+              (NULL))))))))
 
-=======================================================
+================================================================================
 LITERALS: DATE/TIME/DATETIME/TIMESTAMP/INTERVAL literals
-=======================================================
+================================================================================
 
 select
   DATE '2014-09-27',
@@ -285,31 +280,30 @@ select
 --------------------------------------------------------------------------------
 
 (source_file
- (query_statement
-  (query_expr
-   (select
-    (select_list
-     (select_expression
-      (time
-       (string)))
-     (select_expression
-      (time
-       (string)))
-     (select_expression
-      (time
-       (string)))
-     (select_expression
-      (time
-       (string)))
-      (select_expression
-        (function_call
-          (identifier)
-          (string)))
-     )))))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (time
+              (string)))
+          (select_expression
+            (time
+              (string)))
+          (select_expression
+            (time
+              (string)))
+          (select_expression
+            (time
+              (string)))
+          (select_expression
+            (function_call
+              (identifier)
+              (string))))))))
 
-=======================================================
+================================================================================
 LITERALS: INTERVAL literals
-=======================================================
+================================================================================
 
 select
   INTERVAL '5' DAY,
@@ -322,41 +316,41 @@ select
 --------------------------------------------------------------------------------
 
 (source_file
- (query_statement
-  (query_expr
-   (select
-    (select_list
-     (select_expression
-      (interval
-       (string)
-       (datetime_part)))
-     (select_expression
-      (interval
-       (identifier)
-       (datetime_part)))
-     (select_expression
-      (interval
-       (string)
-       (datetime_part)))
-     (select_expression
-      (interval
-       (string)
-       (datetime_part)
-       (datetime_part)))
-     (select_expression
-      (interval
-       (string)
-       (datetime_part)
-       (datetime_part)))
-     (select_expression
-      (interval
-       (string)
-       (datetime_part)
-       (datetime_part))))))))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (interval
+              (string)
+              (datetime_part)))
+          (select_expression
+            (interval
+              (identifier)
+              (datetime_part)))
+          (select_expression
+            (interval
+              (string)
+              (datetime_part)))
+          (select_expression
+            (interval
+              (string)
+              (datetime_part)
+              (datetime_part)))
+          (select_expression
+            (interval
+              (string)
+              (datetime_part)
+              (datetime_part)))
+          (select_expression
+            (interval
+              (string)
+              (datetime_part)
+              (datetime_part))))))))
 
-=======================================================
+================================================================================
 LITERALS: Query parameter
-=======================================================
+================================================================================
 
 select
   @user_used,
@@ -365,12 +359,11 @@ select
 --------------------------------------------------------------------------------
 
 (source_file
- (query_statement
-  (query_expr
-   (select
-    (select_list
-     (select_expression
-       (query_parameter))
-     (select_expression
-       (system_variable))
-    )))))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (query_parameter))
+          (select_expression
+            (system_variable)))))))

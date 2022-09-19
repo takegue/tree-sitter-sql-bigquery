@@ -9260,82 +9260,24 @@
       }
     },
     "string": {
-      "type": "ALIAS",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "PATTERN",
-                "value": "[bB]?[rR]?'"
-              },
-              {
-                "type": "PATTERN",
-                "value": "[^']*"
-              },
-              {
-                "type": "STRING",
-                "value": "'"
-              }
-            ]
-          },
-          {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "PATTERN",
-                "value": "[bB]?[rR]?\""
-              },
-              {
-                "type": "PATTERN",
-                "value": "[^\"]*"
-              },
-              {
-                "type": "STRING",
-                "value": "\""
-              }
-            ]
-          },
-          {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "PATTERN",
-                "value": "[bB]?[rR]?'''"
-              },
-              {
-                "type": "PATTERN",
-                "value": "[^']+"
-              },
-              {
-                "type": "STRING",
-                "value": "'''"
-              }
-            ]
-          },
-          {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "PATTERN",
-                "value": "[bB]?[rR]?\"\"\""
-              },
-              {
-                "type": "PATTERN",
-                "value": "[^\"]+"
-              },
-              {
-                "type": "STRING",
-                "value": "\"\"\""
-              }
-            ]
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_string_start"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_string_content"
           }
-        ]
-      },
-      "named": false,
-      "value": "_string"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_string_end"
+        }
+      ]
     },
     "ordered_expression": {
       "type": "SEQ",
@@ -10525,7 +10467,20 @@
       }
     ]
   ],
-  "externals": [],
+  "externals": [
+    {
+      "type": "SYMBOL",
+      "name": "_string_start"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_string_content"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_string_end"
+    }
+  ],
   "inline": [],
   "supertypes": []
 }

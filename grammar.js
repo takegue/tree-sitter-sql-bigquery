@@ -8,7 +8,12 @@ const multiplicative_operators = ['*', '/', '||'],
 
 module.exports = grammar({
   name: 'sql_bigquery',
-  extras: ($) => [/\s\n/, /\s/, $.comment, /[\s\f\uFEFF\u2060\u200B]|\\\r?\n/],
+  extras: ($) => [
+    /\s\n/,
+    /\s/,
+    $.comment,
+    /[\s\f\uFEFF\u2060\u200B]|\\\r?\n/
+  ],
 
   // Reference:
   //   Operator Precedence: https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#operator_precedence
@@ -32,6 +37,11 @@ module.exports = grammar({
     ],
   ],
   conflicts: ($) => [[$.query_expr]],
+  externals: $ => [
+    $._string_start,
+    $._string_content,
+    $._string_end,
+  ],
 
   word: ($) => $._unquoted_identifier,
   rules: {
@@ -1287,16 +1297,11 @@ module.exports = grammar({
     _dotted_identifier: ($) => seq($._identifier, token.immediate('.')),
     identifier: ($) => prec.right(seq(repeat($._dotted_identifier), $._identifier)),
     _base_type: ($) => prec.left(seq($._unquoted_identifier, optional(seq('(', $.number, ')')))),
-    string: ($) =>
-      alias(
-        choice(
-          seq(/[bB]?[rR]?'/, /[^']*/, '\''),
-          seq(/[bB]?[rR]?"/, /[^"]*/, '"'),
-          seq(/[bB]?[rR]?'''/, /[^']+/, '\'\'\''), // FIXME: single quote included multi-line text
-          seq(/[bB]?[rR]?"""/, /[^"]+/, '"""'), // FIXME double quote included multi-line text
-        ),
-        '_string',
-      ),
+    string: $ => seq(
+      $._string_start,
+      repeat($._string_content),
+      $._string_end,
+    ),
     ordered_expression: ($) => seq($._expression, $._direction_keywords),
 
     // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890

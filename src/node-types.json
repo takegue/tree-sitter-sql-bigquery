@@ -10755,10 +10755,6 @@
     "named": false
   },
   {
-    "type": "_string",
-    "named": false
-  },
-  {
     "type": "comment",
     "named": true
   },
