@@ -104,6 +104,8 @@ module.exports = grammar({
           $.drop_table_function_statement,
           $.create_procedure_statement,
           $.drop_procedure_statement,
+          $.create_model_statement,
+          $.drop_model_statement,
           $.query_statement,
           $.insert_statement,
           $.delete_statement,
@@ -353,33 +355,33 @@ module.exports = grammar({
         ),
       ),
     create_snapshot_table_statement: ($) => prec.right(seq(
-          kw('CREATE'),
-          kw('SNAPSHOT TABLE'),
-          optional($.keyword_if_not_exists),
-          field('table_name', $.identifier),
-          kw('CLONE'),
-          field('source_table_name', $.identifier),
-          optional($.system_time_clause),
-          optional($.option_clause),
-        )),
+      kw('CREATE'),
+      kw('SNAPSHOT TABLE'),
+      optional($.keyword_if_not_exists),
+      field('table_name', $.identifier),
+      kw('CLONE'),
+      field('source_table_name', $.identifier),
+      optional($.system_time_clause),
+      optional($.option_clause),
+    )),
 
     create_external_table_statement: ($) => prec.right(
       seq(
-          kw('CREATE'),
-          optional($.keyword_replace),
-          kw('EXTERNAL TABLE'),
-          optional($.keyword_if_not_exists),
-          field('table_name', $.identifier),
-          optional(alias(seq(kw('WITH'), kw('CONNECTION'), field('table_name', $.identifier)), $.connection_clause)),
-          optional($.partition_columns_clause),
-          optional($.option_clause),
-        )
+        kw('CREATE'),
+        optional($.keyword_replace),
+        kw('EXTERNAL TABLE'),
+        optional($.keyword_if_not_exists),
+        field('table_name', $.identifier),
+        optional(alias(seq(kw('WITH'), kw('CONNECTION'), field('table_name', $.identifier)), $.connection_clause)),
+        optional($.partition_columns_clause),
+        optional($.option_clause),
+      )
     ),
 
     partition_columns_clause: ($) => prec.right(seq(
-        kw('WITH'), kw('PARTITION COLUMNS'),
-        optional(alias($.create_table_parameters, $.partition_columns))
-      )),
+      kw('WITH'), kw('PARTITION COLUMNS'),
+      optional(alias($.create_table_parameters, $.partition_columns))
+    )),
 
     system_time_clause: ($) => seq(
       $._keyword_system_as_of, $._expression
@@ -648,6 +650,28 @@ module.exports = grammar({
         kw('PROCEDURE'),
         optional($.keyword_if_exists),
         field('routine_name', $.identifier),
+      ),
+
+    create_model_statement: ($) =>
+      prec.left(
+        seq(
+          kw('CREATE'),
+          optional($.keyword_replace),
+          choice(kw('MODEL')),
+          optional($.keyword_if_not_exists),
+          field('model_name', $.identifier),
+          optional($.transoform_clause),
+          optional($.option_clause),
+          optional(seq($._keyword_as, $.query_statement)),
+        ),
+      ),
+    transoform_clause: $ => seq(kw('TRANSFORM'), '(', $.select_list, ')'),
+    drop_model_statement: $ =>
+      seq(
+        kw('DROP'),
+        kw('MODEL'),
+        optional($.keyword_if_exists),
+        field('model_name', $.identifier),
       ),
 
     /** *******************************************************************************

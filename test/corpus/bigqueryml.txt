@@ -1,0 +1,67 @@
+================================================================================
+DDL: TRANSFORM example
+================================================================================
+
+CREATE OR REPLACE MODEL m
+  TRANSFORM(ML.FEATURE_CROSS(STRUCT(f1, f2)) as cross_f,
+            ML.QUANTILE_BUCKETIZE(f3) OVER() as buckets,
+            label_col)
+  OPTIONS(model_type='linear_reg', input_label_cols=['label_col'])
+AS SELECT * FROM t
+
+--------------------------------------------------------------------------------
+
+(source_file
+ (create_model_statement
+  (keyword_replace)
+  (identifier)
+  (transoform_clause
+   (select_list
+    (select_expression
+     (function_call
+      (identifier)
+      (struct
+       (identifier)
+       (identifier)))
+     (as_alias
+      (identifier)))
+    (select_expression
+     (function_call
+      (identifier)
+      (identifier)
+      (analytics_clause
+       (over_clause
+        (window_specification))))
+     (as_alias
+      (identifier)))
+    (select_expression
+     (identifier))))
+  (option_clause
+   (option_item
+    (identifier)
+    (string))
+   (option_item
+    (identifier)
+    (array
+     (string))))
+  (query_statement
+   (query_expr
+    (select
+     (select_list
+      (select_all
+       (asterisk_expression)))
+     (from_clause
+      (from_item
+       (identifier))))))))
+
+================================================================================
+DDL: DROP MODEL example
+================================================================================
+
+DROP MODEL IF EXISTS `awesome_bigquery.model`;
+--------------------------------------------------------------------------------
+
+(source_file
+ (drop_model_statement
+  (keyword_if_exists)
+  (identifier)))

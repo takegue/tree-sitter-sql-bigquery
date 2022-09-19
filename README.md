@@ -12,7 +12,8 @@ This project supports StandardSQL in BigQuery. You could try out the demo on
 - [x] DML Statements
 - [x] DDL Statements
 - [x] Procedural Language
-- [ ] DCL Statements/BigQuery ML
+- [x] BigQuery ML
+- [ ] DCL Statements
 
 ### References
 
