@@ -730,12 +730,16 @@ module.exports = grammar({
 
     select_list: ($) =>
       prec.left(
-        commaSep1(
-          choice(
-            $.select_all,
-            alias($._aliasable_expression, $.select_expression),
+        seq(
+          commaSep1(
+            choice(
+              $.select_all,
+              alias($._aliasable_expression, $.select_expression),
+            ),
           ),
-        ),
+          // Allow trailing comma
+          optional(seq(',')),
+        )
       ),
     select_all: ($) =>
       prec.right(
