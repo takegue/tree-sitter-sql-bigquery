@@ -12,7 +12,7 @@ module.exports = grammar({
     /\s\n/,
     /\s/,
     $.comment,
-    /[\s\f\uFEFF\u2060\u200B]|\\\r?\n/
+    /[\s\f\uFEFF\u2060\u200B]|\\\r?\n/,
   ],
 
   // Reference:
@@ -37,7 +37,7 @@ module.exports = grammar({
     ],
   ],
   conflicts: ($) => [[$.query_expr]],
-  externals: $ => [
+  externals: ($) => [
     $._string_start,
     $._string_content,
     $._string_end,
@@ -209,7 +209,7 @@ module.exports = grammar({
     begin_end_statement: ($) =>
       seq(
         choice(kw('BEGIN')),
-        $._statement_list,
+        optional($._statement_list),
         kw('END'),
       ),
 
@@ -218,7 +218,7 @@ module.exports = grammar({
         choice(kw('BEGIN')),
         $._statement_list,
         kw('EXCEPTION WHEN ERROR THEN'),
-        $._statement_list,
+        optional($._statement_list),
         kw('END'),
       ),
 
@@ -273,7 +273,7 @@ module.exports = grammar({
         kw('WHILE'),
         $._expression,
         kw('DO'),
-        $._statement_list,
+        optional($._statement_list),
         kw('END WHILE'),
       ),
 
@@ -286,14 +286,14 @@ module.exports = grammar({
         $.query_statement,
         ')',
         kw('DO'),
-        $._statement_list,
+        optional($._statement_list),
         kw('END FOR'),
       ),
 
-    break_statement: ($) => kw('BREAK'),
-    leave_statement: ($) => kw('LEAVE'),
-    continue_statement: ($) => kw('CONTINUE'),
-    iterate_statement: ($) => kw('ITERATE'),
+    break_statement: () => kw('BREAK'),
+    leave_statement: () => kw('LEAVE'),
+    continue_statement: () => kw('CONTINUE'),
+    iterate_statement: () => kw('ITERATE'),
 
     raise_statement: ($) =>
       seq(
@@ -364,38 +364,44 @@ module.exports = grammar({
           optional($.option_clause),
         ),
       ),
-    create_snapshot_table_statement: ($) => prec.right(seq(
-      kw('CREATE'),
-      kw('SNAPSHOT TABLE'),
-      optional($.keyword_if_not_exists),
-      field('table_name', $.identifier),
-      kw('CLONE'),
-      field('source_table_name', $.identifier),
-      optional($.system_time_clause),
-      optional($.option_clause),
-    )),
-
-    create_external_table_statement: ($) => prec.right(
-      seq(
+    create_snapshot_table_statement: ($) =>
+      prec.right(seq(
         kw('CREATE'),
-        optional($.keyword_replace),
-        kw('EXTERNAL TABLE'),
+        kw('SNAPSHOT TABLE'),
         optional($.keyword_if_not_exists),
         field('table_name', $.identifier),
-        optional(alias(seq(kw('WITH'), kw('CONNECTION'), field('table_name', $.identifier)), $.connection_clause)),
-        optional($.partition_columns_clause),
+        kw('CLONE'),
+        field('source_table_name', $.identifier),
+        optional($.system_time_clause),
         optional($.option_clause),
-      )
-    ),
+      )),
 
-    partition_columns_clause: ($) => prec.right(seq(
-      kw('WITH'), kw('PARTITION COLUMNS'),
-      optional(alias($.create_table_parameters, $.partition_columns))
-    )),
+    create_external_table_statement: ($) =>
+      prec.right(
+        seq(
+          kw('CREATE'),
+          optional($.keyword_replace),
+          kw('EXTERNAL TABLE'),
+          optional($.keyword_if_not_exists),
+          field('table_name', $.identifier),
+          optional(alias(seq(kw('WITH'), kw('CONNECTION'), field('table_name', $.identifier)), $.connection_clause)),
+          optional($.partition_columns_clause),
+          optional($.option_clause),
+        ),
+      ),
 
-    system_time_clause: ($) => seq(
-      $._keyword_system_as_of, $._expression
-    ),
+    partition_columns_clause: ($) =>
+      prec.right(seq(
+        kw('WITH'),
+        kw('PARTITION COLUMNS'),
+        optional(alias($.create_table_parameters, $.partition_columns)),
+      )),
+
+    system_time_clause: ($) =>
+      seq(
+        $._keyword_system_as_of,
+        $._expression,
+      ),
 
     alter_table_statement: ($) =>
       seq(
@@ -580,7 +586,6 @@ module.exports = grammar({
         ),
       ),
 
-
     _function_body_sql: ($) => seq('(', choice($._expression), ')'),
     _function_body_js: ($) => $.string,
     create_function_return_clause: ($) => seq($._keyword_returns, $.type),
@@ -675,8 +680,8 @@ module.exports = grammar({
           optional(seq($._keyword_as, $.query_statement)),
         ),
       ),
-    transoform_clause: $ => seq(kw('TRANSFORM'), '(', $.select_list, ')'),
-    drop_model_statement: $ =>
+    transoform_clause: ($) => seq(kw('TRANSFORM'), '(', $.select_list, ')'),
+    drop_model_statement: ($) =>
       seq(
         kw('DROP'),
         kw('MODEL'),
@@ -738,8 +743,9 @@ module.exports = grammar({
             ),
           ),
           // Allow trailing comma
-          optional(',')
-        )),
+          optional(','),
+        ),
+      ),
     select_all: ($) =>
       prec.right(
         seq(
@@ -1300,11 +1306,12 @@ module.exports = grammar({
     _dotted_identifier: ($) => seq($._identifier, token.immediate('.')),
     identifier: ($) => prec.right(seq(repeat($._dotted_identifier), $._identifier)),
     _base_type: ($) => prec.left(seq($._unquoted_identifier, optional(seq('(', $.number, ')')))),
-    string: $ => seq(
-      $._string_start,
-      repeat($._string_content),
-      $._string_end,
-    ),
+    string: ($) =>
+      seq(
+        $._string_start,
+        repeat($._string_content),
+        $._string_end,
+      ),
     ordered_expression: ($) => seq($._expression, $._direction_keywords),
 
     // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890

@@ -34,42 +34,41 @@ DECLARE item DEFAULT (SELECT item FROM schema1.products LIMIT 1);
 --------------------------------------------------------------------------------
 
 (source_file
- (declare_statement
-  (identifier)
-  (variable_type))
- (declare_statement
-  (identifier)
-  (variable_type)
-  (default_clause
-   (function_call
-    (identifier))))
- (declare_statement
-  (identifier)
-  (identifier)
-  (identifier)
-  (variable_type)
-  (default_clause
-   (number)))
- (declare_statement
-  (identifier)
-  (identifier)
-  (identifier)
-  (variable_type))
- (declare_statement
-  (identifier)
-  (variable_type))
- (query_statement
-  (query_expr
-   (query_expr
-    (select
-     (select_list
-      (select_expression
-       (identifier)))
-     (from_clause
-      (from_item
-       (identifier))))
-      (limit_clause)))))
-
+  (declare_statement
+    (identifier)
+    (variable_type))
+  (declare_statement
+    (identifier)
+    (variable_type)
+    (default_clause
+      (function_call
+        (identifier))))
+  (declare_statement
+    (identifier)
+    (identifier)
+    (identifier)
+    (variable_type)
+    (default_clause
+      (number)))
+  (declare_statement
+    (identifier)
+    (identifier)
+    (identifier)
+    (variable_type))
+  (declare_statement
+    (identifier)
+    (variable_type))
+  (query_statement
+    (query_expr
+      (query_expr
+        (select
+          (select_list
+            (select_expression
+              (identifier)))
+          (from_clause
+            (from_item
+              (identifier))))
+        (limit_clause)))))
 
 ================================================================================
 PROCEDURAL LANGUAGE: SET statement
@@ -81,19 +80,18 @@ SET (a, b, c) = (1 + 3, 'foo', false);
 --------------------------------------------------------------------------------
 
 (source_file
- (set_statement
-  (identifier)
-  (number))
- (set_statement
-  (identifier)
-  (identifier)
-  (identifier)
-  (binary_expression
-   (number)
-   (number))
-  (string)
-  (FALSE)))
-
+  (set_statement
+    (identifier)
+    (number))
+  (set_statement
+    (identifier)
+    (identifier)
+    (identifier)
+    (binary_expression
+      (number)
+      (number))
+    (string)
+    (FALSE)))
 
 ================================================================================
 PROCEDURAL LANGUAGE: EXECUTE IMMEDIATE statement
@@ -109,39 +107,38 @@ EXECUTE IMMEDIATE (select "SELECT @a * (@b + 2)")
 
 --------------------------------------------------------------------------------
 
-  (source_file
-   (comment)
-   (execute_immadiate_statement
+(source_file
+  (comment)
+  (execute_immadiate_statement
     (string)
     (into_clause
-     (identifier))
+      (identifier))
     (using_clause
-     (using_expression
-      (number))
-     (using_expression
-      (number))))
-   (comment)
-   (execute_immadiate_statement
+      (using_expression
+        (number))
+      (using_expression
+        (number))))
+  (comment)
+  (execute_immadiate_statement
     (string)
     (into_clause
-     (identifier))
+      (identifier))
     (using_clause
-     (using_expression
-      (number)
-      (as_alias
-       (identifier)))
-     (using_expression
-      (number)
-      (as_alias
-       (identifier)))))
-   (execute_immadiate_statement
+      (using_expression
+        (number)
+        (as_alias
+          (identifier)))
+      (using_expression
+        (number)
+        (as_alias
+          (identifier)))))
+  (execute_immadiate_statement
     (select_subexpression
-     (query_expr
-      (select
-       (select_list
-        (select_expression
-         (string))))))))
-
+      (query_expr
+        (select
+          (select_list
+            (select_expression
+              (string))))))))
 
 ================================================================================
 PROCEDURAL LANGUAGE: BEGIN...END statement
@@ -158,30 +155,30 @@ SELECT x;
 --------------------------------------------------------------------------------
 
 (source_file
- (declare_statement
-  (identifier)
-  (variable_type)
-  (default_clause
-   (number)))
- (begin_end_statement
   (declare_statement
-   (identifier)
-   (variable_type))
-  (set_statement
-   (identifier)
-   (identifier))
+    (identifier)
+    (variable_type)
+    (default_clause
+      (number)))
+  (begin_end_statement
+    (declare_statement
+      (identifier)
+      (variable_type))
+    (set_statement
+      (identifier)
+      (identifier))
+    (query_statement
+      (query_expr
+        (select
+          (select_list
+            (select_expression
+              (identifier)))))))
   (query_statement
-   (query_expr
-    (select
-     (select_list
-      (select_expression
-       (identifier)))))))
- (query_statement
-  (query_expr
-   (select
-    (select_list
-     (select_expression
-      (identifier)))))))
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (identifier)))))))
 
 ================================================================================
 PROCEDURAL LANGUAGE: BEGIN...END statement
@@ -205,45 +202,53 @@ EXCEPTION WHEN ERROR THEN
     @@error.formatted_stack_trace;
 END;
 
+BEGIN
+  CALL schema2.proc2();
+EXCEPTION WHEN ERROR THEN
+END;
+
+
 --------------------------------------------------------------------------------
 
 (source_file
- (create_procedure_statement
-  (keyword_replace)
-  (identifier)
-  (procedure_parameters)
-  (procedure_body
-   (query_statement
-    (query_expr
-     (select
-      (select_list
-       (select_expression
-        (binary_expression
-         (number)
-         (number)))))))))
- (create_procedure_statement
-  (keyword_replace)
-  (identifier)
-  (procedure_parameters)
-  (procedure_body
-   (call_statement
-    (identifier))))
- (begin_exception_end_statement
-  (call_statement
-   (identifier))
-  (query_statement
-   (query_expr
-    (select
-     (select_list
-      (select_expression
-       (system_variable))
-      (select_expression
-       (system_variable))
-      (select_expression
-       (system_variable))
-      (select_expression
-       (system_variable))))))))
-
+  (create_procedure_statement
+    (keyword_replace)
+    (identifier)
+    (procedure_parameters)
+    (procedure_body
+      (query_statement
+        (query_expr
+          (select
+            (select_list
+              (select_expression
+                (binary_expression
+                  (number)
+                  (number)))))))))
+  (create_procedure_statement
+    (keyword_replace)
+    (identifier)
+    (procedure_parameters)
+    (procedure_body
+      (call_statement
+        (identifier))))
+  (begin_exception_end_statement
+    (call_statement
+      (identifier))
+    (query_statement
+      (query_expr
+        (select
+          (select_list
+            (select_expression
+              (system_variable))
+            (select_expression
+              (system_variable))
+            (select_expression
+              (system_variable))
+            (select_expression
+              (system_variable)))))))
+  (begin_exception_end_statement
+    (call_statement
+      (identifier))))
 
 ================================================================================
 PROCEDURAL LANGUAGE: CALL statement
@@ -257,21 +262,20 @@ SELECT retCode;
 --------------------------------------------------------------------------------
 
 (source_file
- (declare_statement
-  (identifier)
-  (variable_type))
- (comment)
- (call_statement
-  (identifier)
-  (string)
-  (identifier))
- (query_statement
-  (query_expr
-   (select
-    (select_list
-     (select_expression
-      (identifier)))))))
-
+  (declare_statement
+    (identifier)
+    (variable_type))
+  (comment)
+  (call_statement
+    (identifier)
+    (string)
+    (identifier))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (identifier)))))))
 
 ================================================================================
 PROCEDURAL LANGUAGE: IF statement
@@ -292,78 +296,76 @@ END IF;
 --------------------------------------------------------------------------------
 
 (source_file
- (declare_statement
-  (identifier)
-  (variable_type)
-  (default_clause
-   (number)))
- (if_statement
-  (unary_expression
-   (select_subexpression
-    (query_expr
-     (select
-      (select_list
-       (select_expression
-        (number)))
-      (from_clause
-       (from_item
-        (identifier)))
-      (where_clause
-       (binary_expression
-        (identifier)
-        (identifier)))))))
-  (query_statement
-   (query_expr
-    (select
-     (select_list
-      (select_expression
-       (function_call
-        (identifier)
-        (string)
-        (cast_expression
-         (identifier)
-         (type_identifier))))))))
-  (elseif_statement
-   (unary_expression
-    (select_subexpression
-     (query_expr
-      (select
-       (select_list
-        (select_expression
-         (number)))
-       (from_clause
-        (from_item
-         (identifier)))
-       (where_clause
-        (binary_expression
-         (identifier)
-         (identifier))))))))
-  (elseif_statement
-   (query_statement
-    (query_expr
-     (select
-      (select_list
-       (select_expression
-        (function_call
-         (identifier)
-         (string)
-         (cast_expression
-          (identifier)
-          (type_identifier)))))))))
-  (else_statement
-   (query_statement
-    (query_expr
-     (select
-      (select_list
-       (select_expression
-        (function_call
-         (identifier)
-         (string)
-         (cast_expression
-          (identifier)
-            (type_identifier)))))))))))
-
-
+  (declare_statement
+    (identifier)
+    (variable_type)
+    (default_clause
+      (number)))
+  (if_statement
+    (unary_expression
+      (select_subexpression
+        (query_expr
+          (select
+            (select_list
+              (select_expression
+                (number)))
+            (from_clause
+              (from_item
+                (identifier)))
+            (where_clause
+              (binary_expression
+                (identifier)
+                (identifier)))))))
+    (query_statement
+      (query_expr
+        (select
+          (select_list
+            (select_expression
+              (function_call
+                (identifier)
+                (string)
+                (cast_expression
+                  (identifier)
+                  (type_identifier))))))))
+    (elseif_statement
+      (unary_expression
+        (select_subexpression
+          (query_expr
+            (select
+              (select_list
+                (select_expression
+                  (number)))
+              (from_clause
+                (from_item
+                  (identifier)))
+              (where_clause
+                (binary_expression
+                  (identifier)
+                  (identifier))))))))
+    (elseif_statement
+      (query_statement
+        (query_expr
+          (select
+            (select_list
+              (select_expression
+                (function_call
+                  (identifier)
+                  (string)
+                  (cast_expression
+                    (identifier)
+                    (type_identifier)))))))))
+    (else_statement
+      (query_statement
+        (query_expr
+          (select
+            (select_list
+              (select_expression
+                (function_call
+                  (identifier)
+                  (string)
+                  (cast_expression
+                    (identifier)
+                    (type_identifier)))))))))))
 
 ================================================================================
 PROCEDURAL LANGUAGE: LOOP statement
@@ -378,31 +380,32 @@ LOOP
 END LOOP;
 SELECT x;
 
+
 --------------------------------------------------------------------------------
 
 (source_file
- (declare_statement
-  (identifier)
-  (variable_type)
-  (default_clause
-   (number)))
- (loop_statement
-  (set_statement
-   (identifier)
-   (binary_expression
+  (declare_statement
     (identifier)
-    (number)))
-  (if_statement
-   (binary_expression
-    (identifier)
-    (number))
-   (leave_statement)))
- (query_statement
-  (query_expr
-   (select
-    (select_list
-     (select_expression
-      (identifier)))))))
+    (variable_type)
+    (default_clause
+      (number)))
+  (loop_statement
+    (set_statement
+      (identifier)
+      (binary_expression
+        (identifier)
+        (number)))
+    (if_statement
+      (binary_expression
+        (identifier)
+        (number))
+      (leave_statement)))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (identifier)))))))
 
 ================================================================================
 PROCEDURAL LANGUAGE: REPEAT statement
@@ -417,23 +420,22 @@ END REPEAT;
 --------------------------------------------------------------------------------
 
 (source_file
- (repeat_statement
-  (set_statement
-   (identifier)
-   (binary_expression
-    (identifier)
-    (number)))
-  (query_statement
-   (query_expr
-    (select
-     (select_list
-      (select_expression
-       (identifier))))))
-  (until_clause
-   (binary_expression
-    (identifier)
-    (number)))))
-
+  (repeat_statement
+    (set_statement
+      (identifier)
+      (binary_expression
+        (identifier)
+        (number)))
+    (query_statement
+      (query_expr
+        (select
+          (select_list
+            (select_expression
+              (identifier))))))
+    (until_clause
+      (binary_expression
+        (identifier)
+        (number)))))
 
 ================================================================================
 PROCEDURAL LANGUAGE: WHILE statement
@@ -446,16 +448,15 @@ END WHILE;
 --------------------------------------------------------------------------------
 
 (source_file
- (while_statement
-  (binary_expression
-   (identifier)
-   (number))
-  (set_statement
-   (identifier)
-   (binary_expression
-    (identifier)
-    (number)))))
-
+  (while_statement
+    (binary_expression
+      (identifier)
+      (number))
+    (set_statement
+      (identifier)
+      (binary_expression
+        (identifier)
+        (number)))))
 
 ================================================================================
 PROCEDURAL LANGUAGE: FOR-IN statement
@@ -472,29 +473,28 @@ END FOR;
 --------------------------------------------------------------------------------
 
 (source_file
- (for_in_statement
-  (identifier)
-  (query_statement
-   (query_expr
-    (select
-     (select_list
-      (select_expression
-       (identifier))
-      (select_expression
-       (identifier)))
-     (from_clause
-      (from_item
-       (identifier))))
-    (limit_clause)))
-  (query_statement
-   (query_expr
-    (select
-     (select_list
-      (select_expression
-       (identifier))
-      (select_expression
-       (identifier))))))))
-
+  (for_in_statement
+    (identifier)
+    (query_statement
+      (query_expr
+        (select
+          (select_list
+            (select_expression
+              (identifier))
+            (select_expression
+              (identifier)))
+          (from_clause
+            (from_item
+              (identifier))))
+        (limit_clause)))
+    (query_statement
+      (query_expr
+        (select
+          (select_list
+            (select_expression
+              (identifier))
+            (select_expression
+              (identifier))))))))
 
 ================================================================================
 PROCEDURAL LANGUAGE: ASSERT statement
@@ -515,38 +515,38 @@ AS 'Column X must contain the value 7919';
 --------------------------------------------------------------------------------
 
 (source_file
- (assert_statement
-  (binary_expression
-   (select_subexpression
-    (query_expr
-     (select
-      (select_list
-       (select_expression
-        (number))))))
-   (number))
-  (string))
- (assert_statement
-  (unary_expression
-   (select_subexpression
-    (query_expr
-     (select
-      (select_list
-       (select_expression
-        (identifier)))
-      (from_clause
-       (from_item
-        (unnest_clause
-         (unnest_operator
-          (array
-           (number)
-           (number)
-           (number)
-           (number)
-           (number)))
-          (as_alias
-            (identifier)))))
-      (where_clause
-       (binary_expression
-        (identifier)
-        (number)))))))
-      (string)))
+  (assert_statement
+    (binary_expression
+      (select_subexpression
+        (query_expr
+          (select
+            (select_list
+              (select_expression
+                (number))))))
+      (number))
+    (string))
+  (assert_statement
+    (unary_expression
+      (select_subexpression
+        (query_expr
+          (select
+            (select_list
+              (select_expression
+                (identifier)))
+            (from_clause
+              (from_item
+                (unnest_clause
+                  (unnest_operator
+                    (array
+                      (number)
+                      (number)
+                      (number)
+                      (number)
+                      (number)))
+                  (as_alias
+                    (identifier)))))
+            (where_clause
+              (binary_expression
+                (identifier)
+                (number)))))))
+    (string)))
