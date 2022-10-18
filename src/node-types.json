@@ -606,7 +606,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "alter_column_drop_not_nulls_statement",

@@ -1063,8 +1063,16 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "_statement_list"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_statement_list"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "ALIAS",
@@ -1125,8 +1133,16 @@
           "value": "EXCEPTION_WHEN_ERROR_THEN"
         },
         {
-          "type": "SYMBOL",
-          "name": "_statement_list"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_statement_list"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "ALIAS",
@@ -1398,8 +1414,16 @@
           "value": "DO"
         },
         {
-          "type": "SYMBOL",
-          "name": "_statement_list"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_statement_list"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "ALIAS",
@@ -1458,8 +1482,16 @@
           "value": "DO"
         },
         {
-          "type": "SYMBOL",
-          "name": "_statement_list"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_statement_list"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "ALIAS",
@@ -1552,6 +1584,10 @@
                   },
                   "named": false,
                   "value": "USING_MESSAGE"
+                },
+                {
+                  "type": "STRING",
+                  "value": "="
                 },
                 {
                   "type": "SYMBOL",
