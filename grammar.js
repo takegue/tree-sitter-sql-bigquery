@@ -298,7 +298,7 @@ module.exports = grammar({
     raise_statement: ($) =>
       seq(
         kw('RAISE'),
-        optional(seq(kw('USING MESSAGE'), $._expression)),
+        optional(seq(kw('USING MESSAGE'), '=', $._expression)),
       ),
 
     assert_statement: ($) =>
