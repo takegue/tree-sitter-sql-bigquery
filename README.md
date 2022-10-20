@@ -18,10 +18,11 @@ This project supports StandardSQL in BigQuery. You could try out the demo on
 ### References
 
 - ZetaSQL: https://github.com/google/zetasql/blob/master/docs/README.md
-- Other SQL Projects :
-  - https://github.com/m-novikov/tree-sitter-sql
-  - https://github.com/DerekStride/tree-sitter-sql
-  - https://github.com/dhcmrlchtdj/tree-sitter-sqlite
+
+- Other SQL Dialect Projects:
+  - MySQL: https://github.com/DerekStride/tree-sitter-sql
+  - PostgreSQL: https://github.com/m-novikov/tree-sitter-sql
+  - SQLite: https://github.com/dhcmrlchtdj/tree-sitter-sqlite
 
 ## Development
 
@@ -34,4 +35,4 @@ npm test
 
 ### Debbuging
 
-- `npm run parse <file.sql>` outputs a syntax tree
+- `npm run parse <your sql file.sql>` outputs a syntax tree
