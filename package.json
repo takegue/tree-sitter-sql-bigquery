@@ -22,12 +22,13 @@
   "author": "takegue <takegue@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "nan": "^2.14.2"
+    "nan": "^2.14.2",
+    "tree-sitter": "^0.20.1"
   },
   "devDependencies": {
     "graphviz": "^0.0.9",
     "prettier": "^2.4.1",
-    "tree-sitter-cli": "^0.20.6"
+    "tree-sitter-cli": "^0.20.7"
   },
   "tree-sitter": [
     {
