@@ -23,12 +23,12 @@
   "license": "MIT",
   "dependencies": {
     "nan": "^2.14.2",
-    "tree-sitter": "^0.20.1"
+    "tree-sitter": "^0.20.1",
+    "tree-sitter-cli": "^0.20.7"
   },
   "devDependencies": {
     "graphviz": "^0.0.9",
-    "prettier": "^2.4.1",
-    "tree-sitter-cli": "^0.20.7"
+    "prettier": "^2.4.1"
   },
   "tree-sitter": [
     {
