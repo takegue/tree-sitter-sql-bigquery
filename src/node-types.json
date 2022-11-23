@@ -4273,6 +4273,10 @@
           "named": true
         },
         {
+          "type": "function_call",
+          "named": true
+        },
+        {
           "type": "join_operation",
           "named": true
         },
