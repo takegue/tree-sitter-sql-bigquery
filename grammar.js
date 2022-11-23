@@ -964,6 +964,7 @@ module.exports = grammar({
           seq(field('table_name', $.identifier), optional($.as_alias)),
           //TODO: add fucntion call subexpression
           seq($.select_subexpression, optional($.as_alias)),
+          seq($.function_call, optional($.as_alias)),
           $.unnest_clause,
           $.join_operation,
           seq('(', $.join_operation, ')'),
