@@ -2,7 +2,7 @@
 name = "tree-sitter-sql-bigquery"
 description = "BigQuery SQL grammar for the tree-sitter parsing library"
 authors = ["takegue <takegue@gmail.com>"]
-version = "0.1.0"
+version = "0.1.1"
 keywords = ["incremental", "parsing", "sql", "bigquery", "tree-sitter"]
 categories = ["parsing", "text-editors"]
 repository = "https://github.com/takegue/tree-sitter-sql-bigquery"
