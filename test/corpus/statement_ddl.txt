@@ -12,17 +12,24 @@ OPTIONS(
 --------------------------------------------------------------------------------
 
 (source_file
-    (create_schema_statement
+  (create_schema_statement
+    (identifier)
+    (option_clause))
+  (create_schema_statement
+    (identifier)
+    (option_clause
+      (option_item
         (identifier)
-        (option_clause))
-    (create_schema_statement
+        (string))
+      (option_item
         (identifier)
-        (option_clause
-            (option_item (identifier) (string))
-            (option_item (identifier) (array
-              (struct (string) (string))
-              (struct (string) (string))))))
-    )
+        (array
+          (struct
+            (string)
+            (string))
+          (struct
+            (string)
+            (string)))))))
 
 ================================================================================
 DDL: SCHEMA IF NOT EXISTS
@@ -33,9 +40,9 @@ CREATE SCHEMA IF NOT EXISTS mydataset
 --------------------------------------------------------------------------------
 
 (source_file
-    (create_schema_statement
-        (keyword_if_not_exists)
-        (identifier)))
+  (create_schema_statement
+    (keyword_if_not_exists)
+    (identifier)))
 
 ================================================================================
 DDL: CREATE TABLE
@@ -49,35 +56,34 @@ CREATE TEMPORARY TABLE IF NOT EXISTS my_table (col1 INT64);
 --------------------------------------------------------------------------------
 
 (source_file
- (create_table_statement
-  (identifier)
-  (create_table_parameters
-   (column_definition
+  (create_table_statement
     (identifier)
-    (column_type))))
- (create_table_statement
-  (keyword_replace)
-   (identifier)
-  (create_table_parameters
-   (column_definition
-    (identifier)
-    (column_type))))
- (create_table_statement
-  (keyword_if_not_exists)
-   (identifier)
-  (create_table_parameters
-   (column_definition
-    (identifier)
-    (column_type))))
-    (create_table_statement
-     (keyword_temporary)
-     (keyword_if_not_exists)
-     (identifier)
-     (create_table_parameters
+    (create_table_parameters
       (column_definition
-       (identifier)
-       (column_type))))
-    )
+        (identifier)
+        (column_type))))
+  (create_table_statement
+    (keyword_replace)
+    (identifier)
+    (create_table_parameters
+      (column_definition
+        (identifier)
+        (column_type))))
+  (create_table_statement
+    (keyword_if_not_exists)
+    (identifier)
+    (create_table_parameters
+      (column_definition
+        (identifier)
+        (column_type))))
+  (create_table_statement
+    (keyword_temporary)
+    (keyword_if_not_exists)
+    (identifier)
+    (create_table_parameters
+      (column_definition
+        (identifier)
+        (column_type)))))
 
 ================================================================================
 DDL: CREATE TABLE CLONE
@@ -95,31 +101,31 @@ OPTIONS(
 --------------------------------------------------------------------------------
 
 (source_file
- (create_table_clone_statement
-  (identifier)
-  (identifier)
-  (option_clause
-   (option_item
+  (create_table_clone_statement
     (identifier)
-    (function_call
-     (identifier)
-     (function_call
-      (identifier))
-     (interval
-      (number)
-      (datetime_part))))
-   (option_item
     (identifier)
-    (string))
-   (option_item
-    (identifier)
-    (string))
-   (option_item
-    (identifier)
-    (array
-     (struct
-      (string)
-      (string)))))))
+    (option_clause
+      (option_item
+        (identifier)
+        (function_call
+          (identifier)
+          (function_call
+            (identifier))
+          (interval
+            (number)
+            (datetime_part))))
+      (option_item
+        (identifier)
+        (string))
+      (option_item
+        (identifier)
+        (string))
+      (option_item
+        (identifier)
+        (array
+          (struct
+            (string)
+            (string)))))))
 
 ================================================================================
 DDL: CREATE SNAPSHOT TABLE
@@ -135,19 +141,18 @@ OPTIONS(
 --------------------------------------------------------------------------------
 
 (source_file
- (create_snapshot_table_statement
-  (keyword_if_not_exists)
-  (identifier)
-  (identifier)
-  (system_time_clause
-   (time
-    (string)))
-  (option_clause
-   (option_item
+  (create_snapshot_table_statement
+    (keyword_if_not_exists)
     (identifier)
-    (time
-     (string))))))
-
+    (identifier)
+    (system_time_clause
+      (time
+        (string)))
+    (option_clause
+      (option_item
+        (identifier)
+        (time
+          (string))))))
 
 ================================================================================
 DDL: CREATE TABLE with table options
@@ -165,38 +170,37 @@ OPTIONS(description="text description");
 --------------------------------------------------------------------------------
 
 (source_file
- (create_table_statement
-  (identifier)
-  (create_table_parameters
-   (column_definition
+  (create_table_statement
     (identifier)
-    (column_type)))
-  (table_partition_clause
-   (partition_expression
-    (identifier))))
- (create_table_statement
-  (identifier)
-  (create_table_parameters
-   (column_definition
-    (identifier)
-    (column_type))
-   (column_definition
-    (identifier)
-    (column_type)))
-  (table_cluster_clause
-   (identifier)
-   (identifier)))
-    (create_table_statement
-     (identifier)
-     (create_table_parameters
+    (create_table_parameters
       (column_definition
-       (identifier)
-       (column_type)))
-     (option_clause
+        (identifier)
+        (column_type)))
+    (table_partition_clause
+      (partition_expression
+        (identifier))))
+  (create_table_statement
+    (identifier)
+    (create_table_parameters
+      (column_definition
+        (identifier)
+        (column_type))
+      (column_definition
+        (identifier)
+        (column_type)))
+    (table_cluster_clause
+      (identifier)
+      (identifier)))
+  (create_table_statement
+    (identifier)
+    (create_table_parameters
+      (column_definition
+        (identifier)
+        (column_type)))
+    (option_clause
       (option_item
-       (identifier)
-       (string)))))
-
+        (identifier)
+        (string)))))
 
 ================================================================================
 DDL: CREATE TABLE with SELECT
@@ -208,27 +212,26 @@ CREATE TABLE my_table(date DATE) AS SELECT "2022-01-01";
 --------------------------------------------------------------------------------
 
 (source_file
- (create_table_statement
-  (identifier)
-  (query_statement
-   (query_expr
-    (select
-     (select_list
-      (select_expression
-        (string)))))))
- (create_table_statement
-  (identifier)
-  (create_table_parameters
-   (column_definition
+  (create_table_statement
     (identifier)
-    (column_type)))
-  (query_statement
-   (query_expr
-    (select
-     (select_list
-      (select_expression
-        (string))))))))
-
+    (query_statement
+      (query_expr
+        (select
+          (select_list
+            (select_expression
+              (string)))))))
+  (create_table_statement
+    (identifier)
+    (create_table_parameters
+      (column_definition
+        (identifier)
+        (column_type)))
+    (query_statement
+      (query_expr
+        (select
+          (select_list
+            (select_expression
+              (string))))))))
 
 ================================================================================
 DDL: CREATE TABLE on BigQuery Examples #1
@@ -253,48 +256,48 @@ OPTIONS(
 --------------------------------------------------------------------------------
 
 (source_file
- (create_table_statement
-  (identifier)
-  (create_table_parameters
-   (column_definition
+  (create_table_statement
     (identifier)
-    (column_type)
-    (option_clause
-     (option_item
-      (identifier)
-      (string))))
-   (column_definition
-    (identifier)
-    (column_type
-     (column_definition
-      (identifier)
-      (column_type)
-      (option_clause
-       (option_item
+    (create_table_parameters
+      (column_definition
         (identifier)
-        (string))))
-     (column_definition
-      (identifier)
-      (column_type)))))
-  (table_partition_clause
-   (partition_expression))
-  (option_clause
-   (option_item
-    (identifier)
-    (time
-     (string)))
-   (option_item
-    (identifier)
-    (number))
-   (option_item
-    (identifier)
-    (string))
-   (option_item
-    (identifier)
-    (array
-     (struct
-      (string)
-      (string)))))))
+        (column_type)
+        (option_clause
+          (option_item
+            (identifier)
+            (string))))
+      (column_definition
+        (identifier)
+        (column_type
+          (column_definition
+            (identifier)
+            (column_type)
+            (option_clause
+              (option_item
+                (identifier)
+                (string))))
+          (column_definition
+            (identifier)
+            (column_type)))))
+    (table_partition_clause
+      (partition_expression))
+    (option_clause
+      (option_item
+        (identifier)
+        (time
+          (string)))
+      (option_item
+        (identifier)
+        (number))
+      (option_item
+        (identifier)
+        (string))
+      (option_item
+        (identifier)
+        (array
+          (struct
+            (string)
+            (string)))))))
 
 ================================================================================
 DDL: CREATE EXTENRAL TABLE
@@ -327,53 +330,52 @@ OPTIONS (
 --------------------------------------------------------------------------------
 
 (source_file
- (create_external_table_statement
-  (identifier)
-  (option_clause
-   (option_item
-    (identifier)
-    (string))
-   (option_item
-    (identifier)
-    (array
-     (string)
-     (string)))))
- (create_external_table_statement
-  (identifier)
-  (partition_columns_clause)
-  (option_clause
-   (option_item
-    (identifier)
-    (array
-     (string)))
-   (option_item
-    (identifier)
-    (identifier))
-   (option_item
-    (identifier)
-    (string))))
   (create_external_table_statement
-   (identifier)
-   (partition_columns_clause
-    (partition_columns
-     (column_definition
-      (identifier)
-      (column_type))
-     (column_definition
-      (identifier)
-      (column_type))))
-   (option_clause
-    (option_item
-     (identifier)
-     (array
-      (string)))
-    (option_item
-     (identifier)
-     (identifier))
-    (option_item
-     (identifier)
-      (string)))))
-
+    (identifier)
+    (option_clause
+      (option_item
+        (identifier)
+        (string))
+      (option_item
+        (identifier)
+        (array
+          (string)
+          (string)))))
+  (create_external_table_statement
+    (identifier)
+    (partition_columns_clause)
+    (option_clause
+      (option_item
+        (identifier)
+        (array
+          (string)))
+      (option_item
+        (identifier)
+        (identifier))
+      (option_item
+        (identifier)
+        (string))))
+  (create_external_table_statement
+    (identifier)
+    (partition_columns_clause
+      (partition_columns
+        (column_definition
+          (identifier)
+          (column_type))
+        (column_definition
+          (identifier)
+          (column_type))))
+    (option_clause
+      (option_item
+        (identifier)
+        (array
+          (string)))
+      (option_item
+        (identifier)
+        (identifier))
+      (option_item
+        (identifier)
+        (string)))))
 
 ================================================================================
 DDL: CREATE FUNCTION with SQL UDF
@@ -381,26 +383,34 @@ DDL: CREATE FUNCTION with SQL UDF
 
 CREATE FUNCTION mydataset.multiplyInputs(x FLOAT64, y FLOAT64)
 RETURNS FLOAT64
+OPTIONS(language='SQL', library='mylib')
 AS (x * y);
 
 --------------------------------------------------------------------------------
 
 (source_file
- (create_function_statement
-  (identifier)
-  (create_function_parameters
-   (create_function_parameter
+  (create_function_statement
     (identifier)
-    (type))
-   (create_function_parameter
-    (identifier)
-    (type)))
-  (create_function_return_clause
-   (type))
-  (create_function_body
-   (binary_expression
-    (identifier)
-    (identifier)))))
+    (create_function_parameters
+      (create_function_parameter
+        (identifier)
+        (type))
+      (create_function_parameter
+        (identifier)
+        (type)))
+    (create_function_return_clause
+      (type))
+    (option_clause
+      (option_item
+        (identifier)
+        (string))
+      (option_item
+        (identifier)
+        (string)))
+    (create_function_body
+      (binary_expression
+        (identifier)
+        (identifier)))))
 
 ================================================================================
 DDL: CREATE FUNCTION with Javascript UDF
@@ -416,21 +426,21 @@ AS r"""
 --------------------------------------------------------------------------------
 
 (source_file
- (create_function_statement
-  (keyword_temporary)
-  (identifier)
-  (create_function_parameters
-   (create_function_parameter
+  (create_function_statement
+    (keyword_temporary)
     (identifier)
-    (type))
-   (create_function_parameter
-    (identifier)
-    (type)))
-  (create_function_return_clause
-   (type))
-  (language)
-  (create_function_body
-   (string))))
+    (create_function_parameters
+      (create_function_parameter
+        (identifier)
+        (type))
+      (create_function_parameter
+        (identifier)
+        (type)))
+    (create_function_return_clause
+      (type))
+    (language)
+    (create_function_body
+      (string))))
 
 ================================================================================
 DDL: CREATE FUNCTION with REMOTE PATH
@@ -443,25 +453,23 @@ OPTIONS(endpoint="https://us-central1-myproject.cloudfunctions.net/multiply");
 
 --------------------------------------------------------------------------------
 
-
 (source_file
- (create_remote_function_statement
-  (identifier)
-  (create_function_parameters
-   (create_function_parameter
+  (create_remote_function_statement
     (identifier)
-    (type))
-   (create_function_parameter
-    (identifier)
-    (type)))
-  (create_function_return_clause
-   (type))
-  (connection_path)
-  (option_clause
-   (option_item
-    (identifier)
-    (string)))))
-
+    (create_function_parameters
+      (create_function_parameter
+        (identifier)
+        (type))
+      (create_function_parameter
+        (identifier)
+        (type)))
+    (create_function_return_clause
+      (type))
+    (connection_path)
+    (option_clause
+      (option_item
+        (identifier)
+        (string)))))
 
 ================================================================================
 DDL: TABLE FUNCTION
@@ -478,50 +486,49 @@ AS
 --------------------------------------------------------------------------------
 
 (source_file
- (create_table_function_statement
-  (keyword_replace)
-  (identifier)
-  (create_table_function_parameters
-   (create_function_parameter
+  (create_table_function_statement
+    (keyword_replace)
     (identifier)
-    (type)))
-  (create_table_function_returns
-   (column_definition
-    (identifier)
-    (column_type))
-   (column_definition
-    (identifier)
-    (column_type))
-   (column_definition
-    (identifier)
-    (column_type)))
-  (create_table_function_body
-   (query_statement
-    (query_expr
-     (select
-      (select_list
-       (select_expression
-        (identifier))
-       (select_expression
-        (identifier))
-       (select_expression
-        (function_call
-         (identifier)
-         (identifier))
-        (as_alias
-         (identifier))))
-      (from_clause
-       (from_item
-        (identifier)))
-      (where_clause
-       (binary_expression
+    (create_table_function_parameters
+      (create_function_parameter
         (identifier)
-        (identifier)))
-      (group_by_clause
-       (group_by_clause_body
+        (type)))
+    (create_table_function_returns
+      (column_definition
         (identifier)
-        (identifier)))))))))
-
+        (column_type))
+      (column_definition
+        (identifier)
+        (column_type))
+      (column_definition
+        (identifier)
+        (column_type)))
+    (create_table_function_body
+      (query_statement
+        (query_expr
+          (select
+            (select_list
+              (select_expression
+                (identifier))
+              (select_expression
+                (identifier))
+              (select_expression
+                (function_call
+                  (identifier)
+                  (identifier))
+                (as_alias
+                  (identifier))))
+            (from_clause
+              (from_item
+                (identifier)))
+            (where_clause
+              (binary_expression
+                (identifier)
+                (identifier)))
+            (group_by_clause
+              (group_by_clause_body
+                (identifier)
+                (identifier)))))))))
 
 ================================================================================
 DDL: CREATE PROCEDURE
@@ -539,29 +546,29 @@ END;
 --------------------------------------------------------------------------------
 
 (source_file
- (create_procedure_statement
-  (identifier)
-  (procedure_parameters)
-  (procedure_body
-   (query_statement
-    (query_expr
-     (select
-      (select_list
-       (select_all
-        (asterisk_expression)))
-      (from_clause
-       (from_item
-        (identifier))))))))
- (create_procedure_statement
-  (identifier)
-  (procedure_parameters
-   (procedure_argument
+  (create_procedure_statement
     (identifier)
-    (type))
-   (procedure_argument
+    (procedure_parameters)
+    (procedure_body
+      (query_statement
+        (query_expr
+          (select
+            (select_list
+              (select_all
+                (asterisk_expression)))
+            (from_clause
+              (from_item
+                (identifier))))))))
+  (create_procedure_statement
     (identifier)
-    (type)))
-   (procedure_body)))
+    (procedure_parameters
+      (procedure_argument
+        (identifier)
+        (type))
+      (procedure_argument
+        (identifier)
+        (type)))
+    (procedure_body)))
 
 ================================================================================
 DDL: DROP SCEHMA Statements
@@ -575,18 +582,17 @@ DROP SCHEMA dataset_name RESTRICT;
 --------------------------------------------------------------------------------
 
 (source_file
- (drop_schema_statement
-  (identifier))
- (drop_schema_statement
-  (keyword_if_exists)
-  (identifier))
- (drop_schema_statement
-  (identifier)
-  (drop_schema_option))
- (drop_schema_statement
-  (identifier)
-  (drop_schema_option)))
-
+  (drop_schema_statement
+    (identifier))
+  (drop_schema_statement
+    (keyword_if_exists)
+    (identifier))
+  (drop_schema_statement
+    (identifier)
+    (drop_schema_option))
+  (drop_schema_statement
+    (identifier)
+    (drop_schema_option)))
 
 ================================================================================
 DDL: DROP TABLE/SNAPSHOT/VIEW/MATERIALIZED/VIEW Statements
@@ -600,16 +606,15 @@ DROP MATERIALIZED VIEW dataset_name.mview;
 --------------------------------------------------------------------------------
 
 (source_file
- (drop_table_statement
-  (identifier))
- (drop_table_statement
-  (keyword_if_exists)
-  (identifier))
- (drop_table_statement
-  (identifier))
- (drop_table_statement
-  (identifier)))
-
+  (drop_table_statement
+    (identifier))
+  (drop_table_statement
+    (keyword_if_exists)
+    (identifier))
+  (drop_table_statement
+    (identifier))
+  (drop_table_statement
+    (identifier)))
 
 ================================================================================
 DDL: DROP TABLE FUNCTION Statements
@@ -622,13 +627,12 @@ DROP PROCEDURE dataset_name.my_routine_name;
 --------------------------------------------------------------------------------
 
 (source_file
- (drop_table_function_statement
-  (identifier))
- (drop_function_statement
-  (identifier))
- (drop_procedure_statement
-  (identifier)))
-
+  (drop_table_function_statement
+    (identifier))
+  (drop_function_statement
+    (identifier))
+  (drop_procedure_statement
+    (identifier)))
 
 ================================================================================
 DDL: ALTER SCHEMA on BigQuery Examples #1
@@ -642,12 +646,12 @@ SET OPTIONS(
 --------------------------------------------------------------------------------
 
 (source_file
- (alter_schema_statement
-  (identifier)
-  (option_clause
-   (option_item
+  (alter_schema_statement
     (identifier)
-    (number)))))
+    (option_clause
+      (option_item
+        (identifier)
+        (number)))))
 
 ================================================================================
 DDL: ALTER TABLE on BigQuery Examples #1
@@ -662,22 +666,21 @@ SET OPTIONS (
 --------------------------------------------------------------------------------
 
 (source_file
- (alter_table_statement
-  (identifier)
-  (option_clause
-   (option_item
+  (alter_table_statement
     (identifier)
-    (function_call
-     (identifier)
-     (function_call
-      (identifier))
-     (interval
-      (number)
-      (datetime_part))))
-   (option_item
-    (identifier)
-    (string)))))
-
+    (option_clause
+      (option_item
+        (identifier)
+        (function_call
+          (identifier)
+          (function_call
+            (identifier))
+          (interval
+            (number)
+            (datetime_part))))
+      (option_item
+        (identifier)
+        (string)))))
 
 ================================================================================
 DDL: ALTER TABLE COLUMN on BigQuery Examples #1
@@ -692,26 +695,25 @@ DDL: ALTER TABLE COLUMN on BigQuery Examples #1
 --------------------------------------------------------------------------------
 
 (source_file
- (alter_table_column_statement
-  (identifier)
-  (column_definition
-   (identifier)
-   (column_type))
-  (keyword_if_not_exists)
-  (column_definition
-   (identifier)
-   (column_type))
-  (column_definition
-   (identifier)
-   (column_type))
-  (column_definition
-   (identifier)
-   (column_type)
-   (option_clause
-    (option_item
-     (identifier)
-     (string))))))
-
+  (alter_table_column_statement
+    (identifier)
+    (column_definition
+      (identifier)
+      (column_type))
+    (keyword_if_not_exists)
+    (column_definition
+      (identifier)
+      (column_type))
+    (column_definition
+      (identifier)
+      (column_type))
+    (column_definition
+      (identifier)
+      (column_type)
+      (option_clause
+        (option_item
+          (identifier)
+          (string))))))
 
 ================================================================================
 DDL: ALTER TABLE RENAME TO on BigQuery Examples #1
@@ -722,9 +724,9 @@ ALTER TABLE mydataset.mytable RENAME TO mynewtable
 --------------------------------------------------------------------------------
 
 (source_file
- (alter_table_rename_statement
-  (identifier)
-  (identifier)))
+  (alter_table_rename_statement
+    (identifier)
+    (identifier)))
 
 ================================================================================
 DDL: ALTER COLUMN SET OPTIONS on BigQuery Examples #1
@@ -739,13 +741,13 @@ SET OPTIONS (
 --------------------------------------------------------------------------------
 
 (source_file
- (alter_column_set_options_statement
-  (identifier)
-  (identifier)
-  (option_clause
-   (option_item
+  (alter_column_set_options_statement
     (identifier)
-    (string)))))
+    (identifier)
+    (option_clause
+      (option_item
+        (identifier)
+        (string)))))
 
 ================================================================================
 DDL: ALTER COLUMN DROP NOT NULL on BigQuery Examples #1
@@ -758,9 +760,9 @@ DROP NOT NULL
 --------------------------------------------------------------------------------
 
 (source_file
- (alter_column_drop_not_nulls_statement
-  (identifier)
-  (identifier)))
+  (alter_column_drop_not_nulls_statement
+    (identifier)
+    (identifier)))
 
 ================================================================================
 DDL: ALTER COLUMN SET DATA TYPE on BigQuery Examples #1
@@ -773,9 +775,9 @@ SET DATA TYPE NUMERIC(8,2);
 --------------------------------------------------------------------------------
 
 (source_file
- (alter_column_set_data_type_statement
-  (identifier)
-  (identifier)
-  (column_type
-   (number)
-   (number))))
+  (alter_column_set_data_type_statement
+    (identifier)
+    (identifier)
+    (column_type
+      (number)
+      (number))))

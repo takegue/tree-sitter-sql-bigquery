@@ -550,17 +550,16 @@ module.exports = grammar({
           optional($.keyword_if_not_exists),
           field('routine_name', $.identifier),
           $.create_function_parameters,
+          optional($.create_function_return_clause),
           optional($.option_clause),
           choice(
             // SQL UDF
             seq(
-              optional($.create_function_return_clause),
               $._keyword_as,
               alias($._function_body_sql, $.create_function_body),
             ),
             // Javascript UDF
             seq(
-              optional($.create_function_return_clause),
               $._function_language,
               $._keyword_as,
               alias($._function_body_js, $.create_function_body),
