@@ -10,7 +10,8 @@
     "parse": "tree-sitter parse",
     "fix": "deno fmt",
     "build-wasm": "tree-sitter build-wasm",
-    "playground": "tree-sitter generate && rm -f tree-sitter-sql-bigquery.wasm && npm run build-wasm && tree-sitter playground"
+    "playground": "tree-sitter generate && rm -f tree-sitter-sql-bigquery.wasm && npm run build-wasm && tree-sitter playground",
+    "minor-release": "./script/update_demo && tree-sitter test && git add -u && git commit -m 'Update demo' && ./script/version"
   },
   "keywords": [
     "parser",
