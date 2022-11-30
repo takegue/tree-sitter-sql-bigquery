@@ -1019,10 +1019,10 @@ module.exports = grammar({
             field('function', $.identifier),
             '(',
             optional(alias($._keyword_distinct, $.distinct)),
-            field(
+            optional(field(
               'argument',
               commaSep1(choice($._expression, $.asterisk_expression)),
-            ),
+            )),
             optional(
               seq(optional(choice(kw('IGNORE', 'RESPECT'))), kw('NULLS')),
             ),
