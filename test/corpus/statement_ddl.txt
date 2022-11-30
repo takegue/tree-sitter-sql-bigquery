@@ -161,6 +161,9 @@ DDL: CREATE TABLE with table options
 CREATE TABLE my_table (timestamp TIMESTAMP)
 PARTITION BY DATE(timestamp);
 
+CREATE TABLE my_table (timestamp TIMESTAMP)
+PARTITION BY date;
+
 CREATE TABLE my_table (col1 INT, col2 INT)
 CLUSTER BY col1, col2;
 
@@ -170,6 +173,17 @@ OPTIONS(description="text description");
 --------------------------------------------------------------------------------
 
 (source_file
+  (create_table_statement
+    (identifier)
+    (create_table_parameters
+      (column_definition
+        (identifier)
+        (column_type)))
+    (table_partition_clause
+      (partition_expression
+        (function_call
+          (identifier)
+          (identifier)))))
   (create_table_statement
     (identifier)
     (create_table_parameters

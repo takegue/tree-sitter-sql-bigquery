@@ -34,6 +34,7 @@ module.exports = grammar({
       'unary_not',
       'statement',
       'clause_connective',
+      'literal',
     ],
   ],
   conflicts: ($) => [[$.query_expr]],
@@ -83,7 +84,11 @@ module.exports = grammar({
     _keyword_window: (_) => kw('WINDOW'),
     _keyword_partition_by: (_) => kw('PARTITION BY'),
     _keyword_date: (_) => kw('DATE'),
+    _keyword_datetime: (_) => kw('DATETIME'),
+    _keyword_time: (_) => kw('TIME'),
+    _keyword_timestamp: (_) => kw('TIMESTAMP'),
     _keyword_for: (_) => kw('FOR'),
+    _keyword_partitiontime: (_) => kw('_PARTITIONTIME'),
     _keyword_system_as_of: (_) => kw('FOR SYSTEM_TIME AS OF'),
 
     /** ************************************************************************
@@ -514,13 +519,7 @@ module.exports = grammar({
     partition_expression: ($) =>
       choice(
         kw('_PARTITIONDATE'),
-        seq(
-          $._keyword_date,
-          '(',
-          choice(kw('_PARTITIONTIME'), $.identifier),
-          ')',
-        ),
-        $.identifier,
+        $.function_call,
         seq(
           choice(kw('DATETIME_TRUNC'), kw('TIMESTAMP_TRUNC'), kw('DATE_TRUNC')),
           '(',
@@ -536,6 +535,7 @@ module.exports = grammar({
           commaSep1($._expression),
           ')',
         ),
+        $.identifier,
       ),
     table_partition_clause: ($) => seq($._keyword_partition_by, $.partition_expression),
     table_cluster_clause: ($) => seq(kw('CLUSTER BY'), sep1($._expression, ',')),
@@ -1039,9 +1039,9 @@ module.exports = grammar({
                 alias(
                   choice(
                     $._keyword_date,
-                    kw('TIME'),
-                    kw('DATETIME'),
-                    kw('TIMESTAMP'),
+                    $._keyword_time,
+                    $._keyword_datetime,
+                    $._keyword_timestamp,
                   ),
                   $.identifier,
                 ),
@@ -1252,7 +1252,7 @@ module.exports = grammar({
       ),
     time: ($) =>
       seq(
-        choice($._keyword_date, kw('TIME'), kw('DATETIME'), kw('TIMESTAMP')),
+        choice($._keyword_date, $._keyword_time, $._keyword_datetime, $._keyword_timestamp),
         $.string,
       ),
     number: ($) => $._number,
@@ -1304,7 +1304,14 @@ module.exports = grammar({
     _quoted_identifier: quoted_identifier,
     _identifier: ($) => choice($._quoted_identifier, $._unquoted_identifier),
     _dotted_identifier: ($) => seq($._identifier, token.immediate('.')),
-    identifier: ($) => prec.right(seq(repeat($._dotted_identifier), $._identifier)),
+    identifier: ($) =>
+      choice(
+        prec.right(seq(repeat($._dotted_identifier), $._identifier)),
+        prec(
+          100,
+          choice($._keyword_date, $._keyword_time, $._keyword_datetime, $._keyword_timestamp),
+        ),
+      ),
     _base_type: ($) => prec.left(seq($._unquoted_identifier, optional(seq('(', $.number, ')')))),
     string: ($) =>
       seq(

@@ -275,7 +275,7 @@ select
   TIME '12:30:00.45',
   DATETIME '2014-09-27 12:30:00.45',
   TIMESTAMP '2014-09-27 12:30:00.45-08',
-  DATE('2014-09-27')
+  DATE('2014-09-27'),
 
 --------------------------------------------------------------------------------
 
@@ -300,6 +300,36 @@ select
             (function_call
               (identifier)
               (string))))))))
+
+================================================================================
+LITERALS: DATE/TIME/DATETIME/TIMESTAMP/INTERVAL literals as identifier
+================================================================================
+
+SELECT
+  DATE,
+  TIME,
+  DATETIME,
+  TIMESTAMP,
+FROM `dataset.table`
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (identifier))
+          (select_expression
+            (identifier))
+          (select_expression
+            (identifier))
+          (select_expression
+            (identifier)))
+        (from_clause
+          (from_item
+            (identifier)))))))
 
 ================================================================================
 LITERALS: INTERVAL literals
