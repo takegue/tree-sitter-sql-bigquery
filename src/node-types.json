@@ -4414,18 +4414,6 @@
             "named": false
           },
           {
-            "type": "DATETIME",
-            "named": false
-          },
-          {
-            "type": "TIME",
-            "named": false
-          },
-          {
-            "type": "TIMESTAMP",
-            "named": false
-          },
-          {
             "type": "identifier",
             "named": true
           }
