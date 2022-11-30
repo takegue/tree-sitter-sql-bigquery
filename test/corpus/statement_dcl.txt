@@ -1,0 +1,41 @@
+================================================================================
+DCL: GRANT
+================================================================================
+
+GRANT `roles/bigquery.dataViewer` ON SCHEMA `mycompany`.revenue
+TO "user:tom@example.com", "user:sara@example.com"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (grant_statement
+    (privilege_role)
+    (object_type)
+    (identifier)
+    (privilege_user
+      (user_type)
+      (user_id))
+    (privilege_user
+      (user_type)
+      (user_id))))
+
+================================================================================
+DCL: REVOKE
+================================================================================
+
+REVOKE `roles/bigquery.admin` ON SCHEMA myProject.myDataset
+FROM "group:example-team@example.com", "serviceAccount:user@test-project.iam.gserviceaccount.com"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (revoke_statement
+    (privilege_role)
+    (object_type)
+    (identifier)
+    (privilege_user
+      (user_type)
+      (user_id))
+    (privilege_user
+      (user_type)
+      (user_id))))

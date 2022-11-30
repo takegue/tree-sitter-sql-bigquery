@@ -146,6 +146,8 @@ module.exports = grammar({
           $.return_satement,
           $.raise_statement,
           $.assert_statement,
+          $.grant_statement,
+          $.revoke_statement,
         ),
         optional(';'),
       ),
@@ -1200,6 +1202,51 @@ module.exports = grammar({
       ),
 
     insert_columns: ($) => seq('(', commaSep1($.identifier), ')'),
+
+    /** *******************************************************************************
+     *  DCL Statement
+     *  - Specification: https://github.com/google/zetasql/blob/master/docs/privileges.md
+     * ***************************************************************************** */
+
+    grant_statement: ($) =>
+      seq(
+        kw('GRANT'),
+        choice(commaSep1($.privilege_role), kw('ALL PRIVILEGES')),
+        kw('ON'),
+        optional($.object_type),
+        commaSep1($.identifier),
+        kw('TO'),
+        commaSep1($.privilege_user),
+      ),
+
+    revoke_statement: ($) =>
+      seq(
+        kw('REVOKE'),
+        choice(commaSep1($.privilege_role), kw('ALL PRIVILEGES')),
+        kw('ON'),
+        optional($.object_type),
+        commaSep1($.identifier),
+        kw('FROM'),
+        commaSep1($.privilege_user),
+      ),
+
+    privilege_role: () => /`[/a-zA-Z0-9._-]+`/,
+    privilege_user: ($) =>
+      seq(
+        '"',
+        alias(choice('user', 'group', 'serviceAccount', 'domain', 'specialGroup'), $.user_type),
+        ':',
+        alias(/[^"']+/, $.user_id),
+        '"',
+      ),
+
+    object_type: () =>
+      choice(
+        kw('SCHEMA'),
+        kw('TABLE'),
+        kw('VIEW'),
+        kw('EXTERNAL TABLE'),
+      ),
 
     /* *******************************************************************
      *                           Literals
