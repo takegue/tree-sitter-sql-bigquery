@@ -151,6 +151,7 @@ module.exports = grammar({
           $.revoke_statement,
           // Other
           $.export_data_statement,
+          $.load_data_statement,
         ),
         optional(';'),
       ),
@@ -394,7 +395,7 @@ module.exports = grammar({
           kw('EXTERNAL TABLE'),
           optional($.keyword_if_not_exists),
           field('table_name', $.identifier),
-          optional(alias(seq(kw('WITH'), kw('CONNECTION'), field('table_name', $.identifier)), $.connection_clause)),
+          optional($.with_connection_clause),
           optional($.partition_columns_clause),
           optional($.option_clause),
         ),
@@ -1258,15 +1259,39 @@ module.exports = grammar({
     export_data_statement: ($) =>
       seq(
         kw('EXPORT DATA'),
-        optional(
-          seq(
-            kw('WITH CONNECTION'),
-            field('connection_name', alias($.identifier, $.connection_path)),
-          ),
-        ),
+        optional($.with_connection_clause),
         $.option_clause,
         'AS',
         $.query_statement,
+      ),
+
+    load_data_statement: ($) =>
+      prec.right(seq(
+        kw('LOAD DATA'),
+        choice(kw('OVERWRITE'), kw('INTO')),
+        field('table_name', $.identifier),
+        optional(alias($.create_table_parameters, $.load_data_table_parameters)),
+        optional($.table_partition_clause),
+        optional($.table_cluster_clause),
+        optional($.option_clause),
+        $.from_files_clause,
+        optional($.partition_columns_clause),
+        optional($.with_connection_clause),
+      )),
+
+    with_connection_clause: ($) =>
+      seq(
+        kw('WITH CONNECTION'),
+        field('connection_name', alias($.identifier, $.connection_path)),
+      ),
+
+    from_files_clause: ($) =>
+      seq(
+        $._keyword_from,
+        kw('FILES'),
+        '(',
+        field('load_option_list', commaSep1($.option_item)),
+        ')',
       ),
 
     /* *******************************************************************

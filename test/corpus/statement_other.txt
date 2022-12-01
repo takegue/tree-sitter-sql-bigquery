@@ -54,7 +54,8 @@ SELECT field1, field2 FROM mydataset.table1 ORDER BY field1 LIMIT 10
             (identifier)))
         (limit_clause))))
   (export_data_statement
-    (connection_path)
+    (with_connection_clause
+      (connection_path))
     (option_clause
       (option_item
         (identifier)
@@ -80,3 +81,145 @@ SELECT field1, field2 FROM mydataset.table1 ORDER BY field1 LIMIT 10
           (order_by_clause_body
             (identifier)))
         (limit_clause)))))
+
+================================================================================
+OTHER: LOAD DATA
+================================================================================
+
+LOAD DATA OVERWRITE mydataset.table1
+  FROM FILES(
+    format='AVRO',
+    uris = ['gs://bucket/path/file.avro']
+  );
+
+LOAD DATA INTO mydataset.table1
+  OPTIONS(
+    description="my table",
+    expiration_timestamp="2025-01-01 00:00:00 UTC"
+  )
+  FROM FILES(
+    format='AVRO',
+    uris = ['gs://bucket/path/file.avro']
+  )
+;
+
+LOAD DATA INTO mydataset.table1
+  PARTITION BY transaction_date
+  CLUSTER BY customer_id
+  OPTIONS(
+    partition_expiration_days=3
+  )
+  FROM FILES(
+    format='AVRO',
+    uris = ['gs://bucket/path/file.avro']
+  )
+;
+
+-- Load a file that is externally partitioned
+
+LOAD DATA INTO mydataset.table1
+  FROM FILES(
+    format='AVRO',
+    uris = ['gs://bucket/path/*'],
+    hive_partition_uri_prefix='gs://bucket/path'
+  )
+  WITH PARTITION COLUMNS
+;
+
+LOAD DATA INTO mydataset.table1
+  FROM FILES(
+    format='AVRO',
+    uris = ['gs://bucket/path/*'],
+    hive_partition_uri_prefix='gs://bucket/path'
+  )
+  WITH PARTITION COLUMNS(
+    field_1 STRING, -- column order must match the external path
+    field_2 INT64
+  )
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (load_data_statement
+    (identifier)
+    (from_files_clause
+      (option_item
+        (identifier)
+        (string))
+      (option_item
+        (identifier)
+        (array
+          (string)))))
+  (load_data_statement
+    (identifier)
+    (option_clause
+      (option_item
+        (identifier)
+        (string))
+      (option_item
+        (identifier)
+        (string)))
+    (from_files_clause
+      (option_item
+        (identifier)
+        (string))
+      (option_item
+        (identifier)
+        (array
+          (string)))))
+  (load_data_statement
+    (identifier)
+    (table_partition_clause
+      (partition_expression
+        (identifier)))
+    (table_cluster_clause
+      (identifier))
+    (option_clause
+      (option_item
+        (identifier)
+        (number)))
+    (from_files_clause
+      (option_item
+        (identifier)
+        (string))
+      (option_item
+        (identifier)
+        (array
+          (string)))))
+  (comment)
+  (load_data_statement
+    (identifier)
+    (from_files_clause
+      (option_item
+        (identifier)
+        (string))
+      (option_item
+        (identifier)
+        (array
+          (string)))
+      (option_item
+        (identifier)
+        (string)))
+    (partition_columns_clause))
+  (load_data_statement
+    (identifier)
+    (from_files_clause
+      (option_item
+        (identifier)
+        (string))
+      (option_item
+        (identifier)
+        (array
+          (string)))
+      (option_item
+        (identifier)
+        (string)))
+    (partition_columns_clause
+      (partition_columns
+        (column_definition
+          (identifier)
+          (column_type))
+        (comment)
+        (column_definition
+          (identifier)
+          (column_type))))))
