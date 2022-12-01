@@ -146,8 +146,11 @@ module.exports = grammar({
           $.return_satement,
           $.raise_statement,
           $.assert_statement,
+          // DCL
           $.grant_statement,
           $.revoke_statement,
+          // Other
+          $.export_data_statement,
         ),
         optional(';'),
       ),
@@ -1246,6 +1249,24 @@ module.exports = grammar({
         kw('TABLE'),
         kw('VIEW'),
         kw('EXTERNAL TABLE'),
+      ),
+
+    /** *******************************************************************************
+     *  Other Statements
+     * ***************************************************************************** */
+
+    export_data_statement: ($) =>
+      seq(
+        kw('EXPORT DATA'),
+        optional(
+          seq(
+            kw('WITH CONNECTION'),
+            field('connection_name', alias($.identifier, $.connection_path)),
+          ),
+        ),
+        $.option_clause,
+        'AS',
+        $.query_statement,
       ),
 
     /* *******************************************************************

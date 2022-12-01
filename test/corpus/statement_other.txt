@@ -1,0 +1,82 @@
+================================================================================
+OTHER: EXPORT DATA
+================================================================================
+
+EXPORT DATA OPTIONS(
+  uri='gs://bucket/folder/*.csv',
+  format='CSV',
+  overwrite=true,
+  header=true,
+  field_delimiter=';') AS
+SELECT field1, field2 FROM mydataset.table1 ORDER BY field1 LIMIT 10;
+
+EXPORT DATA
+  WITH CONNECTION myproject.us.myconnection
+  OPTIONS(
+  uri='s3://bucket/folder/*',
+  format='JSON',
+  overwrite=true) AS
+SELECT field1, field2 FROM mydataset.table1 ORDER BY field1 LIMIT 10
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (export_data_statement
+    (option_clause
+      (option_item
+        (identifier)
+        (string))
+      (option_item
+        (identifier)
+        (string))
+      (option_item
+        (identifier)
+        (TRUE))
+      (option_item
+        (identifier)
+        (TRUE))
+      (option_item
+        (identifier)
+        (string)))
+    (query_statement
+      (query_expr
+        (select
+          (select_list
+            (select_expression
+              (identifier))
+            (select_expression
+              (identifier)))
+          (from_clause
+            (from_item
+              (identifier))))
+        (order_by_clause
+          (order_by_clause_body
+            (identifier)))
+        (limit_clause))))
+  (export_data_statement
+    (connection_path)
+    (option_clause
+      (option_item
+        (identifier)
+        (string))
+      (option_item
+        (identifier)
+        (string))
+      (option_item
+        (identifier)
+        (TRUE)))
+    (query_statement
+      (query_expr
+        (select
+          (select_list
+            (select_expression
+              (identifier))
+            (select_expression
+              (identifier)))
+          (from_clause
+            (from_item
+              (identifier))))
+        (order_by_clause
+          (order_by_clause_body
+            (identifier)))
+        (limit_clause)))))
