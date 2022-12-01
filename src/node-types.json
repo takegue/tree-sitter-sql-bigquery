@@ -311,10 +311,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -331,102 +327,11 @@
           "named": true
         },
         {
-          "type": "function_call",
+          "type": "element_access",
           "named": true
         },
         {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "interval",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "query_parameter",
-          "named": true
-        },
-        {
-          "type": "select_subexpression",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "struct",
-          "named": true
-        },
-        {
-          "type": "system_variable",
-          "named": true
-        },
-        {
-          "type": "time",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
-          "named": true
-        },
-        {
-          "type": "unnest_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "array_element_access",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "FALSE",
-          "named": true
-        },
-        {
-          "type": "NULL",
-          "named": true
-        },
-        {
-          "type": "TRUE",
-          "named": true
-        },
-        {
-          "type": "argument_reference",
-          "named": true
-        },
-        {
-          "type": "array",
-          "named": true
-        },
-        {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
-          "type": "between_operator",
-          "named": true
-        },
-        {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "casewhen_expression",
-          "named": true
-        },
-        {
-          "type": "cast_expression",
+          "type": "field_access",
           "named": true
         },
         {
@@ -439,6 +344,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -525,10 +434,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -545,6 +450,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -554,6 +467,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -737,7 +654,15 @@
           "named": true
         },
         {
+          "type": "export_data_statement",
+          "named": true
+        },
+        {
           "type": "for_in_statement",
+          "named": true
+        },
+        {
+          "type": "grant_statement",
           "named": true
         },
         {
@@ -754,6 +679,10 @@
         },
         {
           "type": "leave_statement",
+          "named": true
+        },
+        {
+          "type": "load_data_statement",
           "named": true
         },
         {
@@ -778,6 +707,10 @@
         },
         {
           "type": "return_satement",
+          "named": true
+        },
+        {
+          "type": "revoke_statement",
           "named": true
         },
         {
@@ -936,7 +869,15 @@
           "named": true
         },
         {
+          "type": "export_data_statement",
+          "named": true
+        },
+        {
           "type": "for_in_statement",
+          "named": true
+        },
+        {
+          "type": "grant_statement",
           "named": true
         },
         {
@@ -953,6 +894,10 @@
         },
         {
           "type": "leave_statement",
+          "named": true
+        },
+        {
+          "type": "load_data_statement",
           "named": true
         },
         {
@@ -977,6 +922,10 @@
         },
         {
           "type": "return_satement",
+          "named": true
+        },
+        {
+          "type": "revoke_statement",
           "named": true
         },
         {
@@ -1027,10 +976,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -1047,6 +992,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1056,6 +1009,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -1134,10 +1091,6 @@
             "named": true
           },
           {
-            "type": "array_element_access",
-            "named": true
-          },
-          {
             "type": "between_operator",
             "named": true
           },
@@ -1154,6 +1107,14 @@
             "named": true
           },
           {
+            "type": "element_access",
+            "named": true
+          },
+          {
+            "type": "field_access",
+            "named": true
+          },
+          {
             "type": "function_call",
             "named": true
           },
@@ -1163,6 +1124,10 @@
           },
           {
             "type": "interval",
+            "named": true
+          },
+          {
+            "type": "json",
             "named": true
           },
           {
@@ -1254,10 +1219,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -1274,6 +1235,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1283,6 +1252,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -1381,10 +1354,6 @@
             "named": true
           },
           {
-            "type": "array_element_access",
-            "named": true
-          },
-          {
             "type": "between_operator",
             "named": true
           },
@@ -1401,6 +1370,14 @@
             "named": true
           },
           {
+            "type": "element_access",
+            "named": true
+          },
+          {
+            "type": "field_access",
+            "named": true
+          },
+          {
             "type": "function_call",
             "named": true
           },
@@ -1410,6 +1387,10 @@
           },
           {
             "type": "interval",
+            "named": true
+          },
+          {
+            "type": "json",
             "named": true
           },
           {
@@ -1585,10 +1566,6 @@
             "named": true
           },
           {
-            "type": "array_element_access",
-            "named": true
-          },
-          {
             "type": "between_operator",
             "named": true
           },
@@ -1605,6 +1582,14 @@
             "named": true
           },
           {
+            "type": "element_access",
+            "named": true
+          },
+          {
+            "type": "field_access",
+            "named": true
+          },
+          {
             "type": "function_call",
             "named": true
           },
@@ -1614,6 +1599,10 @@
           },
           {
             "type": "interval",
+            "named": true
+          },
+          {
+            "type": "json",
             "named": true
           },
           {
@@ -1702,10 +1691,6 @@
             "named": true
           },
           {
-            "type": "array_element_access",
-            "named": true
-          },
-          {
             "type": "between_operator",
             "named": true
           },
@@ -1722,6 +1707,14 @@
             "named": true
           },
           {
+            "type": "element_access",
+            "named": true
+          },
+          {
+            "type": "field_access",
+            "named": true
+          },
+          {
             "type": "function_call",
             "named": true
           },
@@ -1731,6 +1724,10 @@
           },
           {
             "type": "interval",
+            "named": true
+          },
+          {
+            "type": "json",
             "named": true
           },
           {
@@ -1820,10 +1817,6 @@
             "named": true
           },
           {
-            "type": "array_element_access",
-            "named": true
-          },
-          {
             "type": "between_operator",
             "named": true
           },
@@ -1840,6 +1833,14 @@
             "named": true
           },
           {
+            "type": "element_access",
+            "named": true
+          },
+          {
+            "type": "field_access",
+            "named": true
+          },
+          {
             "type": "function_call",
             "named": true
           },
@@ -1849,6 +1850,10 @@
           },
           {
             "type": "interval",
+            "named": true
+          },
+          {
+            "type": "json",
             "named": true
           },
           {
@@ -1928,10 +1933,6 @@
             "named": true
           },
           {
-            "type": "array_element_access",
-            "named": true
-          },
-          {
             "type": "between_operator",
             "named": true
           },
@@ -1948,6 +1949,14 @@
             "named": true
           },
           {
+            "type": "element_access",
+            "named": true
+          },
+          {
+            "type": "field_access",
+            "named": true
+          },
+          {
             "type": "function_call",
             "named": true
           },
@@ -1957,6 +1966,10 @@
           },
           {
             "type": "interval",
+            "named": true
+          },
+          {
+            "type": "json",
             "named": true
           },
           {
@@ -2030,10 +2043,6 @@
             "named": true
           },
           {
-            "type": "array_element_access",
-            "named": true
-          },
-          {
             "type": "between_operator",
             "named": true
           },
@@ -2050,6 +2059,14 @@
             "named": true
           },
           {
+            "type": "element_access",
+            "named": true
+          },
+          {
+            "type": "field_access",
+            "named": true
+          },
+          {
             "type": "function_call",
             "named": true
           },
@@ -2059,6 +2076,10 @@
           },
           {
             "type": "interval",
+            "named": true
+          },
+          {
+            "type": "json",
             "named": true
           },
           {
@@ -2138,10 +2159,6 @@
             "named": true
           },
           {
-            "type": "array_element_access",
-            "named": true
-          },
-          {
             "type": "between_operator",
             "named": true
           },
@@ -2158,6 +2175,14 @@
             "named": true
           },
           {
+            "type": "element_access",
+            "named": true
+          },
+          {
+            "type": "field_access",
+            "named": true
+          },
+          {
             "type": "function_call",
             "named": true
           },
@@ -2167,6 +2192,10 @@
           },
           {
             "type": "interval",
+            "named": true
+          },
+          {
+            "type": "json",
             "named": true
           },
           {
@@ -2252,10 +2281,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -2276,6 +2301,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -2285,6 +2318,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -2402,11 +2439,6 @@
     }
   },
   {
-    "type": "connection_clause",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "connection_path",
     "named": true,
     "fields": {}
@@ -2421,13 +2453,9 @@
     "named": true,
     "fields": {
       "table_name": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "connection_clause",
-            "named": true
-          },
           {
             "type": "identifier",
             "named": true
@@ -2453,6 +2481,10 @@
         },
         {
           "type": "partition_columns_clause",
+          "named": true
+        },
+        {
+          "type": "with_connection_clause",
           "named": true
         }
       ]
@@ -2487,10 +2519,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -2507,6 +2535,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -2516,6 +2552,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -3156,10 +3196,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -3176,6 +3212,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -3185,6 +3229,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -3427,6 +3475,113 @@
     }
   },
   {
+    "type": "element_access",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "FALSE",
+          "named": true
+        },
+        {
+          "type": "NULL",
+          "named": true
+        },
+        {
+          "type": "TRUE",
+          "named": true
+        },
+        {
+          "type": "argument_reference",
+          "named": true
+        },
+        {
+          "type": "array",
+          "named": true
+        },
+        {
+          "type": "between_operator",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "casewhen_expression",
+          "named": true
+        },
+        {
+          "type": "cast_expression",
+          "named": true
+        },
+        {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "query_parameter",
+          "named": true
+        },
+        {
+          "type": "select_subexpression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "struct",
+          "named": true
+        },
+        {
+          "type": "system_variable",
+          "named": true
+        },
+        {
+          "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "unnest_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "else_statement",
     "named": true,
     "fields": {},
@@ -3563,7 +3718,15 @@
           "named": true
         },
         {
+          "type": "export_data_statement",
+          "named": true
+        },
+        {
           "type": "for_in_statement",
+          "named": true
+        },
+        {
+          "type": "grant_statement",
           "named": true
         },
         {
@@ -3580,6 +3743,10 @@
         },
         {
           "type": "leave_statement",
+          "named": true
+        },
+        {
+          "type": "load_data_statement",
           "named": true
         },
         {
@@ -3604,6 +3771,10 @@
         },
         {
           "type": "return_satement",
+          "named": true
+        },
+        {
+          "type": "revoke_statement",
           "named": true
         },
         {
@@ -3679,10 +3850,6 @@
         },
         {
           "type": "array",
-          "named": true
-        },
-        {
-          "type": "array_element_access",
           "named": true
         },
         {
@@ -3798,7 +3965,19 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
           "type": "execute_immadiate_statement",
+          "named": true
+        },
+        {
+          "type": "export_data_statement",
+          "named": true
+        },
+        {
+          "type": "field_access",
           "named": true
         },
         {
@@ -3807,6 +3986,10 @@
         },
         {
           "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "grant_statement",
           "named": true
         },
         {
@@ -3830,7 +4013,15 @@
           "named": true
         },
         {
+          "type": "json",
+          "named": true
+        },
+        {
           "type": "leave_statement",
+          "named": true
+        },
+        {
+          "type": "load_data_statement",
           "named": true
         },
         {
@@ -3863,6 +4054,10 @@
         },
         {
           "type": "return_satement",
+          "named": true
+        },
+        {
+          "type": "revoke_statement",
           "named": true
         },
         {
@@ -3941,10 +4136,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -3961,6 +4152,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -3974,6 +4173,10 @@
         },
         {
           "type": "into_clause",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -4014,6 +4217,136 @@
         },
         {
           "type": "using_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "export_data_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "option_clause",
+          "named": true
+        },
+        {
+          "type": "query_statement",
+          "named": true
+        },
+        {
+          "type": "with_connection_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "field_access",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "FALSE",
+          "named": true
+        },
+        {
+          "type": "NULL",
+          "named": true
+        },
+        {
+          "type": "TRUE",
+          "named": true
+        },
+        {
+          "type": "argument_reference",
+          "named": true
+        },
+        {
+          "type": "array",
+          "named": true
+        },
+        {
+          "type": "between_operator",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "casewhen_expression",
+          "named": true
+        },
+        {
+          "type": "cast_expression",
+          "named": true
+        },
+        {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "query_parameter",
+          "named": true
+        },
+        {
+          "type": "select_subexpression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "struct",
+          "named": true
+        },
+        {
+          "type": "system_variable",
+          "named": true
+        },
+        {
+          "type": "time",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        },
+        {
+          "type": "unnest_clause",
           "named": true
         }
       ]
@@ -4156,7 +4489,15 @@
           "named": true
         },
         {
+          "type": "export_data_statement",
+          "named": true
+        },
+        {
           "type": "for_in_statement",
+          "named": true
+        },
+        {
+          "type": "grant_statement",
           "named": true
         },
         {
@@ -4177,6 +4518,10 @@
         },
         {
           "type": "leave_statement",
+          "named": true
+        },
+        {
+          "type": "load_data_statement",
           "named": true
         },
         {
@@ -4201,6 +4546,10 @@
         },
         {
           "type": "return_satement",
+          "named": true
+        },
+        {
+          "type": "revoke_statement",
           "named": true
         },
         {
@@ -4247,6 +4596,26 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "from_files_clause",
+    "named": true,
+    "fields": {
+      "load_option_list": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "option_item",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -4332,10 +4701,6 @@
             "named": true
           },
           {
-            "type": "array_element_access",
-            "named": true
-          },
-          {
             "type": "asterisk_expression",
             "named": true
           },
@@ -4356,6 +4721,14 @@
             "named": true
           },
           {
+            "type": "element_access",
+            "named": true
+          },
+          {
+            "type": "field_access",
+            "named": true
+          },
+          {
             "type": "function_call",
             "named": true
           },
@@ -4365,6 +4738,10 @@
           },
           {
             "type": "interval",
+            "named": true
+          },
+          {
+            "type": "json",
             "named": true
           },
           {
@@ -4449,10 +4826,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -4477,6 +4850,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -4486,6 +4867,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -4536,6 +4921,33 @@
     }
   },
   {
+    "type": "grant_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "object_type",
+          "named": true
+        },
+        {
+          "type": "privilege_role",
+          "named": true
+        },
+        {
+          "type": "privilege_user",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "group_by_clause",
     "named": true,
     "fields": {},
@@ -4579,10 +4991,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -4599,6 +5007,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -4608,6 +5024,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -4678,10 +5098,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -4698,6 +5114,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -4707,6 +5131,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -4807,10 +5235,6 @@
         },
         {
           "type": "array",
-          "named": true
-        },
-        {
-          "type": "array_element_access",
           "named": true
         },
         {
@@ -4926,6 +5350,10 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
           "type": "else_statement",
           "named": true
         },
@@ -4938,11 +5366,23 @@
           "named": true
         },
         {
+          "type": "export_data_statement",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "for_in_statement",
           "named": true
         },
         {
           "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "grant_statement",
           "named": true
         },
         {
@@ -4966,7 +5406,15 @@
           "named": true
         },
         {
+          "type": "json",
+          "named": true
+        },
+        {
           "type": "leave_statement",
+          "named": true
+        },
+        {
+          "type": "load_data_statement",
           "named": true
         },
         {
@@ -4999,6 +5447,10 @@
         },
         {
           "type": "return_satement",
+          "named": true
+        },
+        {
+          "type": "revoke_statement",
           "named": true
         },
         {
@@ -5127,10 +5579,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -5151,6 +5599,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -5160,6 +5616,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -5261,10 +5721,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -5281,6 +5737,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -5290,6 +5754,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -5375,6 +5843,21 @@
     "fields": {}
   },
   {
+    "type": "json",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "keyword_current_row",
     "named": true,
     "fields": {}
@@ -5418,6 +5901,71 @@
     "type": "limit_clause",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "load_data_statement",
+    "named": true,
+    "fields": {
+      "table_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "from_files_clause",
+          "named": true
+        },
+        {
+          "type": "load_data_table_parameters",
+          "named": true
+        },
+        {
+          "type": "option_clause",
+          "named": true
+        },
+        {
+          "type": "partition_columns_clause",
+          "named": true
+        },
+        {
+          "type": "table_cluster_clause",
+          "named": true
+        },
+        {
+          "type": "table_partition_clause",
+          "named": true
+        },
+        {
+          "type": "with_connection_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "load_data_table_parameters",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "column_definition",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "loop_statement",
@@ -5556,7 +6104,15 @@
           "named": true
         },
         {
+          "type": "export_data_statement",
+          "named": true
+        },
+        {
           "type": "for_in_statement",
+          "named": true
+        },
+        {
+          "type": "grant_statement",
           "named": true
         },
         {
@@ -5573,6 +6129,10 @@
         },
         {
           "type": "leave_statement",
+          "named": true
+        },
+        {
+          "type": "load_data_statement",
           "named": true
         },
         {
@@ -5597,6 +6157,10 @@
         },
         {
           "type": "return_satement",
+          "named": true
+        },
+        {
+          "type": "revoke_statement",
           "named": true
         },
         {
@@ -5647,10 +6211,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -5667,6 +6227,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -5676,6 +6244,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -5971,6 +6543,11 @@
     "fields": {}
   },
   {
+    "type": "object_type",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "option_clause",
     "named": true,
     "fields": {},
@@ -6032,10 +6609,6 @@
             "named": true
           },
           {
-            "type": "array_element_access",
-            "named": true
-          },
-          {
             "type": "between_operator",
             "named": true
           },
@@ -6052,6 +6625,14 @@
             "named": true
           },
           {
+            "type": "element_access",
+            "named": true
+          },
+          {
+            "type": "field_access",
+            "named": true
+          },
+          {
             "type": "function_call",
             "named": true
           },
@@ -6061,6 +6642,10 @@
           },
           {
             "type": "interval",
+            "named": true
+          },
+          {
+            "type": "json",
             "named": true
           },
           {
@@ -6176,10 +6761,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -6196,6 +6777,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -6205,6 +6794,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -6324,10 +6917,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -6344,6 +6933,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -6353,6 +6950,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -6423,10 +7024,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "as_alias",
           "named": true
         },
@@ -6447,6 +7044,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -6456,6 +7061,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -6538,6 +7147,25 @@
         },
         {
           "type": "function_call",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "privilege_user",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "user_id",
+          "named": true
+        },
+        {
+          "type": "user_type",
           "named": true
         }
       ]
@@ -6718,7 +7346,15 @@
           "named": true
         },
         {
+          "type": "export_data_statement",
+          "named": true
+        },
+        {
           "type": "for_in_statement",
+          "named": true
+        },
+        {
+          "type": "grant_statement",
           "named": true
         },
         {
@@ -6735,6 +7371,10 @@
         },
         {
           "type": "leave_statement",
+          "named": true
+        },
+        {
+          "type": "load_data_statement",
           "named": true
         },
         {
@@ -6759,6 +7399,10 @@
         },
         {
           "type": "return_satement",
+          "named": true
+        },
+        {
+          "type": "revoke_statement",
           "named": true
         },
         {
@@ -6824,10 +7468,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -6844,6 +7484,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -6853,6 +7501,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -6978,10 +7630,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -6998,6 +7646,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -7007,6 +7663,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -7185,7 +7845,15 @@
           "named": true
         },
         {
+          "type": "export_data_statement",
+          "named": true
+        },
+        {
           "type": "for_in_statement",
+          "named": true
+        },
+        {
+          "type": "grant_statement",
           "named": true
         },
         {
@@ -7202,6 +7870,10 @@
         },
         {
           "type": "leave_statement",
+          "named": true
+        },
+        {
+          "type": "load_data_statement",
           "named": true
         },
         {
@@ -7226,6 +7898,10 @@
         },
         {
           "type": "return_satement",
+          "named": true
+        },
+        {
+          "type": "revoke_statement",
           "named": true
         },
         {
@@ -7255,6 +7931,33 @@
     "type": "return_satement",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "revoke_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "object_type",
+          "named": true
+        },
+        {
+          "type": "privilege_role",
+          "named": true
+        },
+        {
+          "type": "privilege_user",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "rows_range",
@@ -7290,10 +7993,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -7310,6 +8009,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -7319,6 +8026,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -7482,10 +8193,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "as_alias",
           "named": true
         },
@@ -7506,6 +8213,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -7515,6 +8230,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -7604,10 +8323,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "as_alias",
           "named": true
         },
@@ -7628,6 +8343,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -7637,6 +8360,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -7775,10 +8502,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -7795,6 +8518,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -7804,6 +8535,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -8005,7 +8740,15 @@
           "named": true
         },
         {
+          "type": "export_data_statement",
+          "named": true
+        },
+        {
           "type": "for_in_statement",
+          "named": true
+        },
+        {
+          "type": "grant_statement",
           "named": true
         },
         {
@@ -8022,6 +8765,10 @@
         },
         {
           "type": "leave_statement",
+          "named": true
+        },
+        {
+          "type": "load_data_statement",
           "named": true
         },
         {
@@ -8046,6 +8793,10 @@
         },
         {
           "type": "return_satement",
+          "named": true
+        },
+        {
+          "type": "revoke_statement",
           "named": true
         },
         {
@@ -8101,10 +8852,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "as_alias",
           "named": true
         },
@@ -8125,6 +8872,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -8134,6 +8889,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -8204,10 +8963,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -8224,6 +8979,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -8233,6 +8996,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -8303,10 +9070,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -8323,6 +9086,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -8332,6 +9103,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -8543,10 +9318,6 @@
             "named": true
           },
           {
-            "type": "array_element_access",
-            "named": true
-          },
-          {
             "type": "between_operator",
             "named": true
           },
@@ -8563,6 +9334,14 @@
             "named": true
           },
           {
+            "type": "element_access",
+            "named": true
+          },
+          {
+            "type": "field_access",
+            "named": true
+          },
+          {
             "type": "function_call",
             "named": true
           },
@@ -8572,6 +9351,10 @@
           },
           {
             "type": "interval",
+            "named": true
+          },
+          {
+            "type": "json",
             "named": true
           },
           {
@@ -8638,10 +9421,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -8658,6 +9437,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -8667,6 +9454,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -8760,10 +9551,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -8780,6 +9567,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -8789,6 +9584,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -8922,10 +9721,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -8942,6 +9737,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -8951,6 +9754,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -9021,10 +9828,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -9041,6 +9844,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -9050,6 +9861,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -9173,10 +9988,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "as_alias",
           "named": true
         },
@@ -9197,6 +10008,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -9206,6 +10025,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -9276,10 +10099,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -9296,6 +10115,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -9305,6 +10132,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -9409,10 +10240,6 @@
           "named": true
         },
         {
-          "type": "array_element_access",
-          "named": true
-        },
-        {
           "type": "between_operator",
           "named": true
         },
@@ -9429,6 +10256,14 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -9438,6 +10273,10 @@
         },
         {
           "type": "interval",
+          "named": true
+        },
+        {
+          "type": "json",
           "named": true
         },
         {
@@ -9533,10 +10372,6 @@
         },
         {
           "type": "array",
-          "named": true
-        },
-        {
-          "type": "array_element_access",
           "named": true
         },
         {
@@ -9652,7 +10487,19 @@
           "named": true
         },
         {
+          "type": "element_access",
+          "named": true
+        },
+        {
           "type": "execute_immadiate_statement",
+          "named": true
+        },
+        {
+          "type": "export_data_statement",
+          "named": true
+        },
+        {
+          "type": "field_access",
           "named": true
         },
         {
@@ -9661,6 +10508,10 @@
         },
         {
           "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "grant_statement",
           "named": true
         },
         {
@@ -9684,7 +10535,15 @@
           "named": true
         },
         {
+          "type": "json",
+          "named": true
+        },
+        {
           "type": "leave_statement",
+          "named": true
+        },
+        {
+          "type": "load_data_statement",
           "named": true
         },
         {
@@ -9717,6 +10576,10 @@
         },
         {
           "type": "return_satement",
+          "named": true
+        },
+        {
+          "type": "revoke_statement",
           "named": true
         },
         {
@@ -9931,6 +10794,22 @@
     }
   },
   {
+    "type": "with_connection_clause",
+    "named": true,
+    "fields": {
+      "connection_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "connection_path",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "!=",
     "named": false
   },
@@ -9983,6 +10862,10 @@
     "named": false
   },
   {
+    "type": ":",
+    "named": false
+  },
+  {
     "type": ";",
     "named": false
   },
@@ -10024,6 +10907,10 @@
   },
   {
     "type": "ALL",
+    "named": false
+  },
+  {
+    "type": "ALL_PRIVILEGES",
     "named": false
   },
   {
@@ -10104,10 +10991,6 @@
   },
   {
     "type": "CLUSTER_BY",
-    "named": false
-  },
-  {
-    "type": "CONNECTION",
     "named": false
   },
   {
@@ -10251,11 +11134,19 @@
     "named": false
   },
   {
+    "type": "EXPORT_DATA",
+    "named": false
+  },
+  {
     "type": "EXTERNAL_TABLE",
     "named": false
   },
   {
     "type": "FALSE",
+    "named": false
+  },
+  {
+    "type": "FILES",
     "named": false
   },
   {
@@ -10288,6 +11179,10 @@
   },
   {
     "type": "GENERATE_ARRAY",
+    "named": false
+  },
+  {
+    "type": "GRANT",
     "named": false
   },
   {
@@ -10363,6 +11258,10 @@
     "named": false
   },
   {
+    "type": "JSON",
+    "named": false
+  },
+  {
     "type": "LANGUAGE",
     "named": false
   },
@@ -10380,6 +11279,10 @@
   },
   {
     "type": "LIMIT",
+    "named": false
+  },
+  {
+    "type": "LOAD_DATA",
     "named": false
   },
   {
@@ -10463,6 +11366,10 @@
     "named": false
   },
   {
+    "type": "OVERWRITE",
+    "named": false
+  },
+  {
     "type": "PARTITION_BY",
     "named": false
   },
@@ -10531,6 +11438,10 @@
     "named": false
   },
   {
+    "type": "REVOKE",
+    "named": false
+  },
+  {
     "type": "RIGHT",
     "named": false
   },
@@ -10548,6 +11459,10 @@
   },
   {
     "type": "SAFE_CAST",
+    "named": false
+  },
+  {
+    "type": "SCHEMA",
     "named": false
   },
   {
@@ -10715,6 +11630,10 @@
     "named": false
   },
   {
+    "type": "WITH_CONNECTION",
+    "named": false
+  },
+  {
     "type": "WITH_OFFSET",
     "named": false
   },
@@ -10759,7 +11678,19 @@
     "named": true
   },
   {
+    "type": "privilege_role",
+    "named": true
+  },
+  {
     "type": "system_variable",
+    "named": true
+  },
+  {
+    "type": "user_id",
+    "named": true
+  },
+  {
+    "type": "user_type",
     "named": true
   },
   {
