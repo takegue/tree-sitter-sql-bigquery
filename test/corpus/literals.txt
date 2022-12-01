@@ -156,7 +156,8 @@ select
   ARRAY<struct<x INT64, y STRING>>[],
   [],
   ARRAY(select 1),
-  [ifnull(1, 0), 2]
+  [ifnull(1, 0), 2],
+  [ifnull(1, 0), 2][safe_offset(0)]
 
 --------------------------------------------------------------------------------
 
@@ -205,7 +206,18 @@ select
                 (identifier)
                 (number)
                 (number))
-              (number))))))))
+              (number)))
+          (select_expression
+            (element_access
+              (array
+                (function_call
+                  (identifier)
+                  (number)
+                  (number))
+                (number))
+              (function_call
+                (identifier)
+                (number)))))))))
 
 ================================================================================
 LITERALS: Struct literals
@@ -220,7 +232,8 @@ select
   STRUCT<INT64>(1),
   STRUCT<x struct<INT64>>(1),
   STRUCT<x struct<INT64>>(1),
-  STRUCT<x struct<ARRAY<string>>>(null)
+  STRUCT<x struct<ARRAY<string>>>(null),
+  STRUCT("hoge" as id)  .  id
 
 --------------------------------------------------------------------------------
 
@@ -264,7 +277,14 @@ select
               (number)))
           (select_expression
             (struct
-              (NULL))))))))
+              (NULL)))
+          (select_expression
+            (field_access
+              (struct
+                (string)
+                (as_alias
+                  (identifier)))
+              (identifier))))))))
 
 ================================================================================
 LITERALS: DATE/TIME/DATETIME/TIMESTAMP/INTERVAL literals
@@ -377,6 +397,36 @@ select
               (string)
               (datetime_part)
               (datetime_part))))))))
+
+================================================================================
+LITERALS: JSON
+================================================================================
+
+select
+  JSON '{"fuga": 2}',
+  (JSON '{"hoge": 2}')["hoge"],
+  JSON '{"hoge": 2}'.hoge
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (json
+              (string)))
+          (select_expression
+            (element_access
+              (json
+                (string))
+              (string)))
+          (select_expression
+            (field_access
+              (json
+                (string))
+              (identifier))))))))
 
 ================================================================================
 LITERALS: Query parameter

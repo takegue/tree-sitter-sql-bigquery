@@ -1260,6 +1260,7 @@ module.exports = grammar({
         $.interval,
         $.time,
         $.string,
+        $.json,
         $.TRUE,
         $.FALSE,
         $.NULL,
@@ -1303,6 +1304,7 @@ module.exports = grammar({
         $.string,
       ),
     number: ($) => $._number,
+    json: ($) => seq(kw('JSON'), $.string),
 
     system_variable: () => /@@[_a-zA-Z][._a-zA-Z0-9]*/,
     query_parameter: ($) => choice($._named_query_parameter, $._positional_query_parameter),
@@ -1392,14 +1394,17 @@ module.exports = grammar({
         $.unnest_clause,
         $._parenthesized_expression,
         $.binary_expression,
-        $.array_element_access,
+        $.field_access,
+        $.element_access,
         $.argument_reference,
         $.select_subexpression,
         $.cast_expression,
       ),
 
     _parenthesized_expression: ($) => prec('unary_exp', seq('(', $._expression, ')')),
-    array_element_access: ($) => seq(choice($.identifier, $.argument_reference), '[', $._expression, ']'),
+
+    element_access: ($) => seq($._expression, '[', $._expression, ']'),
+    field_access: ($) => seq($._expression, '.', $.identifier),
 
     unary_expression: ($) =>
       choice(
