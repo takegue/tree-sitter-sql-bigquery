@@ -9891,8 +9891,21 @@
       "value": "[_a-zA-Z][_a-zA-Z0-9]*"
     },
     "_quoted_identifier": {
-      "type": "PATTERN",
-      "value": "`.+`"
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "`"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[^`]+"
+        },
+        {
+          "type": "STRING",
+          "value": "`"
+        }
+      ]
     },
     "_identifier": {
       "type": "CHOICE",

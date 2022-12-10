@@ -11666,6 +11666,10 @@
     "named": false
   },
   {
+    "type": "`",
+    "named": false
+  },
+  {
     "type": "comment",
     "named": true
   },
