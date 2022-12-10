@@ -1,4 +1,24 @@
 ================================================================================
+SELECT statement with wildcard
+================================================================================
+
+SELECT * FROM `test1.hogehoge_*` LIMIT 1000
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_all
+            (asterisk_expression)))
+        (from_clause
+          (from_item
+            (identifier))))
+      (limit_clause))))
+
+================================================================================
 SELECT statement with bigquery public dataset
 ================================================================================
 

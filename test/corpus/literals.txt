@@ -6,7 +6,8 @@ select
   _5bc.dataField,
  `5abc`.dataField,
  `GROUP`.dataField,
- abc5.GROUP
+ abc5.GROUP,
+ `!@#$%^&*(_+|)|}{":?><`
 
 --------------------------------------------------------------------------------
 
@@ -15,6 +16,8 @@ select
     (query_expr
       (select
         (select_list
+          (select_expression
+            (identifier))
           (select_expression
             (identifier))
           (select_expression

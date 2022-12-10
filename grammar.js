@@ -4,7 +4,7 @@ const multiplicative_operators = ['*', '/', '||'],
   additive_operators = ['+', '-'],
   unary_operators = ['~', '+', '-'],
   unquoted_identifier = (_) => /[_a-zA-Z][_a-zA-Z0-9]*/,
-  quoted_identifier = (_) => /`[a-zA-Z0-9._-]+`/;
+  quoted_identifier = (_) => /`.+`/;
 
 module.exports = grammar({
   name: 'sql_bigquery',
@@ -1417,7 +1417,7 @@ module.exports = grammar({
     ordered_expression: ($) => seq($._expression, $._direction_keywords),
 
     // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890
-    comment: ($) =>
+    comment: () =>
       token(
         choice(
           seq('#', /.*/),
