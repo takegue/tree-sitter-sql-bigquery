@@ -3,8 +3,7 @@ const multiplicative_operators = ['*', '/', '||'],
   comparative_operators = ['<', '<=', '<>', '=', '>', '>=', '!='],
   additive_operators = ['+', '-'],
   unary_operators = ['~', '+', '-'],
-  unquoted_identifier = (_) => /[_a-zA-Z][_a-zA-Z0-9]*/,
-  quoted_identifier = (_) => /`.+`/;
+  unquoted_identifier = (_) => /[_a-zA-Z][_a-zA-Z0-9]*/;
 
 module.exports = grammar({
   name: 'sql_bigquery',
@@ -1396,7 +1395,7 @@ module.exports = grammar({
         ')',
       ),
     _unquoted_identifier: unquoted_identifier,
-    _quoted_identifier: quoted_identifier,
+    _quoted_identifier: ($) => seq('`', /[^`]+/, '`'),
     _identifier: ($) => choice($._quoted_identifier, $._unquoted_identifier),
     _dotted_identifier: ($) => seq($._identifier, token.immediate('.')),
     identifier: ($) =>
