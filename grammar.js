@@ -101,7 +101,9 @@ module.exports = grammar({
           $.alter_schema_statement,
           $.drop_schema_statement,
           $.create_table_statement,
+          $.create_table_like_statement,
           $.create_table_clone_statement,
+          $.create_table_copy_statement,
           $.create_snapshot_table_statement,
           $.create_external_table_statement,
           $.alter_table_statement,
@@ -360,6 +362,24 @@ module.exports = grammar({
           optional(seq($._keyword_as, $.query_statement)),
         ),
       ),
+    create_table_like_statement: ($) =>
+      prec.right(
+        seq(
+          kw('CREATE'),
+          optional($.keyword_replace),
+          optional($.keyword_temporary),
+          choice(kw('TABLE'), kw('VIEW'), kw('MATERIALIZED VIEW')),
+          optional($.keyword_if_not_exists),
+          field('table_name', $.identifier),
+          $.like_clause,
+          optional($.create_table_parameters),
+          optional($.table_partition_clause),
+          optional($.table_cluster_clause),
+          optional($.option_clause),
+          optional(seq($._keyword_as, $.query_statement)),
+        ),
+      ),
+    like_clause: ($) => seq(kw('LIKE'), field('source_table_name', $.identifier)),
     create_table_clone_statement: ($) =>
       prec.right(
         seq(
@@ -368,20 +388,32 @@ module.exports = grammar({
           choice(kw('TABLE')),
           optional($.keyword_if_not_exists),
           field('table_name', $.identifier),
-          kw('CLONE'),
-          field('source_table_name', $.identifier),
+          $.clone_clause,
           optional($.system_time_clause),
           optional($.option_clause),
         ),
       ),
+    clone_clause: ($) => seq(kw('CLONE'), field('source_table_name', $.identifier)),
+    create_table_copy_statement: ($) =>
+      prec.right(
+        seq(
+          kw('CREATE'),
+          optional($.keyword_replace),
+          choice(kw('TABLE')),
+          optional($.keyword_if_not_exists),
+          field('table_name', $.identifier),
+          $.copy_clause,
+          optional($.option_clause),
+        ),
+      ),
+    copy_clause: ($) => seq(kw('COPY'), field('source_table_name', $.identifier)),
     create_snapshot_table_statement: ($) =>
       prec.right(seq(
         kw('CREATE'),
         kw('SNAPSHOT TABLE'),
         optional($.keyword_if_not_exists),
         field('table_name', $.identifier),
-        kw('CLONE'),
-        field('source_table_name', $.identifier),
+        $.clone_clause,
         optional($.system_time_clause),
         optional($.option_clause),
       )),
@@ -1395,7 +1427,7 @@ module.exports = grammar({
         ')',
       ),
     _unquoted_identifier: unquoted_identifier,
-    _quoted_identifier: ($) => seq('`', /[^`]+/, '`'),
+    _quoted_identifier: () => new RegExp('`[^`]+`'),
     _identifier: ($) => choice($._quoted_identifier, $._unquoted_identifier),
     _dotted_identifier: ($) => seq($._identifier, token.immediate('.')),
     identifier: ($) =>

@@ -103,7 +103,8 @@ OPTIONS(
 (source_file
   (create_table_clone_statement
     (identifier)
-    (identifier)
+    (clone_clause
+      (identifier))
     (option_clause
       (option_item
         (identifier)
@@ -144,7 +145,8 @@ OPTIONS(
   (create_snapshot_table_statement
     (keyword_if_not_exists)
     (identifier)
-    (identifier)
+    (clone_clause
+      (identifier))
     (system_time_clause
       (time
         (string)))
@@ -169,6 +171,13 @@ CLUSTER BY col1, col2;
 
 CREATE TABLE my_table (col1 INT)
 OPTIONS(description="text description");
+
+CREATE TABLE IF NOT EXISTS `hoge.my_table`
+COPY `bigquery-public-data.austin_311.311_service_requests`;
+
+CREATE TABLE IF NOT EXISTS `hoge.my_table`
+LIKE `bigquery-public-data.austin_311.311_service_requests`
+AS SELECT * FROM mydataset.myothertable;
 
 --------------------------------------------------------------------------------
 
@@ -214,7 +223,26 @@ OPTIONS(description="text description");
     (option_clause
       (option_item
         (identifier)
-        (string)))))
+        (string))))
+  (create_table_copy_statement
+    (keyword_if_not_exists)
+    (identifier)
+    (copy_clause
+      (identifier)))
+  (create_table_like_statement
+    (keyword_if_not_exists)
+    (identifier)
+    (like_clause
+      (identifier))
+    (query_statement
+      (query_expr
+        (select
+          (select_list
+            (select_all
+              (asterisk_expression)))
+          (from_clause
+            (from_item
+              (identifier))))))))
 
 ================================================================================
 DDL: CREATE TABLE with SELECT
