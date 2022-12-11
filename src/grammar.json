@@ -460,7 +460,15 @@
             },
             {
               "type": "SYMBOL",
+              "name": "create_table_like_statement"
+            },
+            {
+              "type": "SYMBOL",
               "name": "create_table_clone_statement"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "create_table_copy_statement"
             },
             {
               "type": "SYMBOL",
@@ -2062,6 +2070,204 @@
         ]
       }
     },
+    "create_table_like_statement": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[cC][rR][eE][aA][tT][eE]"
+            },
+            "named": false,
+            "value": "CREATE"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "keyword_replace"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "keyword_temporary"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[tT][aA][bB][lL][eE]"
+                },
+                "named": false,
+                "value": "TABLE"
+              },
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[vV][iI][eE][wW]"
+                },
+                "named": false,
+                "value": "VIEW"
+              },
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "PATTERN",
+                      "value": "[mM][aA][tT][eE][rR][iI][aA][lL][iI][zZ][eE][dD]"
+                    },
+                    {
+                      "type": "PATTERN",
+                      "value": "[vV][iI][eE][wW]"
+                    }
+                  ]
+                },
+                "named": false,
+                "value": "MATERIALIZED_VIEW"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "keyword_if_not_exists"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "FIELD",
+            "name": "table_name",
+            "content": {
+              "type": "SYMBOL",
+              "name": "identifier"
+            }
+          },
+          {
+            "type": "SYMBOL",
+            "name": "like_clause"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "create_table_parameters"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "table_partition_clause"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "table_cluster_clause"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "option_clause"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_keyword_as"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "query_statement"
+                  }
+                ]
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "like_clause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[lL][iI][kK][eE]"
+          },
+          "named": false,
+          "value": "LIKE"
+        },
+        {
+          "type": "FIELD",
+          "name": "source_table_name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        }
+      ]
+    },
     "create_table_clone_statement": {
       "type": "PREC_RIGHT",
       "value": 0,
@@ -2124,21 +2330,8 @@
             }
           },
           {
-            "type": "ALIAS",
-            "content": {
-              "type": "PATTERN",
-              "value": "[cC][lL][oO][nN][eE]"
-            },
-            "named": false,
-            "value": "CLONE"
-          },
-          {
-            "type": "FIELD",
-            "name": "source_table_name",
-            "content": {
-              "type": "SYMBOL",
-              "name": "identifier"
-            }
+            "type": "SYMBOL",
+            "name": "clone_clause"
           },
           {
             "type": "CHOICE",
@@ -2166,6 +2359,130 @@
           }
         ]
       }
+    },
+    "clone_clause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[cC][lL][oO][nN][eE]"
+          },
+          "named": false,
+          "value": "CLONE"
+        },
+        {
+          "type": "FIELD",
+          "name": "source_table_name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        }
+      ]
+    },
+    "create_table_copy_statement": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[cC][rR][eE][aA][tT][eE]"
+            },
+            "named": false,
+            "value": "CREATE"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "keyword_replace"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[tT][aA][bB][lL][eE]"
+                },
+                "named": false,
+                "value": "TABLE"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "keyword_if_not_exists"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "FIELD",
+            "name": "table_name",
+            "content": {
+              "type": "SYMBOL",
+              "name": "identifier"
+            }
+          },
+          {
+            "type": "SYMBOL",
+            "name": "copy_clause"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "option_clause"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "copy_clause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[cC][oO][pP][yY]"
+          },
+          "named": false,
+          "value": "COPY"
+        },
+        {
+          "type": "FIELD",
+          "name": "source_table_name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        }
+      ]
     },
     "create_snapshot_table_statement": {
       "type": "PREC_RIGHT",
@@ -2221,21 +2538,8 @@
             }
           },
           {
-            "type": "ALIAS",
-            "content": {
-              "type": "PATTERN",
-              "value": "[cC][lL][oO][nN][eE]"
-            },
-            "named": false,
-            "value": "CLONE"
-          },
-          {
-            "type": "FIELD",
-            "name": "source_table_name",
-            "content": {
-              "type": "SYMBOL",
-              "name": "identifier"
-            }
+            "type": "SYMBOL",
+            "name": "clone_clause"
           },
           {
             "type": "CHOICE",
@@ -9891,21 +10195,8 @@
       "value": "[_a-zA-Z][_a-zA-Z0-9]*"
     },
     "_quoted_identifier": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "`"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[^`]+"
-        },
-        {
-          "type": "STRING",
-          "value": "`"
-        }
-      ]
+      "type": "PATTERN",
+      "value": "`[^`]+`"
     },
     "_identifier": {
       "type": "CHOICE",

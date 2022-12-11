@@ -610,7 +610,15 @@
           "named": true
         },
         {
+          "type": "create_table_copy_statement",
+          "named": true
+        },
+        {
           "type": "create_table_function_statement",
+          "named": true
+        },
+        {
+          "type": "create_table_like_statement",
           "named": true
         },
         {
@@ -825,7 +833,15 @@
           "named": true
         },
         {
+          "type": "create_table_copy_statement",
+          "named": true
+        },
+        {
           "type": "create_table_function_statement",
+          "named": true
+        },
+        {
+          "type": "create_table_like_statement",
           "named": true
         },
         {
@@ -2384,6 +2400,22 @@
     }
   },
   {
+    "type": "clone_clause",
+    "named": true,
+    "fields": {
+      "source_table_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "column_definition",
     "named": true,
     "fields": {
@@ -2447,6 +2479,22 @@
     "type": "continue_statement",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "copy_clause",
+    "named": true,
+    "fields": {
+      "source_table_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "create_external_table_statement",
@@ -2874,16 +2922,6 @@
     "type": "create_snapshot_table_statement",
     "named": true,
     "fields": {
-      "source_table_name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
       "table_name": {
         "multiple": false,
         "required": true,
@@ -2897,8 +2935,12 @@
     },
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
+        {
+          "type": "clone_clause",
+          "named": true
+        },
         {
           "type": "keyword_if_not_exists",
           "named": true
@@ -2918,16 +2960,6 @@
     "type": "create_table_clone_statement",
     "named": true,
     "fields": {
-      "source_table_name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
       "table_name": {
         "multiple": false,
         "required": true,
@@ -2941,8 +2973,12 @@
     },
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
+        {
+          "type": "clone_clause",
+          "named": true
+        },
         {
           "type": "keyword_if_not_exists",
           "named": true
@@ -2957,6 +2993,44 @@
         },
         {
           "type": "system_time_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "create_table_copy_statement",
+    "named": true,
+    "fields": {
+      "table_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "copy_clause",
+          "named": true
+        },
+        {
+          "type": "keyword_if_not_exists",
+          "named": true
+        },
+        {
+          "type": "keyword_replace",
+          "named": true
+        },
+        {
+          "type": "option_clause",
           "named": true
         }
       ]
@@ -3048,6 +3122,64 @@
         },
         {
           "type": "option_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "create_table_like_statement",
+    "named": true,
+    "fields": {
+      "table_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "create_table_parameters",
+          "named": true
+        },
+        {
+          "type": "keyword_if_not_exists",
+          "named": true
+        },
+        {
+          "type": "keyword_replace",
+          "named": true
+        },
+        {
+          "type": "keyword_temporary",
+          "named": true
+        },
+        {
+          "type": "like_clause",
+          "named": true
+        },
+        {
+          "type": "option_clause",
+          "named": true
+        },
+        {
+          "type": "query_statement",
+          "named": true
+        },
+        {
+          "type": "table_cluster_clause",
+          "named": true
+        },
+        {
+          "type": "table_partition_clause",
           "named": true
         }
       ]
@@ -3674,7 +3806,15 @@
           "named": true
         },
         {
+          "type": "create_table_copy_statement",
+          "named": true
+        },
+        {
           "type": "create_table_function_statement",
+          "named": true
+        },
+        {
+          "type": "create_table_like_statement",
           "named": true
         },
         {
@@ -3925,7 +4065,15 @@
           "named": true
         },
         {
+          "type": "create_table_copy_statement",
+          "named": true
+        },
+        {
           "type": "create_table_function_statement",
+          "named": true
+        },
+        {
+          "type": "create_table_like_statement",
           "named": true
         },
         {
@@ -4445,7 +4593,15 @@
           "named": true
         },
         {
+          "type": "create_table_copy_statement",
+          "named": true
+        },
+        {
           "type": "create_table_function_statement",
+          "named": true
+        },
+        {
+          "type": "create_table_like_statement",
           "named": true
         },
         {
@@ -5310,7 +5466,15 @@
           "named": true
         },
         {
+          "type": "create_table_copy_statement",
+          "named": true
+        },
+        {
           "type": "create_table_function_statement",
+          "named": true
+        },
+        {
+          "type": "create_table_like_statement",
           "named": true
         },
         {
@@ -5898,6 +6062,22 @@
     "fields": {}
   },
   {
+    "type": "like_clause",
+    "named": true,
+    "fields": {
+      "source_table_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "limit_clause",
     "named": true,
     "fields": {}
@@ -6060,7 +6240,15 @@
           "named": true
         },
         {
+          "type": "create_table_copy_statement",
+          "named": true
+        },
+        {
           "type": "create_table_function_statement",
+          "named": true
+        },
+        {
+          "type": "create_table_like_statement",
           "named": true
         },
         {
@@ -7302,7 +7490,15 @@
           "named": true
         },
         {
+          "type": "create_table_copy_statement",
+          "named": true
+        },
+        {
           "type": "create_table_function_statement",
+          "named": true
+        },
+        {
+          "type": "create_table_like_statement",
           "named": true
         },
         {
@@ -7801,7 +7997,15 @@
           "named": true
         },
         {
+          "type": "create_table_copy_statement",
+          "named": true
+        },
+        {
           "type": "create_table_function_statement",
+          "named": true
+        },
+        {
+          "type": "create_table_like_statement",
           "named": true
         },
         {
@@ -8696,7 +8900,15 @@
           "named": true
         },
         {
+          "type": "create_table_copy_statement",
+          "named": true
+        },
+        {
           "type": "create_table_function_statement",
+          "named": true
+        },
+        {
+          "type": "create_table_like_statement",
           "named": true
         },
         {
@@ -10447,7 +10659,15 @@
           "named": true
         },
         {
+          "type": "create_table_copy_statement",
+          "named": true
+        },
+        {
           "type": "create_table_function_statement",
+          "named": true
+        },
+        {
+          "type": "create_table_like_statement",
           "named": true
         },
         {
@@ -10995,6 +11215,10 @@
   },
   {
     "type": "CONTINUE",
+    "named": false
+  },
+  {
+    "type": "COPY",
     "named": false
   },
   {
@@ -11663,10 +11887,6 @@
   },
   {
     "type": "_TABLE_SUFFIX",
-    "named": false
-  },
-  {
-    "type": "`",
     "named": false
   },
   {
