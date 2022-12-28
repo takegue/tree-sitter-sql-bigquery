@@ -207,20 +207,25 @@ select
             (array
               (function_call
                 (identifier)
-                (number)
-                (number))
+                (argument
+                  (number))
+                (argument
+                  (number)))
               (number)))
           (select_expression
             (element_access
               (array
                 (function_call
                   (identifier)
-                  (number)
-                  (number))
+                  (argument
+                    (number))
+                  (argument
+                    (number)))
                 (number))
               (function_call
                 (identifier)
-                (number)))))))))
+                (argument
+                  (number))))))))))
 
 ================================================================================
 LITERALS: Struct literals
@@ -322,7 +327,8 @@ select
           (select_expression
             (function_call
               (identifier)
-              (string))))))))
+              (argument
+                (string)))))))))
 
 ================================================================================
 LITERALS: DATE/TIME/DATETIME/TIMESTAMP/INTERVAL literals as identifier
@@ -400,6 +406,28 @@ select
               (string)
               (datetime_part)
               (datetime_part))))))))
+
+================================================================================
+LITERALS: FUNCTION_CALL
+================================================================================
+
+select parse_json('{}', wide_number_mode => 'exact')
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (function_call
+              (identifier)
+              (argument
+                (string))
+              (argument
+                (identifier)
+                (string)))))))))
 
 ================================================================================
 LITERALS: JSON

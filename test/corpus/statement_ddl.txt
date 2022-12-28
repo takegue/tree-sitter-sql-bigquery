@@ -110,11 +110,13 @@ OPTIONS(
         (identifier)
         (function_call
           (identifier)
-          (function_call
-            (identifier))
-          (interval
-            (number)
-            (datetime_part))))
+          (argument
+            (function_call
+              (identifier)))
+          (argument
+            (interval
+              (number)
+              (datetime_part)))))
       (option_item
         (identifier)
         (string))
@@ -192,7 +194,8 @@ AS SELECT * FROM mydataset.myothertable;
       (partition_expression
         (function_call
           (identifier)
-          (identifier)))))
+          (argument
+            (identifier))))))
   (create_table_statement
     (identifier)
     (create_table_parameters
@@ -557,7 +560,8 @@ AS
               (select_expression
                 (function_call
                   (identifier)
-                  (identifier))
+                  (argument
+                    (identifier)))
                 (as_alias
                   (identifier))))
             (from_clause
@@ -715,11 +719,13 @@ SET OPTIONS (
         (identifier)
         (function_call
           (identifier)
-          (function_call
-            (identifier))
-          (interval
-            (number)
-            (datetime_part))))
+          (argument
+            (function_call
+              (identifier)))
+          (argument
+            (interval
+              (number)
+              (datetime_part)))))
       (option_item
         (identifier)
         (string)))))

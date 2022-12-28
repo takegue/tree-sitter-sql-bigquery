@@ -15,32 +15,32 @@ select
 --------------------------------------------------------------------------------
 
 (source_file
- (query_statement
-  (query_expr
-   (select
-    (select_list
-     (select_expression
-      (number))
-     (select_expression
-      (number))
-     (select_expression
-      (unary_expression
-       (number)))
-     (select_expression
-      (unary_expression
-       (TRUE)))
-     (select_expression
-      (unary_expression
-       (NULL)
-       (TRUE)))
-     (select_expression
-      (unary_expression
-       (FALSE)
-       (FALSE)))
-     (select_expression
-      (unary_expression
-       (identifier)
-       (NULL))))))))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (number))
+          (select_expression
+            (number))
+          (select_expression
+            (unary_expression
+              (number)))
+          (select_expression
+            (unary_expression
+              (TRUE)))
+          (select_expression
+            (unary_expression
+              (NULL)
+              (TRUE)))
+          (select_expression
+            (unary_expression
+              (FALSE)
+              (FALSE)))
+          (select_expression
+            (unary_expression
+              (identifier)
+              (NULL))))))))
 
 ================================================================================
 OPERATORS: Binary Operators
@@ -56,35 +56,35 @@ select
 --------------------------------------------------------------------------------
 
 (source_file
- (query_statement
-  (query_expr
-   (select
-    (select_list
-     (select_expression
-      (binary_expression
-       (number)
-       (binary_expression
-        (binary_expression
-         (number)
-         (number))
-        (number))))
-     (select_expression
-      (binary_expression
-       (string)
-       (identifier)))
-     (select_expression
-      (binary_expression
-       (binary_expression
-        (number)
-        (number))
-       (number)))
-     (select_expression
-      (binary_expression
-       (TRUE)
-       (unary_expression
-        (unary_expression
-         (NULL)
-          (TRUE))))))))))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (binary_expression
+              (number)
+              (binary_expression
+                (binary_expression
+                  (number)
+                  (number))
+                (number))))
+          (select_expression
+            (binary_expression
+              (string)
+              (identifier)))
+          (select_expression
+            (binary_expression
+              (binary_expression
+                (number)
+                (number))
+              (number)))
+          (select_expression
+            (binary_expression
+              (TRUE)
+              (unary_expression
+                (unary_expression
+                  (NULL)
+                  (TRUE))))))))))
 
 ================================================================================
 OPERATORS: EXISTS operator
@@ -95,27 +95,27 @@ SELECT EXISTS ( SELECT value FROM Words WHERE direction = 'south' ) as result;
 --------------------------------------------------------------------------------
 
 (source_file
- (query_statement
-  (query_expr
-   (select
-    (select_list
-     (select_expression
-      (unary_expression
-       (select_subexpression
-        (query_expr
-         (select
-          (select_list
-           (select_expression
-            (identifier)))
-          (from_clause
-           (from_item
-            (identifier)))
-          (where_clause
-           (binary_expression
-            (identifier)
-            (string)))))))
-      (as_alias
-       (identifier))))))))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (unary_expression
+              (select_subexpression
+                (query_expr
+                  (select
+                    (select_list
+                      (select_expression
+                        (identifier)))
+                    (from_clause
+                      (from_item
+                        (identifier)))
+                    (where_clause
+                      (binary_expression
+                        (identifier)
+                        (string)))))))
+            (as_alias
+              (identifier))))))))
 
 ================================================================================
 OPERATORS: Function Calls
@@ -129,31 +129,35 @@ SELECT
 --------------------------------------------------------------------------------
 
 (source_file
- (query_statement
-  (query_expr
-   (select
-    (select_list
-     (select_expression
-      (function_call
-       (identifier)
-       (number)))
-     (select_expression
-      (function_call
-       (identifier)
-       (distinct)
-       (number)
-       (number)
-       (number)
-       (order_by_clause
-        (order_by_clause_body
-         (identifier)))
-       (limit_clause)))
-     (select_expression
-      (function_call
-       (identifier)
-       (datetime_part)
-       (function_call
-        (identifier)))))))))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (function_call
+              (identifier)
+              (argument
+                (number))))
+          (select_expression
+            (function_call
+              (identifier)
+              (distinct)
+              (argument
+                (number))
+              (argument
+                (number))
+              (argument
+                (number))
+              (order_by_clause
+                (order_by_clause_body
+                  (identifier)))
+              (limit_clause)))
+          (select_expression
+            (function_call
+              (identifier)
+              (datetime_part)
+              (function_call
+                (identifier)))))))))
 
 ================================================================================
 OPERATORS: JSON Functions
@@ -166,15 +170,17 @@ SELECT
 --------------------------------------------------------------------------------
 
 (source_file
- (query_statement
-  (query_expr
-   (select
-    (select_list
-     (select_expression
-      (function_call
-       (identifier)
-       (identifier)))
-     (select_expression
-      (function_call
-       (identifier)
-       (identifier))))))))
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (function_call
+              (identifier)
+              (argument
+                (identifier))))
+          (select_expression
+            (function_call
+              (identifier)
+              (argument
+                (identifier)))))))))

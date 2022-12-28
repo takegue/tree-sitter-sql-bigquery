@@ -141,6 +141,34 @@ EXECUTE IMMEDIATE (select "SELECT @a * (@b + 2)")
               (string))))))))
 
 ================================================================================
+PROCEDURAL LANGUAGE: CALL Statement
+================================================================================
+
+call myproc(1, 2, 3);
+call myproc(1, 2, kw => 3);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (call_statement
+    (identifier)
+    (argument
+      (number))
+    (argument
+      (number))
+    (argument
+      (number)))
+  (call_statement
+    (identifier)
+    (argument
+      (number))
+    (argument
+      (number))
+    (argument
+      (identifier)
+      (number))))
+
+================================================================================
 PROCEDURAL LANGUAGE: BEGIN...END statement
 ================================================================================
 
@@ -268,8 +296,10 @@ SELECT retCode;
   (comment)
   (call_statement
     (identifier)
-    (string)
-    (identifier))
+    (argument
+      (string))
+    (argument
+      (identifier)))
   (query_statement
     (query_expr
       (select
@@ -323,10 +353,12 @@ END IF;
             (select_expression
               (function_call
                 (identifier)
-                (string)
-                (cast_expression
-                  (identifier)
-                  (type_identifier))))))))
+                (argument
+                  (string))
+                (argument
+                  (cast_expression
+                    (identifier)
+                    (type_identifier)))))))))
     (elseif_statement
       (unary_expression
         (select_subexpression
@@ -350,10 +382,12 @@ END IF;
               (select_expression
                 (function_call
                   (identifier)
-                  (string)
-                  (cast_expression
-                    (identifier)
-                    (type_identifier)))))))))
+                  (argument
+                    (string))
+                  (argument
+                    (cast_expression
+                      (identifier)
+                      (type_identifier))))))))))
     (else_statement
       (query_statement
         (query_expr
@@ -362,10 +396,12 @@ END IF;
               (select_expression
                 (function_call
                   (identifier)
-                  (string)
-                  (cast_expression
-                    (identifier)
-                    (type_identifier)))))))))))
+                  (argument
+                    (string))
+                  (argument
+                    (cast_expression
+                      (identifier)
+                      (type_identifier))))))))))))
 
 ================================================================================
 PROCEDURAL LANGUAGE: LOOP statement

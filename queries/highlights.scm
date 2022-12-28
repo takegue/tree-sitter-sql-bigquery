@@ -12,10 +12,9 @@
 
 ; functions
 (function_call function: (identifier) @function)
-(function_call argument: (identifier) @variable.parameter)
+((argument (identifier) @variable.parameter))
 
 (call_statement routine_name: (identifier) @function)
-(call_statement argument: (identifier) @variable.parameter)
 
 ; types
 (struct) @type.builtin

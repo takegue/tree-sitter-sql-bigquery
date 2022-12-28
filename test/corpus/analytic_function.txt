@@ -22,7 +22,8 @@ FROM Library;
           (select_expression
             (function_call
               (identifier)
-              (identifier)
+              (argument
+                (identifier))
               (analytics_clause
                 (over_clause
                   (window_specification
@@ -62,7 +63,8 @@ FROM Library;
           (select_expression
             (function_call
               (identifier)
-              (identifier)
+              (argument
+                (identifier))
               (analytics_clause
                 (over_clause
                   (window_specification
@@ -109,7 +111,8 @@ SELECT item, purchases, category, LAST_VALUE(item)
           (select_expression
             (function_call
               (identifier)
-              (identifier)
+              (argument
+                (identifier))
               (analytics_clause
                 (over_clause
                   (window_specification
