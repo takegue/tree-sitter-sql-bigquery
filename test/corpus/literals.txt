@@ -207,20 +207,25 @@ select
             (array
               (function_call
                 (identifier)
-                (number)
-                (number))
+                (argument
+                  (number))
+                (argument
+                  (number)))
               (number)))
           (select_expression
             (element_access
               (array
                 (function_call
                   (identifier)
-                  (number)
-                  (number))
+                  (argument
+                    (number))
+                  (argument
+                    (number)))
                 (number))
               (function_call
                 (identifier)
-                (number)))))))))
+                (argument
+                  (number))))))))))
 
 ================================================================================
 LITERALS: Struct literals
@@ -322,7 +327,8 @@ select
           (select_expression
             (function_call
               (identifier)
-              (string))))))))
+              (argument
+                (string)))))))))
 
 ================================================================================
 LITERALS: DATE/TIME/DATETIME/TIMESTAMP/INTERVAL literals as identifier
@@ -417,8 +423,9 @@ select parse_json('{}', wide_number_mode => 'exact')
           (select_expression
             (function_call
               (identifier)
-              (string)
-              (keyword_argument
+              (argument
+                (string))
+              (argument
                 (identifier)
                 (string)))))))))
 
