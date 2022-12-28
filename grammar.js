@@ -36,7 +36,13 @@ module.exports = grammar({
       'literal',
     ],
   ],
-  conflicts: ($) => [[$.query_expr]],
+  conflicts: (
+    $,
+  ) => [
+      [$.query_expr],
+      [$.function_call],
+      // [$.function_call, $.argument],
+    ],
   externals: ($) => [
     $._string_start,
     $._string_content,
@@ -202,19 +208,13 @@ module.exports = grammar({
         ),
       ),
 
-    return_satement: ($) => seq(kw('RETURN')),
-
+    return_satement: () => seq(kw('RETURN')),
     call_statement: ($) =>
       seq(
         kw('CALL'),
         field('routine_name', $.identifier),
         '(',
-        optional(
-          field(
-            'argument',
-            commaSep1($._expression),
-          ),
-        ),
+        optional(commaSep1(field('argument', choice($.argument, $.asterisk_expression)))),
         ')',
       ),
 
@@ -1046,7 +1046,7 @@ module.exports = grammar({
     select_subexpression: ($) => seq('(', $.query_expr, ')'),
 
     analytics_clause: ($) => seq(seq(kw('OVER'), $.over_clause)),
-
+    argument: ($) => prec(10, seq(optional(seq(field('keyword', $.identifier), '=>')), $._expression)),
     function_call: ($) =>
       // FIXME: precedence
       prec(
@@ -1056,10 +1056,7 @@ module.exports = grammar({
             field('function', $.identifier),
             '(',
             optional(alias($._keyword_distinct, $.distinct)),
-            optional(field(
-              'argument',
-              commaSep1(choice($._expression, $.asterisk_expression)),
-            )),
+            optional(commaSep1(field('argument', choice($.argument, $.asterisk_expression)))),
             optional(
               seq(optional(choice(kw('IGNORE', 'RESPECT'))), kw('NULLS')),
             ),
