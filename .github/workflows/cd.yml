@@ -16,4 +16,5 @@ jobs:
       - name: Verify
         run: emcc -v
       - run: npm install
-      - run: npx tree-sitter generate && npx tree-sitter build-wasm
+      # - run: npm run release "${{ github.event.release.tag_name }}"
+      - run: npm run release "v0.1.20"
