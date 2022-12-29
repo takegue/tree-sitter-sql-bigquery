@@ -1,0 +1,19 @@
+name: Deployment
+on:
+  push:
+    branches:
+      - "**"
+jobs:
+  build-wasm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18.x
+      - uses: mymindstorm/setup-emsdk@v11
+      - name: Verify
+        run: emcc -v
+      - run: npm install
+      - run: tree-sitter generate && tree-sitter build-wasm
