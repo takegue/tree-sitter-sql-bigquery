@@ -16,4 +16,4 @@ jobs:
       - name: Verify
         run: emcc -v
       - run: npm install
-      - run: tree-sitter generate && tree-sitter build-wasm
+      - run: npx tree-sitter generate && npx tree-sitter build-wasm
