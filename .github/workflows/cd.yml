@@ -6,6 +6,9 @@ on:
 jobs:
   build-wasm:
     runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
@@ -16,10 +19,10 @@ jobs:
       - name: Verify
         run: emcc -v
       - run: npm install
-      # - run: npm run release "${{ github.event.release.tag_name }}"
       - run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+      # - run: npm run release "${{ github.event.release.tag_name }}"
       - run: npm run release "v0.1.11"
       - run: cargo publish
         env:
