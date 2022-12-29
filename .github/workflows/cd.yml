@@ -24,11 +24,11 @@ jobs:
           git config --local user.name "github-actions[bot]"
       # - run: npm run release "${{ github.event.release.tag_name }}"
       - run: npm run release "v0.1.11"
-      - run: cargo publish
-        env:
-          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_TOKEN }}
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: cargo publish
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_TOKEN }}
       - run: |
           git push --follow-tags origin HEAD:main
