@@ -3,28 +3,31 @@ on:
   release:
     types: [published]
 jobs:
-  build:
+  build-wasm:
     runs-on: ubuntu-latest
+    environment: release
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v3
-      # Setup .npmrc file to publish to npm
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: '16.x'
+          node-version: 18.x
           registry-url: 'https://registry.npmjs.org'
+      - uses: mymindstorm/setup-emsdk@v11
+      - name: Verify
+        run: emcc -v
       - run: npm install
-      - run: npm run build
-      - name: git setting
-        run: |
+      - run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-      - run: |
-          ./script/version "${{ github.event.release.tag_name }}"
-          git push --follow-tags origin HEAD:main
+      - run: npm run release "${{ github.event.release.tag_name }}"
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Build
-        run: cargo build --verbose
+      - run: cargo publish
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_TOKEN }}
+      - run: |
+          git push --follow-tags origin HEAD:main
