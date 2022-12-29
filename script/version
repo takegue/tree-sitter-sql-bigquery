@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const {execFileSync} = require('child_process');
+const { execFileSync } = require('child_process');
 
 const rootPath = path.join(__dirname, '..');
 const cargoTomlPath = path.join(rootPath, 'Cargo.toml');
@@ -10,7 +10,7 @@ const cargoTomlPath = path.join(rootPath, 'Cargo.toml');
 const npmMetadata = require(path.join(rootPath, 'package.json'));
 const npmVersion = npmMetadata.version;
 
-const cargoMetadata = fs.readFileSync(cargoTomlPath, 'utf8')
+const cargoMetadata = fs.readFileSync(cargoTomlPath, 'utf8');
 const cargoVersionMatch = cargoMetadata.match(/version = "([^"\n]+)"/);
 const cargoVersion = cargoVersionMatch[1];
 
@@ -27,8 +27,8 @@ if (!arg) {
     '',
     'Update the CLI version by the given increment or to the given',
     'version number, creating a commit and tag for the new version.',
-    ''
-  ].join('\n'))
+    '',
+  ].join('\n'));
   process.exit(1);
 }
 
@@ -37,7 +37,7 @@ if (arg) {
   const diff = execFileSync(
     'git',
     ['diff', '--stat'],
-    {encoding: 'utf8'}
+    { encoding: 'utf8' },
   );
   if (diff.length !== 0) {
     console.error('There are uncommited changes.');
@@ -47,15 +47,15 @@ if (arg) {
   const newVersion = execFileSync(
     'npm',
     ['version', process.argv[2], '--git-tag-version=false'],
-    {cwd: rootPath, encoding: 'utf8'}
+    { cwd: rootPath, encoding: 'utf8' },
   ).trim().replace(/^v/, '');
   const newCargoVersionLine = cargoVersionMatch[0].replace(cargoVersion, newVersion);
   const newCargoMetadata = cargoMetadata.replace(cargoVersionMatch[0], newCargoVersionLine);
   fs.writeFileSync(cargoTomlPath, newCargoMetadata, 'utf8');
-  execFileSync('cargo', ['build'], {cwd: rootPath});
+  execFileSync('cargo', ['build'], { cwd: rootPath });
   execFileSync('git', ['commit', '-a', '-m', newVersion]);
-  execFileSync('git', ['tag', 'v' + newVersion]);
-  console.log(newVersion)
+  // execFileSync('git', ['tag', 'v' + newVersion]);
+  console.log(newVersion);
 } else {
   console.log(npmVersion);
 }
