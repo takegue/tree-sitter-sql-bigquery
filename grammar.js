@@ -39,10 +39,10 @@ module.exports = grammar({
   conflicts: (
     $,
   ) => [
-      [$.query_expr],
-      [$.function_call],
-      // [$.function_call, $.argument],
-    ],
+    [$.query_expr],
+    [$.function_call],
+    // [$.function_call, $.argument],
+  ],
   externals: ($) => [
     $._string_start,
     $._string_content,
@@ -1060,6 +1060,7 @@ module.exports = grammar({
             optional(
               seq(optional(choice(kw('IGNORE', 'RESPECT'))), kw('NULLS')),
             ),
+            optional(choice($.having_max_clause, $.having_min_clause)),
             optional($.order_by_clause),
             optional($.limit_clause),
             ')',
@@ -1105,6 +1106,16 @@ module.exports = grammar({
             $.select_subexpression,
           ),
         ),
+      ),
+
+    having_max_clause: ($) =>
+      choice(
+        seq(kw('HAVING'), kw('MAX'), alias($._expression, $.having_expression)),
+      ),
+
+    having_min_clause: ($) =>
+      choice(
+        seq(kw('HAVING'), kw('MIN'), alias($._expression, $.having_expression)),
       ),
 
     unnest_operator: ($) =>

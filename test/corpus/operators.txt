@@ -124,7 +124,9 @@ OPERATORS: Function Calls
 SELECT
   A(1),
   COUNT(DISTINCT 1, 2, 3 ignore nulls order by hoge limit 10),
-  EXTRACT(YEAR FROM NOW())
+  EXTRACT(YEAR FROM NOW()),
+  ANY_VALUE(year HAVING MAX inches) AS max_any_year,
+  ANY_VALUE(year HAVING MIN inches * inchces) AS min_any_year,
 
 --------------------------------------------------------------------------------
 
@@ -157,7 +159,29 @@ SELECT
               (identifier)
               (datetime_part)
               (function_call
-                (identifier)))))))))
+                (identifier))))
+          (select_expression
+            (function_call
+              (identifier)
+              (argument
+                (identifier))
+              (having_max_clause
+                (having_expression
+                  (identifier))))
+            (as_alias
+              (identifier)))
+          (select_expression
+            (function_call
+              (identifier)
+              (argument
+                (identifier))
+              (having_min_clause
+                (having_expression
+                  (binary_expression
+                    (identifier)
+                    (identifier)))))
+            (as_alias
+              (identifier))))))))
 
 ================================================================================
 OPERATORS: JSON Functions
