@@ -7754,6 +7754,27 @@
                 "type": "CHOICE",
                 "members": [
                   {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "having_max_clause"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "having_min_clause"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
                     "type": "SYMBOL",
                     "name": "order_by_clause"
                   },
@@ -7971,6 +7992,80 @@
           }
         ]
       }
+    },
+    "having_max_clause": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[hH][aA][vV][iI][nN][gG]"
+              },
+              "named": false,
+              "value": "HAVING"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[mM][aA][xX]"
+              },
+              "named": false,
+              "value": "MAX"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_expression"
+              },
+              "named": true,
+              "value": "having_expression"
+            }
+          ]
+        }
+      ]
+    },
+    "having_min_clause": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[hH][aA][vV][iI][nN][gG]"
+              },
+              "named": false,
+              "value": "HAVING"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[mM][iI][nN]"
+              },
+              "named": false,
+              "value": "MIN"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_expression"
+              },
+              "named": true,
+              "value": "having_expression"
+            }
+          ]
+        }
+      ]
     },
     "unnest_operator": {
       "type": "CHOICE",
