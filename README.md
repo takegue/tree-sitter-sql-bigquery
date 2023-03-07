@@ -5,7 +5,7 @@
 
 Portable BigQuery SQL Parser available in many programming language such as Rust, Node and so on.
 
-This project supports StandardSQL in BigQuery.
+This project supports GoogleSQL(formerly StandardSQL) in BigQuery.
 You could try out the demo on [Github Pages](https://takegue.github.io/tree-sitter-sql-bigquery/)
 
 ### References
