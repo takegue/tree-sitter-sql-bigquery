@@ -731,27 +731,8 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "ALIAS",
-              "content": {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "ALIAS",
-                    "content": {
-                      "type": "PATTERN",
-                      "value": "[dD][eE][fF][aA][uU][lL][tT]"
-                    },
-                    "named": false,
-                    "value": "DEFAULT"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "_expression"
-                  }
-                ]
-              },
-              "named": true,
-              "value": "default_clause"
+              "type": "SYMBOL",
+              "name": "default_clause"
             },
             {
               "type": "BLANK"
@@ -759,6 +740,28 @@
           ]
         }
       ]
+    },
+    "default_clause": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[dD][eE][fF][aA][uU][lL][tT]"
+            },
+            "named": false,
+            "value": "DEFAULT"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          }
+        ]
+      }
     },
     "set_statement": {
       "type": "CHOICE",
@@ -3594,6 +3597,22 @@
             "type": "SYMBOL",
             "name": "column_type"
           }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "default",
+              "content": {
+                "type": "SYMBOL",
+                "name": "default_clause"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "CHOICE",

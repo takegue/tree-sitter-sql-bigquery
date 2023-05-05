@@ -173,8 +173,10 @@ module.exports = grammar({
         kw('DECLARE'),
         commaSep1($.identifier),
         field('variable_type', alias($.type, $.variable_type)),
-        optional(alias(seq(kw('DEFAULT'), $._expression), $.default_clause)),
+        optional($.default_clause),
       ),
+
+    default_clause: ($) => prec.left(seq(kw('DEFAULT'), $._expression)),
 
     set_statement: ($) =>
       choice(
@@ -345,7 +347,7 @@ module.exports = grammar({
         field('schema_name', $.identifier),
         optional($.drop_schema_option),
       ),
-    drop_schema_option: ($) => choice(kw('CASCADE'), kw('RESTRICT')),
+    drop_schema_option: () => choice(kw('CASCADE'), kw('RESTRICT')),
     create_table_statement: ($) =>
       prec.right(
         seq(
@@ -535,6 +537,7 @@ module.exports = grammar({
       seq(
         field('column_name', $.identifier),
         field('column_type', $.column_type),
+        optional(field('default', $.default_clause)),
         optional(field('option', $.option_clause)),
       ),
     column_type: ($) =>

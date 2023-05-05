@@ -2457,6 +2457,16 @@
           }
         ]
       },
+      "default": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "default_clause",
+            "named": true
+          }
+        ]
+      },
       "option": {
         "multiple": false,
         "required": false,
