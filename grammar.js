@@ -39,10 +39,10 @@ module.exports = grammar({
   conflicts: (
     $,
   ) => [
-    [$.query_expr],
-    [$.function_call],
-    // [$.function_call, $.argument],
-  ],
+      [$.query_expr],
+      [$.function_call],
+      // [$.function_call, $.argument],
+    ],
   externals: ($) => [
     $._string_start,
     $._string_content,
@@ -913,9 +913,10 @@ module.exports = grammar({
     cte_clause: ($) =>
       seq(
         kw('WITH'),
-        commaSep1($.non_recursive_cte),
+        optional(alias(kw('RECURSIVE'), $.with_recursive_keyword)),
+        commaSep1($.cte),
       ),
-    non_recursive_cte: ($) =>
+    cte: ($) =>
       seq(
         field('alias_name', $.identifier),
         $._keyword_as,

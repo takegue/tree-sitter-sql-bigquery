@@ -6544,11 +6544,33 @@
           "value": "WITH"
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "ALIAS",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[rR][eE][cC][uU][rR][sS][iI][vV][eE]"
+                },
+                "named": false,
+                "value": "RECURSIVE"
+              },
+              "named": true,
+              "value": "with_recursive_keyword"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "SEQ",
           "members": [
             {
               "type": "SYMBOL",
-              "name": "non_recursive_cte"
+              "name": "cte"
             },
             {
               "type": "REPEAT",
@@ -6561,7 +6583,7 @@
                   },
                   {
                     "type": "SYMBOL",
-                    "name": "non_recursive_cte"
+                    "name": "cte"
                   }
                 ]
               }
@@ -6570,7 +6592,7 @@
         }
       ]
     },
-    "non_recursive_cte": {
+    "cte": {
       "type": "SEQ",
       "members": [
         {
