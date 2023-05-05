@@ -831,7 +831,7 @@ SET DATA TYPE NUMERIC(8,2);
       (number))))
 
 ================================================================================
-DDL: DEFAULT option for
+DDL: DEFAULT option
 ================================================================================
 
 CREATE TABLE mydataset.simple_table (
@@ -851,4 +851,40 @@ CREATE TABLE mydataset.simple_table (
         (identifier)
         (column_type)
         (default_clause
+          (string))))))
+
+================================================================================
+DDL: COLLATE options
+================================================================================
+
+CREATE SCHEMA `collate_table`
+DEFAULT COLLATE 'und:ci'
+;
+
+CREATE TABLE `collate_table`
+DEFAULT COLLATE 'und:ci'
+;
+
+CREATE TABLE `collate_table` (
+  case_insensitive_column STRING COLLATE 'und:ci'
+);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (create_schema_statement
+    (identifier)
+    (default_collate_clause
+      (string)))
+  (create_table_statement
+    (identifier)
+    (default_collate_clause
+      (string)))
+  (create_table_statement
+    (identifier)
+    (create_table_parameters
+      (column_definition
+        (identifier)
+        (column_type)
+        (collate_clause
           (string))))))

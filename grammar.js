@@ -330,6 +330,7 @@ module.exports = grammar({
         kw('CREATE SCHEMA'),
         optional($.keyword_if_not_exists),
         field('schema_name', $.identifier),
+        optional($.default_collate_clause),
         optional($.option_clause),
       ),
     alter_schema_statement: ($) =>
@@ -358,6 +359,7 @@ module.exports = grammar({
           optional($.keyword_if_not_exists),
           field('table_name', $.identifier),
           optional($.create_table_parameters),
+          optional($.default_collate_clause),
           optional($.table_partition_clause),
           optional($.table_cluster_clause),
           optional($.option_clause),
@@ -408,6 +410,7 @@ module.exports = grammar({
           optional($.option_clause),
         ),
       ),
+    default_collate_clause: ($) => seq(kw('DEFAULT COLLATE'), $.string),
     copy_clause: ($) => seq(kw('COPY'), field('source_table_name', $.identifier)),
     create_snapshot_table_statement: ($) =>
       prec.right(seq(
@@ -537,9 +540,12 @@ module.exports = grammar({
       seq(
         field('column_name', $.identifier),
         field('column_type', $.column_type),
+        optional(field('collate_clause', $.collate_clause)),
         optional(field('default', $.default_clause)),
         optional(field('option', $.option_clause)),
       ),
+
+    collate_clause: ($) => prec.left(seq(kw('COLLATE'), $.string)),
     column_type: ($) =>
       choice(
         prec(1, seq($._unquoted_identifier, '(', commaSep1($.number), ')')),

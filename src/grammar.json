@@ -1772,6 +1772,18 @@
           "members": [
             {
               "type": "SYMBOL",
+              "name": "default_collate_clause"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
               "name": "option_clause"
             },
             {
@@ -2029,6 +2041,18 @@
               {
                 "type": "SYMBOL",
                 "name": "create_table_parameters"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "default_collate_clause"
               },
               {
                 "type": "BLANK"
@@ -2486,6 +2510,33 @@
           }
         ]
       }
+    },
+    "default_collate_clause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[dD][eE][fF][aA][uU][lL][tT]"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[cC][oO][lL][lL][aA][tT][eE]"
+              }
+            ]
+          },
+          "named": false,
+          "value": "DEFAULT_COLLATE"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string"
+        }
+      ]
     },
     "copy_clause": {
       "type": "SEQ",
@@ -3603,6 +3654,22 @@
           "members": [
             {
               "type": "FIELD",
+              "name": "collate_clause",
+              "content": {
+                "type": "SYMBOL",
+                "name": "collate_clause"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
               "name": "default",
               "content": {
                 "type": "SYMBOL",
@@ -3631,6 +3698,28 @@
           ]
         }
       ]
+    },
+    "collate_clause": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[cC][oO][lL][lL][aA][tT][eE]"
+            },
+            "named": false,
+            "value": "COLLATE"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "string"
+          }
+        ]
+      }
     },
     "column_type": {
       "type": "CHOICE",

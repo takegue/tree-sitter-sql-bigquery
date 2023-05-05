@@ -2434,9 +2434,34 @@
     }
   },
   {
+    "type": "collate_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "column_definition",
     "named": true,
     "fields": {
+      "collate_clause": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "collate_clause",
+            "named": true
+          }
+        ]
+      },
       "column_name": {
         "multiple": false,
         "required": true,
@@ -2936,6 +2961,10 @@
       "required": false,
       "types": [
         {
+          "type": "default_collate_clause",
+          "named": true
+        },
+        {
           "type": "keyword_if_not_exists",
           "named": true
         },
@@ -3252,6 +3281,10 @@
           "named": true
         },
         {
+          "type": "default_collate_clause",
+          "named": true
+        },
+        {
           "type": "keyword_if_not_exists",
           "named": true
         },
@@ -3459,6 +3492,21 @@
         },
         {
           "type": "unnest_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "default_collate_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "string",
           "named": true
         }
       ]
@@ -11399,6 +11447,10 @@
     "named": false
   },
   {
+    "type": "COLLATE",
+    "named": false
+  },
+  {
     "type": "CONTINUE",
     "named": false
   },
@@ -11452,6 +11504,10 @@
   },
   {
     "type": "DEFAULT",
+    "named": false
+  },
+  {
+    "type": "DEFAULT_COLLATE",
     "named": false
   },
   {
