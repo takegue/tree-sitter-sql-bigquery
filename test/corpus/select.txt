@@ -425,7 +425,7 @@ select * from cte2
   (query_statement
     (query_expr
       (cte_clause
-        (non_recursive_cte
+        (cte
           (identifier)
           (query_expr
             (select
@@ -434,7 +434,7 @@ select * from cte2
                   (number)
                   (as_alias
                     (identifier)))))))
-        (non_recursive_cte
+        (cte
           (identifier)
           (query_expr
             (select
@@ -1001,3 +1001,71 @@ select 1,
         (select_list
           (select_expression
             (number)))))))
+
+================================================================================
+SELECT: RECURSIVE syntax
+================================================================================
+
+WITH RECURSIVE
+  CTE_1 AS (
+    (SELECT 1 AS iteration UNION ALL SELECT 1 AS iteration)
+    UNION ALL
+    SELECT iteration + 1 AS iteration FROM CTE_1 WHERE iteration < 3
+  )
+SELECT iteration FROM CTE_1
+ORDER BY 1 ASC
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (query_statement
+    (query_expr
+      (cte_clause
+        (with_recursive_keyword)
+        (cte
+          (identifier)
+          (query_expr
+            (set_operation
+              (query_expr
+                (query_expr
+                  (set_operation
+                    (query_expr
+                      (select
+                        (select_list
+                          (select_expression
+                            (number)
+                            (as_alias
+                              (identifier))))))
+                    (query_expr
+                      (select
+                        (select_list
+                          (select_expression
+                            (number)
+                            (as_alias
+                              (identifier)))))))))
+              (query_expr
+                (select
+                  (select_list
+                    (select_expression
+                      (binary_expression
+                        (identifier)
+                        (number))
+                      (as_alias
+                        (identifier))))
+                  (from_clause
+                    (from_item
+                      (identifier)))
+                  (where_clause
+                    (binary_expression
+                      (identifier)
+                      (number)))))))))
+      (select
+        (select_list
+          (select_expression
+            (identifier)))
+        (from_clause
+          (from_item
+            (identifier))))
+      (order_by_clause
+        (order_by_clause_body
+          (number))))))

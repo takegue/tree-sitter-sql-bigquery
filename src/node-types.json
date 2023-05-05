@@ -2434,9 +2434,34 @@
     }
   },
   {
+    "type": "collate_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "column_definition",
     "named": true,
     "fields": {
+      "collate_clause": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "collate_clause",
+            "named": true
+          }
+        ]
+      },
       "column_name": {
         "multiple": false,
         "required": true,
@@ -2453,6 +2478,16 @@
         "types": [
           {
             "type": "column_type",
+            "named": true
+          }
+        ]
+      },
+      "default": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "default_clause",
             "named": true
           }
         ]
@@ -2926,6 +2961,10 @@
       "required": false,
       "types": [
         {
+          "type": "default_collate_clause",
+          "named": true
+        },
+        {
           "type": "keyword_if_not_exists",
           "named": true
         },
@@ -3242,6 +3281,10 @@
           "named": true
         },
         {
+          "type": "default_collate_clause",
+          "named": true
+        },
+        {
           "type": "keyword_if_not_exists",
           "named": true
         },
@@ -3273,6 +3316,32 @@
     }
   },
   {
+    "type": "cte",
+    "named": true,
+    "fields": {
+      "alias_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "query_expr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "cte_clause",
     "named": true,
     "fields": {},
@@ -3281,7 +3350,11 @@
       "required": true,
       "types": [
         {
-          "type": "non_recursive_cte",
+          "type": "cte",
+          "named": true
+        },
+        {
+          "type": "with_recursive_keyword",
           "named": true
         }
       ]
@@ -3419,6 +3492,21 @@
         },
         {
           "type": "unnest_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "default_collate_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "string",
           "named": true
         }
       ]
@@ -6846,32 +6934,6 @@
         },
         {
           "type": "window_specification",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "non_recursive_cte",
-    "named": true,
-    "fields": {
-      "alias_name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "query_expr",
           "named": true
         }
       ]
@@ -11385,6 +11447,10 @@
     "named": false
   },
   {
+    "type": "COLLATE",
+    "named": false
+  },
+  {
     "type": "CONTINUE",
     "named": false
   },
@@ -11438,6 +11504,10 @@
   },
   {
     "type": "DEFAULT",
+    "named": false
+  },
+  {
+    "type": "DEFAULT_COLLATE",
     "named": false
   },
   {
@@ -12094,6 +12164,10 @@
   },
   {
     "type": "user_type",
+    "named": true
+  },
+  {
+    "type": "with_recursive_keyword",
     "named": true
   },
   {

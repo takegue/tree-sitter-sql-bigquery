@@ -39,10 +39,10 @@ module.exports = grammar({
   conflicts: (
     $,
   ) => [
-    [$.query_expr],
-    [$.function_call],
-    // [$.function_call, $.argument],
-  ],
+      [$.query_expr],
+      [$.function_call],
+      // [$.function_call, $.argument],
+    ],
   externals: ($) => [
     $._string_start,
     $._string_content,
@@ -173,8 +173,10 @@ module.exports = grammar({
         kw('DECLARE'),
         commaSep1($.identifier),
         field('variable_type', alias($.type, $.variable_type)),
-        optional(alias(seq(kw('DEFAULT'), $._expression), $.default_clause)),
+        optional($.default_clause),
       ),
+
+    default_clause: ($) => prec.left(seq(kw('DEFAULT'), $._expression)),
 
     set_statement: ($) =>
       choice(
@@ -328,6 +330,7 @@ module.exports = grammar({
         kw('CREATE SCHEMA'),
         optional($.keyword_if_not_exists),
         field('schema_name', $.identifier),
+        optional($.default_collate_clause),
         optional($.option_clause),
       ),
     alter_schema_statement: ($) =>
@@ -345,7 +348,7 @@ module.exports = grammar({
         field('schema_name', $.identifier),
         optional($.drop_schema_option),
       ),
-    drop_schema_option: ($) => choice(kw('CASCADE'), kw('RESTRICT')),
+    drop_schema_option: () => choice(kw('CASCADE'), kw('RESTRICT')),
     create_table_statement: ($) =>
       prec.right(
         seq(
@@ -356,6 +359,7 @@ module.exports = grammar({
           optional($.keyword_if_not_exists),
           field('table_name', $.identifier),
           optional($.create_table_parameters),
+          optional($.default_collate_clause),
           optional($.table_partition_clause),
           optional($.table_cluster_clause),
           optional($.option_clause),
@@ -406,6 +410,7 @@ module.exports = grammar({
           optional($.option_clause),
         ),
       ),
+    default_collate_clause: ($) => seq(kw('DEFAULT COLLATE'), $.string),
     copy_clause: ($) => seq(kw('COPY'), field('source_table_name', $.identifier)),
     create_snapshot_table_statement: ($) =>
       prec.right(seq(
@@ -535,8 +540,12 @@ module.exports = grammar({
       seq(
         field('column_name', $.identifier),
         field('column_type', $.column_type),
+        optional(field('collate_clause', $.collate_clause)),
+        optional(field('default', $.default_clause)),
         optional(field('option', $.option_clause)),
       ),
+
+    collate_clause: ($) => prec.left(seq(kw('COLLATE'), $.string)),
     column_type: ($) =>
       choice(
         prec(1, seq($._unquoted_identifier, '(', commaSep1($.number), ')')),
@@ -913,9 +922,10 @@ module.exports = grammar({
     cte_clause: ($) =>
       seq(
         kw('WITH'),
-        commaSep1($.non_recursive_cte),
+        optional(alias(kw('RECURSIVE'), $.with_recursive_keyword)),
+        commaSep1($.cte),
       ),
-    non_recursive_cte: ($) =>
+    cte: ($) =>
       seq(
         field('alias_name', $.identifier),
         $._keyword_as,
