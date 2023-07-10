@@ -1069,3 +1069,60 @@ ORDER BY 1 ASC
       (order_by_clause
         (order_by_clause_body
           (number))))))
+
+================================================================================
+SELECT: DIFFERENTIAL_PRIVACY syntax
+================================================================================
+
+-- Example in Public Reference:
+-- https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#dp_clause
+SELECT
+  WITH DIFFERENTIAL_PRIVACY
+    OPTIONS(epsilon=1e20, delta=.01, max_groups_contributed=2, privacy_unit_column=id)
+    item,
+    AVG(quantity, contribution_bounds_per_group => (0,100)) average_quantity
+FROM professors
+GROUP BY item;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (comment)
+  (query_statement
+    (query_expr
+      (select
+        (differential_privacy_clause
+          (option_item
+            (identifier)
+            (number))
+          (option_item
+            (identifier)
+            (number))
+          (option_item
+            (identifier)
+            (number))
+          (option_item
+            (identifier)
+            (identifier)))
+        (select_list
+          (select_expression
+            (identifier))
+          (select_expression
+            (function_call
+              (identifier)
+              (argument
+                (identifier))
+              (argument
+                (identifier)
+                (struct
+                  (number)
+                  (number))))
+            (as_alias
+              (identifier))))
+        (from_clause
+          (from_item
+            (identifier)))
+        (group_by_clause
+          (group_by_clause_body
+            (identifier)))))))

@@ -3543,6 +3543,21 @@
     }
   },
   {
+    "type": "differential_privacy_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "option_item",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "distinct",
     "named": true,
     "fields": {}
@@ -8513,6 +8528,10 @@
       "required": true,
       "types": [
         {
+          "type": "differential_privacy_clause",
+          "named": true
+        },
+        {
           "type": "from_clause",
           "named": true
         },
@@ -12104,6 +12123,10 @@
   },
   {
     "type": "WITH_CONNECTION",
+    "named": false
+  },
+  {
+    "type": "WITH_DIFFERENTIAL_PRIVACY",
     "named": false
   },
   {
