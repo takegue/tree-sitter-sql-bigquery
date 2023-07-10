@@ -33,5 +33,3 @@ OPTIONS(
   partition_expiration_days=1,
 --                          ^number
 )
-
-
