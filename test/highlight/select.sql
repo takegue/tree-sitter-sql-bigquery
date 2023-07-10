@@ -24,6 +24,7 @@ ORDER BY lower(a), b
 -- <- keyword
 --    ^ keyword
 --        ^ function
+;
 
 SELECT (SELECT 1), a
 -- <- keyword

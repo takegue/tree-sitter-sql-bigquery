@@ -1,4 +1,4 @@
-SELECT 
+SELECT
 -- ^ keyword
     cast(a04 as bool),
 --               ^ type.builtin
