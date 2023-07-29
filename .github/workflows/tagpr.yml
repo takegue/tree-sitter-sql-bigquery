@@ -1,0 +1,29 @@
+# .github/workflows/tagpr.yml
+name: tagpr
+on:
+  push:
+    branches: ["main"]
+jobs:
+  tagpr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+    - uses: actions/checkout@v3
+    - id: tagpr
+      uses: Songmu/tagpr@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+    - name: Update version
+      if: "steps.tagpr.outputs.tag != ''"
+      run: |
+        git config user.name 'github-actions[bot]'
+        git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+        ./script/version ${{ steps.tagpr.outputs.tag }}
+    # Re-tag to include new comits into pr
+    - id: tagpr2
+      uses: Songmu/tagpr@v1
+      if: "steps.tagpr.outputs.tag != ''"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
