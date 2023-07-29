@@ -961,19 +961,65 @@ ALTER COLUMN mycolumn2 DROP DEFAULT;
 DDL: PRIMARY KEY syntax
 ================================================================================
 
+CREATE TABLE `mydataset.table` (
+    `x` INT64,
+    `y` INT64,
+    `z` INT64,
+    PRIMARY KEY (x, y) NOT ENFORCED
+);
+
+CREATE TABLE `mydataset.table` (
+    `x` INT64 PRIMARY KEY NOT ENFORCED,
+    `y` INT64,
+    `z` INT64
+);
+
 ALTER TABLE pk_table ADD PRIMARY KEY (x,y) NOT ENFORCED;
 ALTER TABLE myTable DROP PRIMARY KEY;
 
 --------------------------------------------------------------------------------
 
 (source_file
+  (create_table_statement
+    (identifier)
+    (create_table_parameters
+      (column_definition
+        (identifier)
+        (column_type))
+      (column_definition
+        (identifier)
+        (column_type))
+      (column_definition
+        (identifier)
+        (column_type))
+      (constraint_definition
+        (primary_key
+          (column_list
+            (identifier)
+            (identifier))
+          (constraint_enfoce_option)))))
+  (create_table_statement
+    (identifier)
+    (create_table_parameters
+      (column_definition
+        (identifier)
+        (column_type)
+        (constraint_enfoce_option))
+      (column_definition
+        (identifier)
+        (column_type))
+      (column_definition
+        (identifier)
+        (column_type))))
   (alter_table_column_statement
     (identifier)
     (alter_column_actions_list
       (add_primary_key_action
-        (column_list
-          (identifier)
-          (identifier)))))
+        (primary_key
+          (column_list
+            (identifier)
+            (identifier))
+          (constraint_enfoce_option)))))
   (alter_table_column_statement
     (identifier)
     (alter_column_actions_list
@@ -982,6 +1028,20 @@ ALTER TABLE myTable DROP PRIMARY KEY;
 ================================================================================
 DDL: CONSTRAINT syntax
 ================================================================================
+
+CREATE TABLE fk_table (
+    `x` INT64 REFERENCES primary_key_table(column_name) NOT ENFORCED,
+    `y` INT64,
+    `z` INT64
+);
+
+CREATE TABLE fk_table (
+    `x` INT64,
+    `y` INT64,
+    `z` INT64,
+    CONSTRAINT constraint_name FOREIGN KEY (x, y) REFERENCES primary_key_table(column_name) NOT ENFORCED,
+    FOREIGN KEY (x, y) REFERENCES primary_key_table(column_name) NOT ENFORCED
+);
 
 ALTER TABLE fk_table
 ADD CONSTRAINT my_fk_name FOREIGN KEY (u, v)
@@ -992,19 +1052,71 @@ ALTER TABLE mytable DROP CONSTRAINT myConstraint;
 --------------------------------------------------------------------------------
 
 (source_file
+  (create_table_statement
+    (identifier)
+    (create_table_parameters
+      (column_definition
+        (identifier)
+        (column_type)
+        (foreign_key_references
+          (identifier)
+          (column_list
+            (identifier))
+          (constraint_enfoce_option)))
+      (column_definition
+        (identifier)
+        (column_type))
+      (column_definition
+        (identifier)
+        (column_type))))
+  (create_table_statement
+    (identifier)
+    (create_table_parameters
+      (column_definition
+        (identifier)
+        (column_type))
+      (column_definition
+        (identifier)
+        (column_type))
+      (column_definition
+        (identifier)
+        (column_type))
+      (constraint_definition
+        (identifier)
+        (foreign_key
+          (column_list
+            (identifier)
+            (identifier))
+          (foreign_key_references
+            (identifier)
+            (column_list
+              (identifier))
+            (constraint_enfoce_option))))
+      (constraint_definition
+        (foreign_key
+          (column_list
+            (identifier)
+            (identifier))
+          (foreign_key_references
+            (identifier)
+            (column_list
+              (identifier))
+            (constraint_enfoce_option))))))
   (alter_table_column_statement
     (identifier)
     (alter_column_actions_list
       (add_foreign_key_action
         (identifier)
-        (column_list
-          (identifier)
-          (identifier))
-        (foreign_key_references
-          (identifier)
+        (foreign_key
           (column_list
             (identifier)
-            (identifier))))))
+            (identifier))
+          (foreign_key_references
+            (identifier)
+            (column_list
+              (identifier)
+              (identifier))
+            (constraint_enfoce_option))))))
   (alter_table_column_statement
     (identifier)
     (alter_column_actions_list

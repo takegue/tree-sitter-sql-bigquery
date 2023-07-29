@@ -541,16 +541,19 @@ module.exports = grammar({
     drop_default: ($) => kw('DROP DEFAULT'),
 
     column_list: $ => commaSep1($.identifier),
+    constraint_enfoce_option: ($) => choice(kw('ENFORCED'), kw('NOT ENFORCED')),
+    primary_key: ($) => seq(
+      kw('PRIMARY KEY'),
+      "(",
+      field('column_list', $.column_list),
+      ")",
+      $.constraint_enfoce_option,
+    ),
+
     add_primary_key_action: ($) =>
       seq(
-        kw('ADD PRIMARY KEY'),
-        '(',
-        field('column_list', $.column_list),
-        ')',
-        seq(
-          optional($._keyword_not),
-          kw('ENFORCED'),
-        ),
+        kw('ADD'),
+        $.primary_key,
       ),
 
     drop_primary_key_action: ($) =>
@@ -558,6 +561,24 @@ module.exports = grammar({
         kw('DROP PRIMARY KEY'),
         optional($.keyword_if_exists),
       )),
+
+
+    foreign_key: ($) => seq(
+      kw('FOREIGN KEY'),
+      "(",
+      field('column_list', $.column_list),
+      ")",
+      $.foreign_key_references,
+    ),
+    foreign_key_references: ($) =>
+      seq(
+        kw('REFERENCES'),
+        field('referenced_table_name', $.identifier),
+        '(',
+        field('referenced_column_list', $.column_list),
+        ')',
+        $.constraint_enfoce_option,
+      ),
 
     add_foreign_key_action: ($) =>
       seq(
@@ -569,23 +590,7 @@ module.exports = grammar({
             field('constraint_name', $.identifier),
           ),
         ),
-        kw('FOREIGN KEY'),
-        '(',
-        field('column_list', $.column_list),
-        ')',
-        $.foreign_key_references,
-        seq(
-          optional($._keyword_not),
-          kw('ENFORCED'),
-        ),
-      ),
-    foreign_key_references: ($) =>
-      seq(
-        kw('REFERENCES'),
-        field('referenced_table_name', $.identifier),
-        '(',
-        field('referenced_column_list', $.column_list),
-        ')',
+        $.foreign_key,
       ),
 
     drop_constraint_action: ($) =>
@@ -610,7 +615,9 @@ module.exports = grammar({
         field('table_name', $.identifier),
       ),
 
-    create_table_parameters: ($) => seq('(', commaSep1($.column_definition), ')'),
+    create_table_parameters: ($) => seq('(', commaSep1(
+      choice($.column_definition, $.constraint_definition)
+    ), ')'),
     option_clause: ($) => seq(kw('OPTIONS'), '(', optional(sep1($.option_item, ',')), ')'),
     option_item: ($) => seq(field('key', $.identifier), '=', field('value', $._expression)),
 
@@ -619,10 +626,27 @@ module.exports = grammar({
         field('column_name', $.identifier),
         field('column_type', $.column_type),
         optional(field('collate_clause', $.collate_clause)),
+        optional(field('constraint_clause', choice(
+          seq(kw('PRIMARY KEY'), $.constraint_enfoce_option),
+          $.foreign_key_references
+        ))),
         optional(field('default', $.default_clause)),
+        optional(field('not_null', kw('NOT NULL'))),
         optional(field('option', $.option_clause)),
       ),
 
+    constraint_definition: ($) => choice(
+      $.primary_key,
+      seq(
+        optional(
+          seq(
+            kw('CONSTRAINT'),
+            field('constraint_name', $.identifier),
+          ),
+        ),
+        $.foreign_key
+      )
+    ),
     collate_clause: ($) => prec.left(seq(kw('COLLATE'), $.string)),
     column_type: ($) =>
       choice(
