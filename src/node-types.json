@@ -37,16 +37,6 @@
     "type": "add_foreign_key_action",
     "named": true,
     "fields": {
-      "column_list": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "column_list",
-            "named": true
-          }
-        ]
-      },
       "constraint_name": {
         "multiple": false,
         "required": false,
@@ -63,7 +53,7 @@
       "required": true,
       "types": [
         {
-          "type": "foreign_key_references",
+          "type": "foreign_key",
           "named": true
         },
         {
@@ -76,17 +66,16 @@
   {
     "type": "add_primary_key_action",
     "named": true,
-    "fields": {
-      "column_list": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "column_list",
-            "named": true
-          }
-        ]
-      }
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "primary_key",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -2496,6 +2485,24 @@
           }
         ]
       },
+      "constraint_clause": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "PRIMARY_KEY",
+            "named": false
+          },
+          {
+            "type": "constraint_enfoce_option",
+            "named": true
+          },
+          {
+            "type": "foreign_key_references",
+            "named": true
+          }
+        ]
+      },
       "default": {
         "multiple": false,
         "required": false,
@@ -2503,6 +2510,16 @@
           {
             "type": "default_clause",
             "named": true
+          }
+        ]
+      },
+      "not_null": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "NOT_NULL",
+            "named": false
           }
         ]
       },
@@ -2554,6 +2571,41 @@
   },
   {
     "type": "connection_path",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "constraint_definition",
+    "named": true,
+    "fields": {
+      "constraint_name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "foreign_key",
+          "named": true
+        },
+        {
+          "type": "primary_key",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "constraint_enfoce_option",
     "named": true,
     "fields": {}
   },
@@ -3281,6 +3333,10 @@
       "types": [
         {
           "type": "column_definition",
+          "named": true
+        },
+        {
+          "type": "constraint_definition",
           "named": true
         }
       ]
@@ -4919,6 +4975,32 @@
     }
   },
   {
+    "type": "foreign_key",
+    "named": true,
+    "fields": {
+      "column_list": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "column_list",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "foreign_key_references",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "foreign_key_references",
     "named": true,
     "fields": {
@@ -4942,6 +5024,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "constraint_enfoce_option",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -6497,6 +6589,10 @@
         {
           "type": "column_definition",
           "named": true
+        },
+        {
+          "type": "constraint_definition",
+          "named": true
         }
       ]
     }
@@ -7373,6 +7469,10 @@
         {
           "type": "column_definition",
           "named": true
+        },
+        {
+          "type": "constraint_definition",
+          "named": true
         }
       ]
     }
@@ -7651,6 +7751,32 @@
         },
         {
           "type": "function_call",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "primary_key",
+    "named": true,
+    "fields": {
+      "column_list": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "column_list",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "constraint_enfoce_option",
           "named": true
         }
       ]
@@ -11589,10 +11715,6 @@
     "named": false
   },
   {
-    "type": "ADD_PRIMARY_KEY",
-    "named": false
-  },
-  {
     "type": "ALL",
     "named": false
   },
@@ -12045,6 +12167,14 @@
     "named": false
   },
   {
+    "type": "NOT_ENFORCED",
+    "named": false
+  },
+  {
+    "type": "NOT_NULL",
+    "named": false
+  },
+  {
     "type": "NULL",
     "named": false
   },
@@ -12122,6 +12252,10 @@
   },
   {
     "type": "PRECEDING",
+    "named": false
+  },
+  {
+    "type": "PRIMARY_KEY",
     "named": false
   },
   {

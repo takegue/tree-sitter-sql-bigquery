@@ -3446,9 +3446,18 @@
         }
       ]
     },
-    "add_primary_key_action": {
-      "type": "SEQ",
+    "constraint_enfoce_option": {
+      "type": "CHOICE",
       "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[eE][nN][fF][oO][rR][cC][eE][dD]"
+          },
+          "named": false,
+          "value": "ENFORCED"
+        },
         {
           "type": "ALIAS",
           "content": {
@@ -3456,8 +3465,27 @@
             "members": [
               {
                 "type": "PATTERN",
-                "value": "[aA][dD][dD]"
+                "value": "[nN][oO][tT]"
               },
+              {
+                "type": "PATTERN",
+                "value": "[eE][nN][fF][oO][rR][cC][eE][dD]"
+              }
+            ]
+          },
+          "named": false,
+          "value": "NOT_ENFORCED"
+        }
+      ]
+    },
+    "primary_key": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SEQ",
+            "members": [
               {
                 "type": "PATTERN",
                 "value": "[pP][rR][iI][mM][aA][rR][yY]"
@@ -3469,7 +3497,7 @@
             ]
           },
           "named": false,
-          "value": "ADD_PRIMARY_KEY"
+          "value": "PRIMARY_KEY"
         },
         {
           "type": "STRING",
@@ -3488,30 +3516,26 @@
           "value": ")"
         },
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "_keyword_not"
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
-            },
-            {
-              "type": "ALIAS",
-              "content": {
-                "type": "PATTERN",
-                "value": "[eE][nN][fF][oO][rR][cC][eE][dD]"
-              },
-              "named": false,
-              "value": "ENFORCED"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "constraint_enfoce_option"
+        }
+      ]
+    },
+    "add_primary_key_action": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[aA][dD][dD]"
+          },
+          "named": false,
+          "value": "ADD"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "primary_key"
         }
       ]
     },
@@ -3557,6 +3581,91 @@
           }
         ]
       }
+    },
+    "foreign_key": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[fF][oO][rR][eE][iI][gG][nN]"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[kK][eE][yY]"
+              }
+            ]
+          },
+          "named": false,
+          "value": "FOREIGN_KEY"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "FIELD",
+          "name": "column_list",
+          "content": {
+            "type": "SYMBOL",
+            "name": "column_list"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "foreign_key_references"
+        }
+      ]
+    },
+    "foreign_key_references": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[rR][eE][fF][eE][rR][eE][nN][cC][eE][sS]"
+          },
+          "named": false,
+          "value": "REFERENCES"
+        },
+        {
+          "type": "FIELD",
+          "name": "referenced_table_name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "FIELD",
+          "name": "referenced_column_list",
+          "content": {
+            "type": "SYMBOL",
+            "name": "column_list"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "constraint_enfoce_option"
+        }
+      ]
     },
     "add_foreign_key_action": {
       "type": "SEQ",
@@ -3613,106 +3722,8 @@
           ]
         },
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "PATTERN",
-                "value": "[fF][oO][rR][eE][iI][gG][nN]"
-              },
-              {
-                "type": "PATTERN",
-                "value": "[kK][eE][yY]"
-              }
-            ]
-          },
-          "named": false,
-          "value": "FOREIGN_KEY"
-        },
-        {
-          "type": "STRING",
-          "value": "("
-        },
-        {
-          "type": "FIELD",
-          "name": "column_list",
-          "content": {
-            "type": "SYMBOL",
-            "name": "column_list"
-          }
-        },
-        {
-          "type": "STRING",
-          "value": ")"
-        },
-        {
           "type": "SYMBOL",
-          "name": "foreign_key_references"
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "_keyword_not"
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
-            },
-            {
-              "type": "ALIAS",
-              "content": {
-                "type": "PATTERN",
-                "value": "[eE][nN][fF][oO][rR][cC][eE][dD]"
-              },
-              "named": false,
-              "value": "ENFORCED"
-            }
-          ]
-        }
-      ]
-    },
-    "foreign_key_references": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[rR][eE][fF][eE][rR][eE][nN][cC][eE][sS]"
-          },
-          "named": false,
-          "value": "REFERENCES"
-        },
-        {
-          "type": "FIELD",
-          "name": "referenced_table_name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "identifier"
-          }
-        },
-        {
-          "type": "STRING",
-          "value": "("
-        },
-        {
-          "type": "FIELD",
-          "name": "referenced_column_list",
-          "content": {
-            "type": "SYMBOL",
-            "name": "column_list"
-          }
-        },
-        {
-          "type": "STRING",
-          "value": ")"
+          "name": "foreign_key"
         }
       ]
     },
@@ -3899,8 +3910,17 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "column_definition"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "column_definition"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "constraint_definition"
+                }
+              ]
             },
             {
               "type": "REPEAT",
@@ -3912,8 +3932,17 @@
                     "value": ","
                   },
                   {
-                    "type": "SYMBOL",
-                    "name": "column_definition"
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "column_definition"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "constraint_definition"
+                      }
+                    ]
                   }
                 ]
               }
@@ -4046,10 +4075,88 @@
           "members": [
             {
               "type": "FIELD",
+              "name": "constraint_clause",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "ALIAS",
+                        "content": {
+                          "type": "SEQ",
+                          "members": [
+                            {
+                              "type": "PATTERN",
+                              "value": "[pP][rR][iI][mM][aA][rR][yY]"
+                            },
+                            {
+                              "type": "PATTERN",
+                              "value": "[kK][eE][yY]"
+                            }
+                          ]
+                        },
+                        "named": false,
+                        "value": "PRIMARY_KEY"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "constraint_enfoce_option"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "foreign_key_references"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
               "name": "default",
               "content": {
                 "type": "SYMBOL",
                 "name": "default_clause"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "not_null",
+              "content": {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "PATTERN",
+                      "value": "[nN][oO][tT]"
+                    },
+                    {
+                      "type": "PATTERN",
+                      "value": "[nN][uU][lL][lL]"
+                    }
+                  ]
+                },
+                "named": false,
+                "value": "NOT_NULL"
               }
             },
             {
@@ -4070,6 +4177,54 @@
             },
             {
               "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "constraint_definition": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "primary_key"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "ALIAS",
+                      "content": {
+                        "type": "PATTERN",
+                        "value": "[cC][oO][nN][sS][tT][rR][aA][iI][nN][tT]"
+                      },
+                      "named": false,
+                      "value": "CONSTRAINT"
+                    },
+                    {
+                      "type": "FIELD",
+                      "name": "constraint_name",
+                      "content": {
+                        "type": "SYMBOL",
+                        "name": "identifier"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "SYMBOL",
+              "name": "foreign_key"
             }
           ]
         }
