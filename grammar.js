@@ -493,9 +493,12 @@ module.exports = grammar({
             $.drop_column_action,
             $.alter_column_action,
             $.add_primary_key_action,
-            $.drop_primary_key_action
-          )
-      )),
+            $.drop_primary_key_action,
+            $.add_foreign_key_action,
+            $.drop_constraint_action,
+          ),
+        ),
+      ),
 
     add_column_action: ($) =>
       seq(
@@ -529,24 +532,25 @@ module.exports = grammar({
           $.set_data_type,
           $.set_default,
           $.drop_default,
-        )
+        ),
       ),
     set_option: ($) => seq(kw('SET'), $.option_clause),
-    set_data_type: $ => seq(kw('SET DATA TYPE'), field('column_schema', $.column_type)),
-    set_default: $ => seq(kw('SET DEFAULT'), field('default_value', $._expression)),
-    drop_notnull: $ => kw('DROP NOT NULL'),
-    drop_default: $ => kw('DROP DEFAULT'),
+    set_data_type: ($) => seq(kw('SET DATA TYPE'), field('column_schema', $.column_type)),
+    set_default: ($) => seq(kw('SET DEFAULT'), field('default_value', $._expression)),
+    drop_notnull: ($) => kw('DROP NOT NULL'),
+    drop_default: ($) => kw('DROP DEFAULT'),
 
+    column_list: $ => commaSep1($.identifier),
     add_primary_key_action: ($) =>
       seq(
         kw('ADD PRIMARY KEY'),
-        '(', 
-        field('column_list', commaSep1($.identifier)),
+        '(',
+        field('column_list', $.column_list),
         ')',
         seq(
           optional($._keyword_not),
           kw('ENFORCED'),
-        )
+        ),
       ),
 
     drop_primary_key_action: ($) =>
@@ -555,18 +559,41 @@ module.exports = grammar({
         optional($.keyword_if_exists),
       )),
 
-    // add_foreign_key_action: ($) =>
-    //   seq(
-    //     kw('ADD'),
-    //     optional(
-    //       kw('CONSTRAINT'),
-    //       optional($.keyword_if_not_exists),
-    //       field('constraint_name', $.identifier),
-    //     ),
-    //     kw('FOREIGN KEY'),
-    //     $.column_definition,
-    //   ),
+    add_foreign_key_action: ($) =>
+      seq(
+        kw('ADD'),
+        optional(
+          seq(
+            kw('CONSTRAINT'),
+            optional($.keyword_if_not_exists),
+            field('constraint_name', $.identifier),
+          ),
+        ),
+        kw('FOREIGN KEY'),
+        '(',
+        field('column_list', $.column_list),
+        ')',
+        $.foreign_key_references,
+        seq(
+          optional($._keyword_not),
+          kw('ENFORCED'),
+        ),
+      ),
+    foreign_key_references: ($) =>
+      seq(
+        kw('REFERENCES'),
+        field('referenced_table_name', $.identifier),
+        '(',
+        field('referenced_column_list', $.column_list),
+        ')',
+      ),
 
+    drop_constraint_action: ($) =>
+      seq(
+        kw('DROP CONSTRAINT'),
+        optional($.keyword_if_exists),
+        field('constraint_name', $.identifier),
+      ),
 
     drop_table_statement: ($) =>
       seq(
