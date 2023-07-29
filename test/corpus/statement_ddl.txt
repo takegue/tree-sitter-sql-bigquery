@@ -958,6 +958,27 @@ ALTER COLUMN mycolumn2 DROP DEFAULT;
         (drop_default)))))
 
 ================================================================================
+DDL: PRIMARY KEY syntax
+================================================================================
+
+ALTER TABLE pk_table ADD PRIMARY KEY (x,y) NOT ENFORCED;
+ALTER TABLE myTable DROP PRIMARY KEY;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (alter_table_column_statement
+    (identifier)
+    (alter_column_actions_list
+      (add_primary_key_action
+        (identifier)
+        (identifier))))
+  (alter_table_column_statement
+    (identifier)
+    (alter_column_actions_list
+      (drop_primary_key_action))))
+
+================================================================================
 DDL: DEFAULT option
 ================================================================================
 

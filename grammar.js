@@ -467,6 +467,16 @@ module.exports = grammar({
         field('new_table_name', $.identifier),
       ),
 
+    alter_table_rename_statement: ($) =>
+      seq(
+        $._keyword_alter,
+        kw('TABLE'),
+        optional($.keyword_if_exists),
+        field('table_name', $.identifier),
+        kw('RENAME TO'),
+        field('new_table_name', $.identifier),
+      ),
+
     alter_table_column_statement: ($) =>
       seq(
         $._keyword_alter,
@@ -482,6 +492,8 @@ module.exports = grammar({
             $.rename_column_action,
             $.drop_column_action,
             $.alter_column_action,
+            $.add_primary_key_action,
+            $.drop_primary_key_action
           )
       )),
 
@@ -491,6 +503,7 @@ module.exports = grammar({
         optional($.keyword_if_not_exists),
         $.column_definition,
       ),
+
     rename_column_action: ($) =>
       seq(
         kw('RENAME COLUMN'),
@@ -523,6 +536,37 @@ module.exports = grammar({
     set_default: $ => seq(kw('SET DEFAULT'), field('default_value', $._expression)),
     drop_notnull: $ => kw('DROP NOT NULL'),
     drop_default: $ => kw('DROP DEFAULT'),
+
+    add_primary_key_action: ($) =>
+      seq(
+        kw('ADD PRIMARY KEY'),
+        '(', 
+        field('column_list', commaSep1($.identifier)),
+        ')',
+        seq(
+          optional($._keyword_not),
+          kw('ENFORCED'),
+        )
+      ),
+
+    drop_primary_key_action: ($) =>
+      prec.left(seq(
+        kw('DROP PRIMARY KEY'),
+        optional($.keyword_if_exists),
+      )),
+
+    // add_foreign_key_action: ($) =>
+    //   seq(
+    //     kw('ADD'),
+    //     optional(
+    //       kw('CONSTRAINT'),
+    //       optional($.keyword_if_not_exists),
+    //       field('constraint_name', $.identifier),
+    //     ),
+    //     kw('FOREIGN KEY'),
+    //     $.column_definition,
+    //   ),
+
 
     drop_table_statement: ($) =>
       seq(
