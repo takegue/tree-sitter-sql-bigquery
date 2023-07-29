@@ -971,12 +971,45 @@ ALTER TABLE myTable DROP PRIMARY KEY;
     (identifier)
     (alter_column_actions_list
       (add_primary_key_action
-        (identifier)
-        (identifier))))
+        (column_list
+          (identifier)
+          (identifier)))))
   (alter_table_column_statement
     (identifier)
     (alter_column_actions_list
       (drop_primary_key_action))))
+
+================================================================================
+DDL: CONSTRAINT syntax
+================================================================================
+
+ALTER TABLE fk_table
+ADD CONSTRAINT my_fk_name FOREIGN KEY (u, v)
+REFERENCES pk_table(x, y) NOT ENFORCED;
+
+ALTER TABLE mytable DROP CONSTRAINT myConstraint;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (alter_table_column_statement
+    (identifier)
+    (alter_column_actions_list
+      (add_foreign_key_action
+        (identifier)
+        (column_list
+          (identifier)
+          (identifier))
+        (foreign_key_references
+          (identifier)
+          (column_list
+            (identifier)
+            (identifier))))))
+  (alter_table_column_statement
+    (identifier)
+    (alter_column_actions_list
+      (drop_constraint_action
+        (identifier)))))
 
 ================================================================================
 DDL: DEFAULT option
