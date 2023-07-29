@@ -784,7 +784,12 @@ ALTER TABLE mydataset.mytable
 ALTER COLUMN price
 SET OPTIONS (
   description="Price per unit"
-)
+);
+
+ALTER TABLE `canary.bikeshare_stations_hetero`
+  ALTER COLUMN IF EXISTS `name` SET OPTIONS(description="description"),
+  ALTER COLUMN IF EXISTS `status` SET OPTIONS(description="description")
+;
 
 --------------------------------------------------------------------------------
 

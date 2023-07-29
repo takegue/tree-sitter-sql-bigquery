@@ -487,11 +487,15 @@ module.exports = grammar({
         kw('TABLE'),
         optional($.keyword_if_exists),
         field('table_name', $.identifier),
-        kw('ALTER COLUMN'),
-        field('column_name', $.identifier),
-        optional($.keyword_if_exists),
-        kw('SET'),
-        $.option_clause,
+        commaSep1(
+          seq(
+            kw('ALTER COLUMN'),
+            optional($.keyword_if_exists),
+            field('column_name', $.identifier),
+            kw('SET'),
+            $.option_clause,
+          )
+        )
       ),
     alter_column_drop_not_nulls_statement: ($) =>
       seq(
@@ -499,10 +503,12 @@ module.exports = grammar({
         kw('TABLE'),
         optional($.keyword_if_exists),
         field('table_name', $.identifier),
-        kw('ALTER COLUMN'),
-        optional($.keyword_if_exists),
-        field('column_name', $.identifier),
-        kw('DROP NOT NULL'),
+        seq(
+          kw('ALTER COLUMN'),
+          optional($.keyword_if_exists),
+          field('column_name', $.identifier),
+          kw('DROP NOT NULL'),
+        )
       ),
     alter_column_set_data_type_statement: ($) =>
       seq(
@@ -510,11 +516,15 @@ module.exports = grammar({
         kw('TABLE'),
         optional($.keyword_if_exists),
         field('table_name', $.identifier),
-        kw('ALTER COLUMN'),
-        optional($.keyword_if_exists),
-        field('column_name', $.identifier),
-        kw('SET DATA TYPE'),
-        field('column_schema', $.column_type),
+        commaSep1(
+          seq(
+            kw('ALTER COLUMN'),
+            optional($.keyword_if_exists),
+            field('column_name', $.identifier),
+            kw('SET DATA TYPE'),
+            field('column_schema', $.column_type),
+          )
+        )
       ),
 
     drop_table_statement: ($) =>
