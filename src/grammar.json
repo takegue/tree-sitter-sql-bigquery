@@ -484,23 +484,11 @@
             },
             {
               "type": "SYMBOL",
-              "name": "alter_table_column_statement"
-            },
-            {
-              "type": "SYMBOL",
               "name": "alter_table_rename_statement"
             },
             {
               "type": "SYMBOL",
-              "name": "alter_column_set_options_statement"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "alter_column_drop_not_nulls_statement"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "alter_column_set_data_type_statement"
+              "name": "alter_table_column_statement"
             },
             {
               "type": "SYMBOL",
@@ -2905,127 +2893,6 @@
         }
       ]
     },
-    "alter_table_column_statement": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_keyword_alter"
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[tT][aA][bB][lL][eE]"
-          },
-          "named": false,
-          "value": "TABLE"
-        },
-        {
-          "type": "FIELD",
-          "name": "table_name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "identifier"
-          }
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "ALIAS",
-                  "content": {
-                    "type": "SEQ",
-                    "members": [
-                      {
-                        "type": "PATTERN",
-                        "value": "[aA][dD][dD]"
-                      },
-                      {
-                        "type": "PATTERN",
-                        "value": "[cC][oO][lL][uU][mM][nN]"
-                      }
-                    ]
-                  },
-                  "named": false,
-                  "value": "ADD_COLUMN"
-                },
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "keyword_if_not_exists"
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "column_definition"
-                }
-              ]
-            },
-            {
-              "type": "REPEAT",
-              "content": {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "STRING",
-                    "value": ","
-                  },
-                  {
-                    "type": "SEQ",
-                    "members": [
-                      {
-                        "type": "ALIAS",
-                        "content": {
-                          "type": "SEQ",
-                          "members": [
-                            {
-                              "type": "PATTERN",
-                              "value": "[aA][dD][dD]"
-                            },
-                            {
-                              "type": "PATTERN",
-                              "value": "[cC][oO][lL][uU][mM][nN]"
-                            }
-                          ]
-                        },
-                        "named": false,
-                        "value": "ADD_COLUMN"
-                      },
-                      {
-                        "type": "CHOICE",
-                        "members": [
-                          {
-                            "type": "SYMBOL",
-                            "name": "keyword_if_not_exists"
-                          },
-                          {
-                            "type": "BLANK"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "column_definition"
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      ]
-    },
     "alter_table_rename_statement": {
       "type": "SEQ",
       "members": [
@@ -3090,7 +2957,7 @@
         }
       ]
     },
-    "alter_column_set_options_statement": {
+    "alter_table_column_statement": {
       "type": "SEQ",
       "members": [
         {
@@ -3107,6 +2974,180 @@
           "value": "TABLE"
         },
         {
+          "type": "FIELD",
+          "name": "table_name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "actions",
+          "content": {
+            "type": "SYMBOL",
+            "name": "alter_column_actions_list"
+          }
+        }
+      ]
+    },
+    "alter_column_actions_list": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "add_column_action"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "rename_column_action"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "drop_column_action"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "alter_column_action"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "add_primary_key_action"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "drop_primary_key_action"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "add_foreign_key_action"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "drop_constraint_action"
+                }
+              ]
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "add_column_action"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "rename_column_action"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "drop_column_action"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "alter_column_action"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "add_primary_key_action"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "drop_primary_key_action"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "add_foreign_key_action"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "drop_constraint_action"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "add_column_action": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[aA][dD][dD]"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[cC][oO][lL][uU][mM][nN]"
+              }
+            ]
+          },
+          "named": false,
+          "value": "ADD_COLUMN"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "keyword_if_not_exists"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "column_definition"
+        }
+      ]
+    },
+    "rename_column_action": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[rR][eE][nN][aA][mM][eE]"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[cC][oO][lL][uU][mM][nN]"
+              }
+            ]
+          },
+          "named": false,
+          "value": "RENAME_COLUMN"
+        },
+        {
           "type": "CHOICE",
           "members": [
             {
@@ -3120,12 +3161,77 @@
         },
         {
           "type": "FIELD",
-          "name": "table_name",
+          "name": "column_name",
           "content": {
             "type": "SYMBOL",
             "name": "identifier"
           }
         },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[tT][oO]"
+          },
+          "named": false,
+          "value": "TO"
+        },
+        {
+          "type": "FIELD",
+          "name": "new_column_name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        }
+      ]
+    },
+    "drop_column_action": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[dD][rR][oO][pP]"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[cC][oO][lL][uU][mM][nN]"
+              }
+            ]
+          },
+          "named": false,
+          "value": "DROP_COLUMN"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "keyword_if_exists"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "FIELD",
+          "name": "column_name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        }
+      ]
+    },
+    "alter_column_action": {
+      "type": "SEQ",
+      "members": [
         {
           "type": "ALIAS",
           "content": {
@@ -3145,6 +3251,18 @@
           "value": "ALTER_COLUMN"
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "keyword_if_exists"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "FIELD",
           "name": "column_name",
           "content": {
@@ -3157,13 +3275,31 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "keyword_if_exists"
+              "name": "set_option"
             },
             {
-              "type": "BLANK"
+              "type": "SYMBOL",
+              "name": "drop_notnull"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "set_data_type"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "set_default"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "drop_default"
             }
           ]
-        },
+        }
+      ]
+    },
+    "set_option": {
+      "type": "SEQ",
+      "members": [
         {
           "type": "ALIAS",
           "content": {
@@ -3179,178 +3315,9 @@
         }
       ]
     },
-    "alter_column_drop_not_nulls_statement": {
+    "set_data_type": {
       "type": "SEQ",
       "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_keyword_alter"
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[tT][aA][bB][lL][eE]"
-          },
-          "named": false,
-          "value": "TABLE"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "keyword_if_exists"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "FIELD",
-          "name": "table_name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "identifier"
-          }
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "PATTERN",
-                "value": "[aA][lL][tT][eE][rR]"
-              },
-              {
-                "type": "PATTERN",
-                "value": "[cC][oO][lL][uU][mM][nN]"
-              }
-            ]
-          },
-          "named": false,
-          "value": "ALTER_COLUMN"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "keyword_if_exists"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "FIELD",
-          "name": "column_name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "identifier"
-          }
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "PATTERN",
-                "value": "[dD][rR][oO][pP]"
-              },
-              {
-                "type": "PATTERN",
-                "value": "[nN][oO][tT]"
-              },
-              {
-                "type": "PATTERN",
-                "value": "[nN][uU][lL][lL]"
-              }
-            ]
-          },
-          "named": false,
-          "value": "DROP_NOT_NULL"
-        }
-      ]
-    },
-    "alter_column_set_data_type_statement": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_keyword_alter"
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[tT][aA][bB][lL][eE]"
-          },
-          "named": false,
-          "value": "TABLE"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "keyword_if_exists"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "FIELD",
-          "name": "table_name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "identifier"
-          }
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "PATTERN",
-                "value": "[aA][lL][tT][eE][rR]"
-              },
-              {
-                "type": "PATTERN",
-                "value": "[cC][oO][lL][uU][mM][nN]"
-              }
-            ]
-          },
-          "named": false,
-          "value": "ALTER_COLUMN"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "keyword_if_exists"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "FIELD",
-          "name": "column_name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "identifier"
-          }
-        },
         {
           "type": "ALIAS",
           "content": {
@@ -3379,6 +3346,415 @@
           "content": {
             "type": "SYMBOL",
             "name": "column_type"
+          }
+        }
+      ]
+    },
+    "set_default": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[sS][eE][tT]"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[dD][eE][fF][aA][uU][lL][tT]"
+              }
+            ]
+          },
+          "named": false,
+          "value": "SET_DEFAULT"
+        },
+        {
+          "type": "FIELD",
+          "name": "default_value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_expression"
+          }
+        }
+      ]
+    },
+    "drop_notnull": {
+      "type": "ALIAS",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "PATTERN",
+            "value": "[dD][rR][oO][pP]"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[nN][oO][tT]"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[nN][uU][lL][lL]"
+          }
+        ]
+      },
+      "named": false,
+      "value": "DROP_NOT_NULL"
+    },
+    "drop_default": {
+      "type": "ALIAS",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "PATTERN",
+            "value": "[dD][rR][oO][pP]"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[dD][eE][fF][aA][uU][lL][tT]"
+          }
+        ]
+      },
+      "named": false,
+      "value": "DROP_DEFAULT"
+    },
+    "column_list": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": ","
+              },
+              {
+                "type": "SYMBOL",
+                "name": "identifier"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "add_primary_key_action": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[aA][dD][dD]"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[pP][rR][iI][mM][aA][rR][yY]"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[kK][eE][yY]"
+              }
+            ]
+          },
+          "named": false,
+          "value": "ADD_PRIMARY_KEY"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "FIELD",
+          "name": "column_list",
+          "content": {
+            "type": "SYMBOL",
+            "name": "column_list"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_keyword_not"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[eE][nN][fF][oO][rR][cC][eE][dD]"
+              },
+              "named": false,
+              "value": "ENFORCED"
+            }
+          ]
+        }
+      ]
+    },
+    "drop_primary_key_action": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "PATTERN",
+                  "value": "[dD][rR][oO][pP]"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "[pP][rR][iI][mM][aA][rR][yY]"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "[kK][eE][yY]"
+                }
+              ]
+            },
+            "named": false,
+            "value": "DROP_PRIMARY_KEY"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "keyword_if_exists"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "add_foreign_key_action": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[aA][dD][dD]"
+          },
+          "named": false,
+          "value": "ADD"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "[cC][oO][nN][sS][tT][rR][aA][iI][nN][tT]"
+                  },
+                  "named": false,
+                  "value": "CONSTRAINT"
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "keyword_if_not_exists"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                },
+                {
+                  "type": "FIELD",
+                  "name": "constraint_name",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "identifier"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[fF][oO][rR][eE][iI][gG][nN]"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[kK][eE][yY]"
+              }
+            ]
+          },
+          "named": false,
+          "value": "FOREIGN_KEY"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "FIELD",
+          "name": "column_list",
+          "content": {
+            "type": "SYMBOL",
+            "name": "column_list"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "foreign_key_references"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_keyword_not"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[eE][nN][fF][oO][rR][cC][eE][dD]"
+              },
+              "named": false,
+              "value": "ENFORCED"
+            }
+          ]
+        }
+      ]
+    },
+    "foreign_key_references": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[rR][eE][fF][eE][rR][eE][nN][cC][eE][sS]"
+          },
+          "named": false,
+          "value": "REFERENCES"
+        },
+        {
+          "type": "FIELD",
+          "name": "referenced_table_name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "FIELD",
+          "name": "referenced_column_list",
+          "content": {
+            "type": "SYMBOL",
+            "name": "column_list"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "drop_constraint_action": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[dD][rR][oO][pP]"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[cC][oO][nN][sS][tT][rR][aA][iI][nN][tT]"
+              }
+            ]
+          },
+          "named": false,
+          "value": "DROP_CONSTRAINT"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "keyword_if_exists"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "FIELD",
+          "name": "constraint_name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
           }
         }
       ]
