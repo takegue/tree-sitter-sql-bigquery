@@ -11,6 +11,16 @@ jobs:
       pull-requests: write
     steps:
     - uses: actions/checkout@v3
-    - uses: Songmu/tagpr@v1
+    - id: tagpr
+      uses: Songmu/tagpr@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+    - name: update package config
+      if: "steps.tagpr.outputs.tag != ''"
+      run:  |
+        git config user.name 'github-actions[bot]'
+        git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+        echo ${{ steps.tagpr.outputs.pull_request }}
+        npm run release ${{ steps.tagpr.outputs.tag }}
+
+
