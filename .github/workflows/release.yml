@@ -37,7 +37,7 @@ jobs:
   release:
     needs: check
     runs-on: ubuntu-latest
-    if: always() && (needs.check.outputs.EXISTS_TAG == 'false')
+    if: ${{ !cancelled() && (needs.check.outputs.EXISTS_TAG == 'false') }}
     environment: release
     permissions:
       contents: write
