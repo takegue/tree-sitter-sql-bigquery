@@ -39,10 +39,10 @@ module.exports = grammar({
   conflicts: (
     $,
   ) => [
-      [$.query_expr],
-      [$.function_call],
-      // [$.function_call, $.argument],
-    ],
+    [$.query_expr],
+    [$.function_call],
+    // [$.function_call, $.argument],
+  ],
   externals: ($) => [
     $._string_start,
     $._string_content,
@@ -113,11 +113,8 @@ module.exports = grammar({
           $.create_snapshot_table_statement,
           $.create_external_table_statement,
           $.alter_table_statement,
-          $.alter_table_column_statement,
           $.alter_table_rename_statement,
-          $.alter_column_set_options_statement,
-          $.alter_column_drop_not_nulls_statement,
-          $.alter_column_set_data_type_statement,
+          $.alter_table_column_statement,
           $.drop_table_statement,
           $.create_function_statement,
           $.create_remote_function_statement,
@@ -459,19 +456,7 @@ module.exports = grammar({
         kw('SET'),
         optional($.option_clause),
       ),
-    alter_table_column_statement: ($) =>
-      seq(
-        $._keyword_alter,
-        kw('TABLE'),
-        field('table_name', $.identifier),
-        commaSep1(
-          seq(
-            kw('ADD COLUMN'),
-            optional($.keyword_if_not_exists),
-            $.column_definition,
-          ),
-        ),
-      ),
+
     alter_table_rename_statement: ($) =>
       seq(
         $._keyword_alter,
@@ -481,51 +466,63 @@ module.exports = grammar({
         kw('RENAME TO'),
         field('new_table_name', $.identifier),
       ),
-    alter_column_set_options_statement: ($) =>
+
+    alter_table_column_statement: ($) =>
       seq(
         $._keyword_alter,
         kw('TABLE'),
-        optional($.keyword_if_exists),
         field('table_name', $.identifier),
+        field('actions', $.alter_column_actions_list),
+      ),
+    alter_column_actions_list: ($) =>
+      seq(
         commaSep1(
-          seq(
-            kw('ALTER COLUMN'),
-            optional($.keyword_if_exists),
-            field('column_name', $.identifier),
-            kw('SET'),
-            $.option_clause,
+          choice(
+            $.add_column_action,
+            $.rename_column_action,
+            $.drop_column_action,
+            $.alter_column_action,
           )
-        )
-      ),
-    alter_column_drop_not_nulls_statement: ($) =>
+      )),
+
+    add_column_action: ($) =>
       seq(
-        $._keyword_alter,
-        kw('TABLE'),
-        optional($.keyword_if_exists),
-        field('table_name', $.identifier),
-        seq(
-          kw('ALTER COLUMN'),
-          optional($.keyword_if_exists),
-          field('column_name', $.identifier),
-          kw('DROP NOT NULL'),
-        )
+        kw('ADD COLUMN'),
+        optional($.keyword_if_not_exists),
+        $.column_definition,
       ),
-    alter_column_set_data_type_statement: ($) =>
+    rename_column_action: ($) =>
       seq(
-        $._keyword_alter,
-        kw('TABLE'),
+        kw('RENAME COLUMN'),
         optional($.keyword_if_exists),
-        field('table_name', $.identifier),
-        commaSep1(
-          seq(
-            kw('ALTER COLUMN'),
-            optional($.keyword_if_exists),
-            field('column_name', $.identifier),
-            kw('SET DATA TYPE'),
-            field('column_schema', $.column_type),
-          )
+        field('column_name', $.identifier),
+        kw('TO'),
+        field('new_column_name', $.identifier),
+      ),
+    drop_column_action: ($) =>
+      seq(
+        kw('DROP COLUMN'),
+        optional($.keyword_if_exists),
+        field('column_name', $.identifier),
+      ),
+    alter_column_action: ($) =>
+      seq(
+        kw('ALTER COLUMN'),
+        optional($.keyword_if_exists),
+        field('column_name', $.identifier),
+        choice(
+          $.set_option,
+          $.drop_notnull,
+          $.set_data_type,
+          $.set_default,
+          $.drop_default,
         )
       ),
+    set_option: ($) => seq(kw('SET'), $.option_clause),
+    set_data_type: $ => seq(kw('SET DATA TYPE'), field('column_schema', $.column_type)),
+    set_default: $ => seq(kw('SET DEFAULT'), field('default_value', $._expression)),
+    drop_notnull: $ => kw('DROP NOT NULL'),
+    drop_default: $ => kw('DROP DEFAULT'),
 
     drop_table_statement: ($) =>
       seq(
@@ -914,12 +911,14 @@ module.exports = grammar({
         choice($.identifier, $.window_specification),
       ),
 
-    differential_privacy_clause: ($) => seq(
-      kw('WITH DIFFERENTIAL_PRIVACY'), 'OPTIONS'
-      , '(', 
-      optional(sep1($.option_item, ',')),
-      ')'
-    ),
+    differential_privacy_clause: ($) =>
+      seq(
+        kw('WITH DIFFERENTIAL_PRIVACY'),
+        'OPTIONS',
+        '(',
+        optional(sep1($.option_item, ',')),
+        ')',
+      ),
     window_clause: ($) => seq($._keyword_window, $.named_window_expression),
     order_by_clause_body: ($) =>
       commaSep1(

@@ -745,23 +745,28 @@ DDL: ALTER TABLE COLUMN on BigQuery Examples #1
 (source_file
   (alter_table_column_statement
     (identifier)
-    (column_definition
-      (identifier)
-      (column_type))
-    (keyword_if_not_exists)
-    (column_definition
-      (identifier)
-      (column_type))
-    (column_definition
-      (identifier)
-      (column_type))
-    (column_definition
-      (identifier)
-      (column_type)
-      (option_clause
-        (option_item
+    (alter_column_actions_list
+      (add_column_action
+        (column_definition
           (identifier)
-          (string))))))
+          (column_type)))
+      (add_column_action
+        (keyword_if_not_exists)
+        (column_definition
+          (identifier)
+          (column_type)))
+      (add_column_action
+        (column_definition
+          (identifier)
+          (column_type)))
+      (add_column_action
+        (column_definition
+          (identifier)
+          (column_type)
+          (option_clause
+            (option_item
+              (identifier)
+              (string))))))))
 
 ================================================================================
 DDL: ALTER TABLE RENAME TO on BigQuery Examples #1
@@ -787,20 +792,63 @@ SET OPTIONS (
 );
 
 ALTER TABLE `canary.bikeshare_stations_hetero`
-  ALTER COLUMN IF EXISTS `name` SET OPTIONS(description="description"),
+  ALTER COLUMN `name` SET OPTIONS(description="description"),
   ALTER COLUMN IF EXISTS `status` SET OPTIONS(description="description")
 ;
 
 --------------------------------------------------------------------------------
 
 (source_file
-  (alter_column_set_options_statement
+  (alter_table_column_statement
     (identifier)
-    (identifier)
-    (option_clause
-      (option_item
+    (alter_column_actions_list
+      (alter_column_action
         (identifier)
-        (string)))))
+        (set_option
+          (option_clause
+            (option_item
+              (identifier)
+              (string)))))))
+  (alter_table_column_statement
+    (identifier)
+    (alter_column_actions_list
+      (alter_column_action
+        (identifier)
+        (set_option
+          (option_clause
+            (option_item
+              (identifier)
+              (string)))))
+      (alter_column_action
+        (keyword_if_exists)
+        (identifier)
+        (set_option
+          (option_clause
+            (option_item
+              (identifier)
+              (string))))))))
+
+================================================================================
+DDL: ALTER RENAME COLUMN
+================================================================================
+
+ALTER TABLE canary.bikeshare_stations_blue
+  RENAME COLUMN `station_id` TO `hoge`,
+  RENAME COLUMN IF EXISTS `name` TO `hog2`
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (alter_table_column_statement
+    (identifier)
+    (alter_column_actions_list
+      (rename_column_action
+        (identifier)
+        (identifier))
+      (rename_column_action
+        (keyword_if_exists)
+        (identifier)
+        (identifier)))))
 
 ================================================================================
 DDL: ALTER COLUMN DROP NOT NULL on BigQuery Examples #1
@@ -813,9 +861,12 @@ DROP NOT NULL
 --------------------------------------------------------------------------------
 
 (source_file
-  (alter_column_drop_not_nulls_statement
+  (alter_table_column_statement
     (identifier)
-    (identifier)))
+    (alter_column_actions_list
+      (alter_column_action
+        (identifier)
+        (drop_notnull)))))
 
 ================================================================================
 DDL: ALTER COLUMN SET DATA TYPE on BigQuery Examples #1
@@ -828,12 +879,83 @@ SET DATA TYPE NUMERIC(8,2);
 --------------------------------------------------------------------------------
 
 (source_file
-  (alter_column_set_data_type_statement
+  (alter_table_column_statement
     (identifier)
+    (alter_column_actions_list
+      (alter_column_action
+        (identifier)
+        (set_data_type
+          (column_type
+            (number)
+            (number)))))))
+
+================================================================================
+DDL: ALTER COLUMN SET DEFAULT syntax
+================================================================================
+
+ALTER TABLE mydataset.mytable
+ALTER COLUMN mycolumn1 SET DEFAULT CURRENT_TIME();
+
+ALTER TABLE mydataset.mytable
+ALTER COLUMN IF EXISTS mycolumn1 SET DEFAULT CURRENT_TIME(),
+ALTER COLUMN mycolumn2 SET DEFAULT CURRENT_TIME();
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (alter_table_column_statement
     (identifier)
-    (column_type
-      (number)
-      (number))))
+    (alter_column_actions_list
+      (alter_column_action
+        (identifier)
+        (set_default
+          (function_call
+            (identifier))))))
+  (alter_table_column_statement
+    (identifier)
+    (alter_column_actions_list
+      (alter_column_action
+        (keyword_if_exists)
+        (identifier)
+        (set_default
+          (function_call
+            (identifier))))
+      (alter_column_action
+        (identifier)
+        (set_default
+          (function_call
+            (identifier)))))))
+
+================================================================================
+DDL: ALTER COLUMN DROP DEFAULT syntax
+================================================================================
+
+ALTER TABLE mydataset.mytable
+ALTER COLUMN mycolumn DROP DEFAULT;
+
+ALTER TABLE mydataset.mytable
+ALTER COLUMN IF EXISTS mycolumn1 DROP DEFAULT,
+ALTER COLUMN mycolumn2 DROP DEFAULT;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (alter_table_column_statement
+    (identifier)
+    (alter_column_actions_list
+      (alter_column_action
+        (identifier)
+        (drop_default))))
+  (alter_table_column_statement
+    (identifier)
+    (alter_column_actions_list
+      (alter_column_action
+        (keyword_if_exists)
+        (identifier)
+        (drop_default))
+      (alter_column_action
+        (identifier)
+        (drop_default)))))
 
 ================================================================================
 DDL: DEFAULT option
