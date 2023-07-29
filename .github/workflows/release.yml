@@ -35,10 +35,10 @@ jobs:
           TAG_NAME: v${{ env.PACKAGE_VERSION }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release:
-    runs-on: ubuntu-latest
     needs: check
+    runs-on: ubuntu-latest
+    if: always() && (needs.check.outputs.EXISTS_TAG == 'false')
     environment: release
-    if: always() && needs.check.outputs.EXISTS_TAG == 'false'
     permissions:
       contents: write
       issues: write
