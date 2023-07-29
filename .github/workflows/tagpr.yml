@@ -15,9 +15,12 @@ jobs:
       uses: Songmu/tagpr@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-    - name: update package config
-      run:  |
+    - name: Update version
+      run: |
         git config user.name 'github-actions[bot]'
         git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-        echo ${{ steps.tagpr.outputs.pull_request }}
-        npm run release ${{ steps.tagpr.outputs.tag }}
+        ./script/release ${{ steps.tagpr.outputs.tag }}
+    - id: tagpr2
+      uses: Songmu/tagpr@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
