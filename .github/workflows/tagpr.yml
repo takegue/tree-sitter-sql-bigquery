@@ -16,10 +16,12 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GH_PAT }}
     - name: Update version
+      if: "steps.tagpr.outputs.tag != ''"
       run: |
         git config user.name 'github-actions[bot]'
         git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-        ./script/release ${{ steps.tagpr.outputs.tag }}
+        ./script/version ${{ steps.tagpr.outputs.tag }}
+    # Re-tagpr to include new comits into pr
     - id: tagpr2
       uses: Songmu/tagpr@v1
       env:
