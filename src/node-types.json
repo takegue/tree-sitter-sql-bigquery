@@ -1460,7 +1460,7 @@
     "fields": {
       "left": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "(",
@@ -1570,7 +1570,7 @@
       },
       "operator": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "!=",
@@ -1645,10 +1645,6 @@
             "named": false
           },
           {
-            "type": "LIKE",
-            "named": false
-          },
-          {
             "type": "NOT",
             "named": false
           },
@@ -1659,6 +1655,14 @@
           {
             "type": "^",
             "named": false
+          },
+          {
+            "type": "like_operator",
+            "named": true
+          },
+          {
+            "type": "quantitve_like_operator",
+            "named": true
           },
           {
             "type": "|",
@@ -1672,7 +1676,7 @@
       },
       "right": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "(",
@@ -1743,7 +1747,15 @@
             "named": true
           },
           {
+            "type": "like_pattern",
+            "named": true
+          },
+          {
             "type": "number",
+            "named": true
+          },
+          {
+            "type": "quantitve_like_patterns",
             "named": true
           },
           {
@@ -6524,6 +6536,16 @@
     }
   },
   {
+    "type": "like_operator",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "like_pattern",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "limit_clause",
     "named": true,
     "fields": {}
@@ -8167,6 +8189,26 @@
         },
         {
           "type": "unnest_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "quantitve_like_operator",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "quantitve_like_patterns",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "like_pattern",
           "named": true
         }
       ]
@@ -11739,6 +11781,10 @@
     "named": false
   },
   {
+    "type": "ANY",
+    "named": false
+  },
+  {
     "type": "ARRAY",
     "named": false
   },
@@ -12367,6 +12413,10 @@
     "named": false
   },
   {
+    "type": "SOME",
+    "named": false
+  },
+  {
     "type": "STRUCT",
     "named": false
   },
@@ -12561,6 +12611,10 @@
   {
     "type": "language",
     "named": true
+  },
+  {
+    "type": "operator_compare",
+    "named": false
   },
   {
     "type": "privilege_role",
