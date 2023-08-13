@@ -208,3 +208,57 @@ SELECT
               (identifier)
               (argument
                 (identifier)))))))))
+
+================================================================================
+OPERATORS: Quantitive LIKE operator
+================================================================================
+
+WITH Words AS
+ (SELECT 'Intend with clarity.' as value UNION ALL
+  SELECT 'Secure with intention.' UNION ALL
+  SELECT 'Clarity and security.')
+SELECT * FROM Words WHERE value LIKE ANY ('Intend%', '%intention%');
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (query_statement
+    (query_expr
+      (cte_clause
+        (cte
+          (identifier)
+          (query_expr
+            (set_operation
+              (query_expr
+                (select
+                  (select_list
+                    (select_expression
+                      (string)
+                      (as_alias
+                        (identifier))))))
+              (query_expr
+                (set_operation
+                  (query_expr
+                    (select
+                      (select_list
+                        (select_expression
+                          (string)))))
+                  (query_expr
+                    (select
+                      (select_list
+                        (select_expression
+                          (string)))))))))))
+      (select
+        (select_list
+          (select_all
+            (asterisk_expression)))
+        (from_clause
+          (from_item
+            (identifier)))
+        (where_clause
+          (binary_expression
+            (identifier)
+            (quantitve_like_operator)
+            (quantitve_like_patterns
+              (like_pattern)
+              (like_pattern))))))))

@@ -146,7 +146,8 @@ WHERE DetailedInventory.product = NewArrivals.product AND
     (where_clause
       (binary_expression
         (identifier)
-        (string))))
+        (like_operator)
+        (like_pattern))))
   (update_statement
     (identifier)
     (set_clause
@@ -268,7 +269,8 @@ WHEN NOT MATCHED BY SOURCE THEN
       (search_condition
         (binary_expression
           (identifier)
-          (string)))
+          (like_operator)
+          (like_pattern)))
       (merge_insert_clause
         (insert_columns
           (identifier)
@@ -281,7 +283,8 @@ WHEN NOT MATCHED BY SOURCE THEN
       (search_condition
         (binary_expression
           (identifier)
-          (string)))
+          (like_operator)
+          (like_pattern)))
       (merge_delete_clause)))
   (merge_statement
     (identifier)
