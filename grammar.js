@@ -1649,15 +1649,14 @@ module.exports = grammar({
         ['binary_and', $._keyword_and],
         ['binary_or', $._keyword_or],
         ['operator_compare', seq(optional($._keyword_not), $._keyword_in)],
-        ['operator_compare', seq(optional($._keyword_not), $._keyword_like)],
+        // ['operator_compare', seq(optional($._keyword_not), $._keyword_like)],
         [
           'operator_compare',
           seq($._keyword_is, optional($._keyword_not), kw('DISTINCT FROM')),
         ],
       ];
 
-      return choice(
-        ...table.map(([precedence, operator]) =>
+      const exps = table.map(([precedence, operator]) =>
           prec.left(
             precedence,
             seq(
@@ -1666,9 +1665,32 @@ module.exports = grammar({
               field('right', $._expression),
             ),
           )
-        ),
-      );
+        )
+
+      const specials = [
+        'operator_compare',
+        prec.left(seq(
+          field('left', $._expression),
+          choice(
+            seq(
+              field('operator', $.like_operator),
+              field('right', alias($.string, $.like_pattern)),
+            ),
+            seq(
+              field('operator', $.quantitve_like_operator),
+              field('right', $.quantitve_like_patterns),
+            )
+          )
+        ))
+      ]
+
+      return choice(...exps, ...specials);
     },
+
+    like_operator: ($) => seq(optional($._keyword_not), $._keyword_like),
+    quantitve_like_operator: ($) => seq(optional($._keyword_not), $._keyword_like, choice(kw('ANY'), kw('SOME'), kw('ALL'))),
+    quantitve_like_patterns : ($) => seq('(', commaSep1(alias($.string, $.like_pattern)), ')'),
+
     between_operator: ($) =>
       prec.left(
         'operator_compare',
