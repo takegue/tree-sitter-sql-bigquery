@@ -23,7 +23,7 @@ jobs:
       - name: Tag Check
         id: tag_check
         run: |
-          GET_API_URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/git/ref/tags/v${TAG_NAME}"
+          GET_API_URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/git/ref/tags/${TAG_NAME}"
           http_status_code=$(
             curl -sLI \
               -w '%{http_code}' \
