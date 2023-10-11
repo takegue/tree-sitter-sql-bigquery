@@ -546,12 +546,298 @@ GROUP BY lower(a), b;
           (from_item
             (identifier)))
         (group_by_clause
-          (group_by_clause_body
+          (grouping_item
+            (function_call
+              (identifier)
+              (argument
+                (identifier))))
+          (grouping_item
+            (identifier)))))))
+
+================================================================================
+SELECT statement with group by: GROUPING SETS - 1
+================================================================================
+
+-- GROUP BY with GROUPING SETS
+WITH
+  items AS (
+    SELECT 'hoge' AS product_type, 'fuga' AS product_name, 3 AS product_count UNION ALL
+    SELECT 'piyo', 'fugi', 6
+  )
+SELECT product_type, product_name, SUM(product_count) AS product_sum
+FROM items
+GROUP BY GROUPING SETS (product_type, product_name)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (query_statement
+    (query_expr
+      (cte_clause
+        (cte
+          (identifier)
+          (query_expr
+            (set_operation
+              (query_expr
+                (select
+                  (select_list
+                    (select_expression
+                      (string)
+                      (as_alias
+                        (identifier)))
+                    (select_expression
+                      (string)
+                      (as_alias
+                        (identifier)))
+                    (select_expression
+                      (number)
+                      (as_alias
+                        (identifier))))))
+              (query_expr
+                (select
+                  (select_list
+                    (select_expression
+                      (string))
+                    (select_expression
+                      (string))
+                    (select_expression
+                      (number)))))))))
+      (select
+        (select_list
+          (select_expression
+            (identifier))
+          (select_expression
+            (identifier))
+          (select_expression
             (function_call
               (identifier)
               (argument
                 (identifier)))
-            (identifier)))))))
+            (as_alias
+              (identifier))))
+        (from_clause
+          (from_item
+            (identifier)))
+        (group_by_clause
+          (grouping_sets
+            (grouping_item
+              (identifier))
+            (grouping_item
+              (identifier))))))))
+
+================================================================================
+SELECT statement with group by: GROUPING SETS - 2
+================================================================================
+
+WITH
+  items AS (
+    SELECT 'hoge' AS product_type, 'fuga' AS product_name, 3 AS product_count UNION ALL
+    SELECT 'piyo', 'fugi', 6
+  )
+SELECT product_type, product_name, SUM(product_count) AS product_sum
+FROM items
+GROUP BY GROUPING SETS (product_type, ())
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (query_statement
+    (query_expr
+      (cte_clause
+        (cte
+          (identifier)
+          (query_expr
+            (set_operation
+              (query_expr
+                (select
+                  (select_list
+                    (select_expression
+                      (string)
+                      (as_alias
+                        (identifier)))
+                    (select_expression
+                      (string)
+                      (as_alias
+                        (identifier)))
+                    (select_expression
+                      (number)
+                      (as_alias
+                        (identifier))))))
+              (query_expr
+                (select
+                  (select_list
+                    (select_expression
+                      (string))
+                    (select_expression
+                      (string))
+                    (select_expression
+                      (number)))))))))
+      (select
+        (select_list
+          (select_expression
+            (identifier))
+          (select_expression
+            (identifier))
+          (select_expression
+            (function_call
+              (identifier)
+              (argument
+                (identifier)))
+            (as_alias
+              (identifier))))
+        (from_clause
+          (from_item
+            (identifier)))
+        (group_by_clause
+          (grouping_sets
+            (grouping_item
+              (identifier))
+            (grouping_empty)))))))
+
+================================================================================
+SELECT statement with group by: ROLLUP
+================================================================================
+
+-- GROUP BY with ROLLUP
+WITH
+  items AS (
+    SELECT 'hoge' AS product_type, 'fuga' AS product_name, 3 AS product_count UNION ALL
+    SELECT 'piyo', 'fugi', 6
+  )
+SELECT product_type, product_name, SUM(product_count) AS product_sum
+FROM items
+GROUP BY ROLLUP (product_type, product_name)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (query_statement
+    (query_expr
+      (cte_clause
+        (cte
+          (identifier)
+          (query_expr
+            (set_operation
+              (query_expr
+                (select
+                  (select_list
+                    (select_expression
+                      (string)
+                      (as_alias
+                        (identifier)))
+                    (select_expression
+                      (string)
+                      (as_alias
+                        (identifier)))
+                    (select_expression
+                      (number)
+                      (as_alias
+                        (identifier))))))
+              (query_expr
+                (select
+                  (select_list
+                    (select_expression
+                      (string))
+                    (select_expression
+                      (string))
+                    (select_expression
+                      (number)))))))))
+      (select
+        (select_list
+          (select_expression
+            (identifier))
+          (select_expression
+            (identifier))
+          (select_expression
+            (function_call
+              (identifier)
+              (argument
+                (identifier)))
+            (as_alias
+              (identifier))))
+        (from_clause
+          (from_item
+            (identifier)))
+        (group_by_clause
+          (rollup
+            (grouping_item
+              (identifier))
+            (grouping_item
+              (identifier))))))))
+
+================================================================================
+SELECT statement with group by: CUBE
+================================================================================
+
+-- GROUP BY with CUBE
+WITH
+  items AS (
+    SELECT 'shirt' AS product_type, 't-shirt' AS product_name, 3 AS product_count UNION ALL
+    SELECT 'pants', 'jeans', 6
+  )
+SELECT product_type, product_name, SUM(product_count) AS product_sum
+FROM items
+GROUP BY CUBE (product_type, product_name)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (query_statement
+    (query_expr
+      (cte_clause
+        (cte
+          (identifier)
+          (query_expr
+            (set_operation
+              (query_expr
+                (select
+                  (select_list
+                    (select_expression
+                      (string)
+                      (as_alias
+                        (identifier)))
+                    (select_expression
+                      (string)
+                      (as_alias
+                        (identifier)))
+                    (select_expression
+                      (number)
+                      (as_alias
+                        (identifier))))))
+              (query_expr
+                (select
+                  (select_list
+                    (select_expression
+                      (string))
+                    (select_expression
+                      (string))
+                    (select_expression
+                      (number)))))))))
+      (select
+        (select_list
+          (select_expression
+            (identifier))
+          (select_expression
+            (identifier))
+          (select_expression
+            (function_call
+              (identifier)
+              (argument
+                (identifier)))
+            (as_alias
+              (identifier))))
+        (from_clause
+          (from_item
+            (identifier)))
+        (group_by_clause
+          (cube
+            (grouping_item
+              (identifier))
+            (grouping_item
+              (identifier))))))))
 
 ================================================================================
 SELECT statement with order by
@@ -1124,5 +1410,5 @@ GROUP BY item;
           (from_item
             (identifier)))
         (group_by_clause
-          (group_by_clause_body
+          (grouping_item
             (identifier)))))))

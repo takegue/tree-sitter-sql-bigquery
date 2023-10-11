@@ -909,15 +909,29 @@ module.exports = grammar({
     having_clause: ($) => seq(kw('HAVING'), $._expression),
     qualify_clause: ($) => seq(kw('QUALIFY'), $._expression),
     limit_clause: ($) => seq(kw('LIMIT'), $._integer, optional(seq(kw('OFFSET'), $._integer))),
-    group_by_clause_body: ($) => commaSep1($._expression),
-    group_by_clause: ($) =>
-      seq(
-        kw('GROUP BY'),
-        choice(
-          $.group_by_clause_body,
-          seq(kw('ROLLUP'), '(', $.group_by_clause_body, ')'),
-        ),
-      ),
+    group_by_clause: ($) => prec("clause_connective", seq(
+      kw('GROUP BY'), commaSep1(prec.left(choice(
+        $._grouping_list, 
+        $.grouping_sets,
+      )))
+    )),
+
+    _grouping_list: ($) => prec.left(choice(
+        commaSep1($.grouping_item),
+        $.grouping_item_sets,
+        $.rollup, 
+        $.cube, 
+        $.grouping_empty,
+    )),
+    grouping_sets: ($) => seq(
+      kw('GROUPING SETS'), '(', commaSep1($._grouping_list), ')',
+    ),
+    grouping_item_sets: ($) => seq('(', commaSep1($._grouping_list), ')'),
+    rollup: ($) => seq(kw('ROLLUP'), '(', commaSep1($._grouping_list), ')'),
+    cube: ($) => seq(kw('CUBE'), '(', commaSep1($._grouping_list), ')'),
+    grouping_empty: ($) => prec("literal", seq("(", ")")),
+    grouping_item: ($) => prec.left("literal", $._expression),
+
     over_clause: ($) =>
       choice(
         $.identifier,
@@ -1027,7 +1041,9 @@ module.exports = grammar({
     _nulls_preference: (_) => field('nulls_preference', choice(kw('NULLS FIRST'), kw('NULLS LAST'))),
     order_by_clause: ($) => seq(kw('ORDER BY'), $.order_by_clause_body),
     where_clause: ($) => seq(kw('WHERE'), $._expression),
-    _aliasable_expression: ($) => prec.right(seq($._expression, optional($.as_alias))),
+    _aliasable_expression: ($) => prec.left(
+      "clause_connective", seq($._expression, optional($.as_alias))
+    ),
 
     as_alias: ($) => seq(optional($._keyword_as), field('alias_name', $.identifier)),
 

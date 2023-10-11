@@ -572,8 +572,9 @@ AS
                 (identifier)
                 (identifier)))
             (group_by_clause
-              (group_by_clause_body
-                (identifier)
+              (grouping_item
+                (identifier))
+              (grouping_item
                 (identifier)))))))))
 
 ================================================================================
