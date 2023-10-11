@@ -3458,6 +3458,37 @@
     }
   },
   {
+    "type": "cube",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "cube",
+          "named": true
+        },
+        {
+          "type": "grouping_empty",
+          "named": true
+        },
+        {
+          "type": "grouping_item",
+          "named": true
+        },
+        {
+          "type": "grouping_item_sets",
+          "named": true
+        },
+        {
+          "type": "rollup",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "declare_statement",
     "named": true,
     "fields": {
@@ -5441,22 +5472,47 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
-          "type": "group_by_clause_body",
+          "type": "cube",
+          "named": true
+        },
+        {
+          "type": "grouping_empty",
+          "named": true
+        },
+        {
+          "type": "grouping_item",
+          "named": true
+        },
+        {
+          "type": "grouping_item_sets",
+          "named": true
+        },
+        {
+          "type": "grouping_sets",
+          "named": true
+        },
+        {
+          "type": "rollup",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "group_by_clause_body",
+    "type": "grouping_empty",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "grouping_item",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
@@ -5553,6 +5609,68 @@
         },
         {
           "type": "unnest_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "grouping_item_sets",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "cube",
+          "named": true
+        },
+        {
+          "type": "grouping_empty",
+          "named": true
+        },
+        {
+          "type": "grouping_item",
+          "named": true
+        },
+        {
+          "type": "grouping_item_sets",
+          "named": true
+        },
+        {
+          "type": "rollup",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "grouping_sets",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "cube",
+          "named": true
+        },
+        {
+          "type": "grouping_empty",
+          "named": true
+        },
+        {
+          "type": "grouping_item",
+          "named": true
+        },
+        {
+          "type": "grouping_item_sets",
+          "named": true
+        },
+        {
+          "type": "rollup",
           "named": true
         }
       ]
@@ -8654,6 +8772,37 @@
         },
         {
           "type": "privilege_user",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "rollup",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "cube",
+          "named": true
+        },
+        {
+          "type": "grouping_empty",
+          "named": true
+        },
+        {
+          "type": "grouping_item",
+          "named": true
+        },
+        {
+          "type": "grouping_item_sets",
+          "named": true
+        },
+        {
+          "type": "rollup",
           "named": true
         }
       ]
@@ -11877,6 +12026,10 @@
     "named": false
   },
   {
+    "type": "CUBE",
+    "named": false
+  },
+  {
     "type": "CURRENT_ROW",
     "named": false
   },
@@ -12078,6 +12231,10 @@
   },
   {
     "type": "GRANT",
+    "named": false
+  },
+  {
+    "type": "GROUPING_SETS",
     "named": false
   },
   {
