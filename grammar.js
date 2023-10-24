@@ -871,7 +871,7 @@ module.exports = grammar({
         kw('SELECT'),
         optional(choice(kw('ALL'), $._keyword_distinct)),
         optional(seq($._keyword_as, choice($._keyword_struct, kw('VALUE')))),
-        optional($.differential_privacy_clause),
+        optional(choice($.aggregation_threshold_clause, $.differential_privacy_clause)),
         $.select_list,
         optional($.from_clause),
         optional($.where_clause),
@@ -1018,6 +1018,15 @@ module.exports = grammar({
         $.identifier,
         $._keyword_as,
         choice($.identifier, $.window_specification),
+      ),
+
+    aggregation_threshold_clause: ($) =>
+      seq(
+        kw('WITH AGGREGATION_THRESHOLD'),
+        'OPTIONS',
+        '(',
+        optional(sep1($.option_item, ',')),
+        ')',
       ),
 
     differential_privacy_clause: ($) =>
