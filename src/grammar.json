@@ -5967,8 +5967,17 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "differential_privacy_clause"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "aggregation_threshold_clause"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "differential_privacy_clause"
+                }
+              ]
             },
             {
               "type": "BLANK"
@@ -7174,6 +7183,74 @@
               "name": "window_specification"
             }
           ]
+        }
+      ]
+    },
+    "aggregation_threshold_clause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[wW][iI][tT][hH]"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[aA][gG][gG][rR][eE][gG][aA][tT][iI][oO][nN][__][tT][hH][rR][eE][sS][hH][oO][lL][dD]"
+              }
+            ]
+          },
+          "named": false,
+          "value": "WITH_AGGREGATION_THRESHOLD"
+        },
+        {
+          "type": "STRING",
+          "value": "OPTIONS"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "option_item"
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": ","
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "option_item"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
         }
       ]
     },
@@ -12862,4 +12939,3 @@
   "inline": [],
   "supertypes": []
 }
-

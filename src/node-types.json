@@ -79,6 +79,21 @@
     }
   },
   {
+    "type": "aggregation_threshold_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "option_item",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "alter_column_action",
     "named": true,
     "fields": {
@@ -8929,6 +8944,10 @@
       "required": true,
       "types": [
         {
+          "type": "aggregation_threshold_clause",
+          "named": true
+        },
+        {
           "type": "differential_privacy_clause",
           "named": true
         },
@@ -12715,6 +12734,10 @@
   },
   {
     "type": "WITH",
+    "named": false
+  },
+  {
+    "type": "WITH_AGGREGATION_THRESHOLD",
     "named": false
   },
   {
