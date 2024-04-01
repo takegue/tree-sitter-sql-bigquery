@@ -5,11 +5,7 @@
   },
   "lint": {
     "files": {
-      "include": [
-        "grammar.js",
-        "package.json"
-        "README.md"
-      ],
+      "include": ["grammar.js", "package.json", "README.md"],
       "exclude": ["node_modules"]
     },
     "rules": {
@@ -25,11 +21,7 @@
   },
   "fmt": {
     "files": {
-      "include": [
-        "grammar.js",
-        "package.json",
-        "README.md"
-      ],
+      "include": ["grammar.js", "package.json", "README.md"],
       "exclude": ["node_modules"]
     },
     "options": {
