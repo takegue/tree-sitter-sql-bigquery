@@ -41,7 +41,6 @@ module.exports = grammar({
   ) => [
     [$.query_expr],
     [$.function_call],
-    // [$.function_call, $.argument],
   ],
   externals: ($) => [
     $._string_start,
@@ -70,6 +69,7 @@ module.exports = grammar({
     _keyword_begin: (_) => kw('BEGIN'),
     _keyword_end: (_) => kw('END'),
     _keyword_struct: (_) => kw('STRUCT'),
+    _keyword_range: (_) => kw('RANGE'),
     _keyword_array: (_) => kw('ARRAY'),
     _keyword_returns: (_) => kw('RETURNS'),
     _keyword_between: (_) => kw('BETWEEN'),
@@ -956,7 +956,7 @@ module.exports = grammar({
         $.rows_range,
         choice(optional($.window_frame_start), $.window_frame_between),
       ),
-    rows_range: (_) => choice(kw('ROWS'), kw('RANGE')),
+    rows_range: ($) => choice(kw('ROWS'), $._keyword_range),
     window_frame_start: ($) =>
       seq(
         choice(
@@ -1233,14 +1233,13 @@ module.exports = grammar({
               choice(
                 $.identifier,
                 alias(
-                  choice(
-                    $._keyword_date,
-                    $._keyword_time,
-                    $._keyword_datetime,
-                    $._keyword_timestamp,
-                  ),
+                  $._type_chrono,
                   $.identifier,
                 ),
+                alias(
+                  $._keyword_range,
+                  $.identifier,
+                )
               ),
             ),
             '(',
@@ -1503,6 +1502,7 @@ module.exports = grammar({
         $.query_parameter,
         $.array,
         $.struct,
+        $.range,
         $.interval,
         $.time,
         $.string,
@@ -1544,9 +1544,17 @@ module.exports = grammar({
         alias($._unquoted_identifier, $.datetime_part),
         optional(seq(kw('TO'), alias($._unquoted_identifier, $.datetime_part))),
       ),
+    range: ($) => prec(1, choice(
+      seq(
+        $._keyword_range,
+        '<',
+        $._type_chrono,
+        '>',
+        $.string
+    ))),
     time: ($) =>
       seq(
-        choice($._keyword_date, $._keyword_time, $._keyword_datetime, $._keyword_timestamp),
+        $._type_chrono,
         $.string,
       ),
     number: ($) => $._number,
@@ -1559,6 +1567,7 @@ module.exports = grammar({
 
     type: ($) => $._bqtype,
     _bqtype: ($) => choice($._type_struct, $._type_array, $._base_type),
+    _type_chrono: ($) => choice($._keyword_date, $._keyword_time, $._keyword_datetime, $._keyword_timestamp),
     _type_struct: ($) =>
       seq(
         $._keyword_struct,
@@ -1602,10 +1611,7 @@ module.exports = grammar({
     identifier: ($) =>
       choice(
         prec.right(seq(repeat($._dotted_identifier), $._identifier)),
-        prec(
-          100,
-          choice($._keyword_date, $._keyword_time, $._keyword_datetime, $._keyword_timestamp),
-        ),
+        prec(100, $._type_chrono),
       ),
     _base_type: ($) => prec.left(seq($._unquoted_identifier, optional(seq('(', $.number, ')')))),
     string: ($) =>
