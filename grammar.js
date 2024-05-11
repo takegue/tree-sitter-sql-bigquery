@@ -911,7 +911,7 @@ module.exports = grammar({
     limit_clause: ($) => seq(kw('LIMIT'), $._integer, optional(seq(kw('OFFSET'), $._integer))),
     group_by_clause: ($) => prec("clause_connective", seq(
       kw('GROUP BY'), commaSep1(prec.left(choice(
-        $._grouping_list, 
+        $._grouping_list,
         $.grouping_sets,
       )))
     )),
@@ -919,8 +919,8 @@ module.exports = grammar({
     _grouping_list: ($) => prec.left(choice(
         commaSep1($.grouping_item),
         $.grouping_item_sets,
-        $.rollup, 
-        $.cube, 
+        $.rollup,
+        $.cube,
         $.grouping_empty,
     )),
     grouping_sets: ($) => seq(
@@ -1193,7 +1193,20 @@ module.exports = grammar({
     select_subexpression: ($) => seq('(', $.query_expr, ')'),
 
     analytics_clause: ($) => seq(seq(kw('OVER'), $.over_clause)),
-    argument: ($) => prec(10, seq(optional(seq(field('keyword', $.identifier), '=>')), $._expression)),
+
+    bigquery_resource: ($) => prec(
+      10,
+      seq(
+        field('resource_type', choice(kw("MODEL"), kw("TABLE"))),
+        field('resource_type', $.identifier)
+      )
+    ),
+
+    argument: ($) => prec(10, choice(
+      seq(optional(seq(field('keyword', $.identifier), '=>')), $._expression),
+      $.bigquery_resource
+    )),
+
     function_call: ($) =>
       // FIXME: precedence
       prec(
@@ -1213,6 +1226,7 @@ module.exports = grammar({
             ')',
             optional($.analytics_clause),
           ),
+          // datetime functions
           seq(
             field(
               'function',
