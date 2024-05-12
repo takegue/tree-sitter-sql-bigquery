@@ -1,31 +1,49 @@
-name: Build/Test
+name: CI
+
 on:
   push:
-    branches:
-      - "**"
+    branches: ["*"]
+    paths:
+      - grammar.js
+      - src/**
+      - test/**
+      - bindings/**
+      - binding.gyp
+  pull_request:
+    paths:
+      - grammar.js
+      - src/**
+      - test/**
+      - bindings/**
+      - binding.gyp
+
+concurrency:
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true
+
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
+    name: Test parser
+    runs-on: ${{matrix.os}}
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-2019]
-        node-version: [18, 20]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up the repo
+        uses: tree-sitter/setup-action/cli@v1
+      - name: Run tests
+        uses: tree-sitter/parser-test-action@v2
         with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm install
-      # - run: npx prettier --check .
-      - run: npm test
-
-  test_bindings_rust:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: cargo build --verbose
-    - name: Run tests
-      run: cargo test --verbose
+          test-rust: ${{runner.os == 'Linux'}}
+          test-node: ${{runner.os == 'Linux'}}
+          test-python: ${{runner.os == 'Linux'}}
+          test-go: ${{runner.os == 'Linux'}}
+          # test-swift: ${{runner.os == 'Linux'}}
+      - name: Parse examples
+        uses: tree-sitter/parse-action@v4
+        with:
+          files: |
+            test/corpus/**/*.sql
