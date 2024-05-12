@@ -34,12 +34,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Set up the repo
         uses: tree-sitter/setup-action/cli@v1
-      - name: Set up examples
-        run: |-
-          git clone https://github.com/numpy/numpy examples/numpy --single-branch --depth=1 --filter=blob:none
-          git clone https://github.com/django/django examples/django --single-branch --depth=1 --filter=blob:none
-          git clone https://github.com/pallets/flask examples/flask --single-branch --depth=1 --filter=blob:none
-          git clone https://github.com/python/cpython examples/cpython --single-branch --depth=1 --filter=blob:none
       - name: Run tests
         uses: tree-sitter/parser-test-action@v2
         with:
@@ -48,11 +42,7 @@ jobs:
         uses: tree-sitter/parse-action@v4
         with:
           files: |
-            examples/**/*.py
-            !examples/cpython/Lib/test/test_compile.py
-            !examples/cpython/Tools/build/generate_re_casefix.py
-          invalid-files: |
-            examples/cpython/Lib/test/tokenizedata/badsyntax_3131.py
+            test/corpus/**/*.sql
   fuzz:
     name: Fuzz parser
     runs-on: ubuntu-latest
