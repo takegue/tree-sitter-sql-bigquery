@@ -42,29 +42,14 @@ jobs:
     needs: check
     runs-on: ubuntu-latest
     if: (!cancelled() && (needs.check.outputs.EXISTS_TAG == 'false'))
-    environment: release
     permissions:
       contents: write
       issues: write
       pull-requests: write
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.x
-          registry-url: 'https://registry.npmjs.org'
       - name: Set PACKAGE_VERSION
         run: echo "PACKAGE_VERSION=$(cat package.json | jq -r .version)" >> $GITHUB_ENV
-      - run: npm install
-      - name: "Publsih package: npmjs"
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: "Publsih package: cargo"
-        run: cargo publish
-        env:
-          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_TOKEN }}
       - name: Git Identity
         run: |
           git config --global user.name 'github-actions[bot]'
