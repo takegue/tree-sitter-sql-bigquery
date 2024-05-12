@@ -2,7 +2,9 @@ name: Publish package
 
 on:
   push:
-    tags: ["v*"]
+    tags:
+      - v*
+  workflow_dispatch:
 
 concurrency:
   group: ${{github.workflow}}-${{github.ref}}
