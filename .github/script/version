@@ -23,6 +23,12 @@ const pyprojectMetadata = fs.readFileSync(pyprojectTomlPath, 'utf8');
 const pyprojectVersionMatch = pyprojectMetadata.match(/version = "([^"\n]+)"/);
 const pyprojectVersion = pyprojectVersionMatch[1];
 
+//c
+const packageConfigPath = (rootPath, 'Makefile');
+const packageConfigMetadata = fs.readFileSync(packageConfigPath, 'utf8');
+const packageConfigVersionMatch = packageConfigMetadata.match(/VERSION := ([^\n]+)/);
+const packageConfigVersion = packageConfigVersionMatch[1];
+
 if (npmVersion !== cargoVersion) {
   console.error(`NPM version ${npmVersion} does not match Cargo version ${cargoVersion}`);
   process.exit(1);
@@ -32,6 +38,12 @@ if (npmVersion !== pyprojectVersion) {
   console.error(`NPM version ${npmVersion} does not match Cargo version ${pyprojectVersion}`);
   process.exit(1);
 }
+
+if (npmVersion !== packageConfigVersion) {
+  console.error(`NPM version ${npmVersion} does not match Cargo version ${pyprojectVersion}`);
+  process.exit(1);
+}
+
 
 const arg = process.argv[2];
 
@@ -46,38 +58,42 @@ if (!arg) {
   process.exit(1);
 }
 
-if (arg) {
-  // Check that working directory is clean
-  const diff = execFileSync(
-    'git',
-    ['diff', '--stat'],
-    { encoding: 'utf8' },
-  );
-  if (diff.length !== 0) {
-    console.error(`There are uncommited changes. (${diff})`);
-    process.exit(1);
-  }
+// Check that working directory is clean
+const diff = execFileSync(
+  'git',
+  ['diff', '--stat'],
+  { encoding: 'utf8' },
+);
 
-  const newVersion = execFileSync(
-    'npm',
-    ['version', process.argv[2], '--git-tag-version=false'],
-    { cwd: rootPath, encoding: 'utf8' },
-  ).trim().replace(/^v/, '');
-
-  // cargo
-  const newCargoVersionLine = cargoVersionMatch[0].replace(cargoVersion, newVersion);
-  const newCargoMetadata = cargoMetadata.replace(cargoVersionMatch[0], newCargoVersionLine);
-  fs.writeFileSync(cargoTomlPath, newCargoMetadata, 'utf8');
-  execFileSync('cargo', ['build'], { cwd: rootPath });
-
-  // pyproject
-  const newPyprojectVersionLine = pyprojectVersionMatch[0].replace(pyprojectVersion, newVersion);
-  const newPyprojectMetadata = pyprojectMetadata.replace(pyprojectVersionMatch[0], newPyprojectVersionLine);
-  fs.writeFileSync(pyprojectTomlPath, newPyprojectMetadata, 'utf8');
-
-  execFileSync('git', ['commit', '-a', '-m', newVersion]);
-  // execFileSync('git', ['tag', 'v' + newVersion]);
-  console.log(newVersion);
-} else {
-  console.log(npmVersion);
+if (diff.length !== 0) {
+  console.error(`There are uncommited changes. (${diff})`);
+  process.exit(1);
 }
+
+const newVersion = execFileSync(
+  'npm',
+  ['version', process.argv[2], '--git-tag-version=false'],
+  { cwd: rootPath, encoding: 'utf8' },
+).trim().replace(/^v/, '');
+
+// cargo
+const newCargoVersionLine = cargoVersionMatch[0].replace(cargoVersion, newVersion);
+const newCargoMetadata = cargoMetadata.replace(cargoVersionMatch[0], newCargoVersionLine);
+fs.writeFileSync(cargoTomlPath, newCargoMetadata, 'utf8');
+execFileSync('cargo', ['build'], { cwd: rootPath });
+
+// pyproject
+const newPyprojectVersionLine = pyprojectVersionMatch[0].replace(pyprojectVersion, newVersion);
+const newPyprojectMetadata = pyprojectMetadata.replace(pyprojectVersionMatch[0], newPyprojectVersionLine);
+fs.writeFileSync(pyprojectTomlPath, newPyprojectMetadata, 'utf8');
+
+// c
+const newPackageConfigVersionLine = packageConfigVersionMatch[0].replace(packageConfigVersion, newVersion);
+const newPackageConfigMetadata = packageConfigMetadata.replace(packageConfigVersionMatch[0], newPackageConfigVersionLine);
+fs.writeFileSync(packageConfigPath, newPackageConfigMetadata, 'utf8');
+
+//
+execFileSync('git', ['commit', '-a', '-m', newVersion]);
+// execFileSync('git', ['tag', 'v' + newVersion]);
+//
+console.log(newVersion);
