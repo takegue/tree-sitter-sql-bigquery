@@ -7,3 +7,6 @@ public
 .conda
 build
 .clang-format
+*.pyc
+*.egg-info
+*.o
