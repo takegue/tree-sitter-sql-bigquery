@@ -4,3 +4,6 @@ build
 /target/
 public
 /*.wasm
+.conda
+build
+.clang-format

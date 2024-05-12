@@ -30,6 +30,6 @@ OPTIONS(
 --^variable.parameter
 --                     ^type.builtin
 --                               ^string
-  partition_expiration_days=1,
+  partition_expiration_days=1
 --                          ^number
 )
