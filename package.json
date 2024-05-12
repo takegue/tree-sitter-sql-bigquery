@@ -35,7 +35,8 @@
   "license": "MIT",
   "dependencies": {
     "tree-sitter-cli": "^0.22.6",
-    "node-gyp-build": "^4.8.0"
+    "node-gyp-build": "^4.8.0",
+    "node-addon-api": "^7.1.0",
   },
   "peerDependencies": {
     "tree-sitter": "^0.21.0"
