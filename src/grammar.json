@@ -171,6 +171,15 @@
       "named": false,
       "value": "STRUCT"
     },
+    "_keyword_range": {
+      "type": "ALIAS",
+      "content": {
+        "type": "PATTERN",
+        "value": "[rR][aA][nN][gG][eE]"
+      },
+      "named": false,
+      "value": "RANGE"
+    },
     "_keyword_array": {
       "type": "ALIAS",
       "content": {
@@ -6888,13 +6897,8 @@
           "value": "ROWS"
         },
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[rR][aA][nN][gG][eE]"
-          },
-          "named": false,
-          "value": "RANGE"
+          "type": "SYMBOL",
+          "name": "_keyword_range"
         }
       ]
     },
@@ -8647,40 +8651,93 @@
         }
       ]
     },
-    "argument": {
+    "bigquery_resource": {
       "type": "PREC",
       "value": 10,
       "content": {
         "type": "SEQ",
         "members": [
           {
-            "type": "CHOICE",
+            "type": "FIELD",
+            "name": "resource_type",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "[mM][oO][dD][eE][lL]"
+                  },
+                  "named": false,
+                  "value": "MODEL"
+                },
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "[tT][aA][bB][lL][eE]"
+                  },
+                  "named": false,
+                  "value": "TABLE"
+                }
+              ]
+            }
+          },
+          {
+            "type": "FIELD",
+            "name": "resource_type",
+            "content": {
+              "type": "SYMBOL",
+              "name": "identifier"
+            }
+          }
+        ]
+      }
+    },
+    "argument": {
+      "type": "PREC",
+      "value": 10,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SEQ",
             "members": [
               {
-                "type": "SEQ",
+                "type": "CHOICE",
                 "members": [
                   {
-                    "type": "FIELD",
-                    "name": "keyword",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "identifier"
-                    }
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "FIELD",
+                        "name": "keyword",
+                        "content": {
+                          "type": "SYMBOL",
+                          "name": "identifier"
+                        }
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "=>"
+                      }
+                    ]
                   },
                   {
-                    "type": "STRING",
-                    "value": "=>"
+                    "type": "BLANK"
                   }
                 ]
               },
               {
-                "type": "BLANK"
+                "type": "SYMBOL",
+                "name": "_expression"
               }
             ]
           },
           {
             "type": "SYMBOL",
-            "name": "_expression"
+            "name": "bigquery_resource"
           }
         ]
       }
@@ -8905,25 +8962,17 @@
                     {
                       "type": "ALIAS",
                       "content": {
-                        "type": "CHOICE",
-                        "members": [
-                          {
-                            "type": "SYMBOL",
-                            "name": "_keyword_date"
-                          },
-                          {
-                            "type": "SYMBOL",
-                            "name": "_keyword_time"
-                          },
-                          {
-                            "type": "SYMBOL",
-                            "name": "_keyword_datetime"
-                          },
-                          {
-                            "type": "SYMBOL",
-                            "name": "_keyword_timestamp"
-                          }
-                        ]
+                        "type": "SYMBOL",
+                        "name": "_type_chrono"
+                      },
+                      "named": true,
+                      "value": "identifier"
+                    },
+                    {
+                      "type": "ALIAS",
+                      "content": {
+                        "type": "SYMBOL",
+                        "name": "_keyword_range"
                       },
                       "named": true,
                       "value": "identifier"
@@ -10838,6 +10887,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "range"
+        },
+        {
+          "type": "SYMBOL",
           "name": "interval"
         },
         {
@@ -11091,29 +11144,156 @@
         }
       ]
     },
+    "range_boundary_start": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "["
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        }
+      ]
+    },
+    "range_boundary_end": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "]"
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "range_content": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[uU][nN][bB][oO][uU][nN][dD][eE][dD]"
+          },
+          "named": false,
+          "value": "UNBOUNDED"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[-0-9: .]+"
+        }
+      ]
+    },
+    "range_start": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "range_boundary_start"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "range_content"
+        }
+      ]
+    },
+    "range_end": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "range_content"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "range_boundary_end"
+        }
+      ]
+    },
+    "_range_string": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_string_start"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "range_start"
+        },
+        {
+          "type": "STRING",
+          "value": ","
+        },
+        {
+          "type": "SYMBOL",
+          "name": "range_end"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_string_end"
+        }
+      ]
+    },
+    "range": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_keyword_range"
+            },
+            {
+              "type": "STRING",
+              "value": "<"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_type_chrono"
+              },
+              "named": true,
+              "value": "range_type"
+            },
+            {
+              "type": "STRING",
+              "value": ">"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_range_string"
+                  },
+                  "named": true,
+                  "value": "string"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "string"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "time": {
       "type": "SEQ",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_keyword_date"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_keyword_time"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_keyword_datetime"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_keyword_timestamp"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "_type_chrono"
         },
         {
           "type": "SYMBOL",
@@ -11186,6 +11366,27 @@
         {
           "type": "SYMBOL",
           "name": "_base_type"
+        }
+      ]
+    },
+    "_type_chrono": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_keyword_date"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_keyword_time"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_keyword_datetime"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_keyword_timestamp"
         }
       ]
     },
@@ -11489,25 +11690,8 @@
           "type": "PREC",
           "value": 100,
           "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_keyword_date"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_keyword_time"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_keyword_datetime"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_keyword_timestamp"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "_type_chrono"
           }
         }
       ]
