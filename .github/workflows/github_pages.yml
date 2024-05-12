@@ -42,7 +42,7 @@ jobs:
       - name: Verify
         run: emcc -v
       - run: npm install
-      - run: ./script/update_demo
+      - run: .github/script/update_demo
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
