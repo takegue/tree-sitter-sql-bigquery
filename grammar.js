@@ -1546,7 +1546,7 @@ module.exports = grammar({
 
     range_boundary_start: ($) => choice('[', '('),
     range_boundary_end: ($) => choice(']', ')'),
-    range_content: (_) => choice(kw("UNBOUNDED"), /[-0-9: ]+/),
+    range_content: (_) => choice(kw("UNBOUNDED"), /[-0-9: .]+/),
     range_start: ($) => seq(
         $.range_boundary_start,
         $.range_content,
