@@ -424,6 +424,7 @@ SELECT
         (select_list
           (select_expression
             (range
+              (range_type)
               (string)))
           (select_expression
             (function_call
