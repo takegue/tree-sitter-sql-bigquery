@@ -2,6 +2,9 @@ Cargo.lock
 node_modules
 build
 /target/
+/dist/
+/prebuilds/
+/wheelhouse/
 public
 /*.wasm
 .conda
@@ -10,3 +13,4 @@ build
 *.pyc
 *.egg-info
 *.o
+*.so
