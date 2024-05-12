@@ -4,18 +4,32 @@ const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 
-const rootPath = path.join(__dirname, '..');
-const cargoTomlPath = path.join(rootPath, 'Cargo.toml');
+const rootPath = path.join(__dirname, '../../');
 
-const npmMetadata = require(path.join(rootPath, 'package.json'));
-const npmVersion = npmMetadata.version;
+//cargo-crates
+const cargoTomlPath = path.join(rootPath, 'Cargo.toml');
 
 const cargoMetadata = fs.readFileSync(cargoTomlPath, 'utf8');
 const cargoVersionMatch = cargoMetadata.match(/version = "([^"\n]+)"/);
 const cargoVersion = cargoVersionMatch[1];
 
+//npm
+const npmMetadata = require(path.join(rootPath, 'package.json'));
+const npmVersion = npmMetadata.version;
+
+//pypi
+const pyprojectTomlPath = (rootPath, 'pyproject.toml');
+const pyprojectMetadata = fs.readFileSync(pyprojectTomlPath, 'utf8');
+const pyprojectVersionMatch = pyprojectMetadata.match(/version = "([^"\n]+)"/);
+const pyprojectVersion = pyprojectVersionMatch[1];
+
 if (npmVersion !== cargoVersion) {
   console.error(`NPM version ${npmVersion} does not match Cargo version ${cargoVersion}`);
+  process.exit(1);
+}
+
+if (npmVersion !== pyprojectVersion) {
+  console.error(`NPM version ${npmVersion} does not match Cargo version ${pyprojectVersion}`);
   process.exit(1);
 }
 
@@ -49,10 +63,18 @@ if (arg) {
     ['version', process.argv[2], '--git-tag-version=false'],
     { cwd: rootPath, encoding: 'utf8' },
   ).trim().replace(/^v/, '');
+
+  // cargo
   const newCargoVersionLine = cargoVersionMatch[0].replace(cargoVersion, newVersion);
   const newCargoMetadata = cargoMetadata.replace(cargoVersionMatch[0], newCargoVersionLine);
   fs.writeFileSync(cargoTomlPath, newCargoMetadata, 'utf8');
   execFileSync('cargo', ['build'], { cwd: rootPath });
+
+  // pyproject
+  const newPyprojectVersionLine = pyprojectVersionMatch[0].replace(pyprojectVersion, newVersion);
+  const newPyprojectMetadata = pyprojectMetadata.replace(pyprojectVersionMatch[0], newPyprojectVersionLine);
+  fs.writeFileSync(pyprojectTomlPath, newPyprojectMetadata, 'utf8');
+
   execFileSync('git', ['commit', '-a', '-m', newVersion]);
   // execFileSync('git', ['tag', 'v' + newVersion]);
   console.log(newVersion);
