@@ -408,6 +408,35 @@ select
               (datetime_part))))))))
 
 ================================================================================
+LITERALS: RANGE literal
+================================================================================
+
+SELECT
+  RANGE<DATE> '[2022-01-01, 2023-01-01)',
+  RANGE(DATE '2022-12-01', DATE '2022-12-31') AS results;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (range
+              (range_type)
+              (string)))
+          (select_expression
+            (function_call
+              (identifier)
+              (time
+                (string))
+              (time
+                (string)))
+            (as_alias
+              (identifier))))))))
+
+================================================================================
 LITERALS: FUNCTION_CALL
 ================================================================================
 

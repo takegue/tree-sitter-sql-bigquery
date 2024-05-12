@@ -41,7 +41,6 @@ module.exports = grammar({
   ) => [
     [$.query_expr],
     [$.function_call],
-    // [$.function_call, $.argument],
   ],
   externals: ($) => [
     $._string_start,
@@ -53,48 +52,48 @@ module.exports = grammar({
   rules: {
     source_file: ($) => repeat($._statement),
 
-    /** ************************************************************************
-     *                              Keywords
-     * ************************************************************************* */
-
-    keyword_if_not_exists: (_) => kw('IF NOT EXISTS'),
-    keyword_if_exists: (_) => kw('IF EXISTS'),
-    keyword_temporary: (_) => choice(kw('TEMP'), kw('TEMPORARY')),
-    keyword_replace: (_) => kw('OR REPLACE'),
-    _keyword_alter: (_) => kw('ALTER'),
-    _keyword_from: (_) => kw('FROM'),
-    _keyword_distinct: (_) => kw('DISTINCT'),
-    _keyword_format: (_) => kw('FORMAT'),
-    _keyword_delete: (_) => kw('DELETE'),
-    _keyword_tablesuffix: (_) => kw('_TABLE_SUFFIX'),
-    _keyword_begin: (_) => kw('BEGIN'),
-    _keyword_end: (_) => kw('END'),
-    _keyword_struct: (_) => kw('STRUCT'),
-    _keyword_array: (_) => kw('ARRAY'),
-    _keyword_returns: (_) => kw('RETURNS'),
-    _keyword_between: (_) => kw('BETWEEN'),
-    _keyword_case: (_) => kw('CASE'),
-    _keyword_when: (_) => kw('WHEN'),
-    _keyword_then: (_) => kw('THEN'),
-    _keyword_else: (_) => kw('ELSE'),
-    _keyword_is: (_) => kw('IS'),
-    _keyword_in: (_) => kw('IN'),
-    _keyword_not: (_) => kw('NOT'),
-    _keyword_and: (_) => kw('AND'),
-    _keyword_or: (_) => kw('OR'),
-    _keyword_like: (_) => kw('LIKE'),
-    _keyword_repeat: (_) => kw('REPEAT'),
-    _keyword_as: (_) => kw('AS'),
-    _keyword_cast: (_) => choice(kw('CAST'), kw('SAFE_CAST')),
-    _keyword_window: (_) => kw('WINDOW'),
-    _keyword_partition_by: (_) => kw('PARTITION BY'),
-    _keyword_date: (_) => kw('DATE'),
-    _keyword_datetime: (_) => kw('DATETIME'),
-    _keyword_time: (_) => kw('TIME'),
-    _keyword_timestamp: (_) => kw('TIMESTAMP'),
-    _keyword_for: (_) => kw('FOR'),
-    _keyword_partitiontime: (_) => kw('_PARTITIONTIME'),
-    _keyword_system_as_of: (_) => kw('FOR SYSTEM_TIME AS OF'),
+  /** ************************************************************************
+  *                              Keywords
+  * ************************************************************************* */
+  keyword_if_not_exists: (_) => kw('IF NOT EXISTS'),
+  keyword_if_exists: (_) => kw('IF EXISTS'),
+  keyword_temporary: (_) => choice(kw('TEMP'), kw('TEMPORARY')),
+  keyword_replace: (_) => kw('OR REPLACE'),
+  _keyword_alter: (_) => kw('ALTER'),
+  _keyword_from: (_) => kw('FROM'),
+  _keyword_distinct: (_) => kw('DISTINCT'),
+  _keyword_format: (_) => kw('FORMAT'),
+  _keyword_delete: (_) => kw('DELETE'),
+  _keyword_tablesuffix: (_) => kw('_TABLE_SUFFIX'),
+  _keyword_begin: (_) => kw('BEGIN'),
+  _keyword_end: (_) => kw('END'),
+  _keyword_struct: (_) => kw('STRUCT'),
+  _keyword_range: (_) => kw('RANGE'),
+  _keyword_array: (_) => kw('ARRAY'),
+  _keyword_returns: (_) => kw('RETURNS'),
+  _keyword_between: (_) => kw('BETWEEN'),
+  _keyword_case: (_) => kw('CASE'),
+  _keyword_when: (_) => kw('WHEN'),
+  _keyword_then: (_) => kw('THEN'),
+  _keyword_else: (_) => kw('ELSE'),
+  _keyword_is: (_) => kw('IS'),
+  _keyword_in: (_) => kw('IN'),
+  _keyword_not: (_) => kw('NOT'),
+  _keyword_and: (_) => kw('AND'),
+  _keyword_or: (_) => kw('OR'),
+  _keyword_like: (_) => kw('LIKE'),
+  _keyword_repeat: (_) => kw('REPEAT'),
+  _keyword_as: (_) => kw('AS'),
+  _keyword_cast: (_) => choice(kw('CAST'), kw('SAFE_CAST')),
+  _keyword_window: (_) => kw('WINDOW'),
+  _keyword_partition_by: (_) => kw('PARTITION BY'),
+  _keyword_date: (_) => kw('DATE'),
+  _keyword_datetime: (_) => kw('DATETIME'),
+  _keyword_time: (_) => kw('TIME'),
+  _keyword_timestamp: (_) => kw('TIMESTAMP'),
+  _keyword_for: (_) => kw('FOR'),
+  _keyword_partitiontime: (_) => kw('_PARTITIONTIME'),
+  _keyword_system_as_of: (_) => kw('FOR SYSTEM_TIME AS OF'),
 
     /** ************************************************************************
      *                              Statements
@@ -911,7 +910,7 @@ module.exports = grammar({
     limit_clause: ($) => seq(kw('LIMIT'), $._integer, optional(seq(kw('OFFSET'), $._integer))),
     group_by_clause: ($) => prec("clause_connective", seq(
       kw('GROUP BY'), commaSep1(prec.left(choice(
-        $._grouping_list, 
+        $._grouping_list,
         $.grouping_sets,
       )))
     )),
@@ -919,8 +918,8 @@ module.exports = grammar({
     _grouping_list: ($) => prec.left(choice(
         commaSep1($.grouping_item),
         $.grouping_item_sets,
-        $.rollup, 
-        $.cube, 
+        $.rollup,
+        $.cube,
         $.grouping_empty,
     )),
     grouping_sets: ($) => seq(
@@ -956,7 +955,7 @@ module.exports = grammar({
         $.rows_range,
         choice(optional($.window_frame_start), $.window_frame_between),
       ),
-    rows_range: (_) => choice(kw('ROWS'), kw('RANGE')),
+    rows_range: ($) => choice(kw('ROWS'), $._keyword_range),
     window_frame_start: ($) =>
       seq(
         choice(
@@ -1193,7 +1192,20 @@ module.exports = grammar({
     select_subexpression: ($) => seq('(', $.query_expr, ')'),
 
     analytics_clause: ($) => seq(seq(kw('OVER'), $.over_clause)),
-    argument: ($) => prec(10, seq(optional(seq(field('keyword', $.identifier), '=>')), $._expression)),
+
+    bigquery_resource: ($) => prec(
+      10,
+      seq(
+        field('resource_type', choice(kw("MODEL"), kw("TABLE"))),
+        field('resource_type', $.identifier)
+      )
+    ),
+
+    argument: ($) => prec(10, choice(
+      seq(optional(seq(field('keyword', $.identifier), '=>')), $._expression),
+      $.bigquery_resource
+    )),
+
     function_call: ($) =>
       // FIXME: precedence
       prec(
@@ -1213,20 +1225,20 @@ module.exports = grammar({
             ')',
             optional($.analytics_clause),
           ),
+          // datetime functions
           seq(
             field(
               'function',
               choice(
                 $.identifier,
                 alias(
-                  choice(
-                    $._keyword_date,
-                    $._keyword_time,
-                    $._keyword_datetime,
-                    $._keyword_timestamp,
-                  ),
+                  $._type_chrono,
                   $.identifier,
                 ),
+                alias(
+                  $._keyword_range,
+                  $.identifier,
+                )
               ),
             ),
             '(',
@@ -1489,6 +1501,7 @@ module.exports = grammar({
         $.query_parameter,
         $.array,
         $.struct,
+        $.range,
         $.interval,
         $.time,
         $.string,
@@ -1530,9 +1543,41 @@ module.exports = grammar({
         alias($._unquoted_identifier, $.datetime_part),
         optional(seq(kw('TO'), alias($._unquoted_identifier, $.datetime_part))),
       ),
+
+    range_boundary_start: ($) => choice('[', '('),
+    range_boundary_end: ($) => choice(']', ')'),
+    range_content: (_) => choice(kw("UNBOUNDED"), /[-0-9: .]+/),
+    range_start: ($) => seq(
+        $.range_boundary_start,
+        $.range_content,
+      ),
+    range_end: ($) => seq(
+        $.range_content,
+        $.range_boundary_end,
+      ),
+    _range_string: ($) => seq(
+      $._string_start,
+      $.range_start,
+      ",",
+      $.range_end,
+      $._string_end,
+    ),
+
+    range: ($) => choice(
+      seq(
+        $._keyword_range,
+        '<',
+        alias($._type_chrono, $.range_type),
+        '>',
+        choice(
+          alias($._range_string, $.string),
+          $.string
+        )
+    )),
+
     time: ($) =>
       seq(
-        choice($._keyword_date, $._keyword_time, $._keyword_datetime, $._keyword_timestamp),
+        $._type_chrono,
         $.string,
       ),
     number: ($) => $._number,
@@ -1545,6 +1590,7 @@ module.exports = grammar({
 
     type: ($) => $._bqtype,
     _bqtype: ($) => choice($._type_struct, $._type_array, $._base_type),
+    _type_chrono: ($) => choice($._keyword_date, $._keyword_time, $._keyword_datetime, $._keyword_timestamp),
     _type_struct: ($) =>
       seq(
         $._keyword_struct,
@@ -1588,10 +1634,7 @@ module.exports = grammar({
     identifier: ($) =>
       choice(
         prec.right(seq(repeat($._dotted_identifier), $._identifier)),
-        prec(
-          100,
-          choice($._keyword_date, $._keyword_time, $._keyword_datetime, $._keyword_timestamp),
-        ),
+        prec(100, $._type_chrono),
       ),
     _base_type: ($) => prec.left(seq($._unquoted_identifier, optional(seq('(', $.number, ')')))),
     string: ($) =>
