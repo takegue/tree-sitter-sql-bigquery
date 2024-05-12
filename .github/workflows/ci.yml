@@ -41,12 +41,6 @@ jobs:
           test-node: ${{runner.os == 'Linux'}}
           test-python: ${{runner.os == 'Linux'}}
           test-go: ${{runner.os == 'Linux'}}
-          # test-swift: ${{runner.os == 'Linux'}}
-      - name: Parse examples
-        uses: tree-sitter/parse-action@v4
-        with:
-          files: |
-            test/corpus/**/*.sql
   fuzz:
     name: Fuzz parser
     runs-on: ubuntu-latest

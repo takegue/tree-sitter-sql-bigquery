@@ -2,7 +2,7 @@
 
 set -eEu
 
-npx tree-sitter build-wasm
+npx tree-sitter build --wasm
 timeout 3s npx tree-sitter playground &
 job=$!
 
