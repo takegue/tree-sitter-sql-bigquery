@@ -47,3 +47,13 @@ jobs:
         with:
           files: |
             test/corpus/**/*.sql
+  fuzz:
+    name: Fuzz parser
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Fuzz parser
+        uses: tree-sitter/fuzz-action@v4
