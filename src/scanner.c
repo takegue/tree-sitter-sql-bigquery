@@ -26,16 +26,8 @@ typedef struct {
 
 static inline Delimiter new_delimiter() { return (Delimiter){0}; }
 
-static inline bool is_raw(Delimiter *delimiter) {
-    return delimiter->flags & Raw;
-}
-
 static inline bool is_triple(Delimiter *delimiter) {
     return delimiter->flags & Triple;
-}
-
-static inline bool is_bytes(Delimiter *delimiter) {
-    return delimiter->flags & Bytes;
 }
 
 static inline int32_t end_character(Delimiter *delimiter) {
@@ -251,31 +243,25 @@ void tree_sitter_sql_bigquery_external_scanner_deserialize(void *payload,
                                                            const char *buffer,
                                                            unsigned length) {
     Scanner *scanner = (Scanner *)payload;
+    array_clear(&scanner->delimiters);
+    if(length == 0) return;
 
-    array_delete(&scanner->delimiters);
-
-    if (length > 0) {
-        size_t size = 0;
-
-        size_t delimiter_count = (uint8_t)buffer[size++];
-        if (delimiter_count > 0) {
-            array_reserve(&scanner->delimiters, delimiter_count);
-            scanner->delimiters.size = delimiter_count;
-            memcpy(scanner->delimiters.contents, &buffer[size],
-                   delimiter_count);
-            size += delimiter_count;
-        }
+    size_t size = 0;
+    size_t delimiter_count = (uint8_t)buffer[size++];
+    if (delimiter_count > 0) {
+        array_reserve(&scanner->delimiters, delimiter_count);
+        scanner->delimiters.size = delimiter_count;
+        memcpy(scanner->delimiters.contents, &buffer[size], delimiter_count);
     }
 }
 
 void *tree_sitter_sql_bigquery_external_scanner_create() {
     Scanner *scanner = (Scanner *)ts_calloc(1, sizeof(Scanner));
-
-    array_init(&scanner->delimiters);
-    tree_sitter_sql_bigquery_external_scanner_deserialize(scanner, NULL, 0);
     return scanner;
 }
 
 void tree_sitter_sql_bigquery_external_scanner_destroy(void *payload) {
-    ts_free((Scanner *)payload);
+    Scanner *scanner = (Scanner *)payload;
+    array_delete(&scanner->delimiters);
+    ts_free(scanner);
 }
