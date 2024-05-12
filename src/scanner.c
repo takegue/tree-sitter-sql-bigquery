@@ -1,9 +1,3 @@
-// The MIT License (MIT)
-// Copyright (c) 2016 Max Brunsfeld
-// https://github.com/tree-sitter/tree-sitter-python/blob/master/LICENSE
-//
-// This file is forked from: https://github.com/tree-sitter/tree-sitter-python
-
 #include "tree_sitter/array.h"
 #include "tree_sitter/parser.h"
 #include <assert.h>
@@ -76,7 +70,6 @@ static inline void set_end_character(Delimiter *delimiter, int32_t character) {
 }
 
 typedef struct {
-    Array(uint16_t) indents;
     Array(Delimiter) delimiters;
 } Scanner;
 
@@ -145,27 +138,21 @@ bool tree_sitter_sql_bigquery_external_scanner_scan(void *payload,
     lexer->mark_end(lexer);
 
     bool found_end_of_line = false;
-    uint32_t indent_length = 0;
     while (true) {
         if (lexer->lookahead == '\n') {
             found_end_of_line = true;
-            indent_length = 0;
             skip(lexer);
         } else if (lexer->lookahead == ' ') {
-            indent_length++;
             skip(lexer);
         } else if (lexer->lookahead == '\r') {
-            indent_length = 0;
             skip(lexer);
         } else if (lexer->lookahead == '\t') {
-            indent_length += 8;
             skip(lexer);
         } else if (lexer->lookahead == '#') {
             while (lexer->lookahead && lexer->lookahead != '\n') {
                 skip(lexer);
             }
             skip(lexer);
-            indent_length = 0;
         } else if (lexer->lookahead == '\\') {
             skip(lexer);
             if (lexer->lookahead == '\r') {
@@ -177,7 +164,6 @@ bool tree_sitter_sql_bigquery_external_scanner_scan(void *payload,
                 return false;
             }
         } else if (lexer->eof(lexer)) {
-            indent_length = 0;
             found_end_of_line = true;
             break;
         } else {
@@ -258,13 +244,6 @@ unsigned tree_sitter_sql_bigquery_external_scanner_serialize(void *payload,
     }
     size += delimiter_count;
 
-    uint32_t iter = 1;
-    for (; iter < scanner->indents.size &&
-           size < TREE_SITTER_SERIALIZATION_BUFFER_SIZE;
-         ++iter) {
-        buffer[size++] = (char)*array_get(&scanner->indents, iter);
-    }
-
     return size;
 }
 
@@ -274,8 +253,6 @@ void tree_sitter_sql_bigquery_external_scanner_deserialize(void *payload,
     Scanner *scanner = (Scanner *)payload;
 
     array_delete(&scanner->delimiters);
-    array_delete(&scanner->indents);
-    array_push(&scanner->indents, 0);
 
     if (length > 0) {
         size_t size = 0;
@@ -288,29 +265,17 @@ void tree_sitter_sql_bigquery_external_scanner_deserialize(void *payload,
                    delimiter_count);
             size += delimiter_count;
         }
-
-        for (; size < length; size++) {
-            array_push(&scanner->indents, (unsigned char)buffer[size]);
-        }
     }
 }
 
 void *tree_sitter_sql_bigquery_external_scanner_create() {
-#if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 201112L)
-    _Static_assert(sizeof(Delimiter) == sizeof(char), "");
-#else
-    assert(sizeof(Delimiter) == sizeof(char));
-#endif
-    Scanner *scanner = calloc(1, sizeof(Scanner));
-    array_init(&scanner->indents);
+    Scanner *scanner = (Scanner *)ts_calloc(1, sizeof(Scanner));
+
     array_init(&scanner->delimiters);
     tree_sitter_sql_bigquery_external_scanner_deserialize(scanner, NULL, 0);
     return scanner;
 }
 
 void tree_sitter_sql_bigquery_external_scanner_destroy(void *payload) {
-    Scanner *scanner = (Scanner *)payload;
-    array_delete(&scanner->indents);
-    array_delete(&scanner->delimiters);
-    free(scanner);
+    ts_free((Scanner *)payload);
 }
