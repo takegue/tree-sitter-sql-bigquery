@@ -8,6 +8,10 @@ concurrency:
   group: ${{github.workflow}}-${{github.ref}}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   npm:
     uses: tree-sitter/workflows/.github/workflows/package-npm.yml@main
