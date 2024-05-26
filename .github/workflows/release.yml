@@ -61,7 +61,7 @@ jobs:
         uses: pkgdeps/git-tag-action@v3
         with:
           version: ${{ env.PACKAGE_VERSION }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_PAT }}
           github_repo: ${{ github.repository }}
           git_commit_sha: ${{ github.sha }}
           git_tag_prefix: "v"
