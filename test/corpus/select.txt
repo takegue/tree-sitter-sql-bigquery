@@ -555,6 +555,34 @@ GROUP BY lower(a), b;
             (identifier)))))))
 
 ================================================================================
+SELECT statement with group by all
+================================================================================
+
+SELECT a, MAX(b)
+FROM table1
+GROUP BY ALL;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (identifier))
+          (select_expression
+            (function_call
+              (identifier)
+              (argument
+                (identifier)))))
+        (from_clause
+          (from_item
+            (identifier)))
+        (group_by_clause
+          (grouping_all))))))
+
+================================================================================
 SELECT statement with group by: GROUPING SETS - 1
 ================================================================================
 
