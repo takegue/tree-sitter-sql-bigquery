@@ -15,13 +15,16 @@ permissions:
 jobs:
   npm:
     uses: tree-sitter/workflows/.github/workflows/package-npm.yml@main
+    with:
+      node-version: "20.x"
     secrets:
       NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
   crates:
     uses: tree-sitter/workflows/.github/workflows/package-crates.yml@main
     secrets:
       CARGO_REGISTRY_TOKEN: ${{secrets.CARGO_REGISTRY_TOKEN}}
   pypi:
-    uses: tree-sitter/workflows/.github/workflows/package-pypi.yml@main
+    uses: ./.github/workflows/publish-pypi.yml
     secrets:
       PYPI_API_TOKEN: ${{secrets.PYPI_API_TOKEN}}
