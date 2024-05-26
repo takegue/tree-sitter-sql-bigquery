@@ -1,4 +1,4 @@
-VERSION := 0.7.0
+VERSION := 0.7.1
 
 LANGUAGE_NAME := tree-sitter-sql_bigquery
 
