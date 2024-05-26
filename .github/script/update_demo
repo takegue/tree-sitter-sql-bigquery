@@ -11,6 +11,8 @@ while ! nc -z localhost 8000; do
 done
 
 wget -P playground -nH -r http://127.0.0.1:8000/{,tree-sitter.wasm,tree-sitter-parser.wasm}
+TAG=${TAG:-$(git describe --tags --abbrev=0)}
 sed -i 's,LANGUAGE_BASE_URL = "";,LANGUAGE_BASE_URL = new URL(window.location.href).pathname;,' playground/index.html
+sed -i "s,sql_bigquery,sql_bigquery ${TAG}," playground/index.html
 
 wait $job || exit 0
