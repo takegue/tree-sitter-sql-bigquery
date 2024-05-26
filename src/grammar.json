@@ -6435,6 +6435,10 @@
                     {
                       "type": "SYMBOL",
                       "name": "grouping_sets"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "grouping_all"
                     }
                   ]
                 }
@@ -6461,6 +6465,10 @@
                           {
                             "type": "SYMBOL",
                             "name": "grouping_sets"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "grouping_all"
                           }
                         ]
                       }
@@ -6522,6 +6530,15 @@
           }
         ]
       }
+    },
+    "grouping_all": {
+      "type": "ALIAS",
+      "content": {
+        "type": "PATTERN",
+        "value": "[aA][lL][lL]"
+      },
+      "named": false,
+      "value": "ALL"
     },
     "grouping_sets": {
       "type": "SEQ",

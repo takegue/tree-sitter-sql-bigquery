@@ -912,6 +912,7 @@ module.exports = grammar({
       kw('GROUP BY'), commaSep1(prec.left(choice(
         $._grouping_list,
         $.grouping_sets,
+        $.grouping_all
       )))
     )),
 
@@ -922,6 +923,7 @@ module.exports = grammar({
         $.cube,
         $.grouping_empty,
     )),
+    grouping_all: ($) => kw('ALL'),
     grouping_sets: ($) => seq(
       kw('GROUPING SETS'), '(', commaSep1($._grouping_list), ')',
     ),
