@@ -52,48 +52,54 @@ module.exports = grammar({
   rules: {
     source_file: ($) => repeat($._statement),
 
-  /** ************************************************************************
-  *                              Keywords
-  * ************************************************************************* */
-  keyword_if_not_exists: (_) => kw('IF NOT EXISTS'),
-  keyword_if_exists: (_) => kw('IF EXISTS'),
-  keyword_temporary: (_) => choice(kw('TEMP'), kw('TEMPORARY')),
-  keyword_replace: (_) => kw('OR REPLACE'),
-  _keyword_alter: (_) => kw('ALTER'),
-  _keyword_from: (_) => kw('FROM'),
-  _keyword_distinct: (_) => kw('DISTINCT'),
-  _keyword_format: (_) => kw('FORMAT'),
-  _keyword_delete: (_) => kw('DELETE'),
-  _keyword_tablesuffix: (_) => kw('_TABLE_SUFFIX'),
-  _keyword_begin: (_) => kw('BEGIN'),
-  _keyword_end: (_) => kw('END'),
-  _keyword_struct: (_) => kw('STRUCT'),
-  _keyword_range: (_) => kw('RANGE'),
-  _keyword_array: (_) => kw('ARRAY'),
-  _keyword_returns: (_) => kw('RETURNS'),
-  _keyword_between: (_) => kw('BETWEEN'),
-  _keyword_case: (_) => kw('CASE'),
-  _keyword_when: (_) => kw('WHEN'),
-  _keyword_then: (_) => kw('THEN'),
-  _keyword_else: (_) => kw('ELSE'),
-  _keyword_is: (_) => kw('IS'),
-  _keyword_in: (_) => kw('IN'),
-  _keyword_not: (_) => kw('NOT'),
-  _keyword_and: (_) => kw('AND'),
-  _keyword_or: (_) => kw('OR'),
-  _keyword_like: (_) => kw('LIKE'),
-  _keyword_repeat: (_) => kw('REPEAT'),
-  _keyword_as: (_) => kw('AS'),
-  _keyword_cast: (_) => choice(kw('CAST'), kw('SAFE_CAST')),
-  _keyword_window: (_) => kw('WINDOW'),
-  _keyword_partition_by: (_) => kw('PARTITION BY'),
-  _keyword_date: (_) => kw('DATE'),
-  _keyword_datetime: (_) => kw('DATETIME'),
-  _keyword_time: (_) => kw('TIME'),
-  _keyword_timestamp: (_) => kw('TIMESTAMP'),
-  _keyword_for: (_) => kw('FOR'),
-  _keyword_partitiontime: (_) => kw('_PARTITIONTIME'),
-  _keyword_system_as_of: (_) => kw('FOR SYSTEM_TIME AS OF'),
+    /** ************************************************************************
+     *                              Keywords
+     * ************************************************************************* */
+    keyword_if_not_exists: (_) => kw('IF NOT EXISTS'),
+    keyword_if_exists: (_) => kw('IF EXISTS'),
+    keyword_temporary: (_) => choice(kw('TEMP'), kw('TEMPORARY')),
+    keyword_replace: (_) => kw('OR REPLACE'),
+    _keyword_schema: (_) => kw('SCHEMA'),
+    _keyword_column: (_) => kw('COLUMN'),
+    _keyword_alter: (_) => kw('ALTER'),
+    _keyword_rename: (_) => kw('RENAME'),
+    _keyword_add: (_) => kw('ADD'),
+    _keyword_drop: (_) => kw('DROP'),
+    _keyword_from: (_) => kw('FROM'),
+    _keyword_replica: (_) => kw('REPLICA'),
+    _keyword_distinct: (_) => kw('DISTINCT'),
+    _keyword_format: (_) => kw('FORMAT'),
+    _keyword_delete: (_) => kw('DELETE'),
+    _keyword_tablesuffix: (_) => kw('_TABLE_SUFFIX'),
+    _keyword_begin: (_) => kw('BEGIN'),
+    _keyword_end: (_) => kw('END'),
+    _keyword_struct: (_) => kw('STRUCT'),
+    _keyword_range: (_) => kw('RANGE'),
+    _keyword_array: (_) => kw('ARRAY'),
+    _keyword_returns: (_) => kw('RETURNS'),
+    _keyword_between: (_) => kw('BETWEEN'),
+    _keyword_case: (_) => kw('CASE'),
+    _keyword_when: (_) => kw('WHEN'),
+    _keyword_then: (_) => kw('THEN'),
+    _keyword_else: (_) => kw('ELSE'),
+    _keyword_is: (_) => kw('IS'),
+    _keyword_in: (_) => kw('IN'),
+    _keyword_not: (_) => kw('NOT'),
+    _keyword_and: (_) => kw('AND'),
+    _keyword_or: (_) => kw('OR'),
+    _keyword_like: (_) => kw('LIKE'),
+    _keyword_repeat: (_) => kw('REPEAT'),
+    _keyword_as: (_) => kw('AS'),
+    _keyword_cast: (_) => choice(kw('CAST'), kw('SAFE_CAST')),
+    _keyword_window: (_) => kw('WINDOW'),
+    _keyword_partition_by: (_) => kw('PARTITION BY'),
+    _keyword_date: (_) => kw('DATE'),
+    _keyword_datetime: (_) => kw('DATETIME'),
+    _keyword_time: (_) => kw('TIME'),
+    _keyword_timestamp: (_) => kw('TIMESTAMP'),
+    _keyword_for: (_) => kw('FOR'),
+    _keyword_partitiontime: (_) => kw('_PARTITIONTIME'),
+    _keyword_system_as_of: (_) => kw('FOR SYSTEM_TIME AS OF'),
 
     /** ************************************************************************
      *                              Statements
@@ -104,6 +110,8 @@ module.exports = grammar({
         choice(
           $.create_schema_statement,
           $.alter_schema_statement,
+          $.alter_schema_add_replica_statement,
+          $.alter_schema_drop_replica_statement,
           $.drop_schema_statement,
           $.create_table_statement,
           $.create_table_like_statement,
@@ -329,22 +337,46 @@ module.exports = grammar({
         optional($.default_collate_clause),
         optional($.option_clause),
       ),
-    alter_schema_statement: ($) =>
+
+    _alter_schema_clause: ($) =>
       seq(
-        kw('ALTER SCHEMA'),
+        $._keyword_alter,
+        $._keyword_schema,
         optional($.keyword_if_exists),
         field('schema_name', $.identifier),
+      ),
+
+    alter_schema_statement: ($) =>
+      seq(
+        $._alter_schema_clause,
         kw('SET'),
         optional($.option_clause),
       ),
+    alter_schema_add_replica_statement: ($) =>
+      seq(
+        $._alter_schema_clause,
+        $._keyword_add,
+        $._keyword_replica,
+        field('replica_name', $.identifier),
+        optional($.option_clause),
+      ),
+    alter_schema_drop_replica_statement: ($) =>
+      seq(
+        $._alter_schema_clause,
+        $._keyword_drop,
+        $._keyword_replica,
+        field('replica_name', $.identifier),
+      ),
     drop_schema_statement: ($) =>
       seq(
-        kw('DROP SCHEMA'),
+        $._keyword_drop,
+        $._keyword_schema,
         optional($.keyword_if_exists),
         field('schema_name', $.identifier),
         optional($.drop_schema_option),
       ),
     drop_schema_option: () => choice(kw('CASCADE'), kw('RESTRICT')),
+
     create_table_statement: ($) =>
       prec.right(
         seq(
@@ -466,16 +498,6 @@ module.exports = grammar({
         field('new_table_name', $.identifier),
       ),
 
-    alter_table_rename_statement: ($) =>
-      seq(
-        $._keyword_alter,
-        kw('TABLE'),
-        optional($.keyword_if_exists),
-        field('table_name', $.identifier),
-        kw('RENAME TO'),
-        field('new_table_name', $.identifier),
-      ),
-
     alter_table_column_statement: ($) =>
       seq(
         $._keyword_alter,
@@ -501,14 +523,16 @@ module.exports = grammar({
 
     add_column_action: ($) =>
       seq(
-        kw('ADD COLUMN'),
+        $._keyword_add,
+        $._keyword_column,
         optional($.keyword_if_not_exists),
         $.column_definition,
       ),
 
     rename_column_action: ($) =>
       seq(
-        kw('RENAME COLUMN'),
+        $._keyword_rename,
+        $._keyword_column,
         optional($.keyword_if_exists),
         field('column_name', $.identifier),
         kw('TO'),
@@ -516,13 +540,15 @@ module.exports = grammar({
       ),
     drop_column_action: ($) =>
       seq(
-        kw('DROP COLUMN'),
+        $._keyword_drop,
+        $._keyword_column,
         optional($.keyword_if_exists),
         field('column_name', $.identifier),
       ),
     alter_column_action: ($) =>
       seq(
-        kw('ALTER COLUMN'),
+        $._keyword_alter,
+        $._keyword_column,
         optional($.keyword_if_exists),
         field('column_name', $.identifier),
         choice(
@@ -539,15 +565,16 @@ module.exports = grammar({
     drop_notnull: ($) => kw('DROP NOT NULL'),
     drop_default: ($) => kw('DROP DEFAULT'),
 
-    column_list: $ => commaSep1($.identifier),
+    column_list: ($) => commaSep1($.identifier),
     constraint_enfoce_option: ($) => choice(kw('ENFORCED'), kw('NOT ENFORCED')),
-    primary_key: ($) => seq(
-      kw('PRIMARY KEY'),
-      "(",
-      field('column_list', $.column_list),
-      ")",
-      $.constraint_enfoce_option,
-    ),
+    primary_key: ($) =>
+      seq(
+        kw('PRIMARY KEY'),
+        '(',
+        field('column_list', $.column_list),
+        ')',
+        $.constraint_enfoce_option,
+      ),
 
     add_primary_key_action: ($) =>
       seq(
@@ -561,14 +588,14 @@ module.exports = grammar({
         optional($.keyword_if_exists),
       )),
 
-
-    foreign_key: ($) => seq(
-      kw('FOREIGN KEY'),
-      "(",
-      field('column_list', $.column_list),
-      ")",
-      $.foreign_key_references,
-    ),
+    foreign_key: ($) =>
+      seq(
+        kw('FOREIGN KEY'),
+        '(',
+        field('column_list', $.column_list),
+        ')',
+        $.foreign_key_references,
+      ),
     foreign_key_references: ($) =>
       seq(
         kw('REFERENCES'),
@@ -601,7 +628,7 @@ module.exports = grammar({
 
     drop_table_statement: ($) =>
       seq(
-        kw('DROP'),
+        $._keyword_drop,
         choice(
           kw('TABLE'),
           kw('SNAPSHOT TABLE'),
@@ -614,9 +641,14 @@ module.exports = grammar({
         field('table_name', $.identifier),
       ),
 
-    create_table_parameters: ($) => seq('(', commaSep1(
-      choice($.column_definition, $.constraint_definition)
-    ), ')'),
+    create_table_parameters: ($) =>
+      seq(
+        '(',
+        commaSep1(
+          choice($.column_definition, $.constraint_definition),
+        ),
+        ')',
+      ),
     option_clause: ($) => seq(kw('OPTIONS'), '(', optional(sep1($.option_item, ',')), ')'),
     option_item: ($) => seq(field('key', $.identifier), '=', field('value', $._expression)),
 
@@ -625,27 +657,31 @@ module.exports = grammar({
         field('column_name', $.identifier),
         field('column_type', $.column_type),
         optional(field('collate_clause', $.collate_clause)),
-        optional(field('constraint_clause', choice(
-          seq(kw('PRIMARY KEY'), $.constraint_enfoce_option),
-          $.foreign_key_references
-        ))),
+        optional(field(
+          'constraint_clause',
+          choice(
+            seq(kw('PRIMARY KEY'), $.constraint_enfoce_option),
+            $.foreign_key_references,
+          ),
+        )),
         optional(field('default', $.default_clause)),
         optional(field('not_null', kw('NOT NULL'))),
         optional(field('option', $.option_clause)),
       ),
 
-    constraint_definition: ($) => choice(
-      $.primary_key,
-      seq(
-        optional(
-          seq(
-            kw('CONSTRAINT'),
-            field('constraint_name', $.identifier),
+    constraint_definition: ($) =>
+      choice(
+        $.primary_key,
+        seq(
+          optional(
+            seq(
+              kw('CONSTRAINT'),
+              field('constraint_name', $.identifier),
+            ),
           ),
+          $.foreign_key,
         ),
-        $.foreign_key
-      )
-    ),
+      ),
     collate_clause: ($) => prec.left(seq(kw('COLLATE'), $.string)),
     column_type: ($) =>
       choice(
@@ -737,7 +773,7 @@ module.exports = grammar({
     create_function_return_clause: ($) => seq($._keyword_returns, $.type),
     drop_function_statement: ($) =>
       seq(
-        kw('DROP'),
+        $._keyword_drop,
         kw('FUNCTION'),
         optional($.keyword_if_exists),
         field('routine_name', $.identifier),
@@ -765,7 +801,7 @@ module.exports = grammar({
 
     drop_table_function_statement: ($) =>
       seq(
-        kw('DROP'),
+        $._keyword_drop,
         kw('TABLE FUNCTION'),
         optional($.keyword_if_exists),
         field('routine_name', $.identifier),
@@ -807,7 +843,7 @@ module.exports = grammar({
 
     drop_procedure_statement: ($) =>
       seq(
-        kw('DROP'),
+        $._keyword_drop,
         kw('PROCEDURE'),
         optional($.keyword_if_exists),
         field('routine_name', $.identifier),
@@ -829,7 +865,7 @@ module.exports = grammar({
     transoform_clause: ($) => seq(kw('TRANSFORM'), '(', $.select_list, ')'),
     drop_model_statement: ($) =>
       seq(
-        kw('DROP'),
+        $._keyword_drop,
         kw('MODEL'),
         optional($.keyword_if_exists),
         field('model_name', $.identifier),
@@ -908,30 +944,40 @@ module.exports = grammar({
     having_clause: ($) => seq(kw('HAVING'), $._expression),
     qualify_clause: ($) => seq(kw('QUALIFY'), $._expression),
     limit_clause: ($) => seq(kw('LIMIT'), $._integer, optional(seq(kw('OFFSET'), $._integer))),
-    group_by_clause: ($) => prec("clause_connective", seq(
-      kw('GROUP BY'), commaSep1(prec.left(choice(
-        $._grouping_list,
-        $.grouping_sets,
-        $.grouping_all
-      )))
-    )),
+    group_by_clause: ($) =>
+      prec(
+        'clause_connective',
+        seq(
+          kw('GROUP BY'),
+          commaSep1(prec.left(choice(
+            $._grouping_list,
+            $.grouping_sets,
+            $.grouping_all,
+          ))),
+        ),
+      ),
 
-    _grouping_list: ($) => prec.left(choice(
+    _grouping_list: ($) =>
+      prec.left(choice(
         commaSep1($.grouping_item),
         $.grouping_item_sets,
         $.rollup,
         $.cube,
         $.grouping_empty,
-    )),
+      )),
     grouping_all: ($) => kw('ALL'),
-    grouping_sets: ($) => seq(
-      kw('GROUPING SETS'), '(', commaSep1($._grouping_list), ')',
-    ),
+    grouping_sets: ($) =>
+      seq(
+        kw('GROUPING SETS'),
+        '(',
+        commaSep1($._grouping_list),
+        ')',
+      ),
     grouping_item_sets: ($) => seq('(', commaSep1($._grouping_list), ')'),
     rollup: ($) => seq(kw('ROLLUP'), '(', commaSep1($._grouping_list), ')'),
     cube: ($) => seq(kw('CUBE'), '(', commaSep1($._grouping_list), ')'),
-    grouping_empty: ($) => prec("literal", seq("(", ")")),
-    grouping_item: ($) => prec.left("literal", $._expression),
+    grouping_empty: ($) => prec('literal', seq('(', ')')),
+    grouping_item: ($) => prec.left('literal', $._expression),
 
     over_clause: ($) =>
       choice(
@@ -1051,9 +1097,11 @@ module.exports = grammar({
     _nulls_preference: (_) => field('nulls_preference', choice(kw('NULLS FIRST'), kw('NULLS LAST'))),
     order_by_clause: ($) => seq(kw('ORDER BY'), $.order_by_clause_body),
     where_clause: ($) => seq(kw('WHERE'), $._expression),
-    _aliasable_expression: ($) => prec.left(
-      "clause_connective", seq($._expression, optional($.as_alias))
-    ),
+    _aliasable_expression: ($) =>
+      prec.left(
+        'clause_connective',
+        seq($._expression, optional($.as_alias)),
+      ),
 
     as_alias: ($) => seq(optional($._keyword_as), field('alias_name', $.identifier)),
 
@@ -1195,18 +1243,23 @@ module.exports = grammar({
 
     analytics_clause: ($) => seq(seq(kw('OVER'), $.over_clause)),
 
-    bigquery_resource: ($) => prec(
-      10,
-      seq(
-        field('resource_type', choice(kw("MODEL"), kw("TABLE"))),
-        field('resource_type', $.identifier)
-      )
-    ),
+    bigquery_resource: ($) =>
+      prec(
+        10,
+        seq(
+          field('resource_type', choice(kw('MODEL'), kw('TABLE'))),
+          field('resource_type', $.identifier),
+        ),
+      ),
 
-    argument: ($) => prec(10, choice(
-      seq(optional(seq(field('keyword', $.identifier), '=>')), $._expression),
-      $.bigquery_resource
-    )),
+    argument: ($) =>
+      prec(
+        10,
+        choice(
+          seq(optional(seq(field('keyword', $.identifier), '=>')), $._expression),
+          $.bigquery_resource,
+        ),
+      ),
 
     function_call: ($) =>
       // FIXME: precedence
@@ -1240,7 +1293,7 @@ module.exports = grammar({
                 alias(
                   $._keyword_range,
                   $.identifier,
-                )
+                ),
               ),
             ),
             '(',
@@ -1533,7 +1586,7 @@ module.exports = grammar({
           kw('BIGDECIMAL'),
         ),
         choice(
-          seq('\'', $._float_or_integer, '\''),
+          seq("'", $._float_or_integer, "'"),
           seq('"', $._float_or_integer, '"'),
         ),
       ),
@@ -1548,34 +1601,39 @@ module.exports = grammar({
 
     range_boundary_start: ($) => choice('[', '('),
     range_boundary_end: ($) => choice(']', ')'),
-    range_content: (_) => choice(kw("UNBOUNDED"), /[-0-9: .]+/),
-    range_start: ($) => seq(
+    range_content: (_) => choice(kw('UNBOUNDED'), /[-0-9: .]+/),
+    range_start: ($) =>
+      seq(
         $.range_boundary_start,
         $.range_content,
       ),
-    range_end: ($) => seq(
+    range_end: ($) =>
+      seq(
         $.range_content,
         $.range_boundary_end,
       ),
-    _range_string: ($) => seq(
-      $._string_start,
-      $.range_start,
-      ",",
-      $.range_end,
-      $._string_end,
-    ),
-
-    range: ($) => choice(
+    _range_string: ($) =>
       seq(
-        $._keyword_range,
-        '<',
-        alias($._type_chrono, $.range_type),
-        '>',
-        choice(
-          alias($._range_string, $.string),
-          $.string
-        )
-    )),
+        $._string_start,
+        $.range_start,
+        ',',
+        $.range_end,
+        $._string_end,
+      ),
+
+    range: ($) =>
+      choice(
+        seq(
+          $._keyword_range,
+          '<',
+          alias($._type_chrono, $.range_type),
+          '>',
+          choice(
+            alias($._range_string, $.string),
+            $.string,
+          ),
+        ),
+      ),
 
     time: ($) =>
       seq(
@@ -1727,15 +1785,15 @@ module.exports = grammar({
       ];
 
       const exps = table.map(([precedence, operator]) =>
-          prec.left(
-            precedence,
-            seq(
-              field('left', $._expression),
-              field('operator', operator),
-              field('right', $._expression),
-            ),
-          )
+        prec.left(
+          precedence,
+          seq(
+            field('left', $._expression),
+            field('operator', operator),
+            field('right', $._expression),
+          ),
         )
+      );
 
       const specials = [
         'operator_compare',
@@ -1749,17 +1807,18 @@ module.exports = grammar({
             seq(
               field('operator', $.quantitve_like_operator),
               field('right', $.quantitve_like_patterns),
-            )
-          )
-        ))
-      ]
+            ),
+          ),
+        )),
+      ];
 
       return choice(...exps, ...specials);
     },
 
     like_operator: ($) => seq(optional($._keyword_not), $._keyword_like),
-    quantitve_like_operator: ($) => seq(optional($._keyword_not), $._keyword_like, choice(kw('ANY'), kw('SOME'), kw('ALL'))),
-    quantitve_like_patterns : ($) => seq('(', commaSep1(alias($.string, $.like_pattern)), ')'),
+    quantitve_like_operator: ($) =>
+      seq(optional($._keyword_not), $._keyword_like, choice(kw('ANY'), kw('SOME'), kw('ALL'))),
+    quantitve_like_patterns: ($) => seq('(', commaSep1(alias($.string, $.like_pattern)), ')'),
 
     between_operator: ($) =>
       prec.left(

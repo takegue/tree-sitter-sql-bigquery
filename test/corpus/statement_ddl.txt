@@ -701,6 +701,38 @@ SET OPTIONS(
         (number)))))
 
 ================================================================================
+DDL: ALTER SCHEMA ADD REPLICA
+================================================================================
+
+ALTER SCHEMA cross_region_dataset
+ADD REPLICA `EU` OPTIONS(location=`eu`);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (alter_schema_add_replica_statement
+    (identifier)
+    (identifier)
+    (option_clause
+      (option_item
+        (identifier)
+        (identifier)))))
+
+================================================================================
+DDL: ALTER SCHEMA DROP REPLICA
+================================================================================
+
+ALTER SCHEMA cross_region_dataset
+DROP REPLICA `us-east4`
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (alter_schema_drop_replica_statement
+    (identifier)
+    (identifier)))
+
+================================================================================
 DDL: ALTER TABLE on BigQuery Examples #1
 ================================================================================
 
