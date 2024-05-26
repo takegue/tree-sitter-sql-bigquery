@@ -644,7 +644,7 @@
             },
             {
               "type": "SYMBOL",
-              "name": "execute_immadiate_statement"
+              "name": "execute_immediate_statement"
             },
             {
               "type": "SYMBOL",
@@ -696,7 +696,7 @@
             },
             {
               "type": "SYMBOL",
-              "name": "return_satement"
+              "name": "return_statement"
             },
             {
               "type": "SYMBOL",
@@ -956,7 +956,7 @@
         }
       ]
     },
-    "execute_immadiate_statement": {
+    "execute_immediate_statement": {
       "type": "SEQ",
       "members": [
         {
@@ -1095,7 +1095,7 @@
         }
       ]
     },
-    "return_satement": {
+    "return_statement": {
       "type": "SEQ",
       "members": [
         {
@@ -9372,44 +9372,6 @@
         }
       ]
     },
-    "insert_columns": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "("
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "identifier"
-            },
-            {
-              "type": "REPEAT",
-              "content": {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "STRING",
-                    "value": ","
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "identifier"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": ")"
-        }
-      ]
-    },
     "values_clause": {
       "type": "CHOICE",
       "members": [
@@ -10201,6 +10163,44 @@
               "value": "ROW"
             }
           ]
+        }
+      ]
+    },
+    "insert_columns": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "identifier"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "identifier"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
         }
       ]
     },

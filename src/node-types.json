@@ -906,7 +906,7 @@
           "named": true
         },
         {
-          "type": "execute_immadiate_statement",
+          "type": "execute_immediate_statement",
           "named": true
         },
         {
@@ -962,7 +962,7 @@
           "named": true
         },
         {
-          "type": "return_satement",
+          "type": "return_statement",
           "named": true
         },
         {
@@ -1125,7 +1125,7 @@
           "named": true
         },
         {
-          "type": "execute_immadiate_statement",
+          "type": "execute_immediate_statement",
           "named": true
         },
         {
@@ -1181,7 +1181,7 @@
           "named": true
         },
         {
-          "type": "return_satement",
+          "type": "return_statement",
           "named": true
         },
         {
@@ -4375,7 +4375,7 @@
           "named": true
         },
         {
-          "type": "execute_immadiate_statement",
+          "type": "execute_immediate_statement",
           "named": true
         },
         {
@@ -4431,7 +4431,7 @@
           "named": true
         },
         {
-          "type": "return_satement",
+          "type": "return_statement",
           "named": true
         },
         {
@@ -4634,7 +4634,7 @@
           "named": true
         },
         {
-          "type": "execute_immadiate_statement",
+          "type": "execute_immediate_statement",
           "named": true
         },
         {
@@ -4722,7 +4722,7 @@
           "named": true
         },
         {
-          "type": "return_satement",
+          "type": "return_statement",
           "named": true
         },
         {
@@ -4777,7 +4777,7 @@
     }
   },
   {
-    "type": "execute_immadiate_statement",
+    "type": "execute_immediate_statement",
     "named": true,
     "fields": {},
     "children": {
@@ -5166,7 +5166,7 @@
           "named": true
         },
         {
-          "type": "execute_immadiate_statement",
+          "type": "execute_immediate_statement",
           "named": true
         },
         {
@@ -5226,7 +5226,7 @@
           "named": true
         },
         {
-          "type": "return_satement",
+          "type": "return_statement",
           "named": true
         },
         {
@@ -6374,7 +6374,7 @@
           "named": true
         },
         {
-          "type": "execute_immadiate_statement",
+          "type": "execute_immediate_statement",
           "named": true
         },
         {
@@ -6462,7 +6462,7 @@
           "named": true
         },
         {
-          "type": "return_satement",
+          "type": "return_statement",
           "named": true
         },
         {
@@ -7158,7 +7158,7 @@
           "named": true
         },
         {
-          "type": "execute_immadiate_statement",
+          "type": "execute_immediate_statement",
           "named": true
         },
         {
@@ -7214,7 +7214,7 @@
           "named": true
         },
         {
-          "type": "return_satement",
+          "type": "return_statement",
           "named": true
         },
         {
@@ -8428,7 +8428,7 @@
           "named": true
         },
         {
-          "type": "execute_immadiate_statement",
+          "type": "execute_immediate_statement",
           "named": true
         },
         {
@@ -8484,7 +8484,7 @@
           "named": true
         },
         {
-          "type": "return_satement",
+          "type": "return_statement",
           "named": true
         },
         {
@@ -9072,7 +9072,7 @@
           "named": true
         },
         {
-          "type": "execute_immadiate_statement",
+          "type": "execute_immediate_statement",
           "named": true
         },
         {
@@ -9128,7 +9128,7 @@
           "named": true
         },
         {
-          "type": "return_satement",
+          "type": "return_statement",
           "named": true
         },
         {
@@ -9159,7 +9159,7 @@
     }
   },
   {
-    "type": "return_satement",
+    "type": "return_statement",
     "named": true,
     "fields": {}
   },
@@ -10177,7 +10177,7 @@
           "named": true
         },
         {
-          "type": "execute_immadiate_statement",
+          "type": "execute_immediate_statement",
           "named": true
         },
         {
@@ -10233,7 +10233,7 @@
           "named": true
         },
         {
-          "type": "return_satement",
+          "type": "return_statement",
           "named": true
         },
         {
@@ -11994,7 +11994,7 @@
           "named": true
         },
         {
-          "type": "execute_immadiate_statement",
+          "type": "execute_immediate_statement",
           "named": true
         },
         {
@@ -12082,7 +12082,7 @@
           "named": true
         },
         {
-          "type": "return_satement",
+          "type": "return_statement",
           "named": true
         },
         {
