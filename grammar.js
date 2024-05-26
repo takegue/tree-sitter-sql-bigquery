@@ -142,7 +142,7 @@ module.exports = grammar({
           // procedural language
           $.declare_statement,
           $.set_statement,
-          $.execute_immadiate_statement,
+          $.execute_immediate_statement,
           $.begin_end_statement,
           $.begin_exception_end_statement,
           $.if_statement,
@@ -155,7 +155,7 @@ module.exports = grammar({
           $.iterate_statement,
           $.leave_statement,
           $.call_statement,
-          $.return_satement,
+          $.return_statement,
           $.raise_statement,
           $.assert_statement,
           // DCL
@@ -198,7 +198,7 @@ module.exports = grammar({
         ),
       ),
 
-    execute_immadiate_statement: ($) =>
+    execute_immediate_statement: ($) =>
       seq(
         kw('EXECUTE IMMEDIATE'),
         // FIXME: Inner query statement is not supported
@@ -215,7 +215,7 @@ module.exports = grammar({
         ),
       ),
 
-    return_satement: () => seq(kw('RETURN')),
+    return_statement: () => seq(kw('RETURN')),
     call_statement: ($) =>
       seq(
         kw('CALL'),
@@ -269,14 +269,6 @@ module.exports = grammar({
         kw('LOOP'),
         $._statement_list,
         kw('END LOOP'),
-      ),
-
-    repeat_statement: ($) =>
-      seq(
-        $._keyword_repeat,
-        $._statement_list,
-        alias(seq(kw('UNTIL'), $._expression), $.until_clause),
-        kw('END REPEAT'),
       ),
 
     repeat_statement: ($) =>
@@ -1366,7 +1358,6 @@ module.exports = grammar({
         optional($.insert_columns),
         $.values_clause,
       ),
-    insert_columns: ($) => seq('(', commaSep1($.identifier), ')'),
     values_clause: ($) => choice(seq(kw('VALUES'), commaSep1($.value_element)), $.query_statement),
     value_element: ($) => seq('(', commaSep1($._expression), ')'),
 
