@@ -109,7 +109,7 @@ EXECUTE IMMEDIATE (select "SELECT @a * (@b + 2)")
 
 (source_file
   (comment)
-  (execute_immadiate_statement
+  (execute_immediate_statement
     (string)
     (into_clause
       (identifier))
@@ -119,7 +119,7 @@ EXECUTE IMMEDIATE (select "SELECT @a * (@b + 2)")
       (using_expression
         (number))))
   (comment)
-  (execute_immadiate_statement
+  (execute_immediate_statement
     (string)
     (into_clause
       (identifier))
@@ -132,7 +132,7 @@ EXECUTE IMMEDIATE (select "SELECT @a * (@b + 2)")
         (number)
         (as_alias
           (identifier)))))
-  (execute_immadiate_statement
+  (execute_immediate_statement
     (select_subexpression
       (query_expr
         (select
