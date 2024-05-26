@@ -63,6 +63,7 @@ module.exports = grammar({
     _keyword_column: (_) => kw('COLUMN'),
     _keyword_alter: (_) => kw('ALTER'),
     _keyword_rename: (_) => kw('RENAME'),
+    _keyword_create: (_) => kw('CREATE'),
     _keyword_add: (_) => kw('ADD'),
     _keyword_drop: (_) => kw('DROP'),
     _keyword_from: (_) => kw('FROM'),
@@ -331,7 +332,8 @@ module.exports = grammar({
      * ***************************************************************************** */
     create_schema_statement: ($) =>
       seq(
-        kw('CREATE SCHEMA'),
+        $._keyword_create,
+        $._keyword_schema,
         optional($.keyword_if_not_exists),
         field('schema_name', $.identifier),
         optional($.default_collate_clause),
@@ -380,7 +382,7 @@ module.exports = grammar({
     create_table_statement: ($) =>
       prec.right(
         seq(
-          kw('CREATE'),
+          $._keyword_create,
           optional($.keyword_replace),
           optional($.keyword_temporary),
           choice(kw('TABLE'), kw('VIEW'), kw('MATERIALIZED VIEW')),
@@ -397,7 +399,7 @@ module.exports = grammar({
     create_table_like_statement: ($) =>
       prec.right(
         seq(
-          kw('CREATE'),
+          $._keyword_create,
           optional($.keyword_replace),
           optional($.keyword_temporary),
           choice(kw('TABLE'), kw('VIEW'), kw('MATERIALIZED VIEW')),
@@ -415,7 +417,7 @@ module.exports = grammar({
     create_table_clone_statement: ($) =>
       prec.right(
         seq(
-          kw('CREATE'),
+          $._keyword_create,
           optional($.keyword_replace),
           choice(kw('TABLE')),
           optional($.keyword_if_not_exists),
@@ -429,7 +431,7 @@ module.exports = grammar({
     create_table_copy_statement: ($) =>
       prec.right(
         seq(
-          kw('CREATE'),
+          $._keyword_create,
           optional($.keyword_replace),
           choice(kw('TABLE')),
           optional($.keyword_if_not_exists),
@@ -442,7 +444,7 @@ module.exports = grammar({
     copy_clause: ($) => seq(kw('COPY'), field('source_table_name', $.identifier)),
     create_snapshot_table_statement: ($) =>
       prec.right(seq(
-        kw('CREATE'),
+          $._keyword_create,
         kw('SNAPSHOT TABLE'),
         optional($.keyword_if_not_exists),
         field('table_name', $.identifier),
@@ -454,7 +456,7 @@ module.exports = grammar({
     create_external_table_statement: ($) =>
       prec.right(
         seq(
-          kw('CREATE'),
+          $._keyword_create,
           optional($.keyword_replace),
           kw('EXTERNAL TABLE'),
           optional($.keyword_if_not_exists),
@@ -726,7 +728,7 @@ module.exports = grammar({
     create_function_statement: ($) =>
       prec.left(
         seq(
-          kw('CREATE'),
+          $._keyword_create,
           optional($.keyword_replace),
           optional($.keyword_temporary),
           kw('FUNCTION'),
@@ -754,7 +756,7 @@ module.exports = grammar({
     create_remote_function_statement: ($) =>
       prec.left(
         seq(
-          kw('CREATE'),
+          $._keyword_create,
           optional($.keyword_replace),
           optional($.keyword_temporary),
           kw('FUNCTION'),
@@ -782,7 +784,7 @@ module.exports = grammar({
     create_table_function_statement: ($) =>
       prec.left(
         seq(
-          kw('CREATE'),
+          $._keyword_create,
           optional($.keyword_replace),
           kw('TABLE FUNCTION'),
           optional($.keyword_if_not_exists),
@@ -820,7 +822,7 @@ module.exports = grammar({
     create_function_parameters: ($) => seq('(', commaSep1($.create_function_parameter), ')'),
     create_procedure_statement: ($) => (
       seq(
-        kw('CREATE'),
+        $._keyword_create,
         optional($.keyword_replace),
         kw('PROCEDURE'),
         optional($.keyword_if_not_exists),
@@ -852,7 +854,7 @@ module.exports = grammar({
     create_model_statement: ($) =>
       prec.left(
         seq(
-          kw('CREATE'),
+          $._keyword_create,
           optional($.keyword_replace),
           choice(kw('MODEL')),
           optional($.keyword_if_not_exists),

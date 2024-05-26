@@ -183,6 +183,82 @@
     }
   },
   {
+    "type": "alter_schema_add_replica_statement",
+    "named": true,
+    "fields": {
+      "replica_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "schema_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "keyword_if_exists",
+          "named": true
+        },
+        {
+          "type": "option_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "alter_schema_drop_replica_statement",
+    "named": true,
+    "fields": {
+      "replica_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "schema_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "keyword_if_exists",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "alter_schema_statement",
     "named": true,
     "fields": {
@@ -702,6 +778,14 @@
       "required": false,
       "types": [
         {
+          "type": "alter_schema_add_replica_statement",
+          "named": true
+        },
+        {
+          "type": "alter_schema_drop_replica_statement",
+          "named": true
+        },
+        {
           "type": "alter_schema_statement",
           "named": true
         },
@@ -912,6 +996,14 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "alter_schema_add_replica_statement",
+          "named": true
+        },
+        {
+          "type": "alter_schema_drop_replica_statement",
+          "named": true
+        },
         {
           "type": "alter_schema_statement",
           "named": true
@@ -4155,6 +4247,14 @@
       "required": true,
       "types": [
         {
+          "type": "alter_schema_add_replica_statement",
+          "named": true
+        },
+        {
+          "type": "alter_schema_drop_replica_statement",
+          "named": true
+        },
+        {
           "type": "alter_schema_statement",
           "named": true
         },
@@ -4375,6 +4475,14 @@
         },
         {
           "type": "TRUE",
+          "named": true
+        },
+        {
+          "type": "alter_schema_add_replica_statement",
+          "named": true
+        },
+        {
+          "type": "alter_schema_drop_replica_statement",
           "named": true
         },
         {
@@ -4929,6 +5037,14 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "alter_schema_add_replica_statement",
+          "named": true
+        },
+        {
+          "type": "alter_schema_drop_replica_statement",
+          "named": true
+        },
         {
           "type": "alter_schema_statement",
           "named": true
@@ -5607,6 +5723,10 @@
           "named": true
         },
         {
+          "type": "grouping_all",
+          "named": true
+        },
+        {
           "type": "grouping_empty",
           "named": true
         },
@@ -5628,6 +5748,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "grouping_all",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "grouping_empty",
@@ -6082,6 +6207,14 @@
         },
         {
           "type": "TRUE",
+          "named": true
+        },
+        {
+          "type": "alter_schema_add_replica_statement",
+          "named": true
+        },
+        {
+          "type": "alter_schema_drop_replica_statement",
           "named": true
         },
         {
@@ -6896,6 +7029,14 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "alter_schema_add_replica_statement",
+          "named": true
+        },
+        {
+          "type": "alter_schema_drop_replica_statement",
+          "named": true
+        },
         {
           "type": "alter_schema_statement",
           "named": true
@@ -8159,6 +8300,14 @@
       "required": false,
       "types": [
         {
+          "type": "alter_schema_add_replica_statement",
+          "named": true
+        },
+        {
+          "type": "alter_schema_drop_replica_statement",
+          "named": true
+        },
+        {
           "type": "alter_schema_statement",
           "named": true
         },
@@ -8794,6 +8943,14 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "alter_schema_add_replica_statement",
+          "named": true
+        },
+        {
+          "type": "alter_schema_drop_replica_statement",
+          "named": true
+        },
         {
           "type": "alter_schema_statement",
           "named": true
@@ -9891,6 +10048,14 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "alter_schema_add_replica_statement",
+          "named": true
+        },
+        {
+          "type": "alter_schema_drop_replica_statement",
+          "named": true
+        },
         {
           "type": "alter_schema_statement",
           "named": true
@@ -11673,6 +11838,14 @@
           "named": true
         },
         {
+          "type": "alter_schema_add_replica_statement",
+          "named": true
+        },
+        {
+          "type": "alter_schema_drop_replica_statement",
+          "named": true
+        },
+        {
           "type": "alter_schema_statement",
           "named": true
         },
@@ -12244,10 +12417,6 @@
     "named": false
   },
   {
-    "type": "ADD_COLUMN",
-    "named": false
-  },
-  {
     "type": "ALL",
     "named": false
   },
@@ -12257,14 +12426,6 @@
   },
   {
     "type": "ALTER",
-    "named": false
-  },
-  {
-    "type": "ALTER_COLUMN",
-    "named": false
-  },
-  {
-    "type": "ALTER_SCHEMA",
     "named": false
   },
   {
@@ -12344,6 +12505,10 @@
     "named": false
   },
   {
+    "type": "COLUMN",
+    "named": false
+  },
+  {
     "type": "CONSTRAINT",
     "named": false
   },
@@ -12357,10 +12522,6 @@
   },
   {
     "type": "CREATE",
-    "named": false
-  },
-  {
-    "type": "CREATE_SCHEMA",
     "named": false
   },
   {
@@ -12436,10 +12597,6 @@
     "named": false
   },
   {
-    "type": "DROP_COLUMN",
-    "named": false
-  },
-  {
     "type": "DROP_CONSTRAINT",
     "named": false
   },
@@ -12453,10 +12610,6 @@
   },
   {
     "type": "DROP_PRIMARY_KEY",
-    "named": false
-  },
-  {
-    "type": "DROP_SCHEMA",
     "named": false
   },
   {
@@ -12832,7 +12985,7 @@
     "named": false
   },
   {
-    "type": "RENAME_COLUMN",
+    "type": "RENAME",
     "named": false
   },
   {
@@ -12845,6 +12998,10 @@
   },
   {
     "type": "REPLACE",
+    "named": false
+  },
+  {
+    "type": "REPLICA",
     "named": false
   },
   {
