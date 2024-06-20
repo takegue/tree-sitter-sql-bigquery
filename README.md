@@ -1,6 +1,5 @@
-[![Build/Test](https://github.com/TKNGUE/tree-sitter-sql-bigquery/actions/workflows/ci.yml/badge.svg)](https://github.com/TKNGUE/tree-sitter-sql-bigquery/actions/workflows/ci.yml)
-
 # tree-sitter for GoogleSQL (SQL dialect in BigQuery)
+[![Build/Test](https://github.com/TKNGUE/tree-sitter-sql-bigquery/actions/workflows/ci.yml/badge.svg)](https://github.com/TKNGUE/tree-sitter-sql-bigquery/actions/workflows/ci.yml)
 
 GoogleSQL(formerly known as StandardSQL) parser available in many programming language such as Rust, Node and so on. You
 could try out the demo on [Github Pages](https://takegue.github.io/tree-sitter-sql-bigquery/)
