@@ -34,7 +34,7 @@
   "author": "takegue <takegue@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "tree-sitter-cli": "^0.23.0",
+    "tree-sitter-cli": "^0.24.5",
     "node-gyp-build": "^4.8.0",
     "node-addon-api": "^8.0.0"
   },
