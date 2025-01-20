@@ -100,6 +100,6 @@ jobs:
       - name: Check build artifacts
         run: ls -l dist
       - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1.8
+        uses: pypa/gh-action-pypi-publish@release/v1.12
         with:
           password: ${{secrets.PYPI_API_TOKEN}}
