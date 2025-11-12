@@ -3,8 +3,8 @@ package tree_sitter_sql_bigquery_test
 import (
 	"testing"
 
-	tree_sitter "github.com/smacker/go-tree-sitter"
-	"github.com/tree-sitter/tree-sitter-sql_bigquery"
+	tree_sitter_sql_bigquery "github.com/takegue/tree-sitter-sql-bigquery/bindings/go"
+	tree_sitter "github.com/tree-sitter/go-tree-sitter"
 )
 
 func TestCanLoadGrammar(t *testing.T) {
