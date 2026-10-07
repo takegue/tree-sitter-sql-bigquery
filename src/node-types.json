@@ -5397,6 +5397,10 @@
           "named": true
         },
         {
+          "type": "system_time_clause",
+          "named": true
+        },
+        {
           "type": "unnest_clause",
           "named": true
         }

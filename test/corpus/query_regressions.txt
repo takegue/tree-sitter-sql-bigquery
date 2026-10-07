@@ -1,0 +1,272 @@
+================================================================================
+Query regression: table time travel with a function expression
+================================================================================
+
+SELECT *
+FROM `example-project.dataset.events`
+FOR SYSTEM_TIME AS OF CURRENT_TIMESTAMP();
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_all
+            (asterisk_expression)))
+        (from_clause
+          (from_item
+            (identifier)
+            (system_time_clause
+              (function_call
+                (identifier)))))))))
+
+================================================================================
+Query regression: aliased time travel followed by a join
+================================================================================
+
+SELECT e.id
+FROM `example-project.dataset.events` AS e
+FOR SYSTEM_TIME AS OF TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 1 DAY)
+LEFT JOIN `example-project.dataset.labels` l USING (id)
+WHERE e.id IS NOT NULL;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (identifier)))
+        (from_clause
+          (from_item
+            (join_operation
+              (from_item
+                (identifier)
+                (as_alias
+                  (identifier))
+                (system_time_clause
+                  (function_call
+                    (identifier)
+                    (argument
+                      (function_call
+                        (identifier)))
+                    (argument
+                      (interval
+                        (number)
+                        (datetime_part))))))
+              (join_type)
+              (from_item
+                (identifier)
+                (as_alias
+                  (identifier)))
+              (join_condition
+                (identifier)))))
+        (where_clause
+          (unary_expression
+            (identifier)
+            (NULL)))))))
+
+================================================================================
+Query regression: implicit alias and multiline time travel before UNNEST
+================================================================================
+
+SELECT e.id, a.role
+FROM `example-project.dataset.events` e
+FOR
+  SYSTEM_TIME AS
+  OF TIMESTAMP '2026-01-01 00:00:00+00',
+UNNEST([STRUCT('origin' AS role), STRUCT('destination' AS role)]) a;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_expression
+            (identifier))
+          (select_expression
+            (identifier)))
+        (from_clause
+          (from_item
+            (join_operation
+              (from_item
+                (identifier)
+                (as_alias
+                  (identifier))
+                (system_time_clause
+                  (time
+                    (string))))
+              (from_item
+                (unnest_clause
+                  (unnest_operator
+                    (array
+                      (struct
+                        (string)
+                        (as_alias
+                          (identifier)))
+                      (struct
+                        (string)
+                        (as_alias
+                          (identifier)))))
+                  (as_alias
+                    (identifier)))))))))))
+
+================================================================================
+Query regression: conditional expressions after a wildcard
+================================================================================
+
+SELECT *,
+  IF(score IS NULL, NULL, LEAST(100, score + 10)) AS adjusted_score,
+  IF(enabled, IF(score > 0, 1, 0), 0) AS selected
+FROM scores;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_all
+            (asterisk_expression))
+          (select_expression
+            (function_call
+              (identifier)
+              (argument
+                (unary_expression
+                  (identifier)
+                  (NULL)))
+              (argument
+                (NULL))
+              (argument
+                (function_call
+                  (identifier)
+                  (argument
+                    (number))
+                  (argument
+                    (binary_expression
+                      (identifier)
+                      (number))))))
+            (as_alias
+              (identifier)))
+          (select_expression
+            (function_call
+              (identifier)
+              (argument
+                (identifier))
+              (argument
+                (function_call
+                  (identifier)
+                  (argument
+                    (binary_expression
+                      (identifier)
+                      (number)))
+                  (argument
+                    (number))
+                  (argument
+                    (number))))
+              (argument
+                (number)))
+            (as_alias
+              (identifier))))
+        (from_clause
+          (from_item
+            (identifier)))))))
+
+================================================================================
+Query regression: lowercase conditional expression and trailing comma
+================================================================================
+
+select *,
+  if(enabled, 1, 0) as selected,
+from scores;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_all
+            (asterisk_expression))
+          (select_expression
+            (function_call
+              (identifier)
+              (argument
+                (identifier))
+              (argument
+                (number))
+              (argument
+                (number)))
+            (as_alias
+              (identifier))))
+        (from_clause
+          (from_item
+            (identifier)))))))
+
+================================================================================
+Query regression: query followed by procedural IF and FOR
+================================================================================
+
+SELECT *, IF(TRUE, 1, 0) AS selected FROM events;
+IF TRUE THEN
+  SELECT 1;
+END IF;
+FOR record IN (SELECT 1 AS value) DO
+  SELECT record.value;
+END FOR;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (query_statement
+    (query_expr
+      (select
+        (select_list
+          (select_all
+            (asterisk_expression))
+          (select_expression
+            (function_call
+              (identifier)
+              (argument
+                (TRUE))
+              (argument
+                (number))
+              (argument
+                (number)))
+            (as_alias
+              (identifier))))
+        (from_clause
+          (from_item
+            (identifier))))))
+  (if_statement
+    (TRUE)
+    (query_statement
+      (query_expr
+        (select
+          (select_list
+            (select_expression
+              (number)))))))
+  (for_in_statement
+    (identifier)
+    (query_statement
+      (query_expr
+        (select
+          (select_list
+            (select_expression
+              (number)
+              (as_alias
+                (identifier)))))))
+    (query_statement
+      (query_expr
+        (select
+          (select_list
+            (select_expression
+              (identifier))))))))

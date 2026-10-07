@@ -26,11 +26,11 @@
 
 (call_statement routine_name: (identifier) @function)
 
-[
-  "_PARTITIONDATE"
-  "_PARTITIONTIME"
-  "_TABLE_SUFFIX"
-] @variable.builtin
+"_PARTITIONDATE" @variable.builtin
+((identifier) @variable.builtin
+ (#match? @variable.builtin "^_[pP][aA][rR][tT][iI][tT][iI][oO][nN][tT][iI][mM][eE]$"))
+((identifier) @variable.builtin
+ (#match? @variable.builtin "^_[tT][aA][bB][lL][eE]_[sS][uU][fF][fF][iI][xX]$"))
 
 [
   "DATE"
@@ -88,6 +88,7 @@
   "FALSE"
   "FOLLOWING"
   "FOR"
+  "FOR_SYSTEM_TIME_AS_OF"
   "FROM"
   "FULL"
   "HAVING"
