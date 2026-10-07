@@ -1187,7 +1187,13 @@ module.exports = grammar({
     from_item: ($) =>
       seq(
         choice(
-          seq(field('table_name', $.identifier), optional($.as_alias)),
+          prec.right(
+            seq(
+              field('table_name', $.identifier),
+              optional($.as_alias),
+              optional($.system_time_clause),
+            ),
+          ),
           //TODO: add fucntion call subexpression
           seq($.select_subexpression, optional($.as_alias)),
           seq($.function_call, optional($.as_alias)),
@@ -1261,7 +1267,7 @@ module.exports = grammar({
         1,
         choice(
           seq(
-            field('function', $.identifier),
+            field('function', choice($.identifier, alias(kw('IF'), $.identifier))),
             '(',
             optional(alias($._keyword_distinct, $.distinct)),
             optional(commaSep1(field('argument', choice($.argument, $.asterisk_expression)))),

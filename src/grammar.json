@@ -8263,29 +8263,45 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "FIELD",
-                  "name": "table_name",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "identifier"
-                  }
-                },
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
+              "type": "PREC_RIGHT",
+              "value": 0,
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "FIELD",
+                    "name": "table_name",
+                    "content": {
                       "type": "SYMBOL",
-                      "name": "as_alias"
-                    },
-                    {
-                      "type": "BLANK"
+                      "name": "identifier"
                     }
-                  ]
-                }
-              ]
+                  },
+                  {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "as_alias"
+                      },
+                      {
+                        "type": "BLANK"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "system_time_clause"
+                      },
+                      {
+                        "type": "BLANK"
+                      }
+                    ]
+                  }
+                ]
+              }
             },
             {
               "type": "SEQ",
@@ -8764,8 +8780,27 @@
                 "type": "FIELD",
                 "name": "function",
                 "content": {
-                  "type": "SYMBOL",
-                  "name": "identifier"
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "identifier"
+                    },
+                    {
+                      "type": "ALIAS",
+                      "content": {
+                        "type": "ALIAS",
+                        "content": {
+                          "type": "PATTERN",
+                          "value": "[iI][fF]"
+                        },
+                        "named": false,
+                        "value": "IF"
+                      },
+                      "named": true,
+                      "value": "identifier"
+                    }
+                  ]
                 }
               },
               {
